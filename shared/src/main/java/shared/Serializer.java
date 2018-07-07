@@ -1,7 +1,9 @@
+package shared;
+
 import com.google.gson.Gson;
 import java.io.Reader;
 
-import Command.GenericCommand;
+import shared.Command.GenericCommand;
 
 
 public class Serializer {

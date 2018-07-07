@@ -10,12 +10,12 @@ public class ExecCommandHandler extends Handler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         // TODO: Finish implementing this, need to add ICommand Dependency
-        //ICommand Command
+        //ICommand shared.Command
         String path = getPath(exchange);
 
         String message = "{\n" +
                 "  success: true,\n" +
-                "  data: 'Command Server API'\n" +
+                "  data: 'shared.Command Server API'\n" +
                 "}";
 
         byte[] result = message.getBytes();

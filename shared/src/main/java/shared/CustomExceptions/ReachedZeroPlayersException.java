@@ -1,4 +1,4 @@
-package CustomExceptions;
+package shared.CustomExceptions;
 
 public class ReachedZeroPlayersException extends Exception {
     public String getMessage()

@@ -1,5 +1,7 @@
-import CustomEnumerations.PlayerColor;
-import CustomExceptions.InvalidPlayerException;
+package shared;
+
+import shared.CustomEnumerations.PlayerColor;
+import shared.CustomExceptions.InvalidPlayerException;
 
 public class Player {
     private String _userName;
@@ -12,7 +14,7 @@ public class Player {
     {
         if (userName == null || userName.isEmpty() || displayName == null || displayName.isEmpty() || color == null)
         {
-            throw new InvalidPlayerException("Invalid Player parameters");
+            throw new InvalidPlayerException("Invalid shared.Player parameters");
         }
 
         _userName = userName;

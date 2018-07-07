@@ -16,7 +16,7 @@ public class DefaultHandler extends Handler {
 
         String message = "{\n" +
                          "  success: true,\n" +
-                         "  data: 'Command Server API'\n" +
+                         "  data: 'shared.Command Server API'\n" +
                          "}";
 
         byte[] result = message.getBytes();

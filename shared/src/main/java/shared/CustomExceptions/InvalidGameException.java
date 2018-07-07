@@ -1,4 +1,4 @@
-package CustomExceptions;
+package shared.CustomExceptions;
 
 public class InvalidGameException extends Exception {
     private String message;

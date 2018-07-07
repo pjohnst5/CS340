@@ -1,4 +1,4 @@
-package CustomEnumerations;
+package shared.CustomEnumerations;
 
 //Note: TrainColor is meant only for Routes and TrainCards, not Markers or Users.
 

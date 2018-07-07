@@ -1,9 +1,11 @@
+package shared;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import CustomExceptions.InvalidGameException;
-import CustomExceptions.MaxPlayersException;
-import CustomExceptions.ReachedZeroPlayersException;
+import shared.CustomExceptions.InvalidGameException;
+import shared.CustomExceptions.MaxPlayersException;
+import shared.CustomExceptions.ReachedZeroPlayersException;
 
 public class Game {
     private String _gameName;
@@ -18,10 +20,10 @@ public class Game {
             throw new InvalidGameException("Invalid number of players : " + maxPlayers);
         }
         if (gameName.isEmpty() || gameName == null){
-            throw new InvalidGameException("Game must have a name");
+            throw new InvalidGameException("shared.Game must have a name");
         }
         if (player == null) {
-            throw new InvalidGameException("Game must have at least one player");
+            throw new InvalidGameException("shared.Game must have at least one player");
         }
         _gameName = gameName;
         _gameID = -1;
@@ -55,7 +57,7 @@ public class Game {
     {
         if (s.isEmpty() || s == null)
         {
-            throw new InvalidGameException("Game must have a name");
+            throw new InvalidGameException("shared.Game must have a name");
         }
         _gameName = s;
     }

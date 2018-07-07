@@ -1,4 +1,4 @@
-package CustomExceptions;
+package shared.CustomExceptions;
 
 public class MaxPlayersException extends Exception {
     private String message;

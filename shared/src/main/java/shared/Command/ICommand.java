@@ -1,4 +1,4 @@
-package Command;
+package shared.Command;
 
 public interface ICommand {
 

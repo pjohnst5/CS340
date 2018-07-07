@@ -1,4 +1,4 @@
-package CustomEnumerations;
+package shared.CustomEnumerations;
 
 //Note, PlayerColor is meant for only Markers and Players, NOT Routes and TrainCards
 

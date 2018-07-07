@@ -1,4 +1,6 @@
-import CustomEnumerations.PlayerColor;
+package shared;
+
+import shared.CustomEnumerations.PlayerColor;
 
 public class GameRequest {
     private String _userName;

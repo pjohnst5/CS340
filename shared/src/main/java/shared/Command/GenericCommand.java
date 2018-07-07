@@ -1,4 +1,4 @@
-package Command;
+package shared.Command;
 
 import java.lang.reflect.Method;
 

@@ -1,4 +1,6 @@
-import Command.GenericCommand;
+package shared;
+
+import shared.Command.GenericCommand;
 
 public class GenericResponse {
     private GenericCommand[] _commands;
