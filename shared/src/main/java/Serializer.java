@@ -1,6 +1,8 @@
 import com.google.gson.Gson;
 import java.io.Reader;
 
+import Command.GenericCommand;
+
 
 public class Serializer {
 

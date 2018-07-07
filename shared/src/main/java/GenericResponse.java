@@ -1,3 +1,5 @@
+import Command.GenericCommand;
+
 public class GenericResponse {
     private GenericCommand[] _commands;
     private boolean _success = false;

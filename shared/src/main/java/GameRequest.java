@@ -1,3 +1,5 @@
+import CustomEnumerations.PlayerColor;
+
 public class GameRequest {
     private String _userName;
     private String _displayName;

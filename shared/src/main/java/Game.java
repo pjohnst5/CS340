@@ -1,15 +1,17 @@
-import org.omg.CORBA.DynAnyPackage.Invalid;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import CustomExceptions.InvalidGameException;
+import CustomExceptions.MaxPlayersException;
+import CustomExceptions.ReachedZeroPlayersException;
 
 public class Game {
     private String _gameName;
     private int _gameID;
-    private List<User> _users;
-    private int _maxUsers;
+    private List<Player> _players;
+    private int _maxPlayers;
 
-    public Game(String gameName, User user, int maxPlayers) throws InvalidGameException
+    public Game(String gameName, Player player, int maxPlayers) throws InvalidGameException
     {
         if (maxPlayers < 2 || maxPlayers > 5)
         {
@@ -18,14 +20,14 @@ public class Game {
         if (gameName.isEmpty() || gameName == null){
             throw new InvalidGameException("Game must have a name");
         }
-        if (user == null) {
-            throw new InvalidGameException("Game must have at least one user");
+        if (player == null) {
+            throw new InvalidGameException("Game must have at least one player");
         }
         _gameName = gameName;
         _gameID = -1;
-        _users = new ArrayList<User>();
-        _users.add(user);
-        _maxUsers = maxPlayers;
+        _players = new ArrayList<Player>();
+        _players.add(player);
+        _maxPlayers = maxPlayers;
     }
 
     public String getGameName()
@@ -38,14 +40,14 @@ public class Game {
         return _gameID;
     }
 
-    public List<User> getUsers()
+    public List<Player> getPlayers()
     {
-        return _users;
+        return _players;
     }
 
     public int getMaxPlayers()
     {
-        return _maxUsers;
+        return _maxPlayers;
     }
 
 
@@ -58,7 +60,7 @@ public class Game {
         _gameName = s;
     }
 
-    public void set_maxUsers(int i) throws InvalidGameException
+    public void setMaxPlayers(int i) throws InvalidGameException
     {
         if (i < 2 || i > 5)
         {
@@ -73,27 +75,27 @@ public class Game {
     }
 
     //returns the number of players after adding the user, otherwise throws an exception
-    public int addUser(User u) throws MaxPlayersException
+    public int addPlayer(Player p) throws MaxPlayersException
     {
-        if (_users.size() >= _maxUsers)
+        if (_players.size() >= _maxPlayers)
         {
-            throw new MaxPlayersException(_maxUsers);
+            throw new MaxPlayersException(_maxPlayers);
         }
-        _users.add(u);
-        return _users.size();
+        _players.add(p);
+        return _players.size();
     }
 
     //returns the number of users after removing the user
-    public int removeUser(String userName)
+    public int removeUser(String userName) throws ReachedZeroPlayersException
     {
-        for( int i = 0; i < _users.size(); i++)
+        for( int i = 0; i < _players.size(); i++)
         {
-            if (_users.get(i).getUserName().equals(userName))
+            if (_players.get(i).getUserName().equals(userName))
             {
-                _users.remove(i);
-                return _users.size();
+                _players.remove(i);
+                return _players.size();
             }
         }
-        return _users.size();
+        return _players.size();
     }
 }

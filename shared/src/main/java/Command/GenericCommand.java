@@ -1,3 +1,5 @@
+package Command;
+
 import java.lang.reflect.Method;
 
 public class GenericCommand implements ICommand {
