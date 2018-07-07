@@ -1,8 +1,6 @@
 import com.google.gson.Gson;
 import java.io.Reader;
 
-import sun.net.www.content.text.Generic;
-
 
 public class Serializer {
 
