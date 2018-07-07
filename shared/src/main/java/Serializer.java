@@ -18,4 +18,11 @@ public class Serializer {
         return cmd;
     }
 
+    public static GenericResponse deserializeResponse(Reader reader)
+    {
+        Gson gson = new Gson();
+        GenericResponse rsp = gson.fromJson(reader, GenericResponse.class);
+        return rsp;
+    }
+
 }

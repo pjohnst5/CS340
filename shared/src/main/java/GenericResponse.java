@@ -17,7 +17,7 @@ public class GenericResponse {
     {
         errorMessage = s;
     }
-    
+
     public GenericCommand[] getCommands()
     {
         return commands;
