@@ -66,12 +66,12 @@ public class Game {
         {
             throw new InvalidGameException("Max players must be between 2 and 5 inclusive");
         }
-        if (i < _users.size())
+        if (i < _players.size())
         {
-            throw new InvalidGameException(_users.size() + " players are already playing, cannot change max num of players to " + i);
+            throw new InvalidGameException(_players.size() + " players are already playing, cannot change max num of players to " + i);
         }
 
-        _maxUsers = i;
+        _maxPlayers = i;
     }
 
     //returns the number of players after adding the user, otherwise throws an exception
