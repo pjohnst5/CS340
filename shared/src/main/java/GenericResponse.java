@@ -1,35 +1,35 @@
 public class GenericResponse {
-    private GenericCommand[] commands;
-    private boolean success;
-    private String errorMessage;
+    private GenericCommand[] _commands;
+    private boolean _success = false;
+    private String _errorMessage;
 
     public void setCommands(GenericCommand[] cmds)
     {
-        commands = cmds;
+        _commands = cmds;
     }
 
     public void setSucess(boolean s)
     {
-        success = s;
+        _success = s;
     }
 
     public void setErrorMessage(String s)
     {
-        errorMessage = s;
+        _errorMessage = s;
     }
 
     public GenericCommand[] getCommands()
     {
-        return commands;
+        return _commands;
     }
 
     public boolean getSuccess()
     {
-        return success;
+        return _success;
     }
 
     public String getErrorMessage()
     {
-        return errorMessage;
+        return _errorMessage;
     }
 }
