@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TicketToRide</string>
+    <string name="login_title">Ticket To Ride</string>
+    <string name="login_username_label">Username</string>
+    <string name="login_username_hint">Username...</string>
+    <string name="login_password_label">Password</string>
+    <string name="login_password_hint">Password...</string>
+    <string name="login_confirm_password_label">Confirm Password</string>
+    <string name="login_confirm_password_hint">Confirm Password...</string>
+    <string name="login_switch_login_label">Login</string>
+    <string name="login_switch_register_label">Register</string>
+    <string name="login_submit_button">Submit</string>
 </resources>
