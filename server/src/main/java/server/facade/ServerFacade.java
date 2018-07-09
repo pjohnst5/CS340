@@ -1,9 +1,11 @@
 package server.facade;
 
+import java.util.List;
 import java.util.UUID;
 
 import shared.Command.ICommand;
 import shared.CustomEnumerations.PlayerColor;
+import shared.Game;
 import shared.GameRequest;
 
 public class ServerFacade {
@@ -41,5 +43,10 @@ public class ServerFacade {
     public ICommand sendMessage(String gameID, String message)
     {
         return GameLobbyFacade.sendMessage(gameID, message);
+    }
+
+    public List<Game> getCurrentGames()
+    {
+        return CommandFacade.getCurrentGames();
     }
 }
