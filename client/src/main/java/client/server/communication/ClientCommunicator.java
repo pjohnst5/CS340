@@ -2,7 +2,6 @@ package client.server.communication;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
@@ -15,7 +14,6 @@ import shared.GenericResponse;
 import shared.communication.serialization.Serializer;
 import shared.configuration.ConfigurationManager;
 
-// TODO: Finish Implementing this - Dallas
 public class ClientCommunicator {
 
     private static final String HTTP_POST = "POST";
@@ -36,7 +34,7 @@ public class ClientCommunicator {
         return _instance;
     }
 
-    private GenericResponse getResult(HttpURLConnection connection){
+    private GenericResponse getResponse(HttpURLConnection connection){
         GenericResponse result = null;
         try {
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
@@ -57,11 +55,11 @@ public class ClientCommunicator {
         return result;
     }
 
-    public void makeRequest(ICommand command) {
-        makeRequest(EXEC_ENDPOINT, command);
+    public HttpURLConnection makeRequest(ICommand command) {
+        return makeRequest(EXEC_ENDPOINT, command);
     }
 
-    public void makeRequest(String endpoint, ICommand command){
+    public HttpURLConnection makeRequest(String endpoint, ICommand command){
 
         HttpURLConnection connection = null;
         Writer writer = null;
@@ -69,7 +67,7 @@ public class ClientCommunicator {
         try {
             URL url = new URL(HOST_URL + endpoint);
             connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod(HTTP_GET);
+            connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
 
             writer = new PrintWriter(connection.getOutputStream());
@@ -83,58 +81,32 @@ public class ClientCommunicator {
             e.printStackTrace();
         }
 
-        return ;
-        /*
-        GenericResponse response;
-        try {
-            //response = getResult(connection);
-            //return response;
-        } catch (Exception e){
-            System.out.println("Got and EXCEPTION");
-        }*/
+        return connection;
+    }
+
+    public static GenericResponse sendCommand(ICommand command){
+
+        HttpURLConnection connection = _instance.makeRequest(command);
+        return _instance.getResponse(connection);
     }
 
     public static void main(String[] args){
 
-        HttpURLConnection connection = null;
+        String[] paramTypes = {
+                String.class.getCanonicalName(),
+                int.class.getCanonicalName(),
+                int.class.getCanonicalName()
+        };
 
-        try {
+        Object[] paramValues = { "Dallas", 4, 5 };
 
-            URL url = new URL(HOST_URL + EXEC_ENDPOINT);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod(HTTP_POST);
-            connection.setDoOutput(true);
-            OutputStream os = connection.getOutputStream();
+        GenericCommand command = new GenericCommand("server.CommandManager",
+                                                    "TestCommand",
+                                                    paramTypes,
+                                                    paramValues,
+                                                    null);
 
-            String[] paramTypes = {
-                    String.class.getCanonicalName(),
-                    int.class.getCanonicalName(),
-                    int.class.getCanonicalName()
-            };
-
-            Object[] paramValues = { "Dallas", new Integer(4), new Integer(5) };
-
-            GenericCommand command = new GenericCommand("server.CommandManager",
-                                                        "TestCommand",
-                                                        paramTypes,
-                                                        paramValues,
-                                                        null);
-
-            PrintWriter writer = new PrintWriter(connection.getOutputStream());
-            Serializer.serializeToWriter(writer, command);
-            writer.close();
-            connection.connect();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-        //GenericResponse obj = _instance.getResult(connection);
-
-        System.out.println("WHAT");
+        sendCommand(command);
     }
 
 
