@@ -1,8 +1,9 @@
-package server.facade;
+package server.ServerFacade;
 
 import java.util.UUID;
 
-public class LoginFacade {
+//Package private, only ServerFacade should touch these
+class LoginFacade {
 
     public static UUID login(String userName, String password)
     {

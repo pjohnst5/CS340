@@ -1,11 +1,12 @@
-package server.facade;
+package server.ServerFacade;
 
 import shared.Command.GenericCommand;
 import shared.Command.ICommand;
 import shared.CustomEnumerations.PlayerColor;
 import shared.GameRequest;
 
-public class GameListFacade {
+//Package private, only ServerFacade should touch these
+class GameListFacade {
 
     public static ICommand createGame(GameRequest gameRequest)
     {

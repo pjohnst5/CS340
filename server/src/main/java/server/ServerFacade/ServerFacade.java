@@ -1,14 +1,30 @@
-package server.facade;
+package server.ServerFacade;
 
 import java.util.List;
 import java.util.UUID;
 
+import shared.Command.GenericCommand;
 import shared.Command.ICommand;
 import shared.CustomEnumerations.PlayerColor;
 import shared.Game;
 import shared.GameRequest;
 
 public class ServerFacade {
+
+    private static ServerFacade _instance;
+
+    private ServerFacade() {
+
+    }
+
+    public static ServerFacade getInstance()
+    {
+        if (_instance == null)
+        {
+            _instance = new ServerFacade();
+        }
+        return _instance;
+    }
 
     public UUID login(String username, String password)
     {
@@ -48,5 +64,10 @@ public class ServerFacade {
     public List<Game> getCurrentGames()
     {
         return CommandFacade.getCurrentGames();
+    }
+
+    public List<GenericCommand> getCommandsFromGame(String gameID, int index)
+    {
+        return CommandFacade.getCommandsFromGame(gameID, index);
     }
 }

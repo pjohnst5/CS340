@@ -1,7 +1,6 @@
 package shared;
 
 import shared.CustomEnumerations.PlayerColor;
-import shared.CustomExceptions.InvalidGameException;
 import shared.CustomExceptions.InvalidGameRequestException;
 
 public class GameRequest {

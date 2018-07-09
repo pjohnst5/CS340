@@ -1,9 +1,10 @@
-package server.facade;
+package server.ServerFacade;
 
 import shared.Command.GenericCommand;
 import shared.Command.ICommand;
 
-public class GameLobbyFacade {
+//Package private, only ServerFacade should touch these
+class GameLobbyFacade {
 
     public static ICommand leaveGame(String username, String gameID)
     {

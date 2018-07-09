@@ -1,4 +1,4 @@
-package server.facade;
+package server.ServerFacade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,8 @@ import java.util.List;
 import shared.Command.GenericCommand;
 import shared.Game;
 
-public class CommandFacade {
+//Package private, only ServerFacade should touch these
+class CommandFacade {
 
     public static List<Game> getCurrentGames()
     {
