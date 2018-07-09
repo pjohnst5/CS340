@@ -27,4 +27,19 @@ public class ServerFacade {
     {
         return GameListFacade.joinGame(username,gameID,color);
     }
+
+    public ICommand leaveGame(String userName, String gameID)
+    {
+        return GameLobbyFacade.leaveGame(userName, gameID);
+    }
+
+    public ICommand startGame(String gameID)
+    {
+        return GameLobbyFacade.startGame(gameID);
+    }
+
+    public ICommand sendMessage(String gameID, String message)
+    {
+        return GameLobbyFacade.sendMessage(gameID, message);
+    }
 }
