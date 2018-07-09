@@ -6,6 +6,9 @@ import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
+
+import shared.Command.ICommand;
 
 public class Serializer implements ISerializer {
 
@@ -30,6 +33,9 @@ public class Serializer implements ISerializer {
         return _deserialize(reader, classType);
     }
 
+    public static void serializeToWriter(Writer writer, Object object) {
+        _gson.toJson(object, writer);
+    }
 
     @Override
     public String serialize(Object object) {

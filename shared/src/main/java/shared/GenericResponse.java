@@ -12,7 +12,7 @@ public class GenericResponse {
         _commands = cmds;
     }
 
-    public void setSucess(boolean s)
+    public void setSuccess(boolean s)
     {
         _success = s;
     }

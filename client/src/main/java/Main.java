@@ -3,24 +3,24 @@ import java.io.StringReader;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import client.server.communication.GameListPoller;
-import client.server.communication.GameLobbyPoller;
+import client.server.communication.poll.GameListPoller;
+import client.server.communication.poll.GameLobbyPoller;
 import shared.communication.serialization.Serializer;
 
 
 
-public class hello {
+public class Main {
 
     private static void DallasTimerTest(){
 
-        GameListPoller.start();
-        GameLobbyPoller.start();
+        GameListPoller.instance().start();
+        GameLobbyPoller.instance().start();
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                GameListPoller.stop();
+                GameListPoller.instance().stop();
             }
         }, 8000);
 
@@ -64,7 +64,7 @@ public class hello {
     public static void main(String[] args) {
         System.out.println("Hello from Ryan");
 
-        // DallasTimerTest();
-        DallasSerializerTest();
+        DallasTimerTest();
+        // DallasSerializerTest();
     }
 }

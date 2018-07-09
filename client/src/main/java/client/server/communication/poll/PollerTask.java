@@ -1,4 +1,4 @@
-package client.server.communication;
+package client.server.communication.poll;
 
 /**
  * This class is left intentionally as a package protected class
