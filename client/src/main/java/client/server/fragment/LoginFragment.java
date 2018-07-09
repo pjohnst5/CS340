@@ -16,7 +16,7 @@ import com.pjohnst5icloud.tickettoride.R;
  * Created by jtyler17 on 7/7/18.
  */
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements ILoginView {
     private EditText mUsernameField;
     private EditText mPasswordField;
     private EditText mConfirmPasswordField;
@@ -24,9 +24,6 @@ public class LoginFragment extends Fragment {
     private Button mSubmitButton;
 
     private boolean isRegister;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

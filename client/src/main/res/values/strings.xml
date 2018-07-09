@@ -10,4 +10,11 @@
     <string name="login_switch_login_label">Login</string>
     <string name="login_switch_register_label">Register</string>
     <string name="login_submit_button">Submit</string>
+    <string name="create_game_button">Create Game</string>
+    <string name="join_game_button">Join Game</string>
+    <string name="lobby_title">Players</string>
+    <string name="start_game_button">Start Game</string>
+    <string name="send">Send</string>
+    <string name="chat_hint">Type here...</string>
+    <string name="leave_game_button">X</string>
 </resources>

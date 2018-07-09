@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="client.server.activity.GameListActivity" />
+        <activity android:name="client.server.activity.GameLobbyActivity"></activity>
     </application>
 
 </manifest>
