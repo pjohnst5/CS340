@@ -1,4 +1,4 @@
-package client.server.communication;
+package client.server.communication.poll;
 
 import java.util.HashMap;
 import java.util.Map;

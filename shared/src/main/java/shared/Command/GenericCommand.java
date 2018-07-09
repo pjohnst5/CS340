@@ -1,6 +1,8 @@
 package shared.Command;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GenericCommand implements ICommand {
 
@@ -9,6 +11,18 @@ public class GenericCommand implements ICommand {
     private String[] _paramTypes;
     private Object[] _paramValues;
     private Object _callOn;
+
+    private static final Map<String,Class> primitivesMap = new HashMap<String,Class>();
+    static {
+        primitivesMap.put("int", int.class );
+        primitivesMap.put("long", long.class );
+        primitivesMap.put("double", double.class );
+        primitivesMap.put("float", float.class );
+        primitivesMap.put("boolean", boolean.class );
+        primitivesMap.put("char", char.class );
+        primitivesMap.put("byte", byte.class );
+        primitivesMap.put("short", short.class );
+    }
 
     public GenericCommand(String className, String methodName, String[] paramTypes, Object[] paramValues, Object callOn) {
         _className = className;
@@ -30,7 +44,17 @@ public class GenericCommand implements ICommand {
                 paramTypes = new Class<?>[_paramTypes.length];
                 for (int i = 0; i < _paramTypes.length; i++)
                 {
-                    paramTypes[i] = Class.forName(_paramTypes[i]);
+
+                    if (primitivesMap.containsKey(_paramTypes[i])){
+                        Class<?> paramType = primitivesMap.get(_paramTypes[i]);
+                        paramTypes[i] = paramType;
+                        if (_paramTypes[i].equals("int")){
+                            _paramValues[i] = ((Double)_paramValues[i]).intValue();
+                        }
+                        // _paramValues[i] = paramType.cast(_paramValues[i]);
+                    } else {
+                        paramTypes[i] = Class.forName(_paramTypes[i]);
+                    }
                 }
             }
 

@@ -3,8 +3,8 @@ import java.io.StringReader;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import client.server.communication.GameListPoller;
-import client.server.communication.GameLobbyPoller;
+import client.server.communication.poll.GameListPoller;
+import client.server.communication.poll.GameLobbyPoller;
 import shared.communication.serialization.Serializer;
 
 

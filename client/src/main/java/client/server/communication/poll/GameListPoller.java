@@ -1,4 +1,4 @@
-package client.server.communication;
+package client.server.communication.poll;
 
 public class GameListPoller extends Poller {
 

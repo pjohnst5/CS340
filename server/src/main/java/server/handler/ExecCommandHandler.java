@@ -3,31 +3,32 @@ package server.handler;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
+import java.io.InputStreamReader;
+
+import shared.Command.GenericCommand;
+import shared.Command.ICommand;
+import shared.GenericResponse;
+import shared.communication.serialization.Serializer;
 
 public class ExecCommandHandler extends Handler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        // TODO: Finish implementing this, need to add ICommand Dependency
-        //ICommand shared.Command
-        String path = getPath(exchange);
 
-        String message = "{\n" +
-                "  success: true,\n" +
-                "  data: 'shared.Command Server API'\n" +
-                "}";
+        InputStreamReader reader = new InputStreamReader(exchange.getRequestBody());
+        GenericCommand command = (GenericCommand) Serializer.deserializeToObject(reader, GenericCommand.class);
 
-        byte[] result = message.getBytes();
+        Object result = command.execute();
 
-        switch (path) {
-            case "/":
-            default:
-                System.out.println("Endpoint Accessed: /");
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-                break;
-        }
+        GenericResponse response = new GenericResponse();
 
-        sendResponse(message, exchange);
+        response.setErrorMessage(result.toString());
+        response.setSuccess(true);
+
+
+        reader.close();
+
+        String serializedObject = Serializer._serialize(response);
+        sendResponse(serializedObject, exchange);
     }
 }
