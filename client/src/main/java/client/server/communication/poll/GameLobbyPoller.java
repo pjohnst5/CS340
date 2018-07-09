@@ -27,16 +27,6 @@ public class GameLobbyPoller extends Poller {
         addCallback(TASK_ID, _task);
     }
 
-    /*
-    public static void _start(){
-        _instance._start(TASK_ID, TASK_INTERVAL);
-    }
-
-    public static void _stop(){
-        _instance._stop(TASK_ID);
-    }
-    */
-
     public boolean start() {
         return _instance._start(TASK_ID, TASK_INTERVAL);
     }
