@@ -94,6 +94,35 @@ public class ClientCommunicator {
         }*/
     }
 
+    public static void sendCommand(ICommand command){
+
+        HttpURLConnection connection = null;
+
+        try {
+
+            URL url = new URL(HOST_URL + EXEC_ENDPOINT);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod(HTTP_POST);
+            connection.setDoOutput(true);
+            OutputStream os = connection.getOutputStream();
+
+            PrintWriter writer = new PrintWriter(connection.getOutputStream());
+            Serializer.serializeToWriter(writer, command);
+            writer.close();
+            connection.connect();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        //GenericResponse obj = _instance.getResult(connection);
+
+        System.out.println("WHAT");
+    }
+
     public static void main(String[] args){
 
         HttpURLConnection connection = null;
@@ -112,7 +141,7 @@ public class ClientCommunicator {
                     int.class.getCanonicalName()
             };
 
-            Object[] paramValues = { "Dallas", new Integer(4), new Integer(5) };
+            Object[] paramValues = { "Dallas", 4, 5 };
 
             GenericCommand command = new GenericCommand("server.CommandManager",
                                                         "TestCommand",

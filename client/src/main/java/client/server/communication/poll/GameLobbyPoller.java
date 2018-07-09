@@ -1,13 +1,16 @@
 package client.server.communication.poll;
 
+import shared.configuration.ConfigurationManager;
+
 public class GameLobbyPoller extends Poller {
 
     private static final String TASK_ID = GameLobbyPoller.class.getName();
-    private static final int TASK_INTERVAL = 2000;
+    private static final int TASK_INTERVAL = ConfigurationManager.getInt("poller_interval");
 
     private PollerTask _task;
 
     private static GameLobbyPoller _instance = new GameLobbyPoller();
+    public static GameLobbyPoller instance() { return _instance; }
     private GameLobbyPoller(){
 
         super();
@@ -24,13 +27,25 @@ public class GameLobbyPoller extends Poller {
         addCallback(TASK_ID, _task);
     }
 
-    public static void start(){
+    /*
+    public static void _start(){
         _instance._start(TASK_ID, TASK_INTERVAL);
     }
 
-    public static void stop(){
+    public static void _stop(){
         _instance._stop(TASK_ID);
     }
+    */
+
+    public boolean start() {
+        return _instance._start(TASK_ID, TASK_INTERVAL);
+    }
+
+    public boolean stop() {
+        return _instance._start(TASK_ID, TASK_INTERVAL);
+    }
+
+
 
     private static void callback(){
         // TODO: Setup Callback function - Setup Server Calls
