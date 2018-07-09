@@ -67,7 +67,7 @@ public class ClientCommunicator {
         try {
             URL url = new URL(HOST_URL + endpoint);
             connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod(HTTP_GET);
+            connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
 
             writer = new PrintWriter(connection.getOutputStream());
@@ -107,8 +107,6 @@ public class ClientCommunicator {
                                                     null);
 
         sendCommand(command);
-
-        System.out.println("WHAT");
     }
 
 

@@ -5,6 +5,13 @@ import shared.Command.ICommand;
 
 public class ServerProxy {
 
+    private ServerProxy(){}
+    private static ServerProxy _instance = new ServerProxy();
+
+    public static ServerProxy instance(){
+        return _instance;
+    }
+
     private Poller _poller;
 
     public void sendCommand(ICommand command){
