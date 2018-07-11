@@ -1,38 +1,50 @@
 package shared.Response;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import shared.Command.ICommand;
 
 public class CommandResponse implements IResponse {
-    private ICommand[] _commands;
+    private List<ICommand> _commands;
     private boolean _success = false;
     private String _errorMessage;
 
-    public void setCommands(ICommand[] cmds)
+    public CommandResponse()
     {
-        _commands = cmds;
+        _commands = new ArrayList<>();
     }
 
+    public void addCommand(ICommand command)
+    {
+        _commands.add(command);
+    }
+
+    @Override
     public void setSuccess(boolean s)
     {
         _success = s;
     }
 
+    @Override
     public void setErrorMessage(String s)
     {
         _errorMessage = s;
     }
 
 
-    public ICommand[] getCommands()
+    public List<ICommand> getCommands()
     {
         return _commands;
     }
 
+    @Override
     public boolean getSuccess()
     {
         return _success;
     }
 
+    @Override
     public String getErrorMessage()
     {
         return _errorMessage;

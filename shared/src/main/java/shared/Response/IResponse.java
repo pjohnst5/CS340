@@ -11,4 +11,6 @@ public interface IResponse {
 
     void setErrorMessage(String s);
 
+
+
 }

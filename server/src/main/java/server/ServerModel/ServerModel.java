@@ -54,6 +54,7 @@ public class ServerModel {
 
     public User authenticate(String username, String password) throws ServerException {
         //TODO: actually error check
+
         try {
             User user = new User(username, password);
             user.setUUID(UUID.fromString(password));
