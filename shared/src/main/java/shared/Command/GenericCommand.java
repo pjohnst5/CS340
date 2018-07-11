@@ -49,7 +49,7 @@ public class GenericCommand implements ICommand {
                         Class<?> paramType = primitivesMap.get(_paramTypes[i]);
                         paramTypes[i] = paramType;
                         if (_paramTypes[i].equals("int")){
-                            _paramValues[i] = ((Double)_paramValues[i]).intValue();
+                            _paramValues[i] = ((Number)_paramValues[i]).intValue();
                         }
                         // _paramValues[i] = paramType.cast(_paramValues[i]);
                     } else {

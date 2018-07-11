@@ -6,10 +6,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class Poller {
-
     private static boolean _initialized = false;
+
     private static Timer _timer;
     private static Map<String, PollerTask> _callbacks;
+
+    public abstract boolean start();
+    public abstract boolean stop();
+
 
     protected Poller(){
         if (!_initialized) {
@@ -63,4 +67,13 @@ public abstract class Poller {
             _callbacks.put(identifier, task);
     }
 
+    @Override
+    public String toString() {
+        return this.getClass().getCanonicalName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.toString().equals(o.toString());
+    }
 }
