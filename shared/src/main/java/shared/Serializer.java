@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import java.io.Reader;
 
 import shared.Command.GenericCommand;
+import shared.Response.CommandResponse;
 
 
 public class Serializer {
@@ -22,10 +23,10 @@ public class Serializer {
         return cmd;
     }
 
-    public static GenericResponse deserializeResponse(Reader reader)
+    public static CommandResponse deserializeResponse(Reader reader)
     {
         Gson gson = new Gson();
-        GenericResponse rsp = gson.fromJson(reader, GenericResponse.class);
+        CommandResponse rsp = gson.fromJson(reader, CommandResponse.class);
         return rsp;
     }
 

@@ -1,9 +1,9 @@
 package shared.CustomExceptions;
 
-public class InvalidPlayerException extends Exception {
+public class PlayerException extends Exception {
     private String message;
 
-    public InvalidPlayerException(String s)
+    public PlayerException(String s)
     {
         message = s;
     }

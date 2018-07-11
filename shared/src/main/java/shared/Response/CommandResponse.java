@@ -1,13 +1,13 @@
-package shared;
+package shared.Response;
 
-import shared.Command.GenericCommand;
+import shared.Command.ICommand;
 
-public class GenericResponse {
-    private GenericCommand[] _commands;
+public class CommandResponse implements IResponse {
+    private ICommand[] _commands;
     private boolean _success = false;
     private String _errorMessage;
 
-    public void setCommands(GenericCommand[] cmds)
+    public void setCommands(ICommand[] cmds)
     {
         _commands = cmds;
     }
@@ -22,7 +22,7 @@ public class GenericResponse {
         _errorMessage = s;
     }
 
-    public GenericCommand[] getCommands()
+    public ICommand[] getCommands()
     {
         return _commands;
     }

@@ -10,7 +10,7 @@ import java.net.URL;
 
 import shared.Command.GenericCommand;
 import shared.Command.ICommand;
-import shared.GenericResponse;
+import shared.Response.CommandResponse;
 import shared.communication.serialization.Serializer;
 import shared.configuration.ConfigurationManager;
 
@@ -34,15 +34,15 @@ public class ClientCommunicator {
         return _instance;
     }
 
-    private GenericResponse getResponse(HttpURLConnection connection){
-        GenericResponse result = null;
+    private CommandResponse getResponse(HttpURLConnection connection){
+        CommandResponse result = null;
         try {
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
                 if (connection.getContentLength() == 0){
                     System.err.println("Response body was empty");
                 } else if (connection.getContentLength() == -1){
                     InputStreamReader reader = new InputStreamReader(connection.getInputStream());
-                    result = (GenericResponse)Serializer._deserialize(reader, GenericResponse.class);
+                    result = (CommandResponse)Serializer._deserialize(reader, CommandResponse.class);
                     reader.close();
                 }
             } else {
@@ -84,7 +84,7 @@ public class ClientCommunicator {
         return connection;
     }
 
-    public static GenericResponse sendCommand(ICommand command){
+    public static CommandResponse sendCommand(ICommand command){
 
         HttpURLConnection connection = _instance.makeRequest(command);
         return _instance.getResponse(connection);

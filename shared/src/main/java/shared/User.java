@@ -1,18 +1,18 @@
 package shared;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import shared.CustomExceptions.InvalidUserException;
 
 public class User {
     private String _userName;
     private String _password;
-    private List<Player> _players;
 
-    public User(String username, String password)
+    public User(String username, String password) throws InvalidUserException
     {
+        if (username == null || password == null)
+            throw new InvalidUserException();
         _userName = username;
         _password = password;
-        _players = new ArrayList<Player>();
     }
 
     public String getUserName()
@@ -25,13 +25,4 @@ public class User {
         return _password;
     }
 
-    public List<Player> getPlayers()
-    {
-        return _players;
-    }
-
-    public void addPlayer(Player p)
-    {
-        _players.add(p);
-    }
 }

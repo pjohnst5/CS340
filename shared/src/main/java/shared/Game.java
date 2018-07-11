@@ -9,7 +9,7 @@ import shared.CustomExceptions.ReachedZeroPlayersException;
 
 public class Game {
     private String _gameName;
-    private int _gameID;
+    private String _gameID;
     private List<Player> _players;
     private int _maxPlayers;
 
@@ -26,8 +26,8 @@ public class Game {
             throw new InvalidGameException("shared.Game must have at least one player");
         }
         _gameName = gameName;
-        _gameID = -1;
-        _players = new ArrayList<Player>();
+        _gameID = new String();
+        _players = new ArrayList<>();
         _players.add(player);
         _maxPlayers = maxPlayers;
     }
@@ -37,7 +37,7 @@ public class Game {
         return _gameName;
     }
 
-    public int getGameID()
+    public String getGameID()
     {
         return _gameID;
     }
@@ -76,7 +76,7 @@ public class Game {
         _maxPlayers = i;
     }
 
-    //returns the number of players after adding the user, otherwise throws an exception
+    //returns the number of players after adding the player, otherwise throws an exception
     public int addPlayer(Player p) throws MaxPlayersException
     {
         if (_players.size() >= _maxPlayers)
@@ -87,8 +87,8 @@ public class Game {
         return _players.size();
     }
 
-    //returns the number of users after removing the user
-    public int removeUser(String userName) throws ReachedZeroPlayersException
+    //returns the number of players after removing the player
+    public int removePlayer(String userName) throws ReachedZeroPlayersException
     {
         for( int i = 0; i < _players.size(); i++)
         {
