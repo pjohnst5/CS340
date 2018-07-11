@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import client.server.fragment.GameListFragment;
+import client.server.fragment.IGameListView;
+import client.server.presenter.GameListPresenter;
+import client.server.presenter.IGameListPresenter;
 
 public class GameListActivity extends SingleFragmentActivity {
 
@@ -17,6 +20,9 @@ public class GameListActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new GameListFragment();
+        IGameListView view = new GameListFragment();
+        IGameListPresenter presenter = new GameListPresenter(view);
+        view.setPresenter(presenter);
+        return (Fragment) view;
     }
 }

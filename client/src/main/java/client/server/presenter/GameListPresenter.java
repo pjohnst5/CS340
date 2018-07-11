@@ -1,4 +1,11 @@
 package client.server.presenter;
 
-public class GameListPresenter {
+import client.server.fragment.IGameListView;
+
+public class GameListPresenter implements IGameListPresenter {
+    private IGameListView _view;
+
+    public GameListPresenter(IGameListView view) {
+        _view = view;
+    }
 }

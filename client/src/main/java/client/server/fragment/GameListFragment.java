@@ -14,12 +14,17 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.List;
 
+import client.server.presenter.IGameListPresenter;
+import shared.Game;
+
 public class GameListFragment extends Fragment implements IGameListView {
     private RecyclerView mGameListRecyclerView;
     private Button mCreateGameButton;
     private Button mJoinGameButton;
+    private Game mCurrentlySelectedGame;
 
     private GameListAdapter mGameListAdapter;
+    private IGameListPresenter mPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +36,8 @@ public class GameListFragment extends Fragment implements IGameListView {
         mCreateGameButton = v.findViewById(R.id.create_game_button);
         mJoinGameButton = v.findViewById(R.id.join_game_button);
 
+        mCurrentlySelectedGame = null;
+
         return v;
     }
 
@@ -38,6 +45,25 @@ public class GameListFragment extends Fragment implements IGameListView {
         // FIXME: called by presenter object to update the game list
         mGameListAdapter = new GameListAdapter(games);
         mGameListRecyclerView.setAdapter(mGameListAdapter);
+        if (mCurrentlySelectedGame != null) {
+            if (!currentlySelectedIsInList(games)) {
+                mCurrentlySelectedGame = null;
+            }
+        }
+    }
+
+    private boolean currentlySelectedIsInList(List<Game> games) {
+        for (Game game : games) {
+            if (game.getGameID() == mCurrentlySelectedGame.getGameID()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void setPresenter(IGameListPresenter presenter) {
+        mPresenter = presenter;
     }
 
     private class GameHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -54,7 +80,7 @@ public class GameListFragment extends Fragment implements IGameListView {
 
         @Override
         public void onClick(View view) {
-
+            mCurrentlySelectedGame = mGame;
         }
     }
 
