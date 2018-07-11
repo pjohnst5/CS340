@@ -2,6 +2,8 @@ package client.server.communication;
 
 import client.server.communication.poll.Poller;
 import shared.Command.ICommand;
+import shared.CustomExceptions.ServerProxyException;
+import shared.Response.CommandResponse;
 
 public class ServerProxy {
 
@@ -14,8 +16,20 @@ public class ServerProxy {
 
     private Poller _poller;
 
-    public void sendCommand(ICommand command){
-        ClientCommunicator.sendCommand(command);
+    public void sendCommand(ICommand command) throws ServerProxyException {
+        CommandResponse response = (CommandResponse)ClientCommunicator.sendCommand(command);
+
+        if (response.getSuccess()){
+            ICommand[] commands = response.getCommands();
+
+            for (int i = 0; i <= commands.length; i++){
+                commands[i].execute();
+            }
+
+            return;
+        }
+
+        throw new ServerProxyException("Server failed to return a successful respnose");
     }
 
     public void usePoller(Poller poller){
