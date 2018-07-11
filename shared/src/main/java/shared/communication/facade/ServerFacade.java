@@ -1,8 +1,7 @@
-package server.ServerFacade;
+package shared.communication.facade;
 
 import shared.CustomEnumerations.PlayerColor;
 import shared.GameRequest;
-import shared.Response.CommandResponse;
 import shared.Response.IResponse;
 
 public class ServerFacade {
