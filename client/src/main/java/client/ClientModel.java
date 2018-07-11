@@ -26,6 +26,7 @@ public class ClientModel extends Observable {
 
     public void setUser(User user) {
         this._user = user;
+        notifyObservers();
     }
 
     public Game getCurrentGame() {
@@ -34,6 +35,7 @@ public class ClientModel extends Observable {
 
     public void setCurrentGame(Game currentGame) {
         this._currentGame = currentGame;
+        notifyObservers();
     }
 
     public List<Game> getGames() {
@@ -42,6 +44,7 @@ public class ClientModel extends Observable {
 
     public void setGames(List<Game> games) {
         this._games = games;
+        notifyObservers();
     }
 
     public void addGameToList(Game game){
