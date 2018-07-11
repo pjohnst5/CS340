@@ -1,16 +1,16 @@
 package server.ServerFacade;
 
-import shared.Response.LoginResponse;
+import shared.Response.IResponse;
 
 //Package private, only ServerFacade should touch these
 class LoginFacade {
 
-    public static LoginResponse login(String userName, String password)
+    public static IResponse login(String userName, String password)
     {
         return null;
     }
 
-    public static LoginResponse register(String username, String password)
+    public static IResponse register(String username, String password)
     {
         return null;
     }

@@ -22,6 +22,7 @@ public class CommandResponse implements IResponse {
         _errorMessage = s;
     }
 
+
     public ICommand[] getCommands()
     {
         return _commands;
