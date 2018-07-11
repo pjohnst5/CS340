@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
 import shared.Command.GenericCommand;
-import shared.Response.CommandResponse;
+import shared.Response.IResponse;
 import shared.communication.serialization.Serializer;
 
 public class ExecCommandHandler extends Handler {
@@ -15,23 +15,25 @@ public class ExecCommandHandler extends Handler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
+        System.out.println("ExecCommandHandler reached");
+
         InputStreamReader reader = new InputStreamReader(exchange.getRequestBody());
         GenericCommand command = (GenericCommand) Serializer.deserializeToObject(reader, GenericCommand.class);
 
-        Object result = command.execute();
+        IResponse result = (IResponse)command.execute();
 
-        CommandResponse response = new CommandResponse();
+        //CommandResponse response = new CommandResponse();
 
-        response.setErrorMessage("RAWR");
-//        response.setErrorMessage(result.toString());
-        response.setSuccess(true);
+        //response.setErrorMessage("RAWR");
+        //response.setErrorMessage(result.toString());
+        //response.setSuccess(true);
 
 
         reader.close();
 
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 
-        String serializedObject = Serializer._serialize(response);
+        String serializedObject = Serializer._serialize(result);
         sendResponse(serializedObject, exchange);
     }
 }
