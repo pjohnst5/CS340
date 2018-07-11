@@ -10,9 +10,11 @@ import client.server.task.LoginTask;
 import client.server.task.RegisterTask;
 import shared.User;
 
-public class LoginPresenter implements ILoginPresenter, Observer {
+public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTask.AsyncCaller {
     private ILoginView _view;
     private ClientModel _model;
+
+    private static final String TAG = "LoginPresenter";
 
     public LoginPresenter(ILoginView view) {
         _view = view;
@@ -23,11 +25,10 @@ public class LoginPresenter implements ILoginPresenter, Observer {
     @Override
     public void update(Observable observable, Object o) {
         if (observable instanceof ClientModel) {
-            User user = _model.getUser();
-//            if (_model.getUUID() != null) {
-//                _model.deleteObserver(this);
-//                _view.changeViewGameList();
-//            }
+            if (_model.getUser() != null) {
+                _model.deleteObserver(this);
+                _view.changeViewGameList();
+            }
         }
     }
 
@@ -36,7 +37,7 @@ public class LoginPresenter implements ILoginPresenter, Observer {
         LoginTask request = new LoginTask();
         request.set_username(username);
         request.set_password(password);
-        new AsyncServerTask().execute(request);
+        new AsyncServerTask(this).execute(request);
     }
 
     @Override
@@ -48,6 +49,11 @@ public class LoginPresenter implements ILoginPresenter, Observer {
         RegisterTask request = new RegisterTask();
         request.set_username(username);
         request.set_password(password);
-        new AsyncServerTask().execute(request);
+        new AsyncServerTask(this).execute(request);
+    }
+
+    @Override
+    public void onServerResponseComplete(Exception exception) {
+        _view.showMessage(exception.getMessage());
     }
 }
