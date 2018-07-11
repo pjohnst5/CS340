@@ -29,7 +29,7 @@ public class ServerProxy {
             return;
         }
 
-        throw new ServerProxyException("Server failed to return a successful respnose");
+        throw new ServerProxyException("Server failed to return a successful response");
     }
 
     public void usePoller(Poller poller){
