@@ -1,18 +1,18 @@
 package server.ServerFacade;
 
 
-import shared.Response.GameListResponse;
 import shared.Response.CommandResponse;
+import shared.Response.IResponse;
 
 //Package private, only ServerFacade should touch these
 class CommandManagerFacade {
 
-    public static GameListResponse getActiveGames()
+    public static IResponse getActiveGames()
     {
         return null;
     }
 
-    public static CommandResponse getCommandList(String gameID, int index)
+    public static IResponse getCommandList(String gameID, int index)
     {
         return null;
     }
