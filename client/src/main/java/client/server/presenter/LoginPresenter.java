@@ -3,25 +3,40 @@ package client.server.presenter;
 import java.util.Observable;
 import java.util.Observer;
 
+import client.ClientModel;
 import client.server.fragment.ILoginView;
+import client.server.task.AsyncServerTask;
+import client.server.task.LoginTask;
+import client.server.task.RegisterTask;
+import shared.User;
 
 public class LoginPresenter implements ILoginPresenter, Observer {
     private ILoginView _view;
+    private ClientModel _model;
 
     public LoginPresenter(ILoginView view) {
         _view = view;
+        _model = ClientModel.getInstance();
+        _model.addObserver(this);
     }
 
     @Override
     public void update(Observable observable, Object o) {
-//        if (observable instanceof ClientModel) {
-        // FIXME: implement
+        if (observable instanceof ClientModel) {
+            User user = _model.getUser();
+//            if (_model.getUUID() != null) {
+//                _model.deleteObserver(this);
+//                _view.changeViewGameList();
+//            }
+        }
     }
 
     @Override
     public void login(String username, String password) {
-        // FIXME: call Login method on Login Facade
-        return;
+        LoginTask request = new LoginTask();
+        request.set_username(username);
+        request.set_password(password);
+        new AsyncServerTask().execute(request);
     }
 
     @Override
@@ -30,7 +45,9 @@ public class LoginPresenter implements ILoginPresenter, Observer {
             _view.showMessage("Confirm password does not match");
             return;
         }
-        // FIXME: call register method on Login Facade
-        return;
+        RegisterTask request = new RegisterTask();
+        request.set_username(username);
+        request.set_password(password);
+        new AsyncServerTask().execute(request);
     }
 }
