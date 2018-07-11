@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_title"
+        android:textSize="30sp" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:horizontalSpacing="0dp"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:rowCount="3"
+        android:useDefaultMargins="false"
+        android:verticalSpacing="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="8dp"
+            android:text="@string/login_username_label"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/login_username"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/login_username_hint" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="8dp"
+            android:text="@string/login_password_label"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/login_password_hint" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="8dp"
+            android:text="@string/login_confirm_password_label"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/login_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/login_confirm_password_hint" />
+
+    </GridLayout>
+
+
+    <Switch
+        android:id="@+id/login_submit_option_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:showText="true"
+        android:textOff="@string/login_switch_login_label"
+        android:textOn="@string/login_switch_register_label"
+        android:layout_margin="16dp"/>
+
+    <Button
+        android:id="@+id/login_submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_submit_button"
+        android:layout_margin="16dp"/>
+
+</LinearLayout>
