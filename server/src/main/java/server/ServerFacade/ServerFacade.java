@@ -33,7 +33,7 @@ public class ServerFacade {
         return null;
     }
 
-    public CommandResponse createGame(GameRequest gameRequest)
+    public GameListResponse createGame(GameRequest gameRequest)
     {
         return GameListFacade.createGame(gameRequest);
     }

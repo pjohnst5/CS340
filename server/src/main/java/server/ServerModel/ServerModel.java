@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import server.exception.ServerException;
 import shared.Game;
+import shared.GameRequest;
 import shared.Player;
 import shared.User;
 
