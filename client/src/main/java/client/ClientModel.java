@@ -1,7 +1,10 @@
-package shared;
+package client;
 
 import java.util.List;
 import java.util.Observable;
+
+import shared.Game;
+import shared.User;
 
 public class ClientModel extends Observable {
     private static final ClientModel ourInstance = new ClientModel();
@@ -12,9 +15,9 @@ public class ClientModel extends Observable {
 
     private ClientModel() {}
 
-    private User _user = new User();
+    private User _user;
     private List<Game> _games;
-    private Game _currentGame = new Game();
+    private Game _currentGame;
 
 
     public User getUser() {
