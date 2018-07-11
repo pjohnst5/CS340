@@ -5,7 +5,7 @@ import shared.GameRequest;
 import shared.Response.CommandResponse;
 import shared.Response.IResponse;
 
-//Package private, only ServerFacade should touch these
+//Only ServerFacade should touch these
 class GameListFacade {
 
     public static IResponse createGame(GameRequest gameRequest)

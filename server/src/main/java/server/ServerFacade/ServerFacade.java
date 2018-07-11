@@ -26,12 +26,12 @@ public class ServerFacade {
     //Login functions
     public IResponse login(String username, String password)
     {
-        return null;
+        return LoginFacade.login(username, password);
     }
 
     public IResponse register(String username, String password)
     {
-        return null;
+        return LoginFacade.register(username, password);
     }
 
 
