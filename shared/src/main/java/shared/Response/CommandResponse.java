@@ -2,7 +2,7 @@ package shared.Response;
 
 import shared.Command.GenericCommand;
 
-public class GenericResponse implements IResponse {
+public class CommandResponse implements IResponse {
     private GenericCommand[] _commands;
     private boolean _success = false;
     private String _errorMessage;

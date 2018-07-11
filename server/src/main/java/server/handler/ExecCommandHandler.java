@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
 import shared.Command.GenericCommand;
-import shared.Response.GenericResponse;
+import shared.Response.CommandResponse;
 import shared.communication.serialization.Serializer;
 
 public class ExecCommandHandler extends Handler {
@@ -20,7 +20,7 @@ public class ExecCommandHandler extends Handler {
 
         Object result = command.execute();
 
-        GenericResponse response = new GenericResponse();
+        CommandResponse response = new CommandResponse();
 
         response.setErrorMessage("RAWR");
 //        response.setErrorMessage(result.toString());

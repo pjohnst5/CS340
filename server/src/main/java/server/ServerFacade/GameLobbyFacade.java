@@ -1,23 +1,21 @@
 package server.ServerFacade;
 
-import shared.Command.GenericCommand;
-import shared.Command.ICommand;
-import shared.Response.GenericResponse;
+import shared.Response.CommandResponse;
 
 //Package private, only ServerFacade should touch these
 class GameLobbyFacade {
 
-    public static GenericResponse leaveGame(String username, String gameID)
+    public static CommandResponse leaveGame(String username, String gameID)
     {
         return null;
     }
 
-    public static GenericResponse startGame(String gameID)
+    public static CommandResponse startGame(String gameID)
     {
         return null;
     }
 
-    public static GenericResponse sendMessage(String gameID, String message)
+    public static CommandResponse sendMessage(String gameID, String message)
     {
         return null;
     }

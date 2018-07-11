@@ -1,7 +1,5 @@
 package server.ServerFacade;
 
-import java.util.UUID;
-
 import shared.Response.LoginResponse;
 
 //Package private, only ServerFacade should touch these

@@ -2,7 +2,7 @@ package server.ServerFacade;
 
 
 import shared.Response.GameListResponse;
-import shared.Response.GenericResponse;
+import shared.Response.CommandResponse;
 
 //Package private, only ServerFacade should touch these
 class CommandManagerFacade {
@@ -12,7 +12,7 @@ class CommandManagerFacade {
         return null;
     }
 
-    public static GenericResponse getCommandList(String gameID, int index)
+    public static CommandResponse getCommandList(String gameID, int index)
     {
         return null;
     }
