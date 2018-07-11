@@ -17,4 +17,18 @@
     <string name="send">Send</string>
     <string name="chat_hint">Type here...</string>
     <string name="leave_game_button">X</string>
+    <string name="create_game_dialog_title">Create New Game</string>
+    <string name="create_game_dialog_name">Name:</string>
+    <string name="create_game_dialog_color_title">Pick Your Color</string>
+    <string name="create_game_dialog_private_game">Private Game:</string>
+    <string name="create_game_dialog_players">Players</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string-array name="player_colors">
+        <item>Black</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Red</item>
+        <item>Yellow</item>
+    </string-array>
 </resources>

@@ -27,7 +27,7 @@ public class LoginPresenter implements ILoginPresenter, Observer {
     @Override
     public void register(String username, String password, String checkPassword) {
         if (!password.equals(checkPassword)) {
-            _view.sendMessage("Confirm password does not match");
+            _view.showMessage("Confirm password does not match");
             return;
         }
         // FIXME: call register method on Login Facade

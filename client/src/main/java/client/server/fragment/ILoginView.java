@@ -5,5 +5,5 @@ import client.server.presenter.ILoginPresenter;
 public interface ILoginView {
     public void changeViewGameList();
     public void setPresenter(ILoginPresenter presenter);
-    public void sendMessage(String message);
+    public void showMessage(String message);
 }
