@@ -1,5 +1,7 @@
 package server.ServerModel;
 
+import com.sun.security.ntlm.Server;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,31 +42,82 @@ public class ServerModel {
 
 
     //Adders
-    public void addGame(Game game) throws ServerException {
-        return;
+    public User authenticate(String username, String password) throws ServerException {
+
+        //Error checking
+        if (!_users.containsKey(username)){
+            throw new ServerException("User is not registered");
+        }
+
+        if (!_users.get(username).getPassword().equals(password)) {
+            throw new ServerException("Wrong password");
+        }
+
+        try {
+            //Get user from map
+            User user = _users.get(username);
+
+            //Get old UUID
+            UUID oldUUID = user.getUUID();
+
+            //Delete old UUID from List
+            _uuids.remove(oldUUID);
+
+            //Make new UUID
+            UUID uuid = UUID.fromString(password);
+
+            //Insert UUID into server model
+            _uuids.add(uuid);
+
+            //Set new uuid for User
+            user.setUUID(uuid);
+
+            //Insert new User (new because new UUID) into the map
+            _users.put(user.getUserName(), user);
+
+            return user;
+
+        } catch(InvalidUserException e) {
+            throw new ServerException(e.getMessage());
+        }
     }
 
-    public User addUser(User user) throws ServerException { //parameter doesn't have UUID, return User object does
-        return null;
+    public User register(String username, String password) throws ServerException {
+
+        //Error checking
+        if (_users.containsKey(username)){
+            throw new ServerException("User is already registered");
+        }
+
+        try {
+            //Make new UUID
+            UUID uuid = UUID.fromString(password);
+
+            //Insert UUID into server model
+            _uuids.add(uuid);
+
+            //Make new user with new UUID
+            User user = new User(username, password);
+            user.setUUID(uuid);
+
+            //Add user into map
+            _users.put(user.getUserName(), user);
+
+            return user;
+
+        } catch(InvalidUserException e) {
+            throw new ServerException(e.getMessage());
+        }
+    }
+
+    public void addGame(Game game) throws ServerException {
+        return;
     }
 
     public void addPlayer(Player player, String gameID) throws ServerException {
         throw new ServerException("not valid");
     }
 
-    public User authenticate(String username, String password) throws ServerException {
-        //TODO: actually error check
-
-        try {
-            User user = new User(username, password);
-            user.setUUID(UUID.fromString(password));
-            return user;
-
-        } catch(InvalidUserException e)
-        {
-            throw new ServerException(e.getMessage());
-        }
-    }
 
 
 
