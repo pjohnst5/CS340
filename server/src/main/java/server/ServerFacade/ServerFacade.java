@@ -1,4 +1,4 @@
-package shared.communication.facade;
+package server.ServerFacade;
 
 import shared.CustomEnumerations.PlayerColor;
 import shared.GameRequest;
