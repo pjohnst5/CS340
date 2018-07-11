@@ -6,4 +6,9 @@ public interface IResponse {
 
     String getErrorMessage();
 
+
+    void setSuccess(boolean b);
+
+    void setErrorMessage(String s);
+
 }

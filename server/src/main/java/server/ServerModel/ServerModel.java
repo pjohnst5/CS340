@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import server.exception.ServerException;
+import shared.CustomExceptions.InvalidUserException;
 import shared.Game;
 import shared.Player;
 import shared.User;
@@ -43,16 +44,25 @@ public class ServerModel {
         return;
     }
 
-    public UUID addUser(User user) throws ServerException {
-        return UUID.fromString("hello");
+    public User addUser(User user) throws ServerException { //parameter doesn't have UUID, return User object does
+        return null;
     }
 
     public void addPlayer(Player player, String gameID) throws ServerException {
         throw new ServerException("not valid");
     }
 
-    public UUID authenticate(String username, String password) throws ServerException {
-        return UUID.fromString("hello");
+    public User authenticate(String username, String password) throws ServerException {
+        //TODO: actually error check
+        try {
+            User user = new User(username, password);
+            user.setUUID(UUID.fromString(password));
+            return user;
+
+        } catch(InvalidUserException e)
+        {
+            throw new ServerException(e.getMessage());
+        }
     }
 
 

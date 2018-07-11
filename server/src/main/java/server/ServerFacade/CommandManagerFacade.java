@@ -5,7 +5,7 @@ import shared.Response.CommandResponse;
 import shared.Response.IResponse;
 
 //Package private, only ServerFacade should touch these
-class CommandManagerFacade {
+public class CommandManagerFacade {
 
     public static IResponse getActiveGames()
     {

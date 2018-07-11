@@ -1,4 +1,4 @@
-package shared.communication.facade;
+package client.ClientFacade;
 
 import client.ClientModel;
 import shared.User;

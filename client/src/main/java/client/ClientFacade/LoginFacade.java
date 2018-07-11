@@ -1,6 +1,7 @@
 package client.ClientFacade;
 
 import shared.Command.GenericCommand;
+import shared.configuration.ConfigurationManager;
 
 public class LoginFacade {
 
@@ -9,7 +10,7 @@ public class LoginFacade {
         Object[] paramValues = {username, password};
 
         GenericCommand loginCommand = new GenericCommand(
-                "server.ServerFacade.ServerFacade",
+                ConfigurationManager.getString("server_facade_name"),
                 "login",
                 paramTypes,
                 paramValues,
@@ -21,7 +22,7 @@ public class LoginFacade {
         Object[] paramValues = {username, password};
 
         GenericCommand loginCommand = new GenericCommand(
-                "server.ServerFacade.ServerFacade",
+                ConfigurationManager.getString("server_facade_name"),
                 "register",
                 paramTypes,
                 paramValues,

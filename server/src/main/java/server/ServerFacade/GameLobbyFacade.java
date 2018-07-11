@@ -2,7 +2,7 @@ package server.ServerFacade;
 
 import shared.Response.IResponse;
 
-//Package private, only ServerFacade should touch these
+//Only ServerFacade should touch these
 class GameLobbyFacade {
 
     public static IResponse leaveGame(String username, String gameID)
