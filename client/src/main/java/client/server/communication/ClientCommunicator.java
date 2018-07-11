@@ -11,6 +11,7 @@ import java.net.URL;
 import shared.Command.GenericCommand;
 import shared.Command.ICommand;
 import shared.Response.CommandResponse;
+import shared.Response.IResponse;
 import shared.communication.serialization.Serializer;
 import shared.configuration.ConfigurationManager;
 
@@ -34,7 +35,7 @@ public class ClientCommunicator {
         return _instance;
     }
 
-    private CommandResponse getResponse(HttpURLConnection connection){
+    private IResponse getResponse(HttpURLConnection connection){
         CommandResponse result = null;
         try {
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
@@ -84,7 +85,7 @@ public class ClientCommunicator {
         return connection;
     }
 
-    public static CommandResponse sendCommand(ICommand command){
+    public static IResponse sendCommand(ICommand command){
 
         HttpURLConnection connection = _instance.makeRequest(command);
         return _instance.getResponse(connection);
@@ -100,7 +101,7 @@ public class ClientCommunicator {
 
         Object[] paramValues = { "Dallas", 4, 5 };
 
-        GenericCommand command = new GenericCommand("server.CommandManager",
+        GenericCommand command = new GenericCommand("server.ServerFacade.ServerFacade",
                                                     "TestCommand",
                                                     paramTypes,
                                                     paramValues,
