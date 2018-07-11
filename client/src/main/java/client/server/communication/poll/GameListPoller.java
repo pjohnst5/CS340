@@ -3,6 +3,7 @@ package client.server.communication.poll;
 import client.server.communication.ServerProxy;
 import shared.Command.GenericCommand;
 import shared.Command.ICommand;
+import shared.CustomExceptions.ServerProxyException;
 import shared.configuration.ConfigurationManager;
 
 public class GameListPoller extends Poller {
@@ -53,9 +54,17 @@ public class GameListPoller extends Poller {
     }
 
     private static void callback(){
-        // TODO: Implement Server Calls
-        ServerProxy.instance().sendCommand(_instance._serverRequest);
-        System.out.println("Generated Output from " + TASK_ID);
+        try {
+
+            ServerProxy.instance().sendCommand(_instance._serverRequest);
+            System.out.println("Generated Output from " + TASK_ID);
+
+        } catch (ServerProxyException e) {
+
+            // TODO: Give real feedback
+            System.out.println(TASK_ID + " Failed");
+
+        }
     }
 
 
