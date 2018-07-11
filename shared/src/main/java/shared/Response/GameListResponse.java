@@ -1,15 +1,16 @@
-package shared;
+package shared.Response;
 
-import shared.Command.GenericCommand;
+import shared.Game;
 
-public class GenericResponse {
-    private GenericCommand[] _commands;
+public class GameListResponse {
+
+    private Game[] _games;
     private boolean _success = false;
     private String _errorMessage;
 
-    public void setCommands(GenericCommand[] cmds)
+    public void setGames(Game[] games)
     {
-        _commands = cmds;
+        _games = games;
     }
 
     public void setSuccess(boolean s)
@@ -22,9 +23,11 @@ public class GenericResponse {
         _errorMessage = s;
     }
 
-    public GenericCommand[] getCommands()
+
+
+    public Game[] getCommands()
     {
-        return _commands;
+        return _games;
     }
 
     public boolean getSuccess()

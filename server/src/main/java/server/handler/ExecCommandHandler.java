@@ -7,8 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
 import shared.Command.GenericCommand;
-import shared.Command.ICommand;
-import shared.GenericResponse;
+import shared.Response.GenericResponse;
 import shared.communication.serialization.Serializer;
 
 public class ExecCommandHandler extends Handler {

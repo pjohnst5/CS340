@@ -2,16 +2,18 @@ package server.ServerFacade;
 
 import java.util.UUID;
 
+import shared.Response.LoginResponse;
+
 //Package private, only ServerFacade should touch these
 class LoginFacade {
 
-    public static UUID login(String userName, String password)
+    public static LoginResponse login(String userName, String password)
     {
-        return UUID.fromString("Hello");
+        return null;
     }
 
-    public static UUID register(String username, String password)
+    public static LoginResponse register(String username, String password)
     {
-        return UUID.fromString("Hello");
+        return null;
     }
 }

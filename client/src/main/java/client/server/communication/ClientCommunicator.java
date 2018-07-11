@@ -10,7 +10,7 @@ import java.net.URL;
 
 import shared.Command.GenericCommand;
 import shared.Command.ICommand;
-import shared.GenericResponse;
+import shared.Response.GenericResponse;
 import shared.communication.serialization.Serializer;
 import shared.configuration.ConfigurationManager;
 

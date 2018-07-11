@@ -8,6 +8,9 @@ import shared.Command.ICommand;
 import shared.CustomEnumerations.PlayerColor;
 import shared.Game;
 import shared.GameRequest;
+import shared.Response.GameListResponse;
+import shared.Response.GenericResponse;
+import shared.Response.LoginResponse;
 
 public class ServerFacade {
 
@@ -26,48 +29,48 @@ public class ServerFacade {
         return _instance;
     }
 
-    public UUID login(String username, String password)
+    public LoginResponse login(String username, String password)
     {
-        return LoginFacade.login(username, password);
+        return null;
     }
 
-    public UUID register(String username, String password)
+    public LoginResponse register(String username, String password)
     {
-        return LoginFacade.register(username, password);
+        return null;
     }
 
-    public ICommand createGame(GameRequest gameRequest)
+    public GenericResponse createGame(GameRequest gameRequest)
     {
         return GameListFacade.createGame(gameRequest);
     }
 
-    public ICommand joinGame(String username, String gameID, PlayerColor color)
+    public GenericResponse joinGame(String username, String gameID, PlayerColor color)
     {
         return GameListFacade.joinGame(username,gameID,color);
     }
 
-    public ICommand leaveGame(String userName, String gameID)
+    public GenericResponse leaveGame(String userName, String gameID)
     {
         return GameLobbyFacade.leaveGame(userName, gameID);
     }
 
-    public ICommand startGame(String gameID)
+    public GenericResponse startGame(String gameID)
     {
         return GameLobbyFacade.startGame(gameID);
     }
 
-    public ICommand sendMessage(String gameID, String message)
+    public GenericResponse sendMessage(String gameID, String message)
     {
         return GameLobbyFacade.sendMessage(gameID, message);
     }
 
-    public List<Game> getCurrentGames()
+    public GameListResponse getActiveGames()
     {
-        return CommandFacade.getCurrentGames();
+        return CommandManagerFacade.getActiveGames();
     }
 
-    public List<GenericCommand> getCommandsFromGame(String gameID, int index)
+    public GenericResponse getCommandList(String gameID, int index)
     {
-        return CommandFacade.getCommandsFromGame(gameID, index);
+        return CommandManagerFacade.getCommandList(gameID, index);
     }
 }
