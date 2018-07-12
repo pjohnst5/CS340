@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
 import shared.Command.GenericCommand;
+import shared.Response.CommandResponse;
 import shared.Response.IResponse;
 import shared.communication.serialization.Serializer;
 
@@ -20,7 +21,7 @@ public class ExecCommandHandler extends Handler {
         InputStreamReader reader = new InputStreamReader(exchange.getRequestBody());
         GenericCommand command = (GenericCommand) Serializer.deserializeToObject(reader, GenericCommand.class);
 
-        IResponse result = (IResponse)command.execute();
+        CommandResponse result = (CommandResponse) command.execute();
 
         //CommandResponse response = new CommandResponse();
 

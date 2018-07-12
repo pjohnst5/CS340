@@ -3,10 +3,11 @@ package shared.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+import shared.Command.GenericCommand;
 import shared.Command.ICommand;
 
 public class CommandResponse implements IResponse {
-    private List<ICommand> _commands;
+    private List<GenericCommand> _commands;
     private boolean _success = false;
     private String _errorMessage;
 
@@ -17,7 +18,7 @@ public class CommandResponse implements IResponse {
 
     public void addCommand(ICommand command)
     {
-        _commands.add(command);
+        _commands.add((GenericCommand) command);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class CommandResponse implements IResponse {
     }
 
 
-    public List<ICommand> getCommands()
+    public List<GenericCommand> getCommands()
     {
         return _commands;
     }
