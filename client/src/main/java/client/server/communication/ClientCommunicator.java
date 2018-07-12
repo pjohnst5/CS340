@@ -1,9 +1,13 @@
 package client.server.communication;
 
+import android.nfc.Tag;
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.lang.annotation.Target;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -14,6 +18,8 @@ import shared.Response.CommandResponse;
 import shared.Response.IResponse;
 import shared.communication.serialization.Serializer;
 import shared.configuration.ConfigurationManager;
+
+import static android.content.ContentValues.TAG;
 
 public class ClientCommunicator {
 

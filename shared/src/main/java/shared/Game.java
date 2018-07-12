@@ -13,7 +13,7 @@ public class Game {
     private List<Player> _players;
     private int _maxPlayers;
 
-    public Game(String gameName, Player player, int maxPlayers) throws InvalidGameException
+    public Game(String gameName, int maxPlayers) throws InvalidGameException
     {
         if (maxPlayers < 2 || maxPlayers > 5)
         {
@@ -22,13 +22,10 @@ public class Game {
         if (gameName.isEmpty() || gameName == null){
             throw new InvalidGameException("shared.Game must have a name");
         }
-        if (player == null) {
-            throw new InvalidGameException("shared.Game must have at least one player");
-        }
+
         _gameName = gameName;
         _gameID = new String();
         _players = new ArrayList<>();
-        _players.add(player);
         _maxPlayers = maxPlayers;
     }
 

@@ -3,22 +3,22 @@ package shared;
 import shared.CustomEnumerations.PlayerColor;
 import shared.CustomExceptions.InvalidGameRequestException;
 
-public class GameRequest {
+public class JoinRequest {
     private String _userName;
     private String _displayName;
     private PlayerColor _color;
-    private int _maxPlayers;
+    private String _gameId;
 
-    public GameRequest(String userName, String displayName, PlayerColor color, int maxPlayers) throws InvalidGameRequestException
+    public JoinRequest(String userName, String displayName, PlayerColor color, String gameId) throws InvalidGameRequestException
     {
-        if (userName == null || displayName == null || color == null || maxPlayers < 2 || maxPlayers > 5)
+        if (userName == null || displayName == null || color == null || gameId == null)
         {
             throw new InvalidGameRequestException();
         }
         _userName = userName;
         _displayName = displayName;
         _color = color;
-        _maxPlayers = maxPlayers;
+        _gameId = gameId;
     }
 
 

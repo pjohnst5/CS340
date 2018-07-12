@@ -1,19 +1,19 @@
 package server.ServerFacade;
 
 import shared.CustomEnumerations.PlayerColor;
-import shared.GameRequest;
-import shared.Response.CommandResponse;
+import shared.Game;
+import shared.JoinRequest;
 import shared.Response.IResponse;
 
 //Only ServerFacade should touch these
 class GameListFacade {
 
-    public static IResponse createGame(GameRequest gameRequest)
+    public static IResponse createGame(Game game)
     {
         return null;
     }
 
-    public static IResponse joinGame(String username, String gameID, PlayerColor color)
+    public static IResponse joinGame(JoinRequest joinRequest)
     {
         return null;
     }

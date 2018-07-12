@@ -1,7 +1,8 @@
 package server.ServerFacade;
 
 import shared.CustomEnumerations.PlayerColor;
-import shared.GameRequest;
+import shared.Game;
+import shared.JoinRequest;
 import shared.Response.IResponse;
 
 public class ServerFacade {
@@ -38,14 +39,14 @@ public class ServerFacade {
 
 
     //Game List functions
-    public static IResponse createGame(GameRequest gameRequest)
+    public static IResponse createGame(Game game)
     {
-        return GameListFacade.createGame(gameRequest);
+        return GameListFacade.createGame(game);
     }
 
-    public static IResponse joinGame(String username, String gameID, PlayerColor color)
+    public static IResponse joinGame(JoinRequest joinRequest)
     {
-        return GameListFacade.joinGame(username,gameID,color);
+        return GameListFacade.joinGame(joinRequest);
     }
 
 

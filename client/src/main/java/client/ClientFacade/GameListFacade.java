@@ -6,7 +6,7 @@ public class GameListFacade {
     public static void createGame(Game game){
 
     }
-    public static void joinGame(String gameId){
+    public static void joinGame(){
 
     }
 }
