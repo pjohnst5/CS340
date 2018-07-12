@@ -2,6 +2,7 @@ package server;
 
 import java.util.Scanner;
 
+import server.ServerFacade.ServerFacade;
 import server.exception.ServerException;
 
 public class ServerDriver {

@@ -109,7 +109,6 @@ public class ServerModel {
     public void addGame(Game game) throws ServerException {
         //set gameID
         String gameID = UUID.randomUUID().toString();
-
         try {
             game.setGameID(gameID);
 
