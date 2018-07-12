@@ -1,9 +1,12 @@
 package client.ClientFacade;
 
-import shared.GameRequest;
+import shared.Game;
 
 public class GameListFacade {
-    public static void createGame(GameRequest gameRequest){
+    public static void createGame(Game game){
+
+    }
+    public static void joinGame(String gameId){
 
     }
 }
