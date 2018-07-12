@@ -20,7 +20,7 @@ class LoginFacade {
         try {
             User user = serverModel.authenticate(username, password); //User has UUID inside
 
-            String className = ConfigurationManager.getString("client_facede_name");
+            String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("set_user");
             String[] paramTypes = {User.class.getCanonicalName()};
             Object[] paramValues = {user};
@@ -47,7 +47,7 @@ class LoginFacade {
         try {
             User user = serverModel.register(username, password);
 
-            String className = ConfigurationManager.getString("client_facede_name");
+            String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("set_user");
             String[] paramTypes = {User.class.getCanonicalName()};
             Object[] paramValues = {user};

@@ -24,12 +24,12 @@ public class ServerFacade {
 
 
     //Login functions
-    public IResponse login(String username, String password)
+    public static IResponse login(String username, String password)
     {
         return LoginFacade.login(username, password);
     }
 
-    public IResponse register(String username, String password)
+    public static IResponse register(String username, String password)
     {
         return LoginFacade.register(username, password);
     }
@@ -38,12 +38,12 @@ public class ServerFacade {
 
 
     //Game List functions
-    public IResponse createGame(GameRequest gameRequest)
+    public static IResponse createGame(GameRequest gameRequest)
     {
         return GameListFacade.createGame(gameRequest);
     }
 
-    public IResponse joinGame(String username, String gameID, PlayerColor color)
+    public static IResponse joinGame(String username, String gameID, PlayerColor color)
     {
         return GameListFacade.joinGame(username,gameID,color);
     }
@@ -52,17 +52,17 @@ public class ServerFacade {
 
 
     //Game Lobby functions
-    public IResponse leaveGame(String userName, String gameID)
+    public static IResponse leaveGame(String userName, String gameID)
     {
         return GameLobbyFacade.leaveGame(userName, gameID);
     }
 
-    public IResponse startGame(String gameID)
+    public static IResponse startGame(String gameID)
     {
         return GameLobbyFacade.startGame(gameID);
     }
 
-    public IResponse sendMessage(String gameID, String message)
+    public static IResponse sendMessage(String gameID, String message)
     {
         return GameLobbyFacade.sendMessage(gameID, message);
     }
@@ -71,12 +71,12 @@ public class ServerFacade {
 
 
     //Poller functions
-    public IResponse getCommandList(String gameID, int index)
+    public static IResponse getCommandList(String gameID, int index)
     {
         return CommandManagerFacade.getCommandList(gameID, index);
     }
 
-    public IResponse getActiveGames()
+    public static IResponse getActiveGames()
     {
         return CommandManagerFacade.getActiveGames();
     }
