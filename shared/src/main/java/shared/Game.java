@@ -12,6 +12,7 @@ public class Game {
     private String _gameID;
     private List<Player> _players;
     private int _maxPlayers;
+    private boolean _started;
 
     public Game(String gameName, int maxPlayers) throws InvalidGameException
     {
@@ -47,6 +48,11 @@ public class Game {
     public int getMaxPlayers()
     {
         return _maxPlayers;
+    }
+
+    public boolean getStarted()
+    {
+        return _started;
     }
 
 
