@@ -12,6 +12,12 @@ public class GenericCommand implements ICommand {
     private Object[] _paramValues;
     private Object _callOn;
 
+    private final String _serializableClassName;
+
+    public String getSerializableClassName() {
+        return _serializableClassName;
+    }
+
     private static final Map<String,Class> primitivesMap = new HashMap<String,Class>();
     static {
         primitivesMap.put("int", int.class );
@@ -25,6 +31,7 @@ public class GenericCommand implements ICommand {
     }
 
     public GenericCommand(String className, String methodName, String[] paramTypes, Object[] paramValues, Object callOn) {
+        _serializableClassName = getClass().getName();
         _className = className;
         _methodName = methodName;
         _paramTypes = paramTypes;

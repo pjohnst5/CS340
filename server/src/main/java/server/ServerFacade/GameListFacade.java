@@ -1,9 +1,8 @@
 package server.ServerFacade;
 
-import shared.CustomEnumerations.PlayerColor;
-import shared.Game;
-import shared.JoinRequest;
-import shared.Response.IResponse;
+import shared.model.Game;
+import shared.model.request.JoinRequest;
+import shared.model.response.IResponse;
 
 //Only ServerFacade should touch these
 class GameListFacade {

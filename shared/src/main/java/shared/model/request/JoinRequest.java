@@ -1,4 +1,4 @@
-package shared;
+package shared.model.request;
 
 import shared.CustomEnumerations.PlayerColor;
 import shared.CustomExceptions.InvalidGameRequestException;

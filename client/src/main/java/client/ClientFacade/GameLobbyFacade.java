@@ -4,6 +4,7 @@ package client.ClientFacade;
 import client.server.communication.ServerProxy;
 import shared.Command.GenericCommand;
 import shared.CustomExceptions.ServerProxyException;
+import shared.model.Message;
 import shared.configuration.ConfigurationManager;
 
 public class GameLobbyFacade {

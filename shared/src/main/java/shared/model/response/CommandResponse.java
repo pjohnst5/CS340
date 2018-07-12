@@ -1,4 +1,4 @@
-package shared.Response;
+package shared.model.response;
 
 import java.util.ArrayList;
 import java.util.List;

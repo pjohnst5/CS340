@@ -20,7 +20,7 @@ import java.util.List;
 
 import client.server.presenter.IGameListPresenter;
 import shared.CustomEnumerations.PlayerColor;
-import shared.Game;
+import shared.model.Game;
 
 public class GameListFragment extends Fragment implements IGameListView {
     private RecyclerView mGameListRecyclerView;

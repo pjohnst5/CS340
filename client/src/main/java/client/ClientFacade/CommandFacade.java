@@ -1,7 +1,7 @@
 package client.ClientFacade;
 
 import client.ClientModel;
-import shared.User;
+import shared.model.User;
 
 public class CommandFacade {
     static ClientModel clientModel = ClientModel.getInstance();

@@ -5,7 +5,7 @@ import java.util.TimerTask;
 
 import client.server.communication.poll.GameListPoller;
 import client.server.communication.poll.GameLobbyPoller;
-import shared.communication.serialization.Serializer;
+import shared.serialization.Serializer;
 
 
 

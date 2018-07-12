@@ -14,7 +14,7 @@ public class LoginFacade {
 
         GenericCommand command = new GenericCommand(
                 ConfigurationManager.getString("server_facade_name"),
-                ConfigurationManager.getString("login"),
+                ConfigurationManager.getString("server_login_method"),
                 paramTypes,
                 paramValues,
                 null);
@@ -27,7 +27,7 @@ public class LoginFacade {
 
         GenericCommand command = new GenericCommand(
                 ConfigurationManager.getString("server_facade_name"),
-                ConfigurationManager.getString("register"),
+                ConfigurationManager.getString("server_register_method"),
                 paramTypes,
                 paramValues,
                 null);

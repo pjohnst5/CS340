@@ -6,7 +6,7 @@ import client.server.communication.poll.Poller;
 import shared.Command.GenericCommand;
 import shared.Command.ICommand;
 import shared.CustomExceptions.ServerProxyException;
-import shared.Response.CommandResponse;
+import shared.model.response.CommandResponse;
 
 public class ServerProxy {
 

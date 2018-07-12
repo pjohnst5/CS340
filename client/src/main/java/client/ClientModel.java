@@ -3,8 +3,8 @@ package client;
 import java.util.List;
 import java.util.Observable;
 
-import shared.Game;
-import shared.User;
+import shared.model.Game;
+import shared.model.User;
 
 public class ClientModel extends Observable {
     private static final ClientModel ourInstance = new ClientModel();

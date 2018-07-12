@@ -1,4 +1,4 @@
-package shared.Response;
+package shared.model.response;
 
 public interface IResponse {
 

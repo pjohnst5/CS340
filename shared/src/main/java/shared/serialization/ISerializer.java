@@ -1,6 +1,4 @@
-package shared.communication.serialization;
-
-import com.google.gson.Gson;
+package shared.serialization;
 
 import java.io.IOException;
 import java.io.Reader;

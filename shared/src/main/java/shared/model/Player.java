@@ -1,4 +1,4 @@
-package shared;
+package shared.model;
 
 import shared.CustomEnumerations.PlayerColor;
 import shared.CustomExceptions.PlayerException;
@@ -14,7 +14,7 @@ public class Player {
     {
         if (userName == null || userName.isEmpty() || displayName == null || displayName.isEmpty() || color == null)
         {
-            throw new PlayerException("Invalid shared.Player parameters");
+            throw new PlayerException("Invalid shared.model.Player parameters");
         }
 
         _userName = userName;
