@@ -3,8 +3,8 @@ package client.ClientFacade;
 import client.server.communication.ServerProxy;
 import shared.Command.GenericCommand;
 import shared.CustomExceptions.ServerProxyException;
-import shared.Game;
-import shared.JoinRequest;
+import shared.model.Game;
+import shared.model.request.JoinRequest;
 import shared.configuration.ConfigurationManager;
 
 public class GameListFacade {

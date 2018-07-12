@@ -9,9 +9,9 @@ import java.util.UUID;
 import server.exception.ServerException;
 import shared.CustomExceptions.InvalidGameException;
 import shared.CustomExceptions.InvalidUserException;
-import shared.Game;
-import shared.Player;
-import shared.User;
+import shared.model.Game;
+import shared.model.Player;
+import shared.model.User;
 
 public class ServerModel {
 

@@ -8,7 +8,6 @@ import client.server.fragment.ILoginView;
 import client.server.task.AsyncServerTask;
 import client.server.task.LoginTask;
 import client.server.task.RegisterTask;
-import shared.User;
 
 public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTask.AsyncCaller {
     private ILoginView _view;

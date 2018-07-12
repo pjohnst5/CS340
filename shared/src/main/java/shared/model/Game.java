@@ -1,4 +1,4 @@
-package shared;
+package shared.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class Game {
             throw new InvalidGameException("Invalid number of players : " + maxPlayers);
         }
         if (gameName.isEmpty() || gameName == null){
-            throw new InvalidGameException("shared.Game must have a name");
+            throw new InvalidGameException("shared.model.Game must have a name");
         }
 
         _gameName = gameName;
@@ -60,7 +60,7 @@ public class Game {
     {
         if (s.isEmpty() || s == null)
         {
-            throw new InvalidGameException("shared.Game must have a name");
+            throw new InvalidGameException("shared.model.Game must have a name");
         }
         _gameName = s;
     }

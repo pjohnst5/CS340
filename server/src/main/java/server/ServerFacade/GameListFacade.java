@@ -2,11 +2,13 @@ package server.ServerFacade;
 
 import server.ServerModel.ServerModel;
 import server.exception.ServerException;
-import shared.CustomEnumerations.PlayerColor;
-import shared.Game;
-import shared.JoinRequest;
-import shared.Response.CommandResponse;
-import shared.Response.IResponse;
+
+import shared.model.Game;
+import shared.model.request.JoinRequest;
+import shared.model.response.IResponse;
+import shared.model.response.CommandResponse;
+
+
 
 //Only ServerFacade should touch these
 class GameListFacade {

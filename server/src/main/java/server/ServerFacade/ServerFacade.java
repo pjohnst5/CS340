@@ -1,10 +1,9 @@
 package server.ServerFacade;
 
-import shared.CustomEnumerations.PlayerColor;
-import shared.Game;
-import shared.JoinRequest;
-import shared.Message;
-import shared.Response.IResponse;
+import shared.model.Game;
+import shared.model.request.JoinRequest;
+import shared.model.Message;
+import shared.model.response.IResponse;
 
 public class ServerFacade {
 

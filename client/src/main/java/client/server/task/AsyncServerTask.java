@@ -3,9 +3,8 @@ package client.server.task;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import client.ClientFacade.GameListFacade;
 import client.ClientFacade.LoginFacade;
-import shared.Game;
+import shared.model.Game;
 
 /**
  * Created by jtyler17 on 6/11/18.

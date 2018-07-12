@@ -1,7 +1,7 @@
 package server.ServerFacade;
 
-import shared.Message;
-import shared.Response.IResponse;
+import shared.model.Message;
+import shared.model.response.IResponse;
 
 //Only ServerFacade should touch these
 class GameLobbyFacade {
