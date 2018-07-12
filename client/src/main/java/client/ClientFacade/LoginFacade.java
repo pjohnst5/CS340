@@ -12,25 +12,25 @@ public class LoginFacade {
         String[] paramTypes = {String.class.getCanonicalName(), String.class.getCanonicalName()};
         Object[] paramValues = {username, password};
 
-        GenericCommand loginCommand = new GenericCommand(
+        GenericCommand command = new GenericCommand(
                 ConfigurationManager.getString("server_facade_name"),
                 ConfigurationManager.getString("login"),
                 paramTypes,
                 paramValues,
                 null);
-        serverProxy.sendCommand(loginCommand);
+        serverProxy.sendCommand(command);
     }
 
     public static void register(String username, String password) throws ServerProxyException {
         String[] paramTypes = {String.class.getCanonicalName(), String.class.getCanonicalName()};
         Object[] paramValues = {username, password};
 
-        GenericCommand registerCommand = new GenericCommand(
+        GenericCommand command = new GenericCommand(
                 ConfigurationManager.getString("server_facade_name"),
                 ConfigurationManager.getString("register"),
                 paramTypes,
                 paramValues,
                 null);
-        serverProxy.sendCommand(registerCommand);
+        serverProxy.sendCommand(command);
     }
 }
