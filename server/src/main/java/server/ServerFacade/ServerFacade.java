@@ -3,6 +3,7 @@ package server.ServerFacade;
 import shared.CustomEnumerations.PlayerColor;
 import shared.Game;
 import shared.JoinRequest;
+import shared.Message;
 import shared.Response.IResponse;
 
 public class ServerFacade {
@@ -63,9 +64,9 @@ public class ServerFacade {
         return GameLobbyFacade.startGame(gameID);
     }
 
-    public static IResponse sendMessage(String gameID, String message)
+    public static IResponse sendMessage(Message message)
     {
-        return GameLobbyFacade.sendMessage(gameID, message);
+        return GameLobbyFacade.sendMessage(message);
     }
 
 

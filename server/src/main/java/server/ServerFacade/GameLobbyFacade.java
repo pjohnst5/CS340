@@ -1,5 +1,6 @@
 package server.ServerFacade;
 
+import shared.Message;
 import shared.Response.IResponse;
 
 //Only ServerFacade should touch these
@@ -15,7 +16,7 @@ class GameLobbyFacade {
         return null;
     }
 
-    public static IResponse sendMessage(String gameID, String message)
+    public static IResponse sendMessage(Message message)
     {
         return null;
     }

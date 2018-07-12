@@ -43,7 +43,6 @@ public class ServerModel {
     public User authenticate(String username, String password) throws ServerException {
 
         //Error checking
-        /*
         if (!_users.containsKey(username)){
             throw new ServerException("User is not registered");
         }
@@ -51,13 +50,11 @@ public class ServerModel {
         if (!_users.get(username).getPassword().equals(password)) {
             throw new ServerException("Wrong password");
         }
-        */
+
 
         try {
             //Get user from map
-            //User user = _users.get(username);
-
-            User user = new User(username,password);
+            User user = _users.get(username);
 
             //Make new UUID
             UUID uuid = UUID.randomUUID();
