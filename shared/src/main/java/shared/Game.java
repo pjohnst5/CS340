@@ -103,4 +103,13 @@ public class Game {
         }
         return _players.size();
     }
+
+    public void setGameID(String s) throws InvalidGameException
+    {
+        if (s == null || s.isEmpty()){
+            throw new InvalidGameException("GameID cannot be null");
+        }
+
+        _gameID = s;
+    }
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import server.exception.ServerException;
+import shared.CustomExceptions.InvalidGameException;
 import shared.CustomExceptions.InvalidUserException;
 import shared.Game;
 import shared.Player;
@@ -33,13 +34,13 @@ public class ServerModel {
     }
 
     private Map<String, User> _users;
-    private Map<String, Player> _players;
-    private Map<String, Game> _games;
+    private Map<String, Player> _players; //displayName to Player
+    private Map<String, Game> _games;  //gameid's to games
     private List<UUID> _uuids;
     private CommandManager _manager;
 
 
-    //Adders
+    //Login/Register
     public User authenticate(String username, String password) throws ServerException {
 
         //Error checking
@@ -103,8 +104,21 @@ public class ServerModel {
         }
     }
 
+
+    //GameList
     public void addGame(Game game) throws ServerException {
-        return;
+        //set gameID
+        String gameID = UUID.randomUUID().toString();
+
+        try {
+            game.setGameID(gameID);
+
+            //Put game in map
+            _games.put(game.getGameID(), game);
+
+        } catch(InvalidGameException e) {
+            throw new ServerException(e.getMessage());
+        }
     }
 
     public void addPlayer(Player player, String gameID) throws ServerException {

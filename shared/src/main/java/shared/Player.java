@@ -10,6 +10,7 @@ public class Player {
     private PlayerColor _color;
     private int _points;
 
+
     public Player(String userName, String displayName, PlayerColor color) throws PlayerException
     {
         if (userName == null || userName.isEmpty() || displayName == null || displayName.isEmpty() || color == null)
