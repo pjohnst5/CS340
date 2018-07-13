@@ -44,7 +44,8 @@ public class AsyncServerTask extends AsyncTask<Object, Void, Exception> {
             } else if (object instanceof StartGameTask) {
                 Log.i(TAG, "Calling GameLobbyFacade.startGame()...");
                 String gameId = ((StartGameTask) object).get_gameId();
-                GameLobbyFacade.startGame(gameId);
+                String playerId = ((StartGameTask) object).get_playerId();
+                GameLobbyFacade.startGame(gameId, playerId);
             } else if (object instanceof LeaveGameTask) {
                 Log.i(TAG, "Calling GameLobbyFacade.leaveGame()...");
                 String gameId = ((LeaveGameTask) object).get_gameId();
