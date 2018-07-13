@@ -5,6 +5,7 @@ import java.util.Map;
 
 import client.model.ClientModel;
 import shared.model.Game;
+import shared.model.GamesWrapper;
 import shared.model.Message;
 import shared.model.Player;
 import shared.model.User;
@@ -16,7 +17,7 @@ public class CommandFacade {
         clientModel.setUser(user);
     }
 
-    public static void setGames(HashMap<String, Game> games){
+    public static void setGames(GamesWrapper games){
         clientModel.setGames(games);
     }
 

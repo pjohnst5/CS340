@@ -8,6 +8,7 @@ import java.util.Observable;
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
 import shared.model.Game;
+import shared.model.GamesWrapper;
 import shared.model.Message;
 import shared.model.Player;
 import shared.model.User;
@@ -56,9 +57,9 @@ public class ClientModel extends Observable {
         return _games;
     }
 
-    public void setGames(Map<String, Game> games) {
+    public void setGames(GamesWrapper games) {
         if(games != null){
-            this._games = games;
+            this._games = games.getGames();
             setChanged();
             notifyObservers();
         }

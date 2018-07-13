@@ -13,6 +13,7 @@ import shared.exception.MaxPlayersException;
 import shared.exception.PlayerException;
 import shared.configuration.ConfigurationManager;
 import shared.model.Game;
+import shared.model.GamesWrapper;
 import shared.model.Player;
 import shared.model.request.JoinRequest;
 import shared.model.response.IResponse;
@@ -32,12 +33,16 @@ class GameListFacade {
             serverModel.addNewGame(game);
 
             //Get map of active games
-            Map<String, Game> activeGames = serverModel.getGames();
+            GamesWrapper games = new GamesWrapper();
+            games.setGames(serverModel.getGames());
+            //Map<String, Game> activeGames = serverModel.getGames();
 
             String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("client_set_games_method");
-            String[] paramTypes = { activeGames.getClass().getCanonicalName() };
-            Object[] paramValues = { activeGames };
+            //String[] paramTypes = { activeGames.getClass().getCanonicalName() };
+            String[] paramTypes = { games.getClass().getCanonicalName() };
+            Object[] paramValues = { games };
+            //Object[] paramValues = { activeGames };
 
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
