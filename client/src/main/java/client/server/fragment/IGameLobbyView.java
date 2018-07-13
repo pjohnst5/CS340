@@ -1,7 +1,8 @@
 package client.server.fragment;
 
 import client.server.presenter.IGameLobbyPresenter;
-import shared.Game;
+import shared.model.Game;
+import shared.model.Message;
 
 public interface IGameLobbyView {
     public void addMessage(Message message);
