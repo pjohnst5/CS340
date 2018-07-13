@@ -3,8 +3,12 @@ package client.server.task;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import client.ClientFacade.GameListFacade;
+import client.ClientFacade.GameLobbyFacade;
 import client.ClientFacade.LoginFacade;
 import shared.model.Game;
+import shared.model.Message;
+import shared.model.request.JoinRequest;
 
 /**
  * Created by jtyler17 on 6/11/18.
@@ -33,16 +37,27 @@ public class AsyncServerTask extends AsyncTask<Object, Void, Exception> {
                 LoginFacade.register(request.get_username(), request.get_password());
             } else if (object instanceof Game) {
                 Log.i(TAG, "Calling GameListFacade.createGame()...");
-                //GameListFacade.createGame((Game) object);
-            } else if (object instanceof JoinGameTask) {
+                GameListFacade.createGame((Game) object);
+            } else if (object instanceof JoinRequest) {
                 Log.i(TAG, "Calling GameListFacade.joinGame()...");
-                String gameId = ((JoinGameTask) object).get_gameId();
-                //GameListFacade.joinGame(gameId);
+                GameListFacade.joinGame((JoinRequest) object); // FIXME: apply fix to gamelistview
+            } else if (object instanceof StartGameTask) {
+                Log.i(TAG, "Calling GameLobbyFacade.startGame()...");
+                String gameId = ((StartGameTask) object).get_gameId();
+                GameLobbyFacade.startGame(gameId);
+            } else if (object instanceof LeaveGameTask) {
+                Log.i(TAG, "Calling GameLobbyFacade.leaveGame()...");
+                String gameId = ((LeaveGameTask) object).get_gameId();
+                String username = ((LeaveGameTask) object).get_username();
+                GameLobbyFacade.leaveGame(gameId, username);
+            } else if (object instanceof Message) {
+                Log.i(TAG, "Calling GameLobbyFacade.sendMessage()...");
+                GameLobbyFacade.sendMessage((Message) object);
             }
         } catch (Exception e) {
             Log.i(TAG, "Server-side exception thrown");
             e.getStackTrace();
-
+            return e;
         }
         Log.e(TAG, "Invalid argument");
         return null;

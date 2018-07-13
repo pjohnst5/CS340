@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import client.server.fragment.GameLobbyFragment;
+import client.server.fragment.IGameLobbyView;
+import client.server.presenter.GameLobbyPresenter;
+import client.server.presenter.IGameLobbyPresenter;
 
 public class GameLobbyActivity extends SingleFragmentActivity {
 
@@ -17,6 +20,9 @@ public class GameLobbyActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new GameLobbyFragment();
+        IGameLobbyView view = new GameLobbyFragment();
+        IGameLobbyPresenter presenter = new GameLobbyPresenter(view);
+        view.setPresenter(presenter);
+        return (Fragment) view;
     }
 }
