@@ -8,7 +8,6 @@ import client.server.fragment.ILoginView;
 import client.server.task.AsyncServerTask;
 import client.server.task.LoginTask;
 import client.server.task.RegisterTask;
-import shared.User;
 
 public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTask.AsyncCaller {
     private ILoginView _view;
@@ -43,7 +42,7 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
     @Override
     public void register(String username, String password, String checkPassword) {
         if (!password.equals(checkPassword)) {
-            _view.showMessage("Confirm password does not match");
+            _view.showToast("Confirm password does not match");
             return;
         }
         RegisterTask request = new RegisterTask();
@@ -54,6 +53,6 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
 
     @Override
     public void onServerResponseComplete(Exception exception) {
-        _view.showMessage(exception.getMessage());
+        _view.showToast(exception.getMessage());
     }
 }

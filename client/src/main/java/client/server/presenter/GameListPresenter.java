@@ -52,14 +52,14 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
             player = new Player(user.getUserName(), user.getUserName(), color);
         } catch (PlayerException e) {
             e.printStackTrace();
-            _view.showMessage("Invalid player object");
+            _view.showToast("Invalid player object");
         }
         Game game = null;
         try {
             game = new Game(gameName, player, maxPlayers);
         } catch (InvalidGameException e) {
             e.printStackTrace();
-            _view.showMessage("Invalid game object");
+            _view.showToast("Invalid game object");
         }
         new AsyncServerTask(this).execute(game);
     }
@@ -73,6 +73,6 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
 
     @Override
     public void onServerResponseComplete(Exception exception) {
-        _view.showMessage(exception.getMessage());
+        _view.showToast(exception.getMessage());
     }
 }
