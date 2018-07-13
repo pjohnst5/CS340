@@ -29,7 +29,7 @@ public class GameLobbyFacade {
 
         GenericCommand command = new GenericCommand(
                 ConfigurationManager.getString("server_facade_name"),
-                ConfigurationManager.getString("startGame"),
+                ConfigurationManager.getString("server_start_game_method"),
                 paramTypes,
                 paramValues,
                 null);
@@ -43,7 +43,7 @@ public class GameLobbyFacade {
 
         GenericCommand command = new GenericCommand(
                 ConfigurationManager.getString("server_facade_name"),
-                ConfigurationManager.getString("sendMessage"),
+                ConfigurationManager.getString("server_send_message_method"),
                 paramTypes,
                 paramValues,
                 null);

@@ -13,11 +13,13 @@ public class CommandFacade {
         clientModel.setUser(user);
     }
 
-    public static void addGame(Game game) {
+    public static void setGames(){}
+
+    public static void createGame(Game game) {
         clientModel.addGameToList(game);
     }
 
-    public static void addPlayer(Player player){
+    public static void joinGame(Player player){
         clientModel.addPlayer(player);
     }
 

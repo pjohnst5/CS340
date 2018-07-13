@@ -16,7 +16,7 @@ public class GameListFacade {
 
         GenericCommand command = new GenericCommand(
                 ConfigurationManager.getString("server_facade_name"),
-                ConfigurationManager.getString("createGame"),
+                ConfigurationManager.getString("server_create_game_method"),
                 paramTypes,
                 paramValues,
                 null);
@@ -29,7 +29,7 @@ public class GameListFacade {
 
         GenericCommand command = new GenericCommand(
                 ConfigurationManager.getString("server_facade_name"),
-                ConfigurationManager.getString("joinGame"),
+                ConfigurationManager.getString("server_join_game_method"),
                 paramTypes,
                 paramValues,
                 null);
