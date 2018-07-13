@@ -114,6 +114,11 @@ public class GameListFragment extends Fragment implements IGameListView {
     }
 
     @Override
+    public void joinGame(Game game) {
+        System.out.println("JOIN GAME REQUESTED!!");
+    }
+
+    @Override
     public void setPresenter(IGameListPresenter presenter) {
         mPresenter = presenter;
     }

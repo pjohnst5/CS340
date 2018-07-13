@@ -1,6 +1,8 @@
 package client.server.presenter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -38,7 +40,8 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
             if (currentGame != null) {
                 // FIXME: transfer the view to GameLobbyView
             } else {
-                List<Game> games = _model.getGames();
+                Map<String, Game> gameMap = _model.getGames();
+                List<Game> games = new ArrayList(gameMap.values());
                 _view.updateGameList(games);
             }
         }
@@ -49,7 +52,7 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
         User user = _model.getUser();
         Player player = null;
         try {
-            player = new Player(user.getUserName(), user.getUserName(), color);
+            player = new Player(user.getUserName(), user.getUserName(), color, "asd", "SDFS");
         } catch (PlayerException e) {
             e.printStackTrace();
             _view.showToast("Invalid player object");

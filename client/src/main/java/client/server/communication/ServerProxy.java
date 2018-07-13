@@ -25,7 +25,7 @@ public class ServerProxy {
         if (response.getSuccess()){
             List<ICommand> commands = response.getCommands();
 
-            for (int i = 0; i <= commands.size(); i++){
+            for (int i = 0; i < commands.size(); i++){
                 commands.get(i).execute();
             }
 

@@ -78,19 +78,13 @@ public class LoginFragment extends Fragment implements ILoginView {
         String username = mUsernameField.getText().toString();
         String password = mPasswordField.getText().toString();
         String checkPassword = mConfirmPasswordField.getText().toString();
-        if (username.equals("")) {
-            showToast("Username can't be empty");
-        }
-        if (password.equals("")) {
-            showToast("Password can't be empty");
-        }
-        if (isRegister) {
-            if (checkPassword.equals("")) {
-                showToast("Confirm password can't be empty");
-            }
+
+        if (isRegister){
             mPresenter.register(username, password, checkPassword);
+        } else {
+            mPresenter.login(username, password);
         }
-        mPresenter.login(username, password);
+
     }
 
     @Override

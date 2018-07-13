@@ -1,5 +1,7 @@
 package client.server.presenter;
 
+import android.util.Log;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -23,6 +25,7 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
 
     @Override
     public void update(Observable observable, Object o) {
+        Log.i(TAG,"Updating LoginPresenter");
         if (observable instanceof ClientModel) {
             if (_model.getUser() != null) {
                 _model.deleteObserver(this);
@@ -31,8 +34,37 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
         }
     }
 
+    public boolean validateArguments(String username,
+                                String password,
+                                String checkPassword){
+
+        if (username.equals("")){
+            _view.showToast("Username cannot be empty");
+
+        } else if (password.equals("")) {
+            _view.showToast("Password cannot be empty");
+
+        } else if (checkPassword.equals("")) {
+            _view.showToast("Confirm Password Field cannot be empty");
+
+        } else if (!password.equals(checkPassword)) {
+            _view.showToast("Passwords do not match");
+
+        } else {
+            return true;
+
+        }
+
+        return false;
+
+    }
+
     @Override
     public void login(String username, String password) {
+
+        if (!validateArguments(username, password, password))
+            return;
+
         LoginTask request = new LoginTask();
         request.set_username(username);
         request.set_password(password);
@@ -41,10 +73,10 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
 
     @Override
     public void register(String username, String password, String checkPassword) {
-        if (!password.equals(checkPassword)) {
-            _view.showToast("Confirm password does not match");
+
+        if (!validateArguments(username, password, checkPassword))
             return;
-        }
+
         RegisterTask request = new RegisterTask();
         request.set_username(username);
         request.set_password(password);
