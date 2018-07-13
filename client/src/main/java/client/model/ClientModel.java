@@ -92,6 +92,7 @@ public class ClientModel extends Observable {
 
             if(player.getPlayerID().equals(this._user.getUserName())){
                 setCurrentGame(g);
+                _user.set_playerId(player.getPlayerID());
             }
             setChanged();
             notifyObservers();

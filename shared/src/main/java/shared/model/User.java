@@ -9,6 +9,7 @@ public class User {
     private String _userName;
     private String _password;
     private UUID _uuid;
+    private String _playerId;
 
     public User(String username, String password) throws InvalidUserException
     {
@@ -41,5 +42,11 @@ public class User {
         }
         _uuid = uuid;
     }
+    public String get_playerId() {
+        return _playerId;
+    }
 
+    public void set_playerId(String _playerId) {
+        this._playerId = _playerId;
+    }
 }
