@@ -33,6 +33,8 @@ public class GameListFragment extends Fragment implements IGameListView {
     private GameListAdapter mGameListAdapter;
     private IGameListPresenter mPresenter;
 
+    private GameHolder mCurrentHolder;
+
     private static final String CREATE_GAME_DIALOG_TAG = "CreateGameDialog";
     private static final String JOIN_GAME_DIALOG_TAG = "JoinGameDialog";
 
@@ -60,13 +62,19 @@ public class GameListFragment extends Fragment implements IGameListView {
         mJoinGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
+                if (mCurrentlySelectedGame == null){
+                    showToast("Please Select a game first");
+                    return;
+                }*/
+
                 FragmentManager manager = getFragmentManager();
                 JoinGameDialog dialog = JoinGameDialog.newInstance();
                 dialog.setTargetFragment(GameListFragment.this, JOIN_GAME_DIALOG_CODE);
                 dialog.show(manager, JOIN_GAME_DIALOG_TAG);
-                if (mCurrentlySelectedGame != null) {
+                /*if (mCurrentlySelectedGame != null) {
                     mPresenter.joinGame(mCurrentlySelectedGame.getGameID());
-                }
+                }*/
             }
         });
 
@@ -161,6 +169,18 @@ public class GameListFragment extends Fragment implements IGameListView {
         private TextView mGameNameView;
         private TextView mGamePlayerNumView;
 
+        public void deselect(){
+            mGameIdView.setBackgroundColor(getResources().getColor(R.color.train_light_grey));
+            mGameNameView.setBackgroundColor(getResources().getColor(R.color.train_light_grey));
+            mGamePlayerNumView.setBackgroundColor(getResources().getColor(R.color.train_light_grey));
+        }
+
+        public void select(){
+            mGameIdView.setBackgroundColor(getResources().getColor(R.color.blue));
+            mGameNameView.setBackgroundColor(getResources().getColor(R.color.blue));
+            mGamePlayerNumView.setBackgroundColor(getResources().getColor(R.color.blue));
+        }
+
         public GameHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.game_list_item, parent, false));
 
@@ -181,7 +201,12 @@ public class GameListFragment extends Fragment implements IGameListView {
 
         @Override
         public void onClick(View view) {
+            if (mCurrentHolder != null){
+                mCurrentHolder.deselect();
+            }
             mCurrentlySelectedGame = mGame;
+            mCurrentHolder = this;
+            this.select();
         }
     }
 
