@@ -19,6 +19,7 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.List;
 
+import client.model.ClientModel;
 import client.presenter.IGameListPresenter;
 import client.view.activity.GameLobbyActivity;
 import shared.enumeration.PlayerColor;
@@ -62,14 +63,20 @@ public class GameListFragment extends Fragment implements IGameListView {
         mJoinGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
+
                 if (mCurrentlySelectedGame == null){
                     showToast("Please Select a game first");
                     return;
-                }*/
+                }
+
+                Bundle args = new Bundle();
+                args.putString("GameId", mCurrentlySelectedGame.getGameID());
+
+
 
                 FragmentManager manager = getFragmentManager();
                 JoinGameDialog dialog = JoinGameDialog.newInstance();
+                dialog.setArguments(args);
                 dialog.setTargetFragment(GameListFragment.this, JOIN_GAME_DIALOG_CODE);
                 dialog.show(manager, JOIN_GAME_DIALOG_TAG);
                 /*if (mCurrentlySelectedGame != null) {
