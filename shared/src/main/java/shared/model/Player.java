@@ -65,6 +65,9 @@ public class Player {
     {
         return _playerID;
     }
+    public int getIndex() {
+        return _index_of_commands;
+    }
 
 
     public void addPoints(int add)
@@ -87,5 +90,9 @@ public class Player {
         if (id == null || id.isEmpty()){
             throw new PlayerException("Player ID cannot be null or empty");
         }
+    }
+
+    public void setIndex(int i){
+        _index_of_commands = i;
     }
 }
