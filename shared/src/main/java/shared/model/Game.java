@@ -1,4 +1,4 @@
-package shared;
+package shared.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ public class Game {
     private String _gameID;
     private List<Player> _players;
     private int _maxPlayers;
+    private boolean _started;
 
     public Game(String gameName, int maxPlayers) throws InvalidGameException
     {
@@ -20,7 +21,7 @@ public class Game {
             throw new InvalidGameException("Invalid number of players : " + maxPlayers);
         }
         if (gameName.isEmpty() || gameName == null){
-            throw new InvalidGameException("shared.Game must have a name");
+            throw new InvalidGameException("shared.model.Game must have a name");
         }
 
         _gameName = gameName;
@@ -49,12 +50,17 @@ public class Game {
         return _maxPlayers;
     }
 
+    public boolean getStarted()
+    {
+        return _started;
+    }
+
 
     public void setGameName(String s) throws InvalidGameException
     {
         if (s.isEmpty() || s == null)
         {
-            throw new InvalidGameException("shared.Game must have a name");
+            throw new InvalidGameException("shared.model.Game must have a name");
         }
         _gameName = s;
     }
@@ -96,5 +102,14 @@ public class Game {
             }
         }
         return _players.size();
+    }
+
+    public void setGameID(String s) throws InvalidGameException
+    {
+        if (s == null || s.isEmpty()){
+            throw new InvalidGameException("GameID cannot be null");
+        }
+
+        _gameID = s;
     }
 }

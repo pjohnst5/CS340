@@ -4,9 +4,9 @@ import server.ServerModel.ServerModel;
 import server.exception.ServerException;
 import shared.Command.GenericCommand;
 import shared.Command.ICommand;
-import shared.Response.CommandResponse;
-import shared.Response.IResponse;
-import shared.User;
+import shared.model.response.CommandResponse;
+import shared.model.response.IResponse;
+import shared.model.User;
 import shared.configuration.ConfigurationManager;
 
 //Only ServerFacade should touch these
@@ -21,7 +21,7 @@ class LoginFacade {
             User user = serverModel.authenticate(username, password); //User has UUID inside
 
             String className = ConfigurationManager.getString("client_facade_name");
-            String methodName = ConfigurationManager.getString("set_user");
+            String methodName = ConfigurationManager.getString("client_set_user_method");
             String[] paramTypes = {User.class.getCanonicalName()};
             Object[] paramValues = {user};
 
@@ -48,7 +48,7 @@ class LoginFacade {
             User user = serverModel.register(username, password);
 
             String className = ConfigurationManager.getString("client_facade_name");
-            String methodName = ConfigurationManager.getString("set_user");
+            String methodName = ConfigurationManager.getString("client_set_user_method");
             String[] paramTypes = {User.class.getCanonicalName()};
             Object[] paramValues = {user};
 

@@ -1,4 +1,4 @@
-package shared;
+package shared.model;
 
 public class Message {
     private String _message;

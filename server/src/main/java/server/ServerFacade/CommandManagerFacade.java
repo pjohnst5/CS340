@@ -1,8 +1,7 @@
 package server.ServerFacade;
 
 
-import shared.Response.CommandResponse;
-import shared.Response.IResponse;
+import shared.model.response.IResponse;
 
 //Package private, only ServerFacade should touch these
 public class CommandManagerFacade {

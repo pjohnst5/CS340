@@ -1,4 +1,4 @@
-package shared;
+package shared.model;
 
 
 import java.util.UUID;

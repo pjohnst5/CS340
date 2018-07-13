@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.UUID;
 
 import server.exception.ServerException;
+import shared.CustomExceptions.InvalidGameException;
 import shared.CustomExceptions.InvalidUserException;
-import shared.Game;
-import shared.Player;
-import shared.User;
+import shared.model.Game;
+import shared.model.Player;
+import shared.model.User;
+import shared.model.request.JoinRequest;
 
 public class ServerModel {
 
@@ -33,13 +35,13 @@ public class ServerModel {
     }
 
     private Map<String, User> _users;
-    private Map<String, Player> _players;
-    private Map<String, Game> _games;
+    private Map<String, Player> _players; //playerid's to Player
+    private Map<String, Game> _games;  //gameid's to games
     private List<UUID> _uuids;
     private CommandManager _manager;
 
 
-    //Adders
+    //Login/Register
     public User authenticate(String username, String password) throws ServerException {
 
         //Error checking
@@ -103,11 +105,27 @@ public class ServerModel {
         }
     }
 
-    public void addGame(Game game) throws ServerException {
-        return;
+
+    //GameList
+    public void addNewGame(Game game) throws ServerException {
+        //set gameID
+        String gameID = UUID.randomUUID().toString();
+        try {
+            game.setGameID(gameID);
+
+            //Put game in map
+            _games.put(game.getGameID(), game);
+
+        } catch(InvalidGameException e) {
+            throw new ServerException(e.getMessage());
+        }
     }
 
-    public void addPlayer(Player player, String gameID) throws ServerException {
+    public void replaceExistingGame(Game game) throws ServerException {
+        _games.put(game.getGameID(), game);
+    }
+
+    public void addPlayer(Player player) throws ServerException {
         throw new ServerException("not valid");
     }
 
@@ -127,7 +145,13 @@ public class ServerModel {
 
     //Getters
     public Game getGame(String gameID) throws ServerException {
-        return null;
+            Game g = _games.get(gameID);
+
+            if(g == null){
+                throw new ServerException("Game does not exist in server");
+            }
+
+        return _games.get(gameID);
     }
 
     public Player getPlayer(String username) throws ServerException
@@ -151,8 +175,8 @@ public class ServerModel {
         return;
     }
 
-    public List<Game> getGames() {
-        return new ArrayList<>(_games.values());
+    public Map<String, Game> getGames() {
+        return _games;
     }
 
 

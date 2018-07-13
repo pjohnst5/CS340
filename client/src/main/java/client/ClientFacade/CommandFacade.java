@@ -1,10 +1,10 @@
 package client.ClientFacade;
 
 import client.ClientModel;
-import shared.Game;
-import shared.Message;
-import shared.Player;
-import shared.User;
+import shared.model.Game;
+import shared.model.Message;
+import shared.model.Player;
+import shared.model.User;
 
 public class CommandFacade {
     static ClientModel clientModel = ClientModel.getInstance();

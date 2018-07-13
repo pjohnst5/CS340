@@ -3,10 +3,10 @@ package client;
 import java.util.Map;
 import java.util.Observable;
 
-import shared.Game;
-import shared.Message;
-import shared.Player;
-import shared.User;
+import shared.model.Game;
+import shared.model.Message;
+import shared.model.Player;
+import shared.model.User;
 
 public class ClientModel extends Observable {
     private static final ClientModel ourInstance = new ClientModel();
@@ -59,5 +59,4 @@ public class ClientModel extends Observable {
     public void startGame(String gameId){}
 
     public void sendMessage(Message message){}
-
 }
