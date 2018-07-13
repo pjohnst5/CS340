@@ -20,6 +20,8 @@ import com.pjohnst5icloud.tickettoride.R;
 import java.util.List;
 
 import client.presenter.IGameListPresenter;
+import client.view.activity.GameListActivity;
+import client.view.activity.GameLobbyActivity;
 import shared.enumeration.PlayerColor;
 import shared.model.Game;
 
@@ -33,8 +35,10 @@ public class GameListFragment extends Fragment implements IGameListView {
     private IGameListPresenter mPresenter;
 
     private static final String CREATE_GAME_DIALOG_TAG = "CreateGameDialog";
+    private static final String JOIN_GAME_DIALOG_TAG = "JoinGameDialog";
 
     private static final int CREATE_GAME_DIALOG_CODE = 0;
+    private static final int JOIN_GAME_DIALOG_CODE = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,6 +102,10 @@ public class GameListFragment extends Fragment implements IGameListView {
             }
             mPresenter.createGame(gameName, displayName, playerColor, maxPlayers);
         }
+
+        if (requestCode == JOIN_GAME_DIALOG_CODE) {
+            // FIXME: implement
+        }
     }
 
     @Override
@@ -123,8 +131,10 @@ public class GameListFragment extends Fragment implements IGameListView {
     }
 
     @Override
-    public void joinGame(Game game) {
-        System.out.println("JOIN GAME REQUESTED!!");
+    public void joinGame() {
+        // switch view
+        Intent intent = GameLobbyActivity.newIntent(getActivity());
+        startActivity(intent);
     }
 
     @Override

@@ -34,7 +34,7 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
         _poller = GameListPoller.instance();
 
         // DALLAS TODO: Fix this after fragment creation works
-        //ServerProxy.instance().usePoller(_poller);
+        ServerProxy.instance().usePoller(_poller);
     }
 
     @Override
@@ -43,6 +43,7 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
             Game currentGame = _model.getCurrentGame();
             if (currentGame != null) {
                 // FIXME: transfer the view to GameLobbyView
+
             } else {
                 Map<String, Game> gameMap = _model.getGames();
                 List<Game> games = new ArrayList(gameMap.values());

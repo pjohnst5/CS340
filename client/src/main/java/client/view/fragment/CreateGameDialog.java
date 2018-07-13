@@ -29,10 +29,10 @@ public class CreateGameDialog extends DialogFragment {
     private Spinner mColorPicker;
     private int mColor;
 
-    public static final String EXTRA_GAME_NAME = "client.server.gameName";
-    public static final String EXTRA_DISPLAY_NAME = "client.server.displayName";
-    public static final String EXTRA_PLAYER_COLOR = "client.server.playerColor";
-    public static final String EXTRA_MAX_PLAYERS = "client.server.maxPlayers";
+    public static final String EXTRA_GAME_NAME = "client.server.CreateGameDialog.gameName";
+    public static final String EXTRA_DISPLAY_NAME = "client.server.CreateGameDialog.displayName";
+    public static final String EXTRA_PLAYER_COLOR = "client.server.CreateGameDialog.playerColor";
+    public static final String EXTRA_MAX_PLAYERS = "client.server.CreateGameDialog.maxPlayers";
 
     public static CreateGameDialog newInstance() {
         CreateGameDialog dialog = new CreateGameDialog();

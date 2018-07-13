@@ -32,6 +32,8 @@
     <string name="create_game_color_title">Train Color</string>
     <string name="create_game_dialog_private_game">Private Game:</string>
 
+    <!-- JOIN GAME DIALOG STRING SET -->
+    <string name="join_game_dialog_title">Join Game</string>
 
 
     <string name="ok">OK</string>
