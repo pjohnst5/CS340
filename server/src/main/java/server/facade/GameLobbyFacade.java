@@ -1,5 +1,7 @@
 package server.facade;
 
+import java.util.List;
+
 import server.model.ServerModel;
 import server.exception.ServerException;
 import shared.command.GenericCommand;
@@ -14,7 +16,7 @@ import shared.model.response.IResponse;
 //Only ServerFacade should touch these
 class GameLobbyFacade {
 
-    public static IResponse startGame(String gameID)
+    public static IResponse startGame(String gameID, String playerID)
     {
         CommandResponse response = new CommandResponse();
         ServerModel serverModel = ServerModel.getInstance();
@@ -42,7 +44,11 @@ class GameLobbyFacade {
             //add command to list of commands for game
             serverModel.addCommand(game.getGameID(), command);
 
-            response.addCommand(command);
+            //gets all commands for this game and player
+            List<ICommand> commands = serverModel.getCommands(gameID, playerID);
+
+            //sets all the commands of this response to be the list
+            response.setCommands(commands);
             response.setSuccess(true);
 
         } catch(ServerException e){

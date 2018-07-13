@@ -1,5 +1,6 @@
 package client.presenter;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,6 +14,7 @@ import client.server.task.LeaveGameTask;
 import client.server.task.StartGameTask;
 import shared.model.Game;
 import shared.model.Message;
+import shared.model.Player;
 import shared.model.User;
 
 public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncServerTask.AsyncCaller {
@@ -69,8 +71,26 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
             _view.showToast("Still waiting for players to join!");
             return;
         }
+
+        //Paul added this below, I just need to know who is trying to start the game
+        //------------------------------------------------------
+        //Get the username of this player
+        String username = _model.getUser().getUserName();
+        String playerID = new String();
+        List<Player> players = _model.getCurrentGame().getPlayers();
+        for (int i = 0; i < players.size(); i++){
+            if (players.get(i).getUserName().equals(username)){ //we have a match
+                playerID = players.get(i).getPlayerID();
+            }
+        }
+        // ----------------------------------------------------
+
+
         StartGameTask request = new StartGameTask();
         request.set_gameId(_model.getCurrentGame().getGameID());
+        //-----------------------------------------------------
+        request.set_playerId(playerID);
+        //-----------------------------------------------------
         new AsyncServerTask(this).execute(request);
     }
 

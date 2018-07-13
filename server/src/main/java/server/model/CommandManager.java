@@ -39,7 +39,7 @@ public class CommandManager {
         }
 
         if (_commandList.get(gameID).size() < index) {
-            throw new ServerException("Too big of an incex for command manager");
+            throw new ServerException("Too big of an index for command manager");
         }
         List<ICommand> commands = _commandList.get(gameID);
         int size = commands.size();

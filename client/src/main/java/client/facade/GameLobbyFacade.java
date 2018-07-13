@@ -23,9 +23,9 @@ public class GameLobbyFacade {
 //        serverProxy.sendCommand(command);
 //    }
 
-    public static void startGame(String gameID) throws ServerProxyException {
-        String[] paramTypes = {String.class.getCanonicalName()};
-        Object[] paramValues = {gameID};
+    public static void startGame(String gameID, String playerID) throws ServerProxyException {
+        String[] paramTypes = {String.class.getCanonicalName(), String.class.getCanonicalName()};
+        Object[] paramValues = {gameID, playerID};
 
         GenericCommand command = new GenericCommand(
                 ConfigurationManager.getString("server_facade_name"),

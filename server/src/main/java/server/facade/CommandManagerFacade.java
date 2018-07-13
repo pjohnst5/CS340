@@ -36,17 +36,15 @@ public class CommandManagerFacade {
         return response;
     }
 
-    public static IResponse getCommandList(String gameID, int index)
+    public static IResponse getCommandList(String gameID, String playerID)
     {
         CommandResponse response = new CommandResponse();
         ServerModel serverModel = ServerModel.getInstance();
 
         try{
-            List<ICommand> commands = serverModel.getCommands(gameID, index);
+            List<ICommand> commands = serverModel.getCommands(gameID, playerID);
 
-            for (int i = 0; i < commands.size(); i++) {
-                response.addCommand(commands.get(i));
-            }
+            response.setCommands(commands);
             response.setSuccess(true);
 
         }catch(ServerException e) {

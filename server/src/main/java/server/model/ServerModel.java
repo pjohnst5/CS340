@@ -174,7 +174,9 @@ public class ServerModel {
         _manager.addCommand(gameID,command);
     }
 
-    public List<ICommand> getCommands(String gameID, int index) throws ServerException {
+    public List<ICommand> getCommands(String gameID, String playerID) throws ServerException {
+        //gets the players index and gives it to command manager
+        int index = _players.get(playerID).getIndex();
         return _manager.getCommands(gameID, index);
     }
 

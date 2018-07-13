@@ -84,11 +84,9 @@ class GameListFacade {
             //Good to make new player
             Player player = new Player(jr.getUserName(),jr.getDisplayName(),jr.getColor(),game.getGameID(), UUID.randomUUID().toString());
 
+            //Player's index is -1 at this point
 
-            //Sets player's index to size of game commands (he's going to add one himself)
-            player.setIndex(serverModel.getCommands(jr.getGameID()).size());
-
-            //Command for client
+            //Command for client, player has index -1 (only server needs an updated version of index)
             String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("client_join_game_method");
             String[] paramTypes = {Player.class.getCanonicalName()};
@@ -103,7 +101,10 @@ class GameListFacade {
             //Get list of commands from game the player just joined
             List<ICommand> commands = serverModel.getCommands(player.getGameID());
 
-            //add player to game
+            //Sets player's index to size of commands for that game minus 1 because it's an index.
+            player.setIndex(commands.size() - 1);
+
+            //add player to game (this player being added to server model is same as client gets except it has an updated index)
             game.addPlayer(player);
 
             //add game back in to server model
@@ -113,9 +114,7 @@ class GameListFacade {
             serverModel.addPlayer(player);
 
             //add all the commands for the game the user just joined.
-            for (int i = 0; i < commands.size(); i++) {
-                response.addCommand(command);
-            }
+            response.setCommands(commands);
             response.setSuccess(true);
 
         } catch(ServerException e){

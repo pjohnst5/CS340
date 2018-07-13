@@ -53,9 +53,9 @@ public class ServerFacade {
 
 
     //Game Lobby functions
-    public static IResponse startGame(String gameID) //startGame(gameID)
+    public static IResponse startGame(String gameID, String playerID) //startGame(gameID)
     {
-        return GameLobbyFacade.startGame(gameID);
+        return GameLobbyFacade.startGame(gameID, playerID);
     }
 
     public static IResponse sendMessage(Message message)   //sendMessage(Message)
@@ -77,9 +77,9 @@ public class ServerFacade {
 
 
     // Poller functions
-    public static IResponse getCommandList(String gameID, int index)
+    public static IResponse getCommandList(String gameID, String playerID)
     {
-        return CommandManagerFacade.getCommandList(gameID, index);
+        return CommandManagerFacade.getCommandList(gameID, playerID);
     }
 
     public static IResponse getActiveGames()

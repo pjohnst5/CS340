@@ -21,6 +21,14 @@ public class CommandResponse implements ICommandResponse {
         _commands.add((GenericCommand) command);
     }
 
+    public void setCommands(List<ICommand> commands){
+        _commands.clear();
+
+        for (int i = 0; i < commands.size(); i++){
+            _commands.add(commands.get(i));
+        }
+    }
+
     @Override
     public void setSuccess(boolean s)
     {
