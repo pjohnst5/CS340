@@ -76,7 +76,7 @@ public class ServerFacade {
 
 
 
-    //Poller functions
+    // Poller functions
     public static IResponse getCommandList(String gameID, int index)
     {
         return CommandManagerFacade.getCommandList(gameID, index);

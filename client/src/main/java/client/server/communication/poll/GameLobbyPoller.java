@@ -35,8 +35,8 @@ public class GameLobbyPoller extends Poller {
         Object[] paramValues = {};
 
         _serverRequest = new GenericCommand(
-                "server.CommandManager",
-                "GameLobbyPoll",
+                ConfigurationManager.get("server_facade_name"),
+                ConfigurationManager.get("server_get_commands_method"),
                 paramTypes,
                 paramValues,
                 null
