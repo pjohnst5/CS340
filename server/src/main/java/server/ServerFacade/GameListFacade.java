@@ -80,13 +80,11 @@ class GameListFacade {
             //Good to make new player
             Player player = new Player(jr.getUserName(),jr.getDisplayName(),jr.getColor(),game.getGameID(), UUID.randomUUID().toString());
 
-            game.addPlayer(player);
+            int sizeOfCommands = serverModel.getCommands(player.getGameID(), -2).size();
+            int oldIndex = player.getIndex();
 
-            //add game back in to server model
-            serverModel.replaceExistingGame(game);
-
-            //add player to map
-            serverModel.addPlayer(player);
+            //Accounts for him getting his own command
+            player.setIndex(oldIndex + sizeOfCommands + 1);
 
             //Command for client
             String className = ConfigurationManager.getString("client_facade_name");
@@ -100,8 +98,22 @@ class GameListFacade {
             //Add "player joined command" in the command manager mapped to the gameID
             serverModel.addCommand(jr.getGameID(),command);
 
-            //Player who just joined will get a command back that adds him to the game, the poller is responsible for getting the rest of the commands that may be associated with the game
-            response.addCommand(command);
+            //Get list of commands from game the player just joined
+            List<ICommand> commands = serverModel.getCommands(player.getGameID(), -2);
+
+            //add player to game
+            game.addPlayer(player);
+
+            //add game back in to server model
+            serverModel.replaceExistingGame(game);
+
+            //add player into model
+            serverModel.addPlayer(player);
+
+            //add all the commands for the game the user just joined.
+            for (int i = 0; i < commands.size(); i++) {
+                response.addCommand(command);
+            }
             response.setSuccess(true);
 
         } catch(ServerException e){
