@@ -48,7 +48,6 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
                 _view.startGame();
             } else {
                 _view.updateGame(currentGame);
-                // FIXME: currentGame.getMessages?
             }
         }
     }
