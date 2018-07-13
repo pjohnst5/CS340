@@ -21,6 +21,8 @@ import java.util.List;
 
 import client.model.ClientModel;
 import client.presenter.IGameListPresenter;
+import client.server.communication.poll.GameListPoller;
+import client.server.communication.poll.Poller;
 import client.view.activity.GameLobbyActivity;
 import shared.enumeration.PlayerColor;
 import shared.model.Game;
@@ -57,6 +59,8 @@ public class GameListFragment extends Fragment implements IGameListView {
                 CreateGameDialog dialog = CreateGameDialog.newInstance();
                 dialog.setTargetFragment(GameListFragment.this, CREATE_GAME_DIALOG_CODE);
                 dialog.show(manager, CREATE_GAME_DIALOG_TAG);
+
+                GameListPoller.instance().stop();
             }
         });
         mJoinGameButton = v.findViewById(R.id.join_game_button);
@@ -72,7 +76,7 @@ public class GameListFragment extends Fragment implements IGameListView {
                 Bundle args = new Bundle();
                 args.putString("GameId", mCurrentlySelectedGame.getGameID());
 
-
+                GameListPoller.instance().stop();
 
                 FragmentManager manager = getFragmentManager();
                 JoinGameDialog dialog = JoinGameDialog.newInstance();

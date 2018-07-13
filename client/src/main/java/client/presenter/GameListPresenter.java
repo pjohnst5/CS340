@@ -39,11 +39,15 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
         ServerProxy.instance().usePoller(_poller);
     }
 
+    // FIXME: _poller should get added/started in onStart()
+
     @Override
     public void update(Observable observable, Object o) {
         if (observable instanceof ClientModel) {
             Game currentGame = _model.getCurrentGame();
             if (currentGame != null) {
+                _model.deleteObserver(this);
+                ServerProxy.instance().stopPoller();
                 _view.joinGame();
             } else {
                 Map<String, Game> gameMap = _model.getGames();
