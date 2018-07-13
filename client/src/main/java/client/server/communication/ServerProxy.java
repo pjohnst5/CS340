@@ -23,7 +23,7 @@ public class ServerProxy {
         CommandResponse response = (CommandResponse)ClientCommunicator.sendCommand(command);
 
         if (response.getSuccess()){
-            List<GenericCommand> commands = response.getCommands();
+            List<ICommand> commands = response.getCommands();
 
             for (int i = 0; i <= commands.size(); i++){
                 commands.get(i).execute();

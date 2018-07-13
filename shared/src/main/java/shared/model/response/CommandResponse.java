@@ -6,8 +6,8 @@ import java.util.List;
 import shared.Command.GenericCommand;
 import shared.Command.ICommand;
 
-public class CommandResponse implements IResponse {
-    private List<GenericCommand> _commands;
+public class CommandResponse implements ICommandResponse {
+    private List<ICommand> _commands;
     private boolean _success = false;
     private String _errorMessage;
 
@@ -34,7 +34,8 @@ public class CommandResponse implements IResponse {
     }
 
 
-    public List<GenericCommand> getCommands()
+    @Override
+    public List<ICommand> getCommands()
     {
         return _commands;
     }
