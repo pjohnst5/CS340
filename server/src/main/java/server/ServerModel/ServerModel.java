@@ -175,8 +175,8 @@ public class ServerModel {
         return;
     }
 
-    public List<Game> getGames() {
-        return new ArrayList<>(_games.values());
+    public Map<String, Game> getGames() {
+        return _games;
     }
 
 

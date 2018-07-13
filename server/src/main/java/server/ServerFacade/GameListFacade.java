@@ -1,6 +1,7 @@
 package server.ServerFacade;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import server.ServerModel.ServerModel;
@@ -32,7 +33,7 @@ class GameListFacade {
             serverModel.addNewGame(game);
 
             //Make list of active games
-            List<Game> activeGames = serverModel.getGames();
+            Map<String, Game> activeGames = serverModel.getGames();
 
             String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("client_set_games_method");
