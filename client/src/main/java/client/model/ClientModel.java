@@ -2,6 +2,7 @@ package client.model;
 
 import android.util.Log;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
@@ -22,7 +23,9 @@ public class ClientModel extends Observable {
         return ourInstance;
     }
 
-    private ClientModel() {}
+    private ClientModel() {
+        _games = new HashMap<>();
+    }
 
     private User _user;
     private Map<String, Game> _games;
@@ -59,9 +62,11 @@ public class ClientModel extends Observable {
 
     public void setGames(GamesWrapper games) {
         if(games != null){
-            this._games = games.getGames();
-            setChanged();
-            notifyObservers();
+            if (games.getGames().size() != this._games.size()){
+                this._games = games.getGames();
+                setChanged();
+                notifyObservers();
+            }
         }
     }
 
