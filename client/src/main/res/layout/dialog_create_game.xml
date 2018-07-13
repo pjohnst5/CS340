@@ -9,8 +9,8 @@
 
     <RelativeLayout
         android:id="@+id/create_game_room_name_rl"
-        android:layout_width="match_parent"
         android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:hint="@string/create_game_display_name_hint"
+            android:hint="@string/display_name_hint"
             android:layout_toEndOf="@id/create_game_display_name_label" />
 
     </RelativeLayout>
@@ -108,7 +108,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
-                        android:text="@string/create_game_color_title"/>
+                        android:text="@string/train_color_title_text"/>
 
                     <Spinner
                         android:id="@+id/dialog_color"

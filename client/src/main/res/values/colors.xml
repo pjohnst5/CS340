@@ -3,4 +3,42 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="light_green">#99b433</color>
+    <color name="light_purple">#9f00a7</color>
+    <color name="light_blue">#eff4ff</color>
+
+
+    <color name="green">#00a300</color>
+    <color name="magenta">#ff0097</color>
+    <color name="purple">#7e3878</color>
+    <color name="darken">#1d1d1d</color>
+    <color name="teal">#00aba9</color>
+    <color name="blue">#2d89ef</color>
+    <color name="yellow">#ffc40d</color>
+    <color name="orange">#e3a21a</color>
+    <color name="red">#ee1111</color>
+    <color name="white">#ffffff</color>
+
+
+    <color name="dark_green">#1e7145</color>
+    <color name="dark_purple">#603cba</color>
+    <color name="dark_blue">#2b5797</color>
+    <color name="dark_orange">#da532c</color>
+    <color name="dark_red">#b91d47</color>
+
+    <!-- Train Car Colors? -->
+    <color name="train_light_grey">#e1e1e1</color>
+    <color name="train_light_blue">#b9e0f6</color>
+    <color name="train_light_green">#c0e4a2</color>
+    <color name="train_light_red">#f8ccd9</color>
+    <color name="train_light_yellow">#ffe99f</color>
+
+    <color name="train_light_grey_disabled">#797979</color>
+    <color name="train_light_blue_disabled">#6e838e</color>
+    <color name="train_light_green_disabled">#5e7958</color>
+    <color name="train_light_red_disabled">#876e76</color>
+    <color name="train_light_yellow_disabled">#897d54</color>
+
+    <color name="train_black_border">#000000</color>
 </resources>

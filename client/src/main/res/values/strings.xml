@@ -26,23 +26,39 @@
     <string name="create_game_room_name_hint">Room Name&#8230;</string>
 
     <string name="create_game_display_name">Display Name:</string>
-    <string name="create_game_display_name_hint">Display Name&#8230;</string>
 
     <string name="create_game_players">Players</string>
-    <string name="create_game_color_title">Train Color</string>
     <string name="create_game_dialog_private_game">Private Game:</string>
 
     <!-- JOIN GAME DIALOG STRING SET -->
     <string name="join_game_dialog_title">Join Game</string>
 
+    <string name="join_game_room_number_label">Game Room:</string>
+    <string name="join_game_display_name_label">Display Name:</string>
+
+    <string name="join_game_button_text">Join Game</string>
+
+
+
+    <!-- GENERIC -->
+    <string name="train_color_title_text">Train Color</string>
+    <string name="display_name_hint">Display Name&#8230;</string>
+
+    <string name="color_red">Red</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_black">Black</string>
+    <string name="color_green">Green</string>
+    <string name="color_yellow">Yellow</string>
+
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string-array name="player_colors">
-        <item>Black</item>
+        <item >Black</item>
         <item>Blue</item>
         <item>Green</item>
         <item>Red</item>
         <item>Yellow</item>
     </string-array>
+
 </resources>
