@@ -112,4 +112,17 @@ public class Game {
 
         _gameID = s;
     }
+
+    public void setStarted(boolean b) throws InvalidGameException
+    {
+        if (_started && b) {
+            throw new InvalidGameException("game has already started, can't end it again");
+        }
+
+        if (!_started && !b) {
+            throw new InvalidGameException("Game has already ended, can't end it again");
+        }
+
+        _started = b;
+    }
 }
