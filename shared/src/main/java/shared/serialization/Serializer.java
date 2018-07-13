@@ -8,9 +8,11 @@ import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.HashMap;
 
 import shared.command.GenericCommand;
 import shared.command.ICommand;
+import shared.model.GamesWrapper;
 
 public class Serializer implements ISerializer {
 
@@ -23,6 +25,7 @@ public class Serializer implements ISerializer {
         // Adding custom deserializers
         builder.registerTypeAdapter(ICommand.class, new GenericCommandSerializer());
         builder.registerTypeAdapter(GenericCommand.class, new GenericCommandSerializer());
+        builder.registerTypeAdapter(GamesWrapper.class, new HashMapDeserializer());
 
         _gson = builder.create();
     }
