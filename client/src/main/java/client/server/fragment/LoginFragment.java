@@ -79,14 +79,14 @@ public class LoginFragment extends Fragment implements ILoginView {
         String password = mPasswordField.getText().toString();
         String checkPassword = mConfirmPasswordField.getText().toString();
         if (username.equals("")) {
-            showMessage("Username can't be empty");
+            showToast("Username can't be empty");
         }
         if (password.equals("")) {
-            showMessage("Password can't be empty");
+            showToast("Password can't be empty");
         }
         if (isRegister) {
             if (checkPassword.equals("")) {
-                showMessage("Confirm password can't be empty");
+                showToast("Confirm password can't be empty");
             }
             mPresenter.register(username, password, checkPassword);
         }
@@ -94,7 +94,7 @@ public class LoginFragment extends Fragment implements ILoginView {
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,25 +1,25 @@
 package shared;
 
 import shared.CustomEnumerations.PlayerColor;
-import shared.CustomExceptions.InvalidPlayerException;
+import shared.CustomExceptions.PlayerException;
 
 public class Player {
     private String _userName;
     private String _displayName;
-    private int _gameID;
+    private String _gameID;
     private PlayerColor _color;
     private int _points;
 
-    public Player(String userName, String displayName, PlayerColor color) throws InvalidPlayerException
+    public Player(String userName, String displayName, PlayerColor color) throws PlayerException
     {
         if (userName == null || userName.isEmpty() || displayName == null || displayName.isEmpty() || color == null)
         {
-            throw new InvalidPlayerException("Invalid shared.Player parameters");
+            throw new PlayerException("Invalid shared.Player parameters");
         }
 
         _userName = userName;
         _displayName = displayName;
-        _gameID = -1;
+        _gameID = new String();
         _color = color;
         _points = 0;
     }
@@ -34,7 +34,7 @@ public class Player {
         return _displayName;
     }
 
-    public int getGameID()
+    public String getGameID()
     {
         return _gameID;
     }
@@ -53,8 +53,13 @@ public class Player {
         _points += add;
     }
 
-    public void setGameID(int id)
+    public void setGameID(String id) throws PlayerException
     {
+        if (id == null || id.isEmpty())
+        {
+            throw new PlayerException("Player gameID cannot be null or empty");
+        }
+
         _gameID = id;
     }
 }

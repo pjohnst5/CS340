@@ -1,26 +1,22 @@
 package server.ServerFacade;
 
-import shared.Command.GenericCommand;
-import shared.Command.ICommand;
+import shared.Response.IResponse;
 
-//Package private, only ServerFacade should touch these
+//Only ServerFacade should touch these
 class GameLobbyFacade {
 
-    public static ICommand leaveGame(String username, String gameID)
+    public static IResponse leaveGame(String username, String gameID)
     {
-        String[] array = new String[2];
-        return new GenericCommand("","",array,null,null);
+        return null;
     }
 
-    public static ICommand startGame(String gameID)
+    public static IResponse startGame(String gameID)
     {
-        String[] array = new String[2];
-        return new GenericCommand("","",array,null,null);
+        return null;
     }
 
-    public static ICommand sendMessage(String gameID, String message)
+    public static IResponse sendMessage(String gameID, String message)
     {
-        String[] array = new String[2];
-        return new GenericCommand("","",array,null,null);
+        return null;
     }
 }

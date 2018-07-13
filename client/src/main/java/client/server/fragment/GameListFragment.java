@@ -97,7 +97,7 @@ public class GameListFragment extends Fragment implements IGameListView {
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
