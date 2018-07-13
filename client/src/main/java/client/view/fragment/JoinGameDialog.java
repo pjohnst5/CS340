@@ -16,6 +16,7 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import client.model.ClientModel;
 import client.presenter.GameListPresenter;
+import client.server.communication.poll.GameListPoller;
 import shared.model.Game;
 
 public class JoinGameDialog extends DialogFragment {
@@ -107,7 +108,12 @@ public class JoinGameDialog extends DialogFragment {
                 .setView(v)
                 .setTitle(R.string.join_game_dialog_title)
                 .setCancelable(true)
-                .setNegativeButton(R.string.cancel, null)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        GameListPoller.instance().start();
+                    }
+                })
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -121,7 +127,7 @@ public class JoinGameDialog extends DialogFragment {
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ad.cancel();
+                ad.getButton(Dialog.BUTTON_NEGATIVE).callOnClick();
             }
         });
 

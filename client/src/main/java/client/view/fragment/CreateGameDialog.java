@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
 
+import client.server.communication.poll.GameListPoller;
+
 /**
  * Created by jtyler17 on 7/10/18.
  */
@@ -67,7 +69,9 @@ public class CreateGameDialog extends DialogFragment {
                 .setTitle(R.string.create_game_dialog_title)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) { }
+                    public void onClick(DialogInterface dialog, int which) {
+                        GameListPoller.instance().start();
+                    }
                 })
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
