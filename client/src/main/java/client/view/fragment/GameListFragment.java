@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
@@ -143,13 +144,26 @@ public class GameListFragment extends Fragment implements IGameListView {
     private class GameHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private Game mGame;
+        private TextView mGameIdView;
+        private TextView mGameNameView;
+        private TextView mGamePlayerNumView;
 
         public GameHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.game_list_item, parent, false));
+
+            mGameIdView = itemView.findViewById(R.id.game_id_view);
+            mGameNameView = itemView.findViewById(R.id.game_name_view);
+            mGamePlayerNumView = itemView.findViewById(R.id.game_player_num_view);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Game game) {
             mGame = game;
+            mGameIdView.setText(mGame.getGameID());
+            mGameNameView.setText(mGame.getGameName());
+            String allowedPlayers = Integer.toString(mGame.getPlayers().size());
+            allowedPlayers += "/" + mGame.getMaxPlayers();
+            mGamePlayerNumView.setText(allowedPlayers);
         }
 
         @Override
