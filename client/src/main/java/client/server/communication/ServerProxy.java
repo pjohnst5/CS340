@@ -31,7 +31,7 @@ public class ServerProxy {
             return;
         }
 
-        throw new ServerProxyException("Server failed to return a successful response");
+        throw new ServerProxyException(response.getErrorMessage());
     }
 
     public void usePoller(Poller poller){

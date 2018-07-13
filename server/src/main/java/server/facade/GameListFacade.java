@@ -32,6 +32,9 @@ class GameListFacade {
             //adds game to serverModel
             serverModel.addNewGame(game);
 
+            //Add player who's in game to serverModel
+            serverModel.addPlayer(game.getPlayers().get(0));
+
             //Get map of active games
             GamesWrapper games = new GamesWrapper();
             games.setGames(serverModel.getGames());
@@ -53,7 +56,7 @@ class GameListFacade {
             Object[] paramValues2 = {game.getPlayers().get(0)}; //gets first player
 
             //Client will check if the player joining a game is him/herself. If it is, it sets current game
-            ICommand command2 = new GenericCommand(className, methodName, paramTypes, paramValues, null);
+            ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
 //--------------------------
             response.addCommand(command);
             response.addCommand(command2);

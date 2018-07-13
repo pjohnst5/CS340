@@ -126,7 +126,11 @@ public class ServerModel {
     }
 
     public void addPlayer(Player player) throws ServerException {
-        throw new ServerException("not valid");
+        if (_players.containsKey(player.getPlayerID())){
+            throw new ServerException("player already exists in server");
+        }
+
+        _players.put(player.getPlayerID(), player);
     }
 
 

@@ -27,26 +27,27 @@ public class JoinGameDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_join_game, null);
-
-        mColorPicker = v.findViewById(R.id.dialog_join_color);
-        ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.player_colors, android.R.layout.simple_spinner_item);
-        mColorPicker.setAdapter(colorAdapter);
-        mColorPicker.setSelection(4);
-
-        return new AlertDialog.Builder(getActivity())
-                .setView(v)
-                .setTitle(R.string.join_game_dialog_title)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        int color = mColorPicker.getSelectedItemPosition();
-
-                        sendResult(Activity.RESULT_OK, color);
-                    }
-                })
-                .create();
+//        //View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_join_game, null);
+//
+//        //mColorPicker = v.findViewById(R.id.dialog_join_color);
+//        ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(getActivity(),
+//                R.array.player_colors, android.R.layout.simple_spinner_item);
+//        mColorPicker.setAdapter(colorAdapter);
+//        mColorPicker.setSelection(4);
+//
+//        return new AlertDialog.Builder(getActivity())
+//                .setView(v)
+//                .setTitle(R.string.join_game_dialog_title)
+//                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        int color = mColorPicker.getSelectedItemPosition();
+//
+//                        sendResult(Activity.RESULT_OK, color);
+//                    }
+//                })
+//                .create();
+        return null;
     }
 
     private void sendResult(int resultCode,
