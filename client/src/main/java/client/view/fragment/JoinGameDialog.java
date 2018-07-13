@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +15,7 @@ import android.widget.EditText;
 import com.pjohnst5icloud.tickettoride.R;
 
 import client.model.ClientModel;
+import client.presenter.GameListPresenter;
 import shared.model.Game;
 
 public class JoinGameDialog extends DialogFragment {
@@ -25,13 +25,19 @@ public class JoinGameDialog extends DialogFragment {
     private Button mGreenTrainButton;
     private Button mRedTrainButton;
     private Button mYellowTrainButton;
+    private EditText mGameRoomName;
+
+    private Button mCancelButton;
+    private Button mJoinButton;
+
+    private Game mCurrentGame;
 
     private EditText mDisplayName;
 
     private int mActiveIndex;
     private Button[] mButtons;
 
-    private Game _currentGame;
+
 
     public static final String EXTRA_DISPLAY_NAME = "client.server.JoinGameDialog.displayName";
     public static final String EXTRA_PLAYER_COLOR = "client.server.JoinGameDialog.playerColor";
@@ -46,6 +52,16 @@ public class JoinGameDialog extends DialogFragment {
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_join_game, null);
 
         mDisplayName = v.findViewById(R.id.join_game_display_name);
+        String gameId = getArguments().getString("GameId");
+
+
+        mCurrentGame = ClientModel.getInstance().getGames().get(gameId);
+
+        mGameRoomName = v.findViewById(R.id.join_game_room_number);
+        mGameRoomName.setText(mCurrentGame.getGameName());
+
+        mCancelButton = v.findViewById(R.id.join_game_cancel_dialog);
+        mJoinButton = v.findViewById(R.id.join_game_call_join);
 
         mBlackTrainButton = v.findViewById(R.id.join_game_train_color_black_button);
         mBlueTrainButton = v.findViewById(R.id.join_game_train_color_blue_button);
@@ -83,9 +99,15 @@ public class JoinGameDialog extends DialogFragment {
             });
         }
 
-        return new AlertDialog.Builder(getActivity())
+
+
+
+
+        AlertDialog ad =  new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.join_game_dialog_title)
+                .setCancelable(true)
+                .setNegativeButton(R.string.cancel, null)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -95,7 +117,24 @@ public class JoinGameDialog extends DialogFragment {
                     }
                 })
                 .create();
+
+        mCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ad.cancel();
+            }
+        });
+
+        mJoinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ad.getButton(Dialog.BUTTON_POSITIVE).callOnClick();
+            }
+        });
+
+        return ad;
     }
+
 
     private void sendResult(int resultCode,
                             String displayName,
