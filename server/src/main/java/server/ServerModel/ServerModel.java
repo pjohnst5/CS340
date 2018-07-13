@@ -12,6 +12,7 @@ import shared.CustomExceptions.InvalidUserException;
 import shared.model.Game;
 import shared.model.Player;
 import shared.model.User;
+import shared.model.request.JoinRequest;
 
 public class ServerModel {
 
@@ -34,7 +35,7 @@ public class ServerModel {
     }
 
     private Map<String, User> _users;
-    private Map<String, Player> _players; //displayName to Player
+    private Map<String, Player> _players; //playerid's to Player
     private Map<String, Game> _games;  //gameid's to games
     private List<UUID> _uuids;
     private CommandManager _manager;
@@ -106,7 +107,7 @@ public class ServerModel {
 
 
     //GameList
-    public void addGame(Game game) throws ServerException {
+    public void addNewGame(Game game) throws ServerException {
         //set gameID
         String gameID = UUID.randomUUID().toString();
         try {
@@ -120,7 +121,11 @@ public class ServerModel {
         }
     }
 
-    public void addPlayer(Player player, String gameID) throws ServerException {
+    public void replaceExistingGame(Game game) throws ServerException {
+        _games.put(game.getGameID(), game);
+    }
+
+    public void addPlayer(Player player) throws ServerException {
         throw new ServerException("not valid");
     }
 
@@ -140,7 +145,13 @@ public class ServerModel {
 
     //Getters
     public Game getGame(String gameID) throws ServerException {
-        return null;
+            Game g = _games.get(gameID);
+
+            if(g == null){
+                throw new ServerException("Game does not exist in server");
+            }
+
+        return _games.get(gameID);
     }
 
     public Player getPlayer(String username) throws ServerException

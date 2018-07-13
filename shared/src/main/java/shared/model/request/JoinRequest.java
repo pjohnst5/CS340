@@ -21,5 +21,20 @@ public class JoinRequest {
         _gameId = gameId;
     }
 
+    public String getUserName() {
+        return _userName;
+    }
+
+    public String getDisplayName() {
+        return _displayName;
+    }
+
+    public PlayerColor getColor() {
+        return _color;
+    }
+
+    public String getGameID() {
+        return _gameId;
+    }
 
 }
