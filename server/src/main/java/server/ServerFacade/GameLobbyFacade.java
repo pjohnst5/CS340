@@ -24,6 +24,12 @@ class GameLobbyFacade {
             if (game.getStarted()){
                 throw new ServerException("Game has already started, can't start it twice.");
             }
+
+            if (!game.getReady()) {
+                throw new ServerException("Game is not full, can't start without max players");
+            }
+
+            //This is really all start game does
             game.setStarted(true);
 
             String className = ConfigurationManager.getString("client_facade_name");
@@ -32,6 +38,9 @@ class GameLobbyFacade {
             Object[] paramValues = {gameID};
 
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
+
+            //add command to list of commands for game
+            serverModel.addCommand(game.getGameID(), command);
 
             response.addCommand(command);
             response.setSuccess(true);

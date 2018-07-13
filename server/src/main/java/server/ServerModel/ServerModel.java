@@ -180,6 +180,10 @@ public class ServerModel {
         return _manager.getCommands(gameID, index);
     }
 
+    public List<ICommand> getCommands(String gameID) throws ServerException {
+        return _manager.getCommands(gameID);
+    }
+
     public Map<String, Game> getGames() {
         return _games;
     }

@@ -13,6 +13,7 @@ public class Game {
     private List<Player> _players;
     private int _maxPlayers;
     private boolean _started;
+    private boolean _readyToStart;
 
     public Game(String gameName, int maxPlayers) throws InvalidGameException
     {
@@ -28,6 +29,8 @@ public class Game {
         _gameID = new String();
         _players = new ArrayList<>();
         _maxPlayers = maxPlayers;
+        _started = false;
+        _readyToStart = false;
     }
 
     public String getGameName()
@@ -53,6 +56,11 @@ public class Game {
     public boolean getStarted()
     {
         return _started;
+    }
+
+    public boolean getReady()
+    {
+        return _readyToStart;
     }
 
 
@@ -87,6 +95,9 @@ public class Game {
             throw new MaxPlayersException(_maxPlayers);
         }
         _players.add(p);
+        if (_players.size() == _maxPlayers){
+            _started = true;
+        }
         return _players.size();
     }
 
@@ -124,5 +135,9 @@ public class Game {
         }
 
         _started = b;
+    }
+
+    public void setReady(boolean b) {
+        _readyToStart = b;
     }
 }

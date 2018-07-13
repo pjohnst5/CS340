@@ -1,5 +1,7 @@
 package server.ServerFacade;
 
+import com.sun.security.ntlm.Server;
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -32,7 +34,7 @@ class GameListFacade {
             //adds game to serverModel
             serverModel.addNewGame(game);
 
-            //Make map of active games
+            //Get map of active games
             Map<String, Game> activeGames = serverModel.getGames();
 
             String className = ConfigurationManager.getString("client_facade_name");
@@ -61,6 +63,11 @@ class GameListFacade {
             Game game = serverModel.getGame(jr.getGameID());
             List<Player> players = game.getPlayers();
 
+            //If game is full, can't add more people
+            if (game.getReady()){
+                throw new ServerException("Game is full, can't add new player");
+            }
+
             //Error checking
             for (int i = 0; i < players.size(); i++){
                 if (players.get(i).getColor().equals(jr.getColor())){
@@ -80,15 +87,13 @@ class GameListFacade {
             //Good to make new player
             Player player = new Player(jr.getUserName(),jr.getDisplayName(),jr.getColor(),game.getGameID(), UUID.randomUUID().toString());
 
-            int sizeOfCommands = serverModel.getCommands(player.getGameID(), -2).size();
-            int oldIndex = player.getIndex();
 
-            //Accounts for him getting his own command
-            player.setIndex(oldIndex + sizeOfCommands + 1);
+            //Sets player's index to size of game commands (he's going to add one himself)
+            player.setIndex(serverModel.getCommands(jr.getGameID()).size());
 
             //Command for client
             String className = ConfigurationManager.getString("client_facade_name");
-            String methodName = ConfigurationManager.getString("server_join_game_method");
+            String methodName = ConfigurationManager.getString("client_join_game_method");
             String[] paramTypes = {Player.class.getCanonicalName()};
             Object[] paramValues = {player};
 
@@ -99,7 +104,7 @@ class GameListFacade {
             serverModel.addCommand(jr.getGameID(),command);
 
             //Get list of commands from game the player just joined
-            List<ICommand> commands = serverModel.getCommands(player.getGameID(), -2);
+            List<ICommand> commands = serverModel.getCommands(player.getGameID());
 
             //add player to game
             game.addPlayer(player);
@@ -107,7 +112,7 @@ class GameListFacade {
             //add game back in to server model
             serverModel.replaceExistingGame(game);
 
-            //add player into model
+            //add player to model
             serverModel.addPlayer(player);
 
             //add all the commands for the game the user just joined.
