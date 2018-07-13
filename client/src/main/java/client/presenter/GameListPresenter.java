@@ -16,11 +16,13 @@ import client.server.task.AsyncServerTask;
 import client.server.task.JoinGameTask;
 import shared.enumeration.PlayerColor;
 import shared.exception.InvalidGameException;
+import shared.exception.InvalidGameRequestException;
 import shared.exception.MaxPlayersException;
 import shared.exception.PlayerException;
 import shared.model.Game;
 import shared.model.Player;
 import shared.model.User;
+import shared.model.request.JoinRequest;
 
 public class GameListPresenter implements IGameListPresenter, Observer, AsyncServerTask.AsyncCaller {
     private IGameListView _view;
@@ -43,7 +45,6 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
             Game currentGame = _model.getCurrentGame();
             if (currentGame != null) {
                 _view.joinGame();
-
             } else {
                 Map<String, Game> gameMap = _model.getGames();
                 List<Game> games = new ArrayList(gameMap.values());
@@ -78,9 +79,14 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
     }
 
     @Override
-    public void joinGame(String gameId) {
-        JoinGameTask request = new JoinGameTask();
-        request.set_gameId(gameId);
+    public void joinGame(String displayName, PlayerColor color, String gameId) {
+        JoinRequest request = null;
+        try {
+            request = new JoinRequest(_model.getUser().getUserName(), displayName, color, gameId);
+        } catch (InvalidGameRequestException e) {
+            e.printStackTrace();
+            _view.showToast("Error joining game");
+        }
         new AsyncServerTask(this).execute(request);
     }
 

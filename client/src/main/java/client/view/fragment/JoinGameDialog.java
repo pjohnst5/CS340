@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.pjohnst5icloud.tickettoride.R;
 
@@ -25,11 +26,14 @@ public class JoinGameDialog extends DialogFragment {
     private Button mRedTrainButton;
     private Button mYellowTrainButton;
 
+    private EditText mDisplayName;
+
     private int mActiveIndex;
     private Button[] mButtons;
 
     private Game _currentGame;
 
+    public static final String EXTRA_DISPLAY_NAME = "client.server.JoinGameDialog.displayName";
     public static final String EXTRA_PLAYER_COLOR = "client.server.JoinGameDialog.playerColor";
 
     public static JoinGameDialog newInstance() {
@@ -41,7 +45,7 @@ public class JoinGameDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_join_game, null);
 
-        _currentGame = ClientModel.getInstance().getCurrentGame();
+        mDisplayName = v.findViewById(R.id.join_game_display_name);
 
         mBlackTrainButton = v.findViewById(R.id.join_game_train_color_black_button);
         mBlueTrainButton = v.findViewById(R.id.join_game_train_color_blue_button);
@@ -86,20 +90,22 @@ public class JoinGameDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         int color = mActiveIndex;
-
-                        sendResult(Activity.RESULT_OK, color);
+                        String displayName = mDisplayName.getText().toString();
+                        sendResult(Activity.RESULT_OK, displayName, color);
                     }
                 })
                 .create();
     }
 
     private void sendResult(int resultCode,
+                            String displayName,
                             int color) {
         if (getTargetFragment() == null) {
             return;
         }
         Intent intent = new Intent();
         intent.putExtra(EXTRA_PLAYER_COLOR, color);
+        intent.putExtra(EXTRA_DISPLAY_NAME, displayName);
 
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }

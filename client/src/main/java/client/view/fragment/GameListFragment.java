@@ -96,26 +96,33 @@ public class GameListFragment extends Fragment implements IGameListView {
             int maxPlayers = data.getIntExtra(CreateGameDialog.EXTRA_MAX_PLAYERS, 2);
             int color = data.getIntExtra(CreateGameDialog.EXTRA_PLAYER_COLOR, 0);
 
-            PlayerColor playerColor = PlayerColor.BLACK;
-            switch (color) {
-                case 1:
-                    playerColor = PlayerColor.BLUE;
-                    break;
-                case 2:
-                    playerColor = PlayerColor.GREEN;
-                    break;
-                case 3:
-                    playerColor = PlayerColor.RED;
-                    break;
-                case 4:
-                    playerColor = PlayerColor.YELLOW;
-                    break;
-            }
+            PlayerColor playerColor = getColorChoice(color);
+
             mPresenter.createGame(gameName, displayName, playerColor, maxPlayers);
         }
 
         if (requestCode == JOIN_GAME_DIALOG_CODE) {
-            // FIXME: implement
+            String displayName = data.getStringExtra(JoinGameDialog.EXTRA_DISPLAY_NAME);
+            int color = data.getIntExtra(JoinGameDialog.EXTRA_PLAYER_COLOR, 0);
+
+            PlayerColor playerColor = getColorChoice(color);
+
+            mPresenter.joinGame(displayName, playerColor, mCurrentlySelectedGame.getGameID());
+        }
+    }
+
+    private PlayerColor getColorChoice(int color) {
+        switch (color) {
+            case 1:
+                return PlayerColor.BLUE;
+            case 2:
+                return PlayerColor.GREEN;
+            case 3:
+                return PlayerColor.RED;
+            case 4:
+                return PlayerColor.YELLOW;
+            default:
+                return PlayerColor.BLACK;
         }
     }
 
@@ -125,6 +132,7 @@ public class GameListFragment extends Fragment implements IGameListView {
     }
 
     public void _updateGamesList(List<Game> games){
+        if (games == null) {return;}
         mGameListAdapter = new GameListAdapter(games);
         mGameListRecyclerView.setAdapter(mGameListAdapter);
         if (mCurrentlySelectedGame != null) {

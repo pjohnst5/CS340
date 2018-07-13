@@ -33,7 +33,6 @@
             android:layout_toEndOf="@id/join_game_room_number_label"
             android:inputType="none"
             android:enabled="false"
-            android:editable="false"
             android:text="STUFF"/>
 
     </RelativeLayout>
