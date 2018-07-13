@@ -10,6 +10,7 @@ import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.configuration.ConfigurationManager;
 import shared.model.Game;
+import shared.model.GamesWrapper;
 import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
 
@@ -23,10 +24,14 @@ class CommandManagerFacade {
 
         Map<String,Game> activeGames = serverModel.getGames();
 
+        GamesWrapper wrapper = new GamesWrapper();
+
+        wrapper.setGames(activeGames);
+
         String className = ConfigurationManager.getString("client_facade_name");
         String methodName = ConfigurationManager.getString("client_set_games_method");
-        String[] paramTypes = {activeGames.getClass().getCanonicalName()};
-        Object[] paramValues = {activeGames};
+        String[] paramTypes = {wrapper.getClass().getCanonicalName()};
+        Object[] paramValues = {wrapper};
 
         ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
