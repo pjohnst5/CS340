@@ -14,6 +14,7 @@ public class Game {
     private int _maxPlayers;
     private boolean _started;
     private boolean _readyToStart;
+    private List<Message> _messages;
 
     public Game(String gameName, int maxPlayers) throws InvalidGameException
     {
@@ -139,5 +140,16 @@ public class Game {
 
     public void setReady(boolean b) {
         _readyToStart = b;
+    }
+
+    public List<Message> get_messages() {
+        return _messages;
+    }
+
+    public void set_messages(List<Message> _messages) {
+        this._messages = _messages;
+    }
+    public void addMessage(Message message){
+        this._messages.add(message);
     }
 }

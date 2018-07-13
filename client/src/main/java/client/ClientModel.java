@@ -1,12 +1,19 @@
 package client;
 
+import android.nfc.Tag;
+import android.util.Log;
+
 import java.util.Map;
 import java.util.Observable;
 
+import shared.CustomExceptions.InvalidGameException;
+import shared.CustomExceptions.MaxPlayersException;
 import shared.model.Game;
 import shared.model.Message;
 import shared.model.Player;
 import shared.model.User;
+
+import static android.content.ContentValues.TAG;
 
 public class ClientModel extends Observable {
     private static final ClientModel ourInstance = new ClientModel();
@@ -38,8 +45,10 @@ public class ClientModel extends Observable {
     }
 
     public void setCurrentGame(Game currentGame) {
-        this._currentGame = currentGame;
-        notifyObservers();
+        if(currentGame != null){
+            this._currentGame = currentGame;
+            notifyObservers();
+        }
     }
 
     public Map<String, Game> getGames() {
@@ -47,18 +56,57 @@ public class ClientModel extends Observable {
     }
 
     public void setGames(Map<String, Game> games) {
-        this._games = games;
-        notifyObservers();
+        if(games != null){
+            this._games = games;
+            notifyObservers();
+        }
     }
 
     public void addGameToList(Game game){
-        String key = game.getGameID();
-        this._games.put(key, game);
+        if(game != null){
+            String key = game.getGameID();
+            this._games.put(key, game);
+            notifyObservers();
+        }
     }
 
-    public void addPlayer(Player player){}
+    public void addPlayer(Player player) {
+        if(player != null){
+            String gameId = player.getGameID();
+            Game g = this._games.get(gameId);
+            try {
+                g.addPlayer(player);
+            } catch (MaxPlayersException e) {
+                Log.i(TAG, e.getMessage());
+                e.printStackTrace();
+            }
 
-    public void startGame(String gameId){}
+            if(player.getPlayerID().equals(this._user.getUserName())){
+                setCurrentGame(g);
+            }
+            notifyObservers();
+        }
+    }
 
-    public void sendMessage(Message message){}
+    public void startGame(String gameId){
+        if(gameId != null) {
+            Game g = this._games.get(gameId);
+            try {
+                g.setStarted(true);
+            } catch (InvalidGameException e) {
+                Log.i(TAG, e.getMessage());
+                e.printStackTrace();
+            }
+            notifyObservers();
+        }
+    }
+
+    public void sendMessage(Message message){
+        if(message != null) {
+            String gameId = message.getGameID();
+            Game game = this._games.get(gameId);
+            game.addMessage(message);
+            notifyObservers();
+        }
+    }
 }
