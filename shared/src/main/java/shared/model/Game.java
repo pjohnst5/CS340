@@ -1,4 +1,4 @@
-package shared;
+package shared.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,23 +12,21 @@ public class Game {
     private String _gameID;
     private List<Player> _players;
     private int _maxPlayers;
+    private boolean _started;
 
-    public Game(String gameName, Player player, int maxPlayers) throws InvalidGameException
+    public Game(String gameName, int maxPlayers) throws InvalidGameException
     {
         if (maxPlayers < 2 || maxPlayers > 5)
         {
             throw new InvalidGameException("Invalid number of players : " + maxPlayers);
         }
         if (gameName.isEmpty() || gameName == null){
-            throw new InvalidGameException("shared.Game must have a name");
+            throw new InvalidGameException("shared.model.Game must have a name");
         }
-        if (player == null) {
-            throw new InvalidGameException("shared.Game must have at least one player");
-        }
+
         _gameName = gameName;
         _gameID = new String();
         _players = new ArrayList<>();
-        _players.add(player);
         _maxPlayers = maxPlayers;
     }
 
@@ -52,12 +50,17 @@ public class Game {
         return _maxPlayers;
     }
 
+    public boolean getStarted()
+    {
+        return _started;
+    }
+
 
     public void setGameName(String s) throws InvalidGameException
     {
         if (s.isEmpty() || s == null)
         {
-            throw new InvalidGameException("shared.Game must have a name");
+            throw new InvalidGameException("shared.model.Game must have a name");
         }
         _gameName = s;
     }
@@ -99,5 +102,27 @@ public class Game {
             }
         }
         return _players.size();
+    }
+
+    public void setGameID(String s) throws InvalidGameException
+    {
+        if (s == null || s.isEmpty()){
+            throw new InvalidGameException("GameID cannot be null");
+        }
+
+        _gameID = s;
+    }
+
+    public void setStarted(boolean b) throws InvalidGameException
+    {
+        if (_started && b) {
+            throw new InvalidGameException("game has already started, can't end it again");
+        }
+
+        if (!_started && !b) {
+            throw new InvalidGameException("Game has already ended, can't end it again");
+        }
+
+        _started = b;
     }
 }

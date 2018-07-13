@@ -1,10 +1,12 @@
 package client;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 
-import shared.Game;
-import shared.User;
+import shared.model.Game;
+import shared.model.Message;
+import shared.model.Player;
+import shared.model.User;
 
 public class ClientModel extends Observable {
     private static final ClientModel ourInstance = new ClientModel();
@@ -16,7 +18,7 @@ public class ClientModel extends Observable {
     private ClientModel() {}
 
     private User _user;
-    private List<Game> _games;
+    private Map<String, Game> _games;
     private Game _currentGame;
 
 
@@ -38,17 +40,23 @@ public class ClientModel extends Observable {
         notifyObservers();
     }
 
-    public List<Game> getGames() {
+    public Map<String, Game> getGames() {
         return _games;
     }
 
-    public void setGames(List<Game> games) {
+    public void setGames(Map<String, Game> games) {
         this._games = games;
         notifyObservers();
     }
 
     public void addGameToList(Game game){
-        this._games.add(game);
+        String key = game.getGameID();
+        this._games.put(key, game);
     }
 
+    public void addPlayer(Player player){}
+
+    public void startGame(String gameId){}
+
+    public void sendMessage(Message message){}
 }

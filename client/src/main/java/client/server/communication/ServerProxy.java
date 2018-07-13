@@ -1,9 +1,12 @@
 package client.server.communication;
 
+import java.util.List;
+
 import client.server.communication.poll.Poller;
+import shared.Command.GenericCommand;
 import shared.Command.ICommand;
 import shared.CustomExceptions.ServerProxyException;
-import shared.Response.CommandResponse;
+import shared.model.response.CommandResponse;
 
 public class ServerProxy {
 
@@ -20,10 +23,10 @@ public class ServerProxy {
         CommandResponse response = (CommandResponse)ClientCommunicator.sendCommand(command);
 
         if (response.getSuccess()){
-            ICommand[] commands = response.getCommands();
+            List<ICommand> commands = response.getCommands();
 
-            for (int i = 0; i <= commands.length; i++){
-                commands[i].execute();
+            for (int i = 0; i <= commands.size(); i++){
+                commands.get(i).execute();
             }
 
             return;

@@ -7,10 +7,14 @@ import java.util.Map;
 import java.util.UUID;
 
 import server.exception.ServerException;
+import shared.Command.GenericCommand;
+import shared.Command.ICommand;
+import shared.CustomExceptions.InvalidGameException;
 import shared.CustomExceptions.InvalidUserException;
-import shared.Game;
-import shared.Player;
-import shared.User;
+import shared.model.Game;
+import shared.model.Player;
+import shared.model.User;
+import shared.model.request.JoinRequest;
 
 public class ServerModel {
 
@@ -33,37 +37,100 @@ public class ServerModel {
     }
 
     private Map<String, User> _users;
-    private Map<String, Player> _players;
-    private Map<String, Game> _games;
+    private Map<String, Player> _players; //playerid's to Player
+    private Map<String, Game> _games;  //gameid's to games
     private List<UUID> _uuids;
     private CommandManager _manager;
 
 
-    //Adders
-    public void addGame(Game game) throws ServerException {
-        return;
-    }
-
-    public User addUser(User user) throws ServerException { //parameter doesn't have UUID, return User object does
-        return null;
-    }
-
-    public void addPlayer(Player player, String gameID) throws ServerException {
-        throw new ServerException("not valid");
-    }
-
+    //Login/Register
     public User authenticate(String username, String password) throws ServerException {
-        //TODO: actually error check
+
+        //Error checking
+        if (!_users.containsKey(username)){
+            throw new ServerException("User is not registered");
+        }
+
+        if (!_users.get(username).getPassword().equals(password)) {
+            throw new ServerException("Wrong password");
+        }
+
+
         try {
-            User user = new User(username, password);
-            user.setUUID(UUID.fromString(password));
+            //Get user from map
+            User user = _users.get(username);
+
+            //Make new UUID
+            UUID uuid = UUID.randomUUID();
+
+            //Insert UUID into server model
+            _uuids.add(uuid);
+
+            //Set new uuid for User
+            user.setUUID(uuid);
+
+            //Insert new User (new because new UUID) into the map
+            _users.put(user.getUserName(), user);
+
             return user;
 
-        } catch(InvalidUserException e)
-        {
+        } catch(InvalidUserException e) {
             throw new ServerException(e.getMessage());
         }
     }
+
+    public User register(String username, String password) throws ServerException {
+
+        //Error checking
+        if (_users.containsKey(username)){
+            throw new ServerException("User is already registered");
+        }
+
+        try {
+            //Make new UUID
+            UUID uuid = UUID.randomUUID();
+
+            //Insert UUID into server model
+            _uuids.add(uuid);
+
+            //Make new user with new UUID
+            User user = new User(username, password);
+            user.setUUID(uuid);
+
+            //Add user into map
+            _users.put(user.getUserName(), user);
+
+            return user;
+
+        } catch(InvalidUserException e) {
+            throw new ServerException(e.getMessage());
+        }
+    }
+
+
+    //GameList
+    public void addNewGame(Game game) throws ServerException {
+        //set gameID
+        String gameID = UUID.randomUUID().toString();
+        try {
+            game.setGameID(gameID);
+
+            //Put game in map
+            _games.put(game.getGameID(), game);
+
+        } catch(InvalidGameException e) {
+            throw new ServerException(e.getMessage());
+        }
+    }
+
+    public void replaceExistingGame(Game game) throws ServerException {
+        _games.put(game.getGameID(), game);
+    }
+
+    public void addPlayer(Player player) throws ServerException {
+        throw new ServerException("not valid");
+    }
+
 
 
 
@@ -80,7 +147,13 @@ public class ServerModel {
 
     //Getters
     public Game getGame(String gameID) throws ServerException {
-        return null;
+            Game g = _games.get(gameID);
+
+            if(g == null){
+                throw new ServerException("Game does not exist in server");
+            }
+
+        return _games.get(gameID);
     }
 
     public Player getPlayer(String username) throws ServerException
@@ -96,16 +169,19 @@ public class ServerModel {
 
 
     //Commands
-    public void addCommand(String gameID) throws ServerException {
-        return;
+    public void addCommand(String gameID, ICommand command) throws ServerException {
+        if (!_games.containsKey(gameID)){
+            throw new ServerException("Game does not exist: cannot add command to game that doesn't exist");
+        }
+        _manager.addCommand(gameID,command);
     }
 
-    public void getCommands(String gameID) throws ServerException {
-        return;
+    public List<ICommand> getCommands(String gameID, int index) throws ServerException {
+        return _manager.getCommands(gameID, index);
     }
 
-    public List<Game> getGames() {
-        return new ArrayList<>(_games.values());
+    public Map<String, Game> getGames() {
+        return _games;
     }
 
 

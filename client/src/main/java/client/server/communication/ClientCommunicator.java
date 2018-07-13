@@ -10,9 +10,9 @@ import java.net.URL;
 
 import shared.Command.GenericCommand;
 import shared.Command.ICommand;
-import shared.Response.CommandResponse;
-import shared.Response.IResponse;
-import shared.communication.serialization.Serializer;
+import shared.model.response.CommandResponse;
+import shared.model.response.IResponse;
+import shared.serialization.Serializer;
 import shared.configuration.ConfigurationManager;
 
 public class ClientCommunicator {
@@ -69,7 +69,7 @@ public class ClientCommunicator {
             URL url = new URL(HOST_URL + endpoint);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(HTTP_POST);
-            connection.setDoOutput(true);
+            connection.setDoOutput(false);
 
             writer = new PrintWriter(connection.getOutputStream());
             Serializer.serializeToWriter(writer, command);

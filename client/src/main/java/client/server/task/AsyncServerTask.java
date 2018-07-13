@@ -3,9 +3,8 @@ package client.server.task;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import client.ClientFacade.GameListFacade;
 import client.ClientFacade.LoginFacade;
-import shared.Game;
+import shared.model.Game;
 
 /**
  * Created by jtyler17 on 6/11/18.
@@ -34,11 +33,11 @@ public class AsyncServerTask extends AsyncTask<Object, Void, Exception> {
                 LoginFacade.register(request.get_username(), request.get_password());
             } else if (object instanceof Game) {
                 Log.i(TAG, "Calling GameListFacade.createGame()...");
-                GameListFacade.createGame((Game) object);
+                //GameListFacade.createGame((Game) object);
             } else if (object instanceof JoinGameTask) {
                 Log.i(TAG, "Calling GameListFacade.joinGame()...");
                 String gameId = ((JoinGameTask) object).get_gameId();
-                GameListFacade.joinGame(gameId);
+                //GameListFacade.joinGame(gameId);
             }
         } catch (Exception e) {
             Log.i(TAG, "Server-side exception thrown");

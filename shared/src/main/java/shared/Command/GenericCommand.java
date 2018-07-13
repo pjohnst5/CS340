@@ -32,6 +32,26 @@ public class GenericCommand implements ICommand {
         _callOn = callOn;
     }
 
+    public String get_className() {
+        return _className;
+    }
+
+    public String get_methodName() {
+        return _methodName;
+    }
+
+    public String[] get_paramTypes() {
+        return _paramTypes;
+    }
+
+    public Object[] get_paramValues() {
+        return _paramValues;
+    }
+
+    public Object get_callOn() {
+        return _callOn;
+    }
+
     @Override
     public Object execute()
     {

@@ -1,6 +1,7 @@
-package shared.communication.serialization;
+package shared.serialization;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
@@ -8,14 +9,22 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
+import shared.Command.GenericCommand;
 import shared.Command.ICommand;
 
 public class Serializer implements ISerializer {
 
-    private static Gson _gson = new Gson();
+    private static Gson _gson; // = new Gson();
     private static Serializer _instance = new Serializer();
 
-    private Serializer(){}
+    private Serializer(){
+        GsonBuilder builder = new GsonBuilder();
+
+        // Adding custom deserializers
+        builder.registerTypeAdapter(ICommand.class, new GenericCommandSerializer());
+
+        _gson = builder.create();
+    }
 
     public static String _serialize(Object object) {
         return _instance.serialize(object);

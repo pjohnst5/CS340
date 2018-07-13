@@ -1,5 +1,6 @@
 package shared.configuration;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,10 +8,21 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigurationManager {
-    private static final String CONFIG_PATH = "config.properties";
+    private static final String CONFIG_PATH = "client" +
+            File.separator + "src" +
+            File.separator + "main" +
+            File.separator + "assets" +
+            File.separator + "config.properties";
 
-    private static ConfigurationManager _instance = new ConfigurationManager();
     private Properties _prop;
+    private static ConfigurationManager _instance = new ConfigurationManager();
+    private static ConfigurationManager instance() {
+        if (!initialized)
+            _instance.init();
+        return _instance;
+    }
+
+    private static boolean initialized;
 
     private boolean catchError(Exception e, String msg){
         System.out.println(msg);
@@ -19,18 +31,53 @@ public class ConfigurationManager {
     }
 
     private ConfigurationManager(){
-        boolean SysExitFlag = false;
+        initialized = false;
+    }
 
-        _prop = new Properties();
+    public static void use(InputStream is){
+        if (!initialized) {
+            _instance.init(is);
+            initialized = true;
+        }
+    }
+
+    private void init(){
+
+        if (initialized) return;
+
         InputStream input = null;
 
         try {
-
             input = new FileInputStream(CONFIG_PATH);
-            _prop.load(input);
+            init(input);
 
         } catch (FileNotFoundException e) {
-            SysExitFlag = catchError(e, "Absent configurations file");
+            catchError(e, "Absent configurations file");
+
+            if (input != null){
+                try {
+                    input.close();
+                } catch (IOException ex){
+                    catchError(ex, "Could not close file.");
+                }
+
+            }
+
+            System.exit(1);
+
+        }
+    }
+
+    private void init(InputStream input){
+
+        if (initialized) return;
+
+        boolean SysExitFlag = false;
+
+        _prop = new Properties();
+
+        try {
+            _prop.load(input);
 
         } catch (IOException e) {
             SysExitFlag = catchError(e, "Exception encountered processing the file");
@@ -50,6 +97,9 @@ public class ConfigurationManager {
                 System.exit(1);
 
         }
+        initialized = true;
+
+        System.out.println("Configurations File Loaded");
     }
 
     public static String get(String prop) {
@@ -61,7 +111,7 @@ public class ConfigurationManager {
     }
 
     public static int getInt(String prop){
-        String propResult = _instance._prop.getProperty(prop);
+        String propResult = instance()._prop.getProperty(prop);
         int parseResult = Integer.parseInt(propResult);
         return parseResult;
     }
