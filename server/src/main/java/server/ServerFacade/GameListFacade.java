@@ -88,7 +88,7 @@ class GameListFacade {
 
             //Command for client
             String className = ConfigurationManager.getString("client_facade_name");
-            String methodName = ConfigurationManager.getString("client_add_player_method");
+            String methodName = ConfigurationManager.getString("client_start_game_method");
             String[] paramTypes = {Player.class.getCanonicalName()};
             Object[] paramValues = {player};
 
