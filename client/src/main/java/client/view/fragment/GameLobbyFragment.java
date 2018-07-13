@@ -72,13 +72,16 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
         mChatRecyclerView = v.findViewById(R.id.chat_list_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        updateView(mCurrentGame);
         return v;
     }
 
     private void updateView(Game game) {
         mCurrentGame = game;
         if (mCurrentGame == null) { return; }
-        mPlayerListAdapter = new PlayerListAdapter(mCurrentGame.getPlayers());
+        List<Player> players = mCurrentGame.getPlayers();
+        if (players == null) {return; }
+        mPlayerListAdapter = new PlayerListAdapter(players);
 //        mChatAdapter = new ChatAdapter(mCurrentGame.getMessages());
         mPlayerListRecyclerView.setAdapter(mPlayerListAdapter);
         mStartButton.setEnabled(mCurrentGame.getStarted());
@@ -111,7 +114,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
     @Override
     public void setCurrentGame(Game currentGame) {
-        updateView(currentGame);
+        mCurrentGame = currentGame;
     }
 
     @Override
