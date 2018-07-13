@@ -9,6 +9,7 @@ public class Player {
     private String _displayName;
     private String _gameID;
     private PlayerColor _color;
+    private int _index_of_commands; //i.e if this is -1, the player has recieved no commands, if 0 he has received and executed the first command
     private int _points;
 
 
@@ -32,6 +33,7 @@ public class Player {
         _gameID = new String();
         _playerID = new String();
         _color = color;
+        _index_of_commands = -1;
         _points = 0;
     }
 
@@ -63,6 +65,9 @@ public class Player {
     {
         return _playerID;
     }
+    public int getIndex() {
+        return _index_of_commands;
+    }
 
 
     public void addPoints(int add)
@@ -85,5 +90,9 @@ public class Player {
         if (id == null || id.isEmpty()){
             throw new PlayerException("Player ID cannot be null or empty");
         }
+    }
+
+    public void setIndex(int i){
+        _index_of_commands = i;
     }
 }

@@ -32,7 +32,7 @@ class GameListFacade {
             //adds game to serverModel
             serverModel.addNewGame(game);
 
-            //Make list of active games
+            //Make map of active games
             Map<String, Game> activeGames = serverModel.getGames();
 
             String className = ConfigurationManager.getString("client_facade_name");
@@ -97,6 +97,10 @@ class GameListFacade {
             //Client will check if the player joining a game is him/herself. If it is, it sets current game
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
+            //Add "player joined command" in the command manager mapped to the gameID
+            serverModel.addCommand(jr.getGameID(),command);
+
+            //Player who just joined will get a command back that adds him to the game, the poller is responsible for getting the rest of the commands that may be associated with the game
             response.addCommand(command);
             response.setSuccess(true);
 

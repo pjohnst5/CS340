@@ -14,14 +14,14 @@ import shared.Command.ICommand;
 
 public class Serializer implements ISerializer {
 
-    private static Gson _gson = new Gson();
+    private static Gson _gson; // = new Gson();
     private static Serializer _instance = new Serializer();
 
     private Serializer(){
-        final GsonBuilder builder = new GsonBuilder();
+        GsonBuilder builder = new GsonBuilder();
 
         // Adding custom deserializers
-        builder.registerTypeAdapter(ICommand.class, new GsonSerializableDeserializer<GenericCommand>());
+        builder.registerTypeAdapter(ICommand.class, new GenericCommandSerializer());
 
         _gson = builder.create();
     }

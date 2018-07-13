@@ -21,14 +21,6 @@ public class ExecCommandHandler extends Handler {
         GenericCommand command = (GenericCommand) Serializer.deserializeToObject(reader, GenericCommand.class);
 
         CommandResponse result = (CommandResponse) command.execute();
-
-        //CommandResponse response = new CommandResponse();
-
-        //response.setErrorMessage("RAWR");
-        //response.setErrorMessage(result.toString());
-        //response.setSuccess(true);
-
-
         reader.close();
 
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

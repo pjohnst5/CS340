@@ -1,5 +1,7 @@
 package server.ServerModel;
 
+import com.sun.security.ntlm.Server;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,33 +28,35 @@ public class CommandManager {
         _commandList = new HashMap<>();
     }
 
+
+
     public List<ICommand> getCommands(String gameID, int index) throws ServerException
     {
-        return null;
+        if (!_commandList.containsKey(gameID)){
+            throw new ServerException("No game in command manager with that gameID getCommands");
+        }
+
+        if (_commandList.get(gameID).size() == (index + 1)) {
+            throw new ServerException("No new commands to get");
+        }
+
+        if (_commandList.get(gameID).size() < index) {
+            throw new ServerException("Too big of an incex for command manager");
+        }
+        List<ICommand> commands = _commandList.get(gameID);
+        int size = commands.size();
+
+        return commands.subList(index+1,size-1);
     }
+
+
 
     public void addCommand(String gameID, ICommand command) throws ServerException
     {
-        return;
+        if (!_commandList.containsKey(gameID)){
+            throw new ServerException("No game in command manager with that gameID addCommand");
+        }
+        _commandList.get(gameID).add(command);
     }
 
-
-
-
-
-
-
-    public static void TestCommand(String a, int b, int c){
-        System.out.println("TEST COMMAND WORKED!!");
-    }
-
-    public static void GameListPoll(){
-        // TODO: Implement this command
-        System.out.println("GameList Polled");
-    }
-
-    public static void GameLobbyPoll(){
-        // TODO: Implement this command
-        System.out.println("GameLobby Polled");
-    }
 }

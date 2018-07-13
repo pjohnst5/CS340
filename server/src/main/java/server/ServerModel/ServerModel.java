@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import server.exception.ServerException;
+import shared.Command.GenericCommand;
+import shared.Command.ICommand;
 import shared.CustomExceptions.InvalidGameException;
 import shared.CustomExceptions.InvalidUserException;
 import shared.model.Game;
@@ -167,12 +169,15 @@ public class ServerModel {
 
 
     //Commands
-    public void addCommand(String gameID) throws ServerException {
-        return;
+    public void addCommand(String gameID, ICommand command) throws ServerException {
+        if (!_games.containsKey(gameID)){
+            throw new ServerException("Game does not exist: cannot add command to game that doesn't exist");
+        }
+        _manager.addCommand(gameID,command);
     }
 
-    public void getCommands(String gameID) throws ServerException {
-        return;
+    public List<ICommand> getCommands(String gameID, int index) throws ServerException {
+        return _manager.getCommands(gameID, index);
     }
 
     public Map<String, Game> getGames() {
