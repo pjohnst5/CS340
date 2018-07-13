@@ -28,8 +28,6 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
         _model.addObserver(this);
         _poller = GameLobbyPoller.instance();
         ServerProxy.instance().usePoller(_poller);
-
-        _view.updateGame(_model.getCurrentGame());
     }
 
     @Override
