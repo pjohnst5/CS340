@@ -24,11 +24,13 @@ import com.pjohnst5icloud.tickettoride.R;
 
 public class CreateGameDialog extends DialogFragment {
     private EditText mGameNameView;
+    private EditText mDisplayNameView;
     private NumberPicker mMaxPlayersPicker;
     private Spinner mColorPicker;
     private int mColor;
 
     public static final String EXTRA_GAME_NAME = "client.server.gameName";
+    public static final String EXTRA_DISPLAY_NAME = "client.server.displayName";
     public static final String EXTRA_PLAYER_COLOR = "client.server.playerColor";
     public static final String EXTRA_MAX_PLAYERS = "client.server.maxPlayers";
 
@@ -41,48 +43,69 @@ public class CreateGameDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_create_game, null);
 
-        mGameNameView = v.findViewById(R.id.dialog_game_name);
+        mGameNameView = v.findViewById(R.id.create_game_room_name);
+        mDisplayNameView = v.findViewById(R.id.create_game_display_name);
         mMaxPlayersPicker = v.findViewById(R.id.dialog_max_players);
-        mMaxPlayersPicker.setMaxValue(5);
         mMaxPlayersPicker.setMinValue(2);
+        mMaxPlayersPicker.setMaxValue(5);
+        mMaxPlayersPicker.setWrapSelectorWheel(false);
 
         mColorPicker = v.findViewById(R.id.dialog_color);
         ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.player_colors, android.R.layout.simple_spinner_item);
         mColorPicker.setAdapter(colorAdapter);
-        mColorPicker.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*mColorPicker.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 mColor = position;
             }
-        });
-        mColorPicker.setSelection(0);
+        });*/
+        mColorPicker.setSelection(4);
 
 
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.create_game_dialog_title)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) { }
+                })
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String gameName = mGameNameView.getText().toString();
+                        String displayName = mDisplayNameView.getText().toString();
+
                         if (gameName.equals("")) {
                             Toast.makeText(getActivity(), "Game name can't be empty", Toast.LENGTH_SHORT).show();
+
+                        } else if (displayName.equals("")) {
+                            Toast.makeText(getActivity(), "Display name can't be empty", Toast.LENGTH_SHORT).show();
+
                         }
+
                         int maxPlayers = mMaxPlayersPicker.getValue();
                         // FIXME: add color
-                        sendResult(Activity.RESULT_OK, gameName, maxPlayers, mColor);
+
+                        int color = mColorPicker.getSelectedItemPosition();
+
+                        sendResult(Activity.RESULT_OK, gameName, displayName, maxPlayers, color);
                     }
                 })
                 .create();
     }
 
-    private void sendResult(int resultCode, String gameName, int maxPlayers, int color) {
+    private void sendResult(int resultCode,
+                            String gameName,
+                            String displayName,
+                            int maxPlayers,
+                            int color) {
         if (getTargetFragment() == null) {
             return;
         }
         Intent intent = new Intent();
         intent.putExtra(EXTRA_GAME_NAME, gameName);
+        intent.putExtra(EXTRA_DISPLAY_NAME, displayName);
         intent.putExtra(EXTRA_MAX_PLAYERS, maxPlayers);
         intent.putExtra(EXTRA_PLAYER_COLOR, color);
 

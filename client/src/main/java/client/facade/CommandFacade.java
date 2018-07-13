@@ -1,5 +1,6 @@
 package client.facade;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import client.model.ClientModel;
@@ -15,7 +16,7 @@ public class CommandFacade {
         clientModel.setUser(user);
     }
 
-    public static void setGames(Map<String, Game> games){
+    public static void setGames(HashMap<String, Game> games){
         clientModel.setGames(games);
     }
 

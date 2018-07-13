@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
+import shared.command.GenericCommand;
 import shared.command.ICommand;
 
 public class Serializer implements ISerializer {
@@ -21,6 +22,7 @@ public class Serializer implements ISerializer {
 
         // Adding custom deserializers
         builder.registerTypeAdapter(ICommand.class, new GenericCommandSerializer());
+        builder.registerTypeAdapter(GenericCommand.class, new GenericCommandSerializer());
 
         _gson = builder.create();
     }

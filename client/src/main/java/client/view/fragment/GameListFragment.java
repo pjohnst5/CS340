@@ -74,9 +74,12 @@ public class GameListFragment extends Fragment implements IGameListView {
         }
 
         if (requestCode == CREATE_GAME_DIALOG_CODE) {
+
             String gameName = data.getStringExtra(CreateGameDialog.EXTRA_GAME_NAME);
+            String displayName = data.getStringExtra(CreateGameDialog.EXTRA_DISPLAY_NAME);
             int maxPlayers = data.getIntExtra(CreateGameDialog.EXTRA_MAX_PLAYERS, 2);
             int color = data.getIntExtra(CreateGameDialog.EXTRA_PLAYER_COLOR, 0);
+
             PlayerColor playerColor = PlayerColor.BLACK;
             switch (color) {
                 case 1:
@@ -92,7 +95,7 @@ public class GameListFragment extends Fragment implements IGameListView {
                     playerColor = PlayerColor.YELLOW;
                     break;
             }
-            mPresenter.createGame(gameName, playerColor, maxPlayers);
+            mPresenter.createGame(gameName, displayName, playerColor, maxPlayers);
         }
     }
 

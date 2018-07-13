@@ -36,8 +36,8 @@ class GameListFacade {
 
             String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("client_set_games_method");
-            String[] paramTypes = {activeGames.getClass().getCanonicalName()};
-            Object[] paramValues = {activeGames};
+            String[] paramTypes = { activeGames.getClass().getCanonicalName() };
+            Object[] paramValues = { activeGames };
 
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 

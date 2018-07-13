@@ -1,5 +1,7 @@
 package shared.model;
 
+import java.util.UUID;
+
 import shared.enumeration.PlayerColor;
 import shared.exception.PlayerException;
 
@@ -13,7 +15,7 @@ public class Player {
     private int _points;
 
 
-    public Player(String userName, String displayName, PlayerColor color, String gameId, String playerID) throws PlayerException
+    public Player(String userName, String displayName, PlayerColor color, String gameId, String playerId) throws PlayerException
     {
         if (userName == null ||
                 userName.isEmpty() ||
@@ -22,16 +24,16 @@ public class Player {
                 color == null ||
                 gameId == null ||
                 gameId.isEmpty() ||
-                playerID == null ||
-                playerID.isEmpty())
+                playerId == null ||
+                playerId.isEmpty())
         {
             throw new PlayerException("Invalid shared.model.Player parameters");
         }
 
         _userName = userName;
         _displayName = displayName;
-        _gameID = new String();
-        _playerID = new String();
+        _gameID = gameId;
+        _playerID = playerId;
         _color = color;
         _index_of_commands = -1;
         _points = 0;

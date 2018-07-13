@@ -17,11 +17,23 @@
     <string name="send">Send</string>
     <string name="chat_hint">Type here...</string>
     <string name="leave_game_button">X</string>
+
+
+    <!-- CREATE GAME STRING SET -->
     <string name="create_game_dialog_title">Create New Game</string>
-    <string name="create_game_dialog_name">Name:</string>
-    <string name="create_game_dialog_color_title">Pick Your Color</string>
+
+    <string name="create_game_room_name">Room Name:</string>
+    <string name="create_game_room_name_hint">Room Name&#8230;</string>
+
+    <string name="create_game_display_name">Display Name:</string>
+    <string name="create_game_display_name_hint">Display Name&#8230;</string>
+
+    <string name="create_game_players">Players</string>
+    <string name="create_game_color_title">Train Color</string>
     <string name="create_game_dialog_private_game">Private Game:</string>
-    <string name="create_game_dialog_players">Players</string>
+
+
+
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string-array name="player_colors">

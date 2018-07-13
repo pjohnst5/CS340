@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.UUID;
 
 import client.model.ClientModel;
 import client.server.communication.ServerProxy;
@@ -15,6 +16,7 @@ import client.server.task.AsyncServerTask;
 import client.server.task.JoinGameTask;
 import shared.enumeration.PlayerColor;
 import shared.exception.InvalidGameException;
+import shared.exception.MaxPlayersException;
 import shared.exception.PlayerException;
 import shared.model.Game;
 import shared.model.Player;
@@ -30,7 +32,9 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
         _model = ClientModel.getInstance();
         _model.addObserver(this);
         _poller = GameListPoller.instance();
-        ServerProxy.instance().usePoller(_poller);
+
+        // DALLAS TODO: Fix this after fragment creation works
+        //ServerProxy.instance().usePoller(_poller);
     }
 
     @Override
@@ -48,11 +52,14 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
     }
 
     @Override
-    public void createGame(String gameName, PlayerColor color, int maxPlayers) {
+    public void createGame(String gameName, String displayName, PlayerColor color, int maxPlayers) {
         User user = _model.getUser();
         Player player = null;
+
+        String gameId = UUID.randomUUID().toString();
+
         try {
-            player = new Player(user.getUserName(), user.getUserName(), color, "asd", "SDFS");
+            player = new Player(user.getUserName(), displayName, color, gameId, user.getUUID().toString());
         } catch (PlayerException e) {
             e.printStackTrace();
             _view.showToast("Invalid player object");
@@ -60,7 +67,9 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
         Game game = null;
         try {
             game = new Game(gameName, maxPlayers);
-        } catch (InvalidGameException e) {
+            game.setGameID(gameId);
+            game.addPlayer(player);
+        } catch (InvalidGameException | MaxPlayersException e) {
             e.printStackTrace();
             _view.showToast("Invalid game object");
         }

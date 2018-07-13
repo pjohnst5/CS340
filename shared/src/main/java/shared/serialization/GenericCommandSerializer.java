@@ -67,7 +67,14 @@ public class GenericCommandSerializer implements JsonSerializer<GenericCommand>,
         Object[] paramValues = new Object[jsonParamValues.size()];
 
         for (int i = 0; i < jsonParamValues.size(); i++){
-            JsonObject paramValueObj = jsonParamValues.get(i).getAsJsonObject();
+
+            JsonElement paramValueObj;
+            try {
+                paramValueObj = jsonParamValues.get(i).getAsJsonObject();
+            } catch (IllegalStateException e) {
+                paramValueObj = jsonParamValues.get(i).getAsJsonPrimitive();
+            }
+
             try {
                 Class<?> objType = Class.forName(paramTypes[i]);
                 paramValues[i] = context.deserialize(paramValueObj, objType);

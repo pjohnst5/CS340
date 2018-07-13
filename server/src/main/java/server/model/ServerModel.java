@@ -109,16 +109,16 @@ public class ServerModel {
     //GameList
     public void addNewGame(Game game) throws ServerException {
         //set gameID
-        String gameID = UUID.randomUUID().toString();
-        try {
-            game.setGameID(gameID);
+        //String gameID = UUID.randomUUID().toString();
+        //try {
+            //game.setGameID(gameID);
 
             //Put game in map
             _games.put(game.getGameID(), game);
 
-        } catch(InvalidGameException e) {
-            throw new ServerException(e.getMessage());
-        }
+        //} catch(InvalidGameException e) {
+        //    throw new ServerException(e.getMessage());
+        //}
     }
 
     public void replaceExistingGame(Game game) throws ServerException {
