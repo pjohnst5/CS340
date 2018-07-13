@@ -82,45 +82,53 @@
             android:textAlignment="center"
             android:text="@string/train_color_title_text"/>
 
-        <Button
-            android:id="@+id/join_game_train_color_black_button"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/join_game_train_color_label"
-            android:background="@drawable/button_grey"
-            android:text="@string/color_black"/>
+            android:background="@drawable/border_two_dp">
 
-        <Button
-            android:id="@+id/join_game_train_color_blue_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/join_game_train_color_black_button"
-            android:background="@drawable/button_blue"
-            android:text="@string/color_blue"/>
 
-        <Button
-            android:id="@+id/join_game_train_color_green_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/join_game_train_color_blue_button"
-            android:background="@drawable/button_green"
-            android:text="@string/color_green"/>
+            <Button
+                android:id="@+id/join_game_train_color_black_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_grey"
+                android:text="@string/color_black"/>
 
-        <Button
-            android:id="@+id/join_game_train_color_red_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/join_game_train_color_green_button"
-            android:background="@drawable/button_red"
-            android:text="@string/color_red"/>
+            <Button
+                android:id="@+id/join_game_train_color_blue_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/join_game_train_color_black_button"
+                android:background="@drawable/button_blue"
+                android:text="@string/color_blue"/>
 
-        <Button
-            android:id="@+id/join_game_train_color_yellow_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/join_game_train_color_red_button"
-            android:background="@drawable/button_yellow"
-            android:text="@string/color_yellow"/>
+            <Button
+                android:id="@+id/join_game_train_color_green_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/join_game_train_color_blue_button"
+                android:background="@drawable/button_green"
+                android:text="@string/color_green"/>
+
+            <Button
+                android:id="@+id/join_game_train_color_red_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/join_game_train_color_green_button"
+                android:background="@drawable/button_red"
+                android:text="@string/color_red"/>
+
+            <Button
+                android:id="@+id/join_game_train_color_yellow_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/join_game_train_color_red_button"
+                android:background="@drawable/button_yellow"
+                android:text="@string/color_yellow"/>
+        </RelativeLayout>
+
 
     </RelativeLayout>
 
@@ -135,20 +143,21 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"
+            android:background="@drawable/border_two_dp"
             android:weightSum="2" >
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="75dp"
                 android:layout_weight="1"
-                android:background="@color/train_light_grey"
+                android:background="@drawable/button_action_grey"
                 android:text="@string/cancel"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="75dp"
                 android:layout_weight="1"
-                android:background="@color/blue"
+                android:background="@drawable/button_action_blue"
                 android:text="@string/join_game_button_text"/>
 
         </LinearLayout>

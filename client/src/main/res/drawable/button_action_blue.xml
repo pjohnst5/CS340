@@ -4,22 +4,21 @@
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
             <stroke android:width="1dp" android:color="@color/train_black_border" />
-            <gradient android:angle="-90" android:startColor="@color/train_light_grey_disabled" android:endColor="@color/train_light_grey_disabled"/>
+            <gradient android:angle="-90" android:startColor="@color/train_light_blue_disabled" android:endColor="@color/train_light_blue_disabled"/>
         </shape>
     </item>
 
-    <item android:state_selected="true">
+    <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <stroke android:width="5dp" android:color="@color/blue" />
-            <gradient android:angle="-90" android:startColor="@color/train_light_grey" android:endColor="@color/train_light_grey" />
+            <stroke android:width="1dp" android:color="@color/train_black_border" />
+            <gradient android:angle="-90" android:startColor="@color/dark_blue" android:endColor="@color/dark_blue" />
         </shape>
     </item>
 
     <item>
         <shape android:shape="rectangle" >
             <stroke android:width="1dp" android:color="@color/train_black_border" />
-            <gradient android:angle="-90" android:gradientRadius="120dp" android:startColor="@color/train_light_grey" android:endColor="@color/train_light_grey" />
-
+            <gradient android:angle="-90" android:gradientRadius="120dp" android:startColor="@color/blue" android:endColor="@color/blue" />
         </shape>
     </item>
 

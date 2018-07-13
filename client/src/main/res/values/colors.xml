@@ -40,5 +40,6 @@
     <color name="train_light_red_disabled">#876e76</color>
     <color name="train_light_yellow_disabled">#897d54</color>
 
+    <color name="train_light_grey_pressed">#afaead</color>
     <color name="train_black_border">#000000</color>
 </resources>
