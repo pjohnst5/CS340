@@ -45,8 +45,18 @@ class GameListFacade {
             //Object[] paramValues = { activeGames };
 
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
+//-----------------------
+            //New command to join the game the player just created.
+            String className2 = ConfigurationManager.getString("client_facade_name");
+            String methodName2 = ConfigurationManager.getString("client_join_game_method");
+            String[] paramTypes2 = {Player.class.getCanonicalName()};
+            Object[] paramValues2 = {game.getPlayers().get(0)}; //gets first player
 
+            //Client will check if the player joining a game is him/herself. If it is, it sets current game
+            ICommand command2 = new GenericCommand(className, methodName, paramTypes, paramValues, null);
+//--------------------------
             response.addCommand(command);
+            response.addCommand(command2);
             response.setSuccess(true);
 
         } catch(ServerException e) {
@@ -72,6 +82,20 @@ class GameListFacade {
 
             //Error checking
             for (int i = 0; i < players.size(); i++){
+                if(players.get(i).getUserName().equals(jr.getUserName())){
+                    throw new ServerException("A player with that username is already in the game");
+//                    response.setSuccess(true);
+//                    //Command sent back sets curent game.
+//                    String className = ConfigurationManager.getString("client_facade_name");
+//                    String methodName = ConfigurationManager.getString("client_join_game_method");
+//                    String[] paramTypes = {Player.class.getCanonicalName()};
+//                    Object[] paramValues = {players.get(i)};
+//
+//                    //Client will check if the player joining a game is him/herself. If it is, it sets current game
+//                    ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
+//
+//                    response.addCommand(command);
+                }
                 if (players.get(i).getColor().equals(jr.getColor())){
                     throw new ServerException("A player with that color already exists in the game");
                 }
@@ -80,9 +104,6 @@ class GameListFacade {
                     throw new ServerException("A player with that display name already exists in the game");
                 }
 
-                if(players.get(i).getUserName().equals(jr.getUserName())){
-                    throw new ServerException("A player with that username is already in the game");
-                }
             }
 
             //By here, no player in the game had same info as new player
