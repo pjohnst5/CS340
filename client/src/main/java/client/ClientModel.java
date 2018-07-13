@@ -27,8 +27,10 @@ public class ClientModel extends Observable {
     }
 
     public void setUser(User user) {
-        this._user = user;
-        notifyObservers();
+        if(user != null) {
+            this._user = user;
+            notifyObservers();
+        }
     }
 
     public Game getCurrentGame() {

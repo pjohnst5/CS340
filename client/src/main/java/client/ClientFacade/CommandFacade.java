@@ -1,5 +1,7 @@
 package client.ClientFacade;
 
+import java.util.Map;
+
 import client.ClientModel;
 import shared.model.Game;
 import shared.model.Message;
@@ -13,7 +15,9 @@ public class CommandFacade {
         clientModel.setUser(user);
     }
 
-    public static void setGames(){}
+    public static void setGames(Map<String, Game> games){
+        clientModel.setGames(games);
+    }
 
     public static void createGame(Game game) {
         clientModel.addGameToList(game);
