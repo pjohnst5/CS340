@@ -20,7 +20,6 @@ import com.pjohnst5icloud.tickettoride.R;
 import java.util.List;
 
 import client.presenter.IGameListPresenter;
-import client.view.activity.GameListActivity;
 import client.view.activity.GameLobbyActivity;
 import shared.enumeration.PlayerColor;
 import shared.model.Game;
@@ -61,6 +60,10 @@ public class GameListFragment extends Fragment implements IGameListView {
         mJoinGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FragmentManager manager = getFragmentManager();
+                JoinGameDialog dialog = JoinGameDialog.newInstance();
+                dialog.setTargetFragment(GameListFragment.this, JOIN_GAME_DIALOG_CODE);
+                dialog.show(manager, JOIN_GAME_DIALOG_TAG);
                 if (mCurrentlySelectedGame != null) {
                     mPresenter.joinGame(mCurrentlySelectedGame.getGameID());
                 }
