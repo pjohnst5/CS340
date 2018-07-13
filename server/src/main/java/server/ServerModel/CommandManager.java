@@ -49,6 +49,14 @@ public class CommandManager {
         return commands.subList(index+1,size-1);
     }
 
+    public List<ICommand> getCommands (String gameID) throws ServerException
+    {
+        if (!_commandList.containsKey(gameID)){
+            throw new ServerException("No game in command manager with that gameID getCommands");
+        }
+        return _commandList.get(gameID);
+    }
+
 
 
     public void addCommand(String gameID, ICommand command) throws ServerException
