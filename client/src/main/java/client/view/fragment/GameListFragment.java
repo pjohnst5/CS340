@@ -136,7 +136,6 @@ public class GameListFragment extends Fragment implements IGameListView {
 
     @Override
     public void updateGameList(List<Game> games) {
-        // FIXME: called by presenter object to update the game list
         getActivity().runOnUiThread(() -> _updateGamesList(games));
 
     }

@@ -14,6 +14,9 @@ import android.widget.Button;
 
 import com.pjohnst5icloud.tickettoride.R;
 
+import client.model.ClientModel;
+import shared.model.Game;
+
 public class JoinGameDialog extends DialogFragment {
 
     private Button mBlackTrainButton;
@@ -25,7 +28,7 @@ public class JoinGameDialog extends DialogFragment {
     private int mActiveIndex;
     private Button[] mButtons;
 
-
+    private Game _currentGame;
 
     public static final String EXTRA_PLAYER_COLOR = "client.server.JoinGameDialog.playerColor";
 
@@ -37,6 +40,8 @@ public class JoinGameDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_join_game, null);
+
+        _currentGame = ClientModel.getInstance().getCurrentGame();
 
         mBlackTrainButton = v.findViewById(R.id.join_game_train_color_black_button);
         mBlueTrainButton = v.findViewById(R.id.join_game_train_color_blue_button);

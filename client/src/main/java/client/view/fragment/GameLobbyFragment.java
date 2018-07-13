@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
@@ -49,7 +50,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
             }
         });
 
-        //mLeaveButton = v.findViewById(R.id.leave_game_button);
+        mLeaveButton = v.findViewById(R.id.leave_game_button);
         mLeaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,11 +75,13 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
         return v;
     }
 
-    private void updateView() {
+    private void updateView(Game game) {
+        mCurrentGame = game;
         if (mCurrentGame == null) { return; }
         mPlayerListAdapter = new PlayerListAdapter(mCurrentGame.getPlayers());
 //        mChatAdapter = new ChatAdapter(mCurrentGame.getMessages());
         mPlayerListRecyclerView.setAdapter(mPlayerListAdapter);
+        mStartButton.setEnabled(mCurrentGame.getStarted());
     }
 
     @Override
@@ -88,8 +91,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
     @Override
     public void updateGame(Game game) {
-        mCurrentGame = game;
-        updateView();
+        getActivity().runOnUiThread(() -> updateView(game));
     }
 
     @Override
@@ -99,7 +101,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
     @Override
     public void leaveGame() {
-        // FIXME: return to game list fragment
+        getActivity().getSupportFragmentManager().popBackStack(); // FIXME: I think this works...
     }
 
     @Override
@@ -114,9 +116,15 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
 
     private class PlayerHolder extends RecyclerView.ViewHolder {
-
-        public PlayerHolder(View itemView) {
-            super(itemView);
+        private TextView mPlayerNameView;
+        private Player mPlayer;
+        public PlayerHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.player_list_item, parent, false));
+            mPlayerNameView = itemView.findViewById(R.id.list_item_player_name);
+        }
+        public void bind(Player player) {
+            mPlayer = player;
+            mPlayerNameView.setText(mPlayer.getUserName());
         }
     }
     private class PlayerListAdapter extends RecyclerView.Adapter<PlayerHolder> {
@@ -128,17 +136,19 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
         @NonNull
         @Override
         public PlayerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return null;
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            return new PlayerHolder(layoutInflater, parent);
         }
 
         @Override
         public void onBindViewHolder(@NonNull PlayerHolder holder, int position) {
-
+            Player player = mPlayers.get(position);
+            holder.bind(player);
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return mPlayers.size();
         }
     }
     private class MessageHolder extends RecyclerView.ViewHolder {

@@ -42,7 +42,7 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
         if (observable instanceof ClientModel) {
             Game currentGame = _model.getCurrentGame();
             if (currentGame != null) {
-                // FIXME: transfer the view to GameLobbyView
+                _view.joinGame();
 
             } else {
                 Map<String, Game> gameMap = _model.getGames();
