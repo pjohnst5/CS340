@@ -14,9 +14,9 @@ import client.server.task.JoinGameTask;
 import shared.CustomEnumerations.PlayerColor;
 import shared.CustomExceptions.InvalidGameException;
 import shared.CustomExceptions.PlayerException;
-import shared.Game;
-import shared.Player;
-import shared.User;
+import shared.model.Game;
+import shared.model.Player;
+import shared.model.User;
 
 public class GameListPresenter implements IGameListPresenter, Observer, AsyncServerTask.AsyncCaller {
     private IGameListView _view;
@@ -56,7 +56,7 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
         }
         Game game = null;
         try {
-            game = new Game(gameName, player, maxPlayers);
+            game = new Game(gameName, maxPlayers);
         } catch (InvalidGameException e) {
             e.printStackTrace();
             _view.showToast("Invalid game object");

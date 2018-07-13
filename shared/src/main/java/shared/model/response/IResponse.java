@@ -1,4 +1,4 @@
-package shared.Response;
+package shared.model.response;
 
 public interface IResponse {
 
@@ -10,5 +10,7 @@ public interface IResponse {
     void setSuccess(boolean b);
 
     void setErrorMessage(String s);
+
+
 
 }

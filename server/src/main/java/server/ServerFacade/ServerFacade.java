@@ -1,8 +1,9 @@
 package server.ServerFacade;
 
-import shared.CustomEnumerations.PlayerColor;
-import shared.GameRequest;
-import shared.Response.IResponse;
+import shared.model.Game;
+import shared.model.request.JoinRequest;
+import shared.model.Message;
+import shared.model.response.IResponse;
 
 public class ServerFacade {
 
@@ -24,12 +25,12 @@ public class ServerFacade {
 
 
     //Login functions
-    public IResponse login(String username, String password)
+    public static IResponse login(String username, String password)  //setUser
     {
         return LoginFacade.login(username, password);
     }
 
-    public IResponse register(String username, String password)
+    public static IResponse register(String username, String password) //setUser
     {
         return LoginFacade.register(username, password);
     }
@@ -38,45 +39,50 @@ public class ServerFacade {
 
 
     //Game List functions
-    public IResponse createGame(GameRequest gameRequest)
+    public static IResponse createGame(Game game) //addGame(Game)
     {
-        return GameListFacade.createGame(gameRequest);
+        return GameListFacade.createGame(game);
     }
 
-    public IResponse joinGame(String username, String gameID, PlayerColor color)
+    public static IResponse joinGame(JoinRequest joinRequest) //addPLayer(Player)
     {
-        return GameListFacade.joinGame(username,gameID,color);
+        return GameListFacade.joinGame(joinRequest);
     }
 
 
 
 
     //Game Lobby functions
-    public IResponse leaveGame(String userName, String gameID)
-    {
-        return GameLobbyFacade.leaveGame(userName, gameID);
-    }
-
-    public IResponse startGame(String gameID)
+    public static IResponse startGame(String gameID) //startGame(gameID)
     {
         return GameLobbyFacade.startGame(gameID);
     }
 
-    public IResponse sendMessage(String gameID, String message)
+    public static IResponse sendMessage(Message message)   //sendMessage(Message)
     {
-        return GameLobbyFacade.sendMessage(gameID, message);
+        return GameLobbyFacade.sendMessage(message);
     }
 
+
+
+
+
+
+    //Was lobby
+//    public static IResponse leaveGame(String userName, String gameID)
+//    {
+//        return GameLobbyFacade.leaveGame(userName, gameID);
+//    }
 
 
 
     //Poller functions
-    public IResponse getCommandList(String gameID, int index)
+    public static IResponse getCommandList(String gameID, int index)
     {
         return CommandManagerFacade.getCommandList(gameID, index);
     }
 
-    public IResponse getActiveGames()
+    public static IResponse getActiveGames()
     {
         return CommandManagerFacade.getActiveGames();
     }

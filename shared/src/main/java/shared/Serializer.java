@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import java.io.Reader;
 
 import shared.Command.GenericCommand;
-import shared.Response.CommandResponse;
+import shared.model.response.CommandResponse;
 
 
 public class Serializer {
