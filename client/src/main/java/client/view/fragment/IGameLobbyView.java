@@ -10,5 +10,6 @@ public interface IGameLobbyView {
     public void startGame();
     public void leaveGame();
     public void setPresenter(IGameLobbyPresenter presenter);
+    public void setCurrentGame(Game currentGame);
     public void showToast(String message);
 }

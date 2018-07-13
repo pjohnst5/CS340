@@ -110,6 +110,9 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
     }
 
     @Override
+    public void setCurrentGame(Game currentGame) { mCurrentGame = currentGame; }
+
+    @Override
     public void showToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
