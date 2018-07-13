@@ -1,5 +1,6 @@
 package client.server.communication.poll;
 
+import client.model.ClientModel;
 import client.server.communication.ServerProxy;
 import shared.command.GenericCommand;
 import shared.command.ICommand;
@@ -31,8 +32,16 @@ public class GameLobbyPoller extends Poller {
 
         addCallback(TASK_ID, _task);
 
-        String[] paramTypes = {};
-        Object[] paramValues = {};
+        String[] paramTypes = {
+                String.class.getCanonicalName(),
+                String.class.getCanonicalName()
+        };
+
+        Object[] paramValues = {
+                ClientModel.getInstance().getCurrentGame().getGameID(),
+                ClientModel.getInstance().getUser().get_playerId()
+
+        };
 
         _serverRequest = new GenericCommand(
                 ConfigurationManager.get("server_facade_name"),
