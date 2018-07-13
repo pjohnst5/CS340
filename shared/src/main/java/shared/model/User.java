@@ -3,7 +3,7 @@ package shared.model;
 
 import java.util.UUID;
 
-import shared.CustomExceptions.InvalidUserException;
+import shared.exception.InvalidUserException;
 
 public class User {
     private String _userName;

@@ -8,8 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import shared.Command.GenericCommand;
-import shared.Command.ICommand;
+import shared.command.GenericCommand;
+import shared.command.ICommand;
 import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
 import shared.serialization.Serializer;

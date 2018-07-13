@@ -1,9 +1,9 @@
 package client.server.communication.poll;
 
 import client.server.communication.ServerProxy;
-import shared.Command.GenericCommand;
-import shared.Command.ICommand;
-import shared.CustomExceptions.ServerProxyException;
+import shared.command.GenericCommand;
+import shared.command.ICommand;
+import shared.exception.ServerProxyException;
 import shared.configuration.ConfigurationManager;
 
 public class GameLobbyPoller extends Poller {

@@ -3,8 +3,8 @@ package shared.model.response;
 import java.util.ArrayList;
 import java.util.List;
 
-import shared.Command.GenericCommand;
-import shared.Command.ICommand;
+import shared.command.GenericCommand;
+import shared.command.ICommand;
 
 public class CommandResponse implements ICommandResponse {
     private List<ICommand> _commands;

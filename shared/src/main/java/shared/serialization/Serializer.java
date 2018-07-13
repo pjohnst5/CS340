@@ -9,8 +9,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
-import shared.Command.GenericCommand;
-import shared.Command.ICommand;
+import shared.command.ICommand;
 
 public class Serializer implements ISerializer {
 

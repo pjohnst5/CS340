@@ -3,9 +3,9 @@ package shared.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import shared.CustomExceptions.InvalidGameException;
-import shared.CustomExceptions.MaxPlayersException;
-import shared.CustomExceptions.ReachedZeroPlayersException;
+import shared.exception.InvalidGameException;
+import shared.exception.MaxPlayersException;
+import shared.exception.ReachedZeroPlayersException;
 
 public class Game {
     private String _gameName;

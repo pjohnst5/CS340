@@ -3,9 +3,9 @@ package client.server.task;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import client.ClientFacade.GameListFacade;
-import client.ClientFacade.GameLobbyFacade;
-import client.ClientFacade.LoginFacade;
+import client.facade.GameListFacade;
+import client.facade.GameLobbyFacade;
+import client.facade.LoginFacade;
 import shared.model.Game;
 import shared.model.Message;
 import shared.model.request.JoinRequest;
@@ -49,7 +49,7 @@ public class AsyncServerTask extends AsyncTask<Object, Void, Exception> {
                 Log.i(TAG, "Calling GameLobbyFacade.leaveGame()...");
                 String gameId = ((LeaveGameTask) object).get_gameId();
                 String username = ((LeaveGameTask) object).get_username();
-                GameLobbyFacade.leaveGame(gameId, username);
+                //GameLobbyFacade.leaveGame(gameId, username);
             } else if (object instanceof Message) {
                 Log.i(TAG, "Calling GameLobbyFacade.sendMessage()...");
                 GameLobbyFacade.sendMessage((Message) object);

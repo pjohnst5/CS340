@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="client.server.activity.LoginActivity">
+        <activity android:name="client.view.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="client.server.activity.GameListActivity" />
-        <activity android:name="client.server.activity.GameLobbyActivity"></activity>
+        <activity android:name="client.view.activity.GameListActivity" />
+        <activity android:name="client.view.activity.GameLobbyActivity"></activity>
     </application>
 
 </manifest>

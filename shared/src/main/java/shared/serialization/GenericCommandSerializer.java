@@ -13,7 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-import shared.Command.GenericCommand;
+import shared.command.GenericCommand;
 
 public class GenericCommandSerializer implements JsonSerializer<GenericCommand>, JsonDeserializer<GenericCommand> {
 

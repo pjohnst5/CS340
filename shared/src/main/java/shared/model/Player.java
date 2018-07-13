@@ -1,7 +1,7 @@
 package shared.model;
 
-import shared.CustomEnumerations.PlayerColor;
-import shared.CustomExceptions.PlayerException;
+import shared.enumeration.PlayerColor;
+import shared.exception.PlayerException;
 
 public class Player {
     private String _userName;

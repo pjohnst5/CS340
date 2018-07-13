@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
-import shared.Command.GenericCommand;
+import shared.command.GenericCommand;
 import shared.model.response.CommandResponse;
 import shared.serialization.Serializer;
 

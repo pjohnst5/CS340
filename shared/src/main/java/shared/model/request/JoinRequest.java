@@ -1,7 +1,7 @@
 package shared.model.request;
 
-import shared.CustomEnumerations.PlayerColor;
-import shared.CustomExceptions.InvalidGameRequestException;
+import shared.enumeration.PlayerColor;
+import shared.exception.InvalidGameRequestException;
 
 public class JoinRequest {
     private String _userName;
