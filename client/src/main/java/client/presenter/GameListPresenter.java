@@ -7,13 +7,13 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
 
+import client.facade.ServerFacade;
 import client.model.ClientModel;
 import client.server.communication.ServerProxy;
 import client.server.communication.poll.GameListPoller;
 import client.server.communication.poll.Poller;
 import client.view.fragment.IGameListView;
-import client.server.task.AsyncServerTask;
-import client.server.task.JoinGameTask;
+import client.server.AsyncServerTask;
 import shared.enumeration.PlayerColor;
 import shared.exception.InvalidGameException;
 import shared.exception.InvalidGameRequestException;
@@ -79,7 +79,7 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
             e.printStackTrace();
             _view.showToast("Invalid game object");
         }
-        new AsyncServerTask(this).execute(game);
+        ServerFacade.createGame(this, game);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
             e.printStackTrace();
             _view.showToast("Error joining game");
         }
-        new AsyncServerTask(this).execute(request);
+        ServerFacade.joinGame(this, request);
     }
 
     @Override

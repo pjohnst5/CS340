@@ -22,39 +22,39 @@ import client.presenter.ILoginPresenter;
  */
 
 public class LoginFragment extends Fragment implements ILoginView {
-    private EditText mUsernameField;
-    private EditText mPasswordField;
-    private EditText mConfirmPasswordField;
-    private Switch mSubmitOptionSwitch;
-    private Button mSubmitButton;
-    private ILoginPresenter mPresenter;
+    private EditText _usernameField;
+    private EditText _passwordField;
+    private EditText _confirmPasswordField;
+    private Switch _submitOptionSwitch;
+    private Button _submitButton;
+    private ILoginPresenter _presenter;
 
-    private boolean isRegister;
+    private boolean _isRegister;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
-        mUsernameField = v.findViewById(R.id.login_username);
-        mPasswordField = v.findViewById(R.id.login_password);
-        mConfirmPasswordField = v.findViewById(R.id.login_confirm_password);
-        mSubmitOptionSwitch = v.findViewById(R.id.login_submit_option_switch);
-        mSubmitOptionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        _usernameField = v.findViewById(R.id.login_username);
+        _passwordField = v.findViewById(R.id.login_password);
+        _confirmPasswordField = v.findViewById(R.id.login_confirm_password);
+        _submitOptionSwitch = v.findViewById(R.id.login_submit_option_switch);
+        _submitOptionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                isRegister = b;
-                mConfirmPasswordField.setEnabled(b);
+                _isRegister = b;
+                _confirmPasswordField.setEnabled(b);
             }
         });
-        mSubmitButton = v.findViewById(R.id.login_submit_button);
-        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+        _submitButton = v.findViewById(R.id.login_submit_button);
+        _submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onSubmit();
             }
         });
 
-        isRegister = false;
+        _isRegister = false;
 
         return v;
     }
@@ -68,21 +68,21 @@ public class LoginFragment extends Fragment implements ILoginView {
 
     @Override
     public void setPresenter(ILoginPresenter presenter) {
-        mPresenter = presenter;
+        _presenter = presenter;
     }
 
     private void onSubmit() {
-        if (mPresenter == null) {
+        if (_presenter == null) {
             return;
         }
-        String username = mUsernameField.getText().toString();
-        String password = mPasswordField.getText().toString();
-        String checkPassword = mConfirmPasswordField.getText().toString();
+        String username = _usernameField.getText().toString();
+        String password = _passwordField.getText().toString();
+        String checkPassword = _confirmPasswordField.getText().toString();
 
-        if (isRegister){
-            mPresenter.register(username, password, checkPassword);
+        if (_isRegister){
+            _presenter.register(username, password, checkPassword);
         } else {
-            mPresenter.login(username, password);
+            _presenter.login(username, password);
         }
 
     }

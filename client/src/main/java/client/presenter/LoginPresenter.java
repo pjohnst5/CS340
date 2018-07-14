@@ -5,11 +5,10 @@ import android.util.Log;
 import java.util.Observable;
 import java.util.Observer;
 
+import client.facade.ServerFacade;
 import client.model.ClientModel;
 import client.view.fragment.ILoginView;
-import client.server.task.AsyncServerTask;
-import client.server.task.LoginTask;
-import client.server.task.RegisterTask;
+import client.server.AsyncServerTask;
 
 public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTask.AsyncCaller {
     private ILoginView _view;
@@ -61,26 +60,18 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
 
     @Override
     public void login(String username, String password) {
-
         if (!validateArguments(username, password, password))
             return;
 
-        LoginTask request = new LoginTask();
-        request.set_username(username);
-        request.set_password(password);
-        new AsyncServerTask(this).execute(request);
+        ServerFacade.login(this, username, password);
     }
 
     @Override
     public void register(String username, String password, String checkPassword) {
-
         if (!validateArguments(username, password, checkPassword))
             return;
 
-        RegisterTask request = new RegisterTask();
-        request.set_username(username);
-        request.set_password(password);
-        new AsyncServerTask(this).execute(request);
+        ServerFacade.register(this, username, password);
     }
 
     @Override
