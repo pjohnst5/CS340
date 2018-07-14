@@ -100,6 +100,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
     @Override
     public void startGame() {
         // FIXME: drop off for now; start the game!
+        showToast("TADA");
     }
 
     @Override

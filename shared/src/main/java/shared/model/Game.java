@@ -104,7 +104,7 @@ public class Game {
         _players.add(p);
 
         if (_players.size() == _maxPlayers){
-            _started = true;
+            _readyToStart = true;
         }
         return _players.size();
     }
