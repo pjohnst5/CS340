@@ -84,7 +84,6 @@ public class Game {
         {
             throw new InvalidGameException(_players.size() + " players are already playing, cannot change max num of players to " + i);
         }
-
         _maxPlayers = i;
     }
 
@@ -95,7 +94,15 @@ public class Game {
         {
             throw new MaxPlayersException(_maxPlayers);
         }
+
+        for (int i = 0; i < _players.size(); i++){
+            if (_players.get(i).getPlayerID().equals(p.getPlayerID())) {
+                return _players.size();
+            }
+        }
+
         _players.add(p);
+
         if (_players.size() == _maxPlayers){
             _started = true;
         }
