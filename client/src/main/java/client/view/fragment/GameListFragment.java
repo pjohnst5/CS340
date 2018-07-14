@@ -19,11 +19,11 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.List;
 
-import client.model.ClientModel;
 import client.presenter.IGameListPresenter;
 import client.server.communication.poll.GameListPoller;
-import client.server.communication.poll.Poller;
 import client.view.activity.GameLobbyActivity;
+import client.view.dialog.CreateGameDialog;
+import client.view.dialog.JoinGameDialog;
 import shared.enumeration.PlayerColor;
 import shared.model.Game;
 

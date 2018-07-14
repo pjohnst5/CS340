@@ -1,4 +1,4 @@
-package client.view.fragment;
+package client.view.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -54,13 +54,8 @@ public class CreateGameDialog extends DialogFragment {
         mColorPicker = v.findViewById(R.id.dialog_color);
         ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.player_colors, android.R.layout.simple_spinner_item);
+
         mColorPicker.setAdapter(colorAdapter);
-        /*mColorPicker.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                mColor = position;
-            }
-        });*/
         mColorPicker.setSelection(4);
 
 

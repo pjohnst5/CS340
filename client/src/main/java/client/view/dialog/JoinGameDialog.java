@@ -1,4 +1,4 @@
-package client.view.fragment;
+package client.view.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -15,7 +15,6 @@ import android.widget.EditText;
 import com.pjohnst5icloud.tickettoride.R;
 
 import client.model.ClientModel;
-import client.presenter.GameListPresenter;
 import client.server.communication.poll.GameListPoller;
 import shared.model.Game;
 
