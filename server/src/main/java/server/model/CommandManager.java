@@ -1,5 +1,6 @@
 package server.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,10 +42,11 @@ public class CommandManager {
         if (_commandList.get(gameID).size() < index) {
             throw new ServerException("Too big of an index for command manager");
         }
+
         List<ICommand> commands = _commandList.get(gameID);
         int size = commands.size();
 
-        return commands.subList(index+1,size-1);
+        return commands.subList(index+1,size);
     }
 
     public List<ICommand> getCommands (String gameID) throws ServerException
@@ -60,7 +62,7 @@ public class CommandManager {
     public void addCommand(String gameID, ICommand command) throws ServerException
     {
         if (!_commandList.containsKey(gameID)){
-            throw new ServerException("No game in command manager with that gameID addCommand");
+            _commandList.put(gameID, new ArrayList<ICommand>());
         }
         _commandList.get(gameID).add(command);
     }

@@ -57,6 +57,8 @@ class GameListFacade {
 
             //Client will check if the player joining a game is him/herself. If it is, it sets current game
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
+
+           serverModel.addCommand(game.getGameID(), command2);
 //--------------------------
             response.addCommand(command);
             response.addCommand(command2);
