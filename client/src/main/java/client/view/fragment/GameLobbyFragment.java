@@ -84,7 +84,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
         mPlayerListAdapter = new PlayerListAdapter(players);
 //        mChatAdapter = new ChatAdapter(mCurrentGame.getMessages());
         mPlayerListRecyclerView.setAdapter(mPlayerListAdapter);
-        mStartButton.setEnabled(mCurrentGame.getStarted());
+        mStartButton.setEnabled(mCurrentGame.getReady());
     }
 
     @Override
