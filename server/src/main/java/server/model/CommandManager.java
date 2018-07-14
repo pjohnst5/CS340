@@ -35,7 +35,7 @@ public class CommandManager {
             throw new ServerException("No game in command manager with that gameID getCommands");
         }
 
-        if (_commandList.get(gameID).size() == (index + 1)) {
+        if (_commandList.get(gameID).size() == (index + 1)) { // if (index == size() - 1
             throw new ServerException("No new commands to get");
         }
 
