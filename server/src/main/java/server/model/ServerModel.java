@@ -158,14 +158,20 @@ public class ServerModel {
         return _games.get(gameID);
     }
 
-    public Player getPlayer(String username) throws ServerException
+    public Player getPlayer(String playerID) throws ServerException
     {
-        return null;
+        if (!_players.containsKey(playerID)){
+            throw new ServerException("Player is not in server");
+        }
+        return _players.get(playerID);
     }
 
     public User getUser(String username) throws ServerException
     {
-        return null;
+        if (!_users.containsKey(username)){
+            throw new ServerException("User is not in server");
+        }
+        return _users.get(username);
     }
 
 
