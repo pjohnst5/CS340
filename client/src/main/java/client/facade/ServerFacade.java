@@ -9,7 +9,6 @@ import shared.model.request.JoinRequest;
 import shared.configuration.ConfigurationManager;
 
 public class ServerFacade {
-    static ServerProxy serverProxy = ServerProxy.instance();
 
     // -- LOGIN VIEW --
 

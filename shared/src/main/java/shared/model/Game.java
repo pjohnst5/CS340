@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shared.exception.InvalidGameException;
+import shared.exception.InvalidGameRequestException;
 import shared.exception.MaxPlayersException;
 import shared.exception.ReachedZeroPlayersException;
 
@@ -102,25 +103,30 @@ public class Game {
         }
 
         _players.add(p);
-
-        if (_players.size() == _maxPlayers){
-            _readyToStart = true;
-        }
+        setIfReady();
         return _players.size();
     }
 
     //returns the number of players after removing the player
-    public int removePlayer(String userName) throws ReachedZeroPlayersException
+    public int removePlayer(String playerID) throws ReachedZeroPlayersException// FIXME: GameAlreadyStartedException
     {
+        if (_started) {
+            // FIXME: throw new GameAlreadyStartedException("Can't remove player; game has already started");
+        }
+        // FIXME: check for _players.size() == 0
+
         for( int i = 0; i < _players.size(); i++)
         {
-            if (_players.get(i).getUserName().equals(userName))
+            if (_players.get(i).getPlayerID().equals(playerID))
             {
                 _players.remove(i);
+                setIfReady();
                 return _players.size();
             }
         }
-        return _players.size();
+        // if method hasn't returned yet, player wasn't found
+        // FIXME: throw new PlayerNotFoundException or whatever
+        return -1;
     }
 
     public void setGameID(String s) throws InvalidGameException
@@ -132,8 +138,17 @@ public class Game {
         _gameID = s;
     }
 
-    public void setStarted(boolean b) throws InvalidGameException
+    public void start() throws InvalidGameException {
+        setIfReady();
+        if (!_readyToStart) {
+            throw new InvalidGameException("Still waiting for players to join");
+        }
+        _started = true;
+    }
+
+    public void setStarted(boolean b) throws InvalidGameException // FIXME: use start() instead
     {
+
         if (_started && b) {
             throw new InvalidGameException("game has already started, can't end it again");
         }
@@ -145,8 +160,12 @@ public class Game {
         _started = b;
     }
 
-    public void setReady(boolean b) {
-        _readyToStart = b;
+    private void setIfReady() {
+        if (_players.size() < _maxPlayers) {
+            _readyToStart = false;
+        } else {
+            _readyToStart = true;
+        }
     }
 
     public List<Message> get_messages() {
