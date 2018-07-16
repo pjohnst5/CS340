@@ -20,40 +20,38 @@ import shared.model.Game;
 
 public class JoinGameDialog extends DialogFragment {
 
-    private Button mBlackTrainButton;
-    private Button mBlueTrainButton;
-    private Button mGreenTrainButton;
-    private Button mRedTrainButton;
-    private Button mYellowTrainButton;
+    private Button[] mButtons;
+
+    private Game mCurrentGame;
+    private EditText mDisplayName;
     private EditText mGameRoomName;
 
     private Button mCancelButton;
     private Button mJoinButton;
 
-    private Game mCurrentGame;
 
-    private EditText mDisplayName;
-
-    private int mActiveIndex;
-    private Button[] mButtons;
-
-
+    private int mActiveColorIndex;
 
     public static final String EXTRA_DISPLAY_NAME = "client.server.JoinGameDialog.displayName";
     public static final String EXTRA_PLAYER_COLOR = "client.server.JoinGameDialog.playerColor";
 
     public static JoinGameDialog newInstance() {
-        JoinGameDialog dialog = new JoinGameDialog();
-        return dialog;
+        return new JoinGameDialog();
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_join_game, null);
+
+        Button mBlackTrainButton = v.findViewById(R.id.join_game_train_color_black_button);
+        Button mBlueTrainButton = v.findViewById(R.id.join_game_train_color_blue_button);
+        Button mGreenTrainButton = v.findViewById(R.id.join_game_train_color_green_button);
+        Button mRedTrainButton = v.findViewById(R.id.join_game_train_color_red_button);
+        Button mYellowTrainButton = v.findViewById(R.id.join_game_train_color_yellow_button);
 
         mDisplayName = v.findViewById(R.id.join_game_display_name);
         String gameId = getArguments().getString("GameId");
-
 
         mCurrentGame = ClientModel.getInstance().getGames().get(gameId);
 
@@ -63,14 +61,9 @@ public class JoinGameDialog extends DialogFragment {
         mCancelButton = v.findViewById(R.id.join_game_cancel_dialog);
         mJoinButton = v.findViewById(R.id.join_game_call_join);
 
-        mBlackTrainButton = v.findViewById(R.id.join_game_train_color_black_button);
-        mBlueTrainButton = v.findViewById(R.id.join_game_train_color_blue_button);
-        mGreenTrainButton = v.findViewById(R.id.join_game_train_color_green_button);
-        mRedTrainButton = v.findViewById(R.id.join_game_train_color_red_button);
-        mYellowTrainButton = v.findViewById(R.id.join_game_train_color_yellow_button);
 
         mBlackTrainButton.setSelected(true);
-        mActiveIndex = 0;
+        mActiveColorIndex = 0;
 
         mButtons = new Button[] {
                 mBlackTrainButton,
@@ -94,13 +87,10 @@ public class JoinGameDialog extends DialogFragment {
                         mButtons[i].setSelected(false);
                     }
                     mButtons[myIndex].setSelected(true);
-                    mActiveIndex = myIndex;
+                    mActiveColorIndex = myIndex;
                 }
             });
         }
-
-
-
 
 
         AlertDialog ad =  new AlertDialog.Builder(getActivity())
@@ -116,9 +106,8 @@ public class JoinGameDialog extends DialogFragment {
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        int color = mActiveIndex;
                         String displayName = mDisplayName.getText().toString();
-                        sendResult(Activity.RESULT_OK, displayName, color);
+                        sendResult(Activity.RESULT_OK, displayName, mActiveColorIndex);
                     }
                 })
                 .create();

@@ -34,7 +34,7 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
         }
     }
 
-    public boolean validateArguments(String username,
+    private boolean validateArguments(String username,
                                 String password,
                                 String checkPassword){
 

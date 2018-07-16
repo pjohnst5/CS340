@@ -59,6 +59,7 @@ public class GameListFragment extends Fragment implements IGameListView {
                 CreateGameDialog dialog = CreateGameDialog.newInstance();
                 dialog.setTargetFragment(GameListFragment.this, CREATE_GAME_DIALOG_CODE);
                 dialog.show(manager, CREATE_GAME_DIALOG_TAG);
+//                dialog.hideDefaultButtons();
 
                 GameListPoller.instance().stop();
             }

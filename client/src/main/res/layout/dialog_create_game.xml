@@ -5,123 +5,207 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:paddingRight="20dp"
-    android:paddingLeft="20dp">
-
-    <RelativeLayout
-        android:id="@+id/create_game_room_name_rl"
-        android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
+    android:paddingLeft="20dp"
+    android:layout_marginBottom="15dp">
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/create_game_name_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/create_game_room_name"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="15dp"
-            android:width="120dp"
-            android:textAlignment="viewEnd"/>
-
-        <EditText
-            android:id="@+id/create_game_room_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:hint="@string/create_game_room_name_hint"
-            android:layout_toEndOf="@id/create_game_name_label" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/create_game_display_name_rl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/create_game_room_name_rl">
-
-        <TextView
-            android:id="@+id/create_game_display_name_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/create_game_display_name"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="15dp"
-            android:width="120dp"
-            android:textAlignment="textEnd"/>
-
-        <EditText
-            android:id="@+id/create_game_display_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:hint="@string/display_name_hint"
-            android:layout_toEndOf="@id/create_game_display_name_label" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/dialog_game_selectors_rl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_below="@id/create_game_display_name_rl">
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2">
+            android:orientation="vertical"
+            android:layout_marginBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/create_game_room_name_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/create_game_name_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/create_game_room_name"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="15dp"
+                    android:width="120dp"
+                    android:textAlignment="viewEnd"/>
+
+                <EditText
+                    android:id="@+id/create_game_room_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:hint="@string/create_game_room_name_hint"
+                    android:layout_toEndOf="@id/create_game_name_label" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/create_game_display_name_rl"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingRight="8dp"
-                android:paddingLeft="16dp"
-                android:layout_weight="1">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/create_game_players"/>
+                android:layout_below="@id/create_game_room_name_rl">
 
-                    <NumberPicker
-                        android:id="@+id/dialog_max_players"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/create_game_display_name_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/create_game_display_name"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="15dp"
+                    android:width="120dp"
+                    android:textAlignment="textEnd"/>
 
-            </LinearLayout>
+                <EditText
+                    android:id="@+id/create_game_display_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:hint="@string/display_name_hint"
+                    android:layout_toEndOf="@id/create_game_display_name_label" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/dialog_game_selectors_rl"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="8dp"
-                android:paddingRight="16dp"
-                android:layout_weight="1">
+                android:layout_marginTop="50dp"
+                android:layout_below="@id/create_game_display_name_rl">
 
-                    <TextView
-                        android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="@string/train_color_title_text"/>
+                        android:orientation="vertical"
+                        android:paddingRight="8dp"
+                        android:paddingLeft="16dp"
+                        android:layout_weight="1">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                android:layout_marginBottom="10dp"
+                                android:text="@string/create_game_players"/>
 
-                    <Spinner
-                        android:id="@+id/dialog_color"
-                        android:layout_width="match_parent"
+                            <NumberPicker
+                                android:id="@+id/dialog_max_players"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/border_one_dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown" />
+                        android:orientation="vertical"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="16dp"
+                        android:layout_weight="1">
 
-            </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:layout_marginBottom="10dp"
+                            android:text="@string/train_color_title_text"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/border_two_dp">
+
+                            <Button
+                                android:id="@+id/create_game_train_color_black_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/button_grey"
+                                android:text="@string/color_black"/>
+
+                            <Button
+                                android:id="@+id/create_game_train_color_blue_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/button_blue"
+                                android:text="@string/color_blue"/>
+
+                            <Button
+                                android:id="@+id/create_game_train_color_green_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/button_green"
+                                android:text="@string/color_green"/>
+
+                            <Button
+                                android:id="@+id/create_game_train_color_red_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/button_red"
+                                android:text="@string/color_red"/>
+
+                            <Button
+                                android:id="@+id/create_game_train_color_yellow_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/button_yellow"
+                                android:text="@string/color_yellow"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/dialog_create_game_action_buttons_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dialog_game_selectors_rl"
+                android:background="@drawable/border_two_dp"
+                android:layout_marginTop="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal"
+                    android:background="@drawable/border_two_dp"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/create_game_cancel_dialog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="75dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_action_grey"
+                        android:text="@string/cancel" />
+
+                    <Button
+                        android:id="@+id/create_game_call_create"
+                        android:layout_width="wrap_content"
+                        android:layout_height="75dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_action_blue"
+                        android:text="@string/create_game_button"/>
 
 
+                </LinearLayout>
 
+            </RelativeLayout>
         </LinearLayout>
-
-    </RelativeLayout>
-
+    </ScrollView>
 </RelativeLayout>

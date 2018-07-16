@@ -1,5 +1,7 @@
 package client.presenter;
 
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +59,30 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
         }
     }
 
+    private boolean validateCreateGameRequest(String gameName, String displayName){
+
+        if (gameName.equals("")) {
+            _view.showToast("Room Name can't be empty");
+
+        } else if (displayName.equals("")){
+            _view.showToast("Display name can't be empty");
+
+        } else {
+            return true;
+
+        }
+
+        return false;
+
+    }
+
     @Override
     public void createGame(String gameName, String displayName, PlayerColor color, int maxPlayers) {
+
+        if (!validateCreateGameRequest(gameName, displayName)) {
+            return;
+        }
+
         User user = _model.getUser();
         Player player = null;
 
