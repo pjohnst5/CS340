@@ -136,4 +136,11 @@ public class Game {
     public void addMessage(Message message){
         this._messages.add(message);
     }
+
+    public void start() throws InvalidGameException {
+        if (_state != GameState.READY) {
+            throw new InvalidGameException("Game not ready, can't start");
+        }
+        _state = GameState.STARTED;
+    }
 }
