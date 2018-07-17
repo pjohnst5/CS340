@@ -1,16 +1,14 @@
 package client.facade;
 
-import client.server.communication.ServerProxy;
+import client.server.AsyncServerTask;
 import shared.command.GenericCommand;
-import shared.exception.ServerProxyException;
 import shared.model.Game;
 import shared.model.request.JoinRequest;
 import shared.configuration.ConfigurationManager;
 
-public class GameListFacade {
-    static ServerProxy serverProxy = ServerProxy.instance();
+public class GameListService {
 
-    public static void createGame(Game game) throws ServerProxyException {
+    public static void createGame(AsyncServerTask.AsyncCaller caller, Game game) {
         String[] paramTypes = {Game.class.getCanonicalName()};
         Object[] paramValues = {game};
 
@@ -20,10 +18,10 @@ public class GameListFacade {
                 paramTypes,
                 paramValues,
                 null);
-        serverProxy.sendCommand(command);
+        new AsyncServerTask(caller).execute(command);
 
     }
-    public static void joinGame(JoinRequest joinRequest) throws ServerProxyException {
+    public static void joinGame(AsyncServerTask.AsyncCaller caller, JoinRequest joinRequest) {
         String[] paramTypes = {JoinRequest.class.getCanonicalName()};
         Object[] paramValues = {joinRequest};
 
@@ -33,7 +31,7 @@ public class GameListFacade {
                 paramTypes,
                 paramValues,
                 null);
-        serverProxy.sendCommand(command);
+        new AsyncServerTask(caller).execute(command);
 
     }
 }

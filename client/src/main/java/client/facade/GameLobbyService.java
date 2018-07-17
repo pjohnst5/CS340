@@ -1,14 +1,12 @@
 package client.facade;
 
 
-import client.server.communication.ServerProxy;
+import client.server.AsyncServerTask;
 import shared.command.GenericCommand;
-import shared.exception.ServerProxyException;
 import shared.model.Message;
 import shared.configuration.ConfigurationManager;
 
-public class GameLobbyFacade {
-    static ServerProxy serverProxy = ServerProxy.instance();
+public class GameLobbyService {
 
 //    public static void leaveGame(String userName, String gameID) throws ServerProxyException {
 //        String[] paramTypes = {String.class.getCanonicalName(), String.class.getCanonicalName()};
@@ -23,7 +21,7 @@ public class GameLobbyFacade {
 //        serverProxy.sendCommand(command);
 //    }
 
-    public static void startGame(String gameID, String playerID) throws ServerProxyException {
+    public static void startGame(AsyncServerTask.AsyncCaller caller, String gameID, String playerID) {
         String[] paramTypes = {String.class.getCanonicalName(), String.class.getCanonicalName()};
         Object[] paramValues = {gameID, playerID};
 
@@ -33,11 +31,11 @@ public class GameLobbyFacade {
                 paramTypes,
                 paramValues,
                 null);
-        serverProxy.sendCommand(command);
+        new AsyncServerTask(caller).execute(command);
 
     }
 
-    public static void sendMessage(Message message) throws ServerProxyException {
+    public static void sendMessage(AsyncServerTask.AsyncCaller caller, Message message) {
         String[] paramTypes = {Message.class.getCanonicalName()};
         Object[] paramValues = {message};
 
@@ -47,6 +45,6 @@ public class GameLobbyFacade {
                 paramTypes,
                 paramValues,
                 null);
-        serverProxy.sendCommand(command);
+        new AsyncServerTask(caller).execute(command);
     }
 }

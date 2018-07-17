@@ -4,14 +4,13 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import client.facade.GameLobbyService;
 import client.model.ClientModel;
 import client.server.communication.ServerProxy;
 import client.server.communication.poll.GameLobbyPoller;
 import client.server.communication.poll.Poller;
 import client.view.fragment.IGameLobbyView;
-import client.server.task.AsyncServerTask;
-import client.server.task.LeaveGameTask;
-import client.server.task.StartGameTask;
+import client.server.AsyncServerTask;
 import shared.model.Game;
 import shared.model.Message;
 import shared.model.Player;
@@ -60,7 +59,7 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
         newMessage.setGameID(_model.getCurrentGame().getGameID());
         newMessage.setMessage(message);
         newMessage.setUsername(user.getUserName());
-        new AsyncServerTask(this).execute(newMessage);
+        GameLobbyService.sendMessage(this, newMessage);
     }
 
     @Override
@@ -84,21 +83,12 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
         }
         // ----------------------------------------------------
 
-
-        StartGameTask request = new StartGameTask();
-        request.set_gameId(_model.getCurrentGame().getGameID());
-        //-----------------------------------------------------
-        request.set_playerId(playerID);
-        //-----------------------------------------------------
-        new AsyncServerTask(this).execute(request);
+        GameLobbyService.startGame(this, game.getGameID(), playerID);
     }
 
     @Override
     public void leaveGame() {
-        LeaveGameTask request = new LeaveGameTask();
-        request.set_gameId(_model.getCurrentGame().getGameID());
-        request.set_username(_model.getUser().getUserName());
-        new AsyncServerTask(this).execute(request);
+        // FIXME: implement
     }
 
     @Override

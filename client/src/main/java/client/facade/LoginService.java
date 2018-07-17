@@ -1,14 +1,12 @@
 package client.facade;
 
-import client.server.communication.ServerProxy;
+import client.server.AsyncServerTask;
 import shared.command.GenericCommand;
-import shared.exception.ServerProxyException;
 import shared.configuration.ConfigurationManager;
 
-public class LoginFacade {
-    static ServerProxy serverProxy = ServerProxy.instance();
+public class LoginService {
 
-    public static void login(String username, String password) throws ServerProxyException {
+    public static void login(AsyncServerTask.AsyncCaller caller, String username, String password) {
         String[] paramTypes = {String.class.getCanonicalName(), String.class.getCanonicalName()};
         Object[] paramValues = {username, password};
 
@@ -18,10 +16,11 @@ public class LoginFacade {
                 paramTypes,
                 paramValues,
                 null);
-        serverProxy.sendCommand(command);
+
+        new AsyncServerTask(caller).execute(command);
     }
 
-    public static void register(String username, String password) throws ServerProxyException {
+    public static void register(AsyncServerTask.AsyncCaller caller, String username, String password) {
         String[] paramTypes = {String.class.getCanonicalName(), String.class.getCanonicalName()};
         Object[] paramValues = {username, password};
 
@@ -31,6 +30,7 @@ public class LoginFacade {
                 paramTypes,
                 paramValues,
                 null);
-        serverProxy.sendCommand(command);
+
+        new AsyncServerTask(caller).execute(command);
     }
 }

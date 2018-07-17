@@ -1,7 +1,5 @@
 package client.presenter;
 
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,13 +7,13 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
 
+import client.facade.GameListService;
 import client.model.ClientModel;
 import client.server.communication.ServerProxy;
 import client.server.communication.poll.GameListPoller;
 import client.server.communication.poll.Poller;
 import client.view.fragment.IGameListView;
-import client.server.task.AsyncServerTask;
-import client.server.task.JoinGameTask;
+import client.server.AsyncServerTask;
 import shared.enumeration.PlayerColor;
 import shared.exception.InvalidGameException;
 import shared.exception.InvalidGameRequestException;
@@ -103,7 +101,7 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
             e.printStackTrace();
             _view.showToast("Invalid game object");
         }
-        new AsyncServerTask(this).execute(game);
+        GameListService.createGame(this, game);
     }
 
     @Override
@@ -115,7 +113,7 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
             e.printStackTrace();
             _view.showToast("Error joining game");
         }
-        new AsyncServerTask(this).execute(request);
+        GameListService.joinGame(this, request);
     }
 
     @Override
