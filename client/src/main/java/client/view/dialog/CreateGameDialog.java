@@ -33,8 +33,6 @@ public class CreateGameDialog extends DialogFragment {
     private EditText mDisplayNameView;
     private NumberPicker mNumPlayers;
 
-    private AlertDialog mAlertDialog;
-
     private int mActiveColorIndex;
     private boolean mGameNameTextEntered;
     private boolean mDisplayNameTextEntered;
@@ -187,7 +185,8 @@ public class CreateGameDialog extends DialogFragment {
         ad.show();
         ad.getButton(Dialog.BUTTON_POSITIVE).setVisibility(View.GONE);
         ad.getButton(Dialog.BUTTON_NEGATIVE).setVisibility(View.GONE);
-        mAlertDialog = ad;
+        ad.hide();
+
         return ad;
     }
 
@@ -209,16 +208,4 @@ public class CreateGameDialog extends DialogFragment {
 
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
-//
-//    public void hideDefaultButtons() {
-//        mAlertDialog.getButton(Dialog.BUTTON_POSITIVE).setVisibility(View.GONE);
-//        mAlertDialog.getButton(Dialog.BUTTON_NEGATIVE).setVisibility(View.GONE);
-//    }
-//
-//    @Override
-//    public void show(FragmentManager manager, String tag) {
-//        super.show(manager, tag);
-//        if (mAlertDialog != null)
-//            hideDefaultButtons();
-//    }
 }
