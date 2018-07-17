@@ -3,6 +3,7 @@ package shared.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import shared.enumeration.GameState;
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
 import shared.exception.ReachedZeroPlayersException;
@@ -12,8 +13,7 @@ public class Game {
     private String _gameID;
     private List<Player> _players;
     private int _maxPlayers;
-    private boolean _started;
-    private boolean _readyToStart;
+    private GameState _state;
     private List<Message> _messages;
 
     public Game(String gameName, int maxPlayers) throws InvalidGameException
@@ -30,8 +30,7 @@ public class Game {
         _gameID = new String();
         _players = new ArrayList<>();
         _maxPlayers = maxPlayers;
-        _started = false;
-        _readyToStart = false;
+        _state = GameState.NOT_READY;
     }
 
     public String getGameName()
@@ -54,14 +53,9 @@ public class Game {
         return _maxPlayers;
     }
 
-    public boolean getStarted()
+    public GameState get_state()
     {
-        return _started;
-    }
-
-    public boolean getReady()
-    {
-        return _readyToStart;
+        return _state;
     }
 
 
@@ -104,7 +98,7 @@ public class Game {
         _players.add(p);
 
         if (_players.size() == _maxPlayers){
-            _readyToStart = true;
+            _state = GameState.READY;
         }
         return _players.size();
     }
@@ -130,23 +124,6 @@ public class Game {
         }
 
         _gameID = s;
-    }
-
-    public void setStarted(boolean b) throws InvalidGameException
-    {
-        if (_started && b) {
-            throw new InvalidGameException("game has already started, can't end it again");
-        }
-
-        if (!_started && !b) {
-            throw new InvalidGameException("Game has already ended, can't end it again");
-        }
-
-        _started = b;
-    }
-
-    public void setReady(boolean b) {
-        _readyToStart = b;
     }
 
     public List<Message> get_messages() {
