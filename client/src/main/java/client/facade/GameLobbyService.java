@@ -8,18 +8,18 @@ import shared.configuration.ConfigurationManager;
 
 public class GameLobbyService {
 
-//    public static void leaveGame(String userName, String gameID) throws ServerProxyException {
-//        String[] paramTypes = {String.class.getCanonicalName(), String.class.getCanonicalName()};
-//        Object[] paramValues = {userName, gameID};
-//
-//        GenericCommand command = new GenericCommand(
-//                ConfigurationManager.getString("server_facade_name"),
-//                ConfigurationManager.getString("leaveGame"),
-//                paramTypes,
-//                paramValues,
-//                null);
-//        serverProxy.sendCommand(command);
-//    }
+    public static void leaveGame(AsyncServerTask.AsyncCaller caller, String gameID, String playerId) {
+        String[] paramTypes = {String.class.getCanonicalName(), String.class.getCanonicalName()};
+        Object[] paramValues = {gameID, playerId};
+
+        GenericCommand command = new GenericCommand(
+                ConfigurationManager.getString("server_facade_name"),
+                ConfigurationManager.getString("leaveGame"),
+                paramTypes,
+                paramValues,
+                null);
+        new AsyncServerTask(caller).execute(command);
+    }
 
     public static void startGame(AsyncServerTask.AsyncCaller caller, String gameID, String playerID) {
         String[] paramTypes = {String.class.getCanonicalName(), String.class.getCanonicalName()};

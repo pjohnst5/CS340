@@ -11,6 +11,7 @@ import client.server.communication.poll.GameLobbyPoller;
 import client.server.communication.poll.Poller;
 import client.view.fragment.IGameLobbyView;
 import client.server.AsyncServerTask;
+import shared.enumeration.GameState;
 import shared.model.Game;
 import shared.model.Message;
 import shared.model.Player;
@@ -40,7 +41,7 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
                 _model.deleteObserver(this);
                 ServerProxy.instance().stopPoller();
                 _view.leaveGame();
-            } else if (currentGame.getStarted()) {
+            } else if (currentGame.get_state() == GameState.STARTED) {
                 // started the game
                 _model.deleteObserver(this);
                 ServerProxy.instance().stopPoller();
@@ -70,25 +71,17 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
             return;
         }
 
-        //Paul added this below, I just need to know who is trying to start the game
-        //------------------------------------------------------
-        //Get the username of this player
-        String username = _model.getUser().getUserName();
-        String playerID = new String();
-        List<Player> players = _model.getCurrentGame().getPlayers();
-        for (int i = 0; i < players.size(); i++){
-            if (players.get(i).getUserName().equals(username)){ //we have a match
-                playerID = players.get(i).getPlayerID();
-            }
-        }
-        // ----------------------------------------------------
+        String gameId = _model.getCurrentGame().getGameID();
+        String playerId = _model.getUser().get_playerId();
 
-        GameLobbyService.startGame(this, game.getGameID(), playerID);
+        GameLobbyService.startGame(this, gameId, playerId);
     }
 
     @Override
     public void leaveGame() {
-        // FIXME: implement
+        String gameId = _model.getCurrentGame().getGameID();
+        String playerId = _model.getUser().get_playerId();
+        GameLobbyService.leaveGame(this, gameId, playerId);
     }
 
     @Override

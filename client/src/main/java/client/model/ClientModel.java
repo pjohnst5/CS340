@@ -8,6 +8,7 @@ import java.util.Observable;
 
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
+import shared.exception.ReachedZeroPlayersException;
 import shared.model.Game;
 import shared.model.GamesWrapper;
 import shared.model.Message;
@@ -17,6 +18,7 @@ import shared.model.User;
 import static android.content.ContentValues.TAG;
 
 public class ClientModel extends Observable {
+    private static final String TAG = "client.ClientModel";
     private static final ClientModel ourInstance = new ClientModel();
 
     public static ClientModel getInstance() {
@@ -49,11 +51,9 @@ public class ClientModel extends Observable {
     }
 
     public void setCurrentGame(Game currentGame) {
-        if(currentGame != null){
-            this._currentGame = currentGame;
-            setChanged();
-            notifyObservers();
-        }
+        _currentGame = currentGame;
+        setChanged();
+        notifyObservers();
     }
 
     public Map<String, Game> getGames() {
@@ -99,11 +99,30 @@ public class ClientModel extends Observable {
         }
     }
 
+    public void removePlayer(Player player) {
+        if (player == null) {
+            Log.e(TAG, "Attempt to remove with null player reference");
+            return;
+        }
+        Game game = _games.get(player.getGameID());
+        if (game == null) {
+            Log.e(TAG, "Can't find game to remove player from");
+            return;
+        }
+
+        try {
+            game.removePlayer(player.getPlayerID());
+        } catch (ReachedZeroPlayersException e) {
+            Log.e(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public void startGame(String gameId){
         if(gameId != null) {
             Game g = this._games.get(gameId);
             try {
-                g.setStarted(true);
+                g.start();
             } catch (InvalidGameException e) {
                 Log.i(TAG, e.getMessage());
                 e.printStackTrace();
