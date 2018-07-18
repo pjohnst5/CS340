@@ -19,14 +19,4 @@ public abstract class IServiceRequest {
     {
         return _playerID;
     }
-
-    void set_gameID(String gameID)
-    {
-        _gameID = gameID;
-    }
-
-    void set_playerID(String playeriD)
-    {
-        _playerID = playeriD;
-    }
 }
