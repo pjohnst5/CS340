@@ -39,7 +39,6 @@
     <string name="join_game_button_text">Join Game</string>
 
 
-
     <!-- GENERIC -->
     <string name="train_color_title_text">Train Color</string>
     <string name="display_name_hint">Display Name&#8230;</string>
@@ -54,11 +53,14 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string-array name="player_colors">
-        <item >Black</item>
+        <item>Black</item>
         <item>Blue</item>
         <item>Green</item>
         <item>Red</item>
         <item>Yellow</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
