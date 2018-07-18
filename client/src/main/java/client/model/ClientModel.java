@@ -112,7 +112,7 @@ public class ClientModel extends Observable {
 
         try {
             game.removePlayer(player.getPlayerID());
-        } catch (ReachedZeroPlayersException e) {
+        } catch (InvalidGameException e) {
             Log.e(TAG, e.getMessage());
             e.printStackTrace();
         }

@@ -6,10 +6,12 @@ import server.model.ServerModel;
 import server.exception.ServerException;
 import shared.command.GenericCommand;
 import shared.command.ICommand;
+import shared.enumeration.GameState;
 import shared.exception.InvalidGameException;
 import shared.configuration.ConfigurationManager;
 import shared.model.Game;
 import shared.model.Message;
+import shared.model.Player;
 import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
 
@@ -23,16 +25,17 @@ class GameLobbyFacade {
 
         try {
             Game game = serverModel.getGame(gameID);
-            if (game.getStarted()){
-                throw new ServerException("Game has already started, can't start it twice.");
-            }
-
-            if (!game.getReady()) {
-                throw new ServerException("Game is not full, can't start without max players");
+            switch (game.get_state()) {
+                case NOT_READY:
+                    throw new ServerException("Game is not full, can't start without max players");
+                case STARTED:
+                    throw new ServerException("Game has already started, can't start it twice.");
+                case FINISHED:
+                    throw new ServerException("Error game has already finished");
             }
 
             //This is really all start game does
-            game.setStarted(true);
+            game.start();
 
             String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("client_start_game_method");
@@ -66,10 +69,40 @@ class GameLobbyFacade {
         return null;
     }
 
-    //    public static IResponse leaveGame(String username, String gameID)
-//    {
-//        return null;
-//    }
+    public static IResponse leaveGame(String gameId, String playerId) {
+        CommandResponse response = new CommandResponse();
+        ServerModel serverModel = ServerModel.getInstance();
+        try {
+            Game game = serverModel.getGame(gameId);
+            if (game.get_state() == GameState.STARTED) {
+                throw new ServerException("Can't leave game; game already started!");
+            }
+            Player player = game.getPlayer(playerId);
+            game.removePlayer(playerId);
+
+            String className = ConfigurationManager.getString("client_facade_name");
+            String methodName = ConfigurationManager.getString("client_leave_game_method");
+            String[] paramTypes = {Player.class.getCanonicalName()};
+            Object[] paramValues = {player};
+
+            ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
+
+            //add command to list of commands for game
+            serverModel.addCommand(game.getGameID(), command);
+
+            //gets all commands for this game and player
+            List<ICommand> commands = serverModel.getCommands(gameId, playerId);
+
+            //sets all the commands of this response to be the list
+            response.setCommands(commands);
+            response.setSuccess(true);
+
+        } catch(Exception e) {
+            response.setSuccess(false);
+            response.setErrorMessage(e.getMessage());
+        }
+        return response;
+    }
 
 }
 

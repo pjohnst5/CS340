@@ -66,12 +66,12 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
     @Override
     public void startGame() {
         Game game = _model.getCurrentGame();
-        if (true ){ // !game.isReadyToStart()) {
-            _view.showToast("Still waiting for players to join!");
+        if (game.get_state() != GameState.READY) {
+            _view.showToast("Can't start game until more players have joined");
             return;
         }
 
-        String gameId = _model.getCurrentGame().getGameID();
+        String gameId = game.getGameID();
         String playerId = _model.getUser().get_playerId();
 
         GameLobbyService.startGame(this, gameId, playerId);

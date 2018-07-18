@@ -48,6 +48,15 @@ public class Game {
         return _players;
     }
 
+    public Player getPlayer(String playerId) throws InvalidGameException {
+        for (Player p : _players) {
+            if (p.getPlayerID().equals(playerId)) {
+                return p;
+            }
+        }
+        throw new InvalidGameException("Can't find player with that ID in the game");
+    }
+
     public int getMaxPlayers()
     {
         return _maxPlayers;
@@ -104,17 +113,17 @@ public class Game {
     }
 
     //returns the number of players after removing the player
-    public int removePlayer(String userName) throws ReachedZeroPlayersException
+    public int removePlayer(String playerId) throws InvalidGameException
     {
         for( int i = 0; i < _players.size(); i++)
         {
-            if (_players.get(i).getUserName().equals(userName))
+            if (_players.get(i).getPlayerID().equals(playerId))
             {
                 _players.remove(i);
                 return _players.size();
             }
         }
-        return _players.size();
+        throw new InvalidGameException("Couldn't find a player with that ID in this game");
     }
 
     public void setGameID(String s) throws InvalidGameException
