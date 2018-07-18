@@ -1,8 +1,5 @@
 package client.facade;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import client.model.ClientModel;
 import shared.model.Game;
 import shared.model.GamesWrapper;
@@ -10,7 +7,7 @@ import shared.model.Message;
 import shared.model.Player;
 import shared.model.User;
 
-public class CommandFacade {
+public class ClientFacade {
     static ClientModel clientModel = ClientModel.getInstance();
 
     public static void setUser(User user){
