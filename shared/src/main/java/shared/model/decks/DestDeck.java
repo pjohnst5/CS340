@@ -3,6 +3,7 @@ package shared.model.decks;
 import java.util.ArrayList;
 import java.util.List;
 
+import shared.enumeration.CityName;
 import shared.exception.DeckException;
 import shared.model.City;
 
@@ -12,36 +13,36 @@ public class DestDeck {
     public DestDeck()
     {
         _cards = new ArrayList<>();
-        _cards.add(new DestCard(new City("Los Angeles"), new City("New York City"), 21));
-        _cards.add(new DestCard(new City("Duluth"), new City("Houston"), 8));
-        _cards.add(new DestCard(new City("Sault Ste Marie"), new City("Nashville"), 8));
-        _cards.add(new DestCard(new City("New York City"), new City("Atlanta"), 6));
-        _cards.add(new DestCard(new City("Portland"), new City("Nashville"), 17));
-        _cards.add(new DestCard(new City("Vancouver"), new City("Montréal"), 20));
-        _cards.add(new DestCard(new City("Duluth"), new City("El Paso"), 10));
-        _cards.add(new DestCard(new City("Toronto"), new City("Miami"), 10));
-        _cards.add(new DestCard(new City("Portland"), new City("Phoenix"), 11));
-        _cards.add(new DestCard(new City("Dallas"), new City("New York City"), 11));
-        _cards.add(new DestCard(new City("Calgary"), new City("Salt Lake City"), 7));
-        _cards.add(new DestCard(new City("Calgary"), new City("Phoenix"), 13));
-        _cards.add(new DestCard(new City("Los Angeles"), new City("Miami"), 20));
-        _cards.add(new DestCard(new City("Winnipeg"), new City("Little Rock"), 11));
-        _cards.add(new DestCard(new City("San Francisco"), new City("Atlanta"), 17));
-        _cards.add(new DestCard(new City("Kansas City"), new City("Houston"), 5));
-        _cards.add(new DestCard(new City("Los Angeles"), new City("Chicago"), 16));
-        _cards.add(new DestCard(new City("Denver"), new City("Pittsburgh"), 11));
-        _cards.add(new DestCard(new City("Chicago"), new City("Santa Fe"), 9));
-        _cards.add(new DestCard(new City("Vancouver"), new City("Santa Fe"), 13));
-        _cards.add(new DestCard(new City("Boston"), new City("Miami"), 12));
-        _cards.add(new DestCard(new City("Chicago"), new City("New Orleans"), 7));
-        _cards.add(new DestCard(new City("Montreal"), new City("Atlanta"), 9));
-        _cards.add(new DestCard(new City("Seattle"), new City("New York"), 22));
-        _cards.add(new DestCard(new City("Denver"), new City("El Paso"), 4));
-        _cards.add(new DestCard(new City("Helena"), new City("Los Angeles"), 8));
-        _cards.add(new DestCard(new City("Winnipeg"), new City("Houston"), 12));
-        _cards.add(new DestCard(new City("Montreal"), new City("New Orleans"), 13));
-        _cards.add(new DestCard(new City("Sault Ste. Marie"), new City("Oklahoma City"), 9));
-        _cards.add(new DestCard(new City("Seattle"), new City("Los Angeles"), 9));
+        _cards.add(new DestCard(new City(CityName.LOS_ANGELES), new City(CityName.NEW_YORK_CITY), 21));
+        _cards.add(new DestCard(new City(CityName.DULUTH), new City(CityName.HOUSTON), 8));
+        _cards.add(new DestCard(new City(CityName.SAULT_STE_MARIE), new City(CityName.NASHVILLE), 8));
+        _cards.add(new DestCard(new City(CityName.NEW_YORK_CITY), new City(CityName.ATLANTA), 6));
+        _cards.add(new DestCard(new City(CityName.PORTLAND), new City(CityName.NASHVILLE), 17));
+        _cards.add(new DestCard(new City(CityName.VANCOUVER), new City(CityName.MONTREAL), 20));
+        _cards.add(new DestCard(new City(CityName.DULUTH), new City(CityName.EL_PASO), 10));
+        _cards.add(new DestCard(new City(CityName.TORONTO), new City(CityName.MIAMI), 10));
+        _cards.add(new DestCard(new City(CityName.PORTLAND), new City(CityName.PHOENIX), 11));
+        _cards.add(new DestCard(new City(CityName.DALLAS), new City(CityName.NEW_YORK_CITY), 11));
+        _cards.add(new DestCard(new City(CityName.CALGARY), new City(CityName.SALT_LAKE_CITY), 7));
+        _cards.add(new DestCard(new City(CityName.CALGARY), new City(CityName.PHOENIX), 13));
+        _cards.add(new DestCard(new City(CityName.LOS_ANGELES), new City(CityName.MIAMI), 20));
+        _cards.add(new DestCard(new City(CityName.WINNIPEG), new City(CityName.LITTLE_ROCK), 11));
+        _cards.add(new DestCard(new City(CityName.SAN_FRANCISCO), new City(CityName.ATLANTA), 17));
+        _cards.add(new DestCard(new City(CityName.KANSAS_CITY), new City(CityName.HOUSTON), 5));
+        _cards.add(new DestCard(new City(CityName.LOS_ANGELES), new City(CityName.CHICAGO), 16));
+        _cards.add(new DestCard(new City(CityName.DENVER), new City(CityName.PITTSBURGH), 11));
+        _cards.add(new DestCard(new City(CityName.CHICAGO), new City(CityName.SANTA_FE), 9));
+        _cards.add(new DestCard(new City(CityName.VANCOUVER), new City(CityName.SANTA_FE), 13));
+        _cards.add(new DestCard(new City(CityName.BOSTON), new City(CityName.MIAMI), 12));
+        _cards.add(new DestCard(new City(CityName.CHICAGO), new City(CityName.NEW_ORLEANS), 7));
+        _cards.add(new DestCard(new City(CityName.MONTREAL), new City(CityName.ATLANTA), 9));
+        _cards.add(new DestCard(new City(CityName.SEATTLE), new City(CityName.NEW_YORK_CITY), 22));
+        _cards.add(new DestCard(new City(CityName.DENVER), new City(CityName.EL_PASO), 4));
+        _cards.add(new DestCard(new City(CityName.HELENA), new City(CityName.LOS_ANGELES), 8));
+        _cards.add(new DestCard(new City(CityName.WINNIPEG), new City(CityName.HOUSTON), 12));
+        _cards.add(new DestCard(new City(CityName.MONTREAL), new City(CityName.NEW_ORLEANS), 13));
+        _cards.add(new DestCard(new City(CityName.SAULT_STE_MARIE), new City(CityName.OKLAHOMA_CITY), 9));
+        _cards.add(new DestCard(new City(CityName.SEATTLE), new City(CityName.LOS_ANGELES), 9));
     }
 
     public final List<DestCard> getThreeCards() throws DeckException
