@@ -1,5 +1,6 @@
 package client.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,8 @@ import com.pjohnst5icloud.tickettoride.R;
 import java.util.List;
 
 import client.presenter.IGameLobbyPresenter;
+import client.view.activity.GameActivity;
+import client.view.activity.GameLobbyActivity;
 import shared.enumeration.GameState;
 import shared.model.Game;
 import shared.model.Message;
@@ -107,6 +110,9 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
     public void startGame() {
         // FIXME: drop off for now; start the game!
         showToast("TADA");
+        Intent intent = GameActivity.newIntent(getActivity());
+        startActivity(intent);
+
     }
 
     @Override

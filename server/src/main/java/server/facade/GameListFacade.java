@@ -9,6 +9,7 @@ import server.exception.ServerException;
 
 import shared.command.GenericCommand;
 import shared.command.ICommand;
+import shared.enumeration.GameState;
 import shared.exception.MaxPlayersException;
 import shared.exception.PlayerException;
 import shared.configuration.ConfigurationManager;
@@ -81,7 +82,7 @@ class GameListFacade {
             List<Player> players = game.getPlayers();
 
             //If game is full, can't add more people
-            if (game.getReady()){
+            if (game.get_state() == GameState.READY){
                 throw new ServerException("Game is full, can't add new player");
             }
 

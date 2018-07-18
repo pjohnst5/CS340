@@ -2,10 +2,13 @@ package server.facade;
 
 import java.util.List;
 
+import javax.print.DocFlavor;
+
 import server.model.ServerModel;
 import server.exception.ServerException;
 import shared.command.GenericCommand;
 import shared.command.ICommand;
+import shared.enumeration.GameState;
 import shared.exception.InvalidGameException;
 import shared.configuration.ConfigurationManager;
 import shared.model.Game;
@@ -23,16 +26,16 @@ class GameLobbyFacade {
 
         try {
             Game game = serverModel.getGame(gameID);
-            if (game.getStarted()){
+            if (game.get_state() == GameState.STARTED){
                 throw new ServerException("Game has already started, can't start it twice.");
             }
 
-            if (!game.getReady()) {
+            if (game.get_state() != GameState.READY) {
                 throw new ServerException("Game is not full, can't start without max players");
             }
 
             //This is really all start game does
-            game.setStarted(true);
+            //game.setStarted(true);
 
             String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("client_start_game_method");
@@ -52,9 +55,6 @@ class GameLobbyFacade {
             response.setSuccess(true);
 
         } catch(ServerException e){
-            response.setSuccess(false);
-            response.setErrorMessage(e.getMessage());
-        } catch(InvalidGameException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
         }
