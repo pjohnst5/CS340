@@ -1,8 +1,8 @@
 package shared.model.decks;
 
-import com.sun.tools.javac.util.Pair;
 
 import shared.model.City;
+import shared.model.Pair;
 
 public class DestCard implements ICard {
     private Pair<City, City> _cities;
