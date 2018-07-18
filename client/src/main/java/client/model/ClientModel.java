@@ -123,12 +123,12 @@ public class ClientModel extends Observable {
             Game g = this._games.get(gameId);
             try {
                 g.start();
+                setChanged(); // only need to notify observers if the game actually gets started
+                notifyObservers();
             } catch (InvalidGameException e) {
                 Log.i(TAG, e.getMessage());
                 e.printStackTrace();
             }
-            setChanged();
-            notifyObservers();
         }
     }
 
