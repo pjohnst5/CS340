@@ -23,7 +23,7 @@ import shared.model.response.CommandResponse;
 
 
 //Only ServerFacade should touch these
-class GameListFacade {
+class GameListService {
 
     public static IResponse createGame(Game game)
     {

@@ -27,12 +27,12 @@ public class ServerFacade {
     //Login functions
     public static IResponse login(String username, String password)  //setUser
     {
-        return LoginFacade.login(username, password);
+        return LoginService.login(username, password);
     }
 
     public static IResponse register(String username, String password) //setUser
     {
-        return LoginFacade.register(username, password);
+        return LoginService.register(username, password);
     }
 
 
@@ -41,12 +41,12 @@ public class ServerFacade {
     //Game List functions
     public static IResponse createGame(Game game) //addGame(Game)
     {
-        return GameListFacade.createGame(game);
+        return GameListService.createGame(game);
     }
 
     public static IResponse joinGame(JoinRequest joinRequest) //addPLayer(Player)
     {
-        return GameListFacade.joinGame(joinRequest);
+        return GameListService.joinGame(joinRequest);
     }
 
 
@@ -55,12 +55,12 @@ public class ServerFacade {
     //Game Lobby functions
     public static IResponse startGame(String gameID, String playerID) //startGame(gameID)
     {
-        return GameLobbyFacade.startGame(gameID, playerID);
+        return GameLobbyService.startGame(gameID, playerID);
     }
 
     public static IResponse sendMessage(Message message)   //sendMessage(Message)
     {
-        return GameLobbyFacade.sendMessage(message);
+        return GameLobbyService.sendMessage(message);
     }
 
 
@@ -71,7 +71,7 @@ public class ServerFacade {
     //Was lobby
 //    public static IResponse leaveGame(String userName, String gameID)
 //    {
-//        return GameLobbyFacade.leaveGame(userName, gameID);
+//        return GameLobbyService.leaveGame(userName, gameID);
 //    }
 
 
@@ -79,11 +79,11 @@ public class ServerFacade {
     // Poller functions
     public static IResponse getCommandList(String gameID, String playerID)
     {
-        return CommandManagerFacade.getCommandList(gameID, playerID);
+        return CommandManagerService.getCommandList(gameID, playerID);
     }
 
     public static IResponse getActiveGames()
     {
-        return CommandManagerFacade.getActiveGames();
+        return CommandManagerService.getActiveGames();
     }
 }

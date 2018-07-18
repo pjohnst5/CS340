@@ -18,7 +18,7 @@ import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
 
 //Only ServerFacade should touch these
-class GameLobbyFacade {
+class GameLobbyService {
 
     public static IResponse startGame(String gameID, String playerID)
     {

@@ -15,7 +15,7 @@ import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
 
 //Package private, only ServerFacade should touch these
-class CommandManagerFacade {
+class CommandManagerService {
 
     public static IResponse getActiveGames()
     {

@@ -10,7 +10,7 @@ import shared.model.User;
 import shared.configuration.ConfigurationManager;
 
 //Only ServerFacade should touch these
-class LoginFacade {
+class LoginService {
 
     public static IResponse login(String username, String password)
     {
