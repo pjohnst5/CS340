@@ -10,12 +10,12 @@ public abstract class IServiceRequest {
         _playerID = playerID;
     }
 
-    String get_gameID()
+    public String get_gameID()
     {
         return _gameID;
     }
 
-    String get_playerID()
+    public String get_playerID()
     {
         return _playerID;
     }

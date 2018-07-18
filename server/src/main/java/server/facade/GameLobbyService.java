@@ -66,6 +66,7 @@ class GameLobbyService {
 
     public static IResponse sendMessage(Message message)
     {
+        //TODO:Implement me
         return null;
     }
 
@@ -79,6 +80,10 @@ class GameLobbyService {
             }
             Player player = game.getPlayer(playerId);
             game.removePlayer(playerId);
+            serverModel.removePlayer(playerId);
+
+            //replace existing game in server
+            serverModel.replaceExistingGame(game);
 
             String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("client_leave_game_method");

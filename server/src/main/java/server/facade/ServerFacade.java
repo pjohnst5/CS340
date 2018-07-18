@@ -3,6 +3,7 @@ package server.facade;
 import shared.model.Game;
 import shared.model.request.JoinRequest;
 import shared.model.Message;
+import shared.model.request.LeaveGameRequest;
 import shared.model.response.IResponse;
 
 public class ServerFacade {
@@ -39,12 +40,12 @@ public class ServerFacade {
 
 
     //Game List functions
-    public static IResponse createGame(Game game) //addGame(Game)
+    public static IResponse createGame(Game game) //setGames(List<Game>) & joinGame(Player)
     {
         return GameListService.createGame(game);
     }
 
-    public static IResponse joinGame(JoinRequest joinRequest) //addPLayer(Player)
+    public static IResponse joinGame(JoinRequest joinRequest) //joinGame(Player)
     {
         return GameListService.joinGame(joinRequest);
     }
@@ -60,19 +61,14 @@ public class ServerFacade {
 
     public static IResponse sendMessage(Message message)   //sendMessage(Message)
     {
+        //TODO: implement me
         return GameLobbyService.sendMessage(message);
     }
 
-
-
-
-
-
-    //Was lobby
-//    public static IResponse leaveGame(String userName, String gameID)
-//    {
-//        return GameLobbyService.leaveGame(userName, gameID);
-//    }
+        public static IResponse leaveGame(LeaveGameRequest request)  //leaveGame(Player)
+    {
+        return GameLobbyService.leaveGame(request.get_gameID(), request.get_playerID());
+    }
 
 
 

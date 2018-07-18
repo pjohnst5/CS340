@@ -106,19 +106,15 @@ public class ServerModel {
     }
 
 
-    //GameList
+
+
+    //Mutators
     public void addNewGame(Game game) throws ServerException {
-        //set gameID
-        //String gameID = UUID.randomUUID().toString();
-        //try {
-            //game.setGameID(gameID);
-
-            //Put game in map
-            _games.put(game.getGameID(), game);
-
-        //} catch(InvalidGameException e) {
-        //    throw new ServerException(e.getMessage());
-        //}
+        if (_games.containsKey(game.getGameID())){
+            throw new ServerException("Game already exists in Server");
+        }
+        _games.put(game.getGameID(), game);
+        _manager.addGame(game.getGameID());
     }
 
     public void replaceExistingGame(Game game) throws ServerException {
@@ -126,24 +122,14 @@ public class ServerModel {
     }
 
     public void addPlayer(Player player) throws ServerException {
-        if (_players.containsKey(player.getPlayerID())){
-            throw new ServerException("player already exists in server");
-        }
-
         _players.put(player.getPlayerID(), player);
     }
 
-
-
-
-    //Removers
-    public void removePlayer(Player player) throws ServerException {
-        return;
+    public void removePlayer(String playerID){
+        _players.remove(playerID);
     }
 
-    public void removeGame(String gameID) throws ServerException {
-        return;
-    }
+
 
 
 
@@ -174,6 +160,11 @@ public class ServerModel {
         return _users.get(username);
     }
 
+    public Map<String, Game> getGames() {
+        return _games;
+    }
+
+
 
 
     //Commands
@@ -193,17 +184,6 @@ public class ServerModel {
     public List<ICommand> getCommands(String gameID) throws ServerException {
         return _manager.getCommands(gameID);
     }
-
-    public Map<String, Game> getGames() {
-        return _games;
-    }
-
-
-
-
-
-
-
 
 
 
