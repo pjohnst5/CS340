@@ -6,10 +6,10 @@ import java.util.List;
 import shared.exception.DeckException;
 import shared.model.City;
 
-public class DestCardDeck {
+public class DestDeck {
     private List<DestCard> _cards;
 
-    public DestCardDeck()
+    public DestDeck()
     {
         _cards = new ArrayList<>();
         _cards.add(new DestCard(new City("Los Angeles"), new City("New York City"), 21));

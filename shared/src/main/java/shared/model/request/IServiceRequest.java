@@ -1,11 +1,14 @@
 package shared.model.request;
 
-//This class is abstract
-
 
 public abstract class IServiceRequest {
     private String _gameID;
     private String _playerID;
+
+    public IServiceRequest(String gameID, String playerID){
+        _gameID = gameID;
+        _playerID = playerID;
+    }
 
     String get_gameID()
     {
