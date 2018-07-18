@@ -1,0 +1,27 @@
+package shared.enumeration;
+
+public enum CityName {
+    LOS_ANGELES,
+    NEW_YORK_CITY,
+    DULUTH,
+    HOUSTON,
+    SAULT_STE_MARIA,
+    NASHVILLE,
+    ATLANTA,
+    PORTLAND,
+    VANCOUVER,
+    MONTREAL,
+    EL_PASO,
+    TORONTO,
+    MIAMI,
+    PHOENIX,
+    CALGARY,
+    SALT_LAKE_CITY,
+    WINNIPEG,
+    LITTLE_ROCK,
+    SAN_FRANCISCO,
+    KANSAS_CITY,
+    CHICAGO,
+    DENVER,
+    PITTSBURGH,
+}

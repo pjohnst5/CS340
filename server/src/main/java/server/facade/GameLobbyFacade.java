@@ -2,6 +2,8 @@ package server.facade;
 
 import java.util.List;
 
+import javax.print.DocFlavor;
+
 import server.model.ServerModel;
 import server.exception.ServerException;
 import shared.command.GenericCommand;
@@ -25,6 +27,7 @@ class GameLobbyFacade {
 
         try {
             Game game = serverModel.getGame(gameID);
+
             switch (game.get_state()) {
                 case NOT_READY:
                     throw new ServerException("Game is not full, can't start without max players");
@@ -54,10 +57,7 @@ class GameLobbyFacade {
             response.setCommands(commands);
             response.setSuccess(true);
 
-        } catch(ServerException e){
-            response.setSuccess(false);
-            response.setErrorMessage(e.getMessage());
-        } catch(InvalidGameException e) {
+        } catch(Exception e){
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
         }
