@@ -178,7 +178,6 @@ public class Game {
         _destDeck = deck;
     }
 
-<<<<<<< HEAD
     public TrainDeck getTrainDeck() {
         return _trainDeck;
     }
@@ -189,7 +188,8 @@ public class Game {
 
     public GameMap getMap() {
         return _map;
-=======
+    }
+
     public String playerTurn() throws InvalidGameException
     {
         if (_turnManager == null)
@@ -206,6 +206,5 @@ public class Game {
             throw new InvalidGameException("Game hasn't started yet");
         }
         _turnManager.changeTurns();
->>>>>>> 30e30a445c0cedad964b57172f51683b93cf60d7
     }
 }
