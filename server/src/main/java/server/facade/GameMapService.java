@@ -57,11 +57,22 @@ public class GameMapService {
 
             ICommand command3 = new GenericCommand(className3, methodName3, paramTypes3, paramValues3, null);
 
+            //changes turns on server
+            serverModel.changeTurn(request.get_gameID());
+
+            //makes command to change turns on client
+            String className4 = ConfigurationManager.getString("client_facade_name");
+            String methodName4 = ConfigurationManager.getString("client_change_turn_method");
+            String[] paramTypes4 = null;
+            Object[] paramValues4 = null;
+
+            ICommand command4 = new GenericCommand(className4, methodName4, paramTypes4, paramValues4, null);
 
             //add commands to list in server model
             serverModel.addCommand(request.get_gameID(), command);
             serverModel.addCommand(request.get_gameID(), command2);
             serverModel.addCommand(request.get_gameID(), command3);
+            serverModel.addCommand(request.get_gameID(), command4);
 
             //gets list of new commands for client
             response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
