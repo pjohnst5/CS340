@@ -2,6 +2,7 @@ package client.facade;
 
 import client.model.ClientModel;
 import shared.model.Game;
+import shared.model.GameMap;
 import shared.model.GamesWrapper;
 import shared.model.Message;
 import shared.model.Player;
@@ -35,6 +36,9 @@ public class ClientFacade {
     }
 
     public static void leaveGame(Player player) { clientModel.removePlayer(player); }
+
+
+
 
 
 }

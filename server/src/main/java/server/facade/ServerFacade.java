@@ -1,9 +1,13 @@
 package server.facade;
 
 import shared.model.Game;
+import shared.model.request.ClaimRouteRequest;
+import shared.model.request.DestCardRequest;
 import shared.model.request.JoinRequest;
 import shared.model.Message;
 import shared.model.request.LeaveGameRequest;
+import shared.model.request.MessageRequest;
+import shared.model.request.TrainCardRequest;
 import shared.model.response.IResponse;
 
 public class ServerFacade {
@@ -59,16 +63,41 @@ public class ServerFacade {
         return GameLobbyService.startGame(gameID, playerID);
     }
 
-    public static IResponse sendMessage(Message message)   //sendMessage(Message)
+    public static IResponse sendMessage(MessageRequest request)   //sendMessage(Message)
     {
-        //TODO: implement me
-        return GameLobbyService.sendMessage(message);
+        return GameLobbyService.sendMessage(request);
     }
 
         public static IResponse leaveGame(LeaveGameRequest request)  //leaveGame(Player)
     {
-        return GameLobbyService.leaveGame(request.get_gameID(), request.get_playerID());
+        return GameLobbyService.leaveGame(request);
     }
+
+
+
+    //Game Map functions
+    public static IResponse claimRoute(ClaimRouteRequest request)
+    {
+        return GameMapService.claimRoute(request);
+    }
+
+
+
+    //Train Card functions
+    public static IResponse updateTrainDeck(TrainCardRequest request)
+    {
+        return TrainCardService.updateTrainDeck(request);
+    }
+
+
+
+    //Dest Card functions
+    public static IResponse updateDestDeck(DestCardRequest request)
+    {
+        return DestCardService.updateDestDeck(request);
+    }
+
+
 
 
 

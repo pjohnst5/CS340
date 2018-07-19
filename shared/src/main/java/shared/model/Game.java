@@ -7,6 +7,8 @@ import shared.enumeration.GameState;
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
 import shared.exception.ReachedZeroPlayersException;
+import shared.model.decks.DestDeck;
+import shared.model.decks.TrainDeck;
 
 public class Game {
     private String _gameName;
@@ -15,6 +17,10 @@ public class Game {
     private int _maxPlayers;
     private GameState _state;
     private List<Message> _messages;
+    private List<GameAction> _actions;
+    private TrainDeck _trainDeck;
+    private DestDeck _destDeck;
+    private GameMap _map;
 
     public Game(String gameName, int maxPlayers) throws InvalidGameException
     {
@@ -31,6 +37,11 @@ public class Game {
         _players = new ArrayList<>();
         _maxPlayers = maxPlayers;
         _state = GameState.NOT_READY;
+        _messages = new ArrayList<>();
+        _actions = new ArrayList<>();
+        _trainDeck = new TrainDeck();
+        _destDeck = new DestDeck();
+        _map = new GameMap();
     }
 
     public String getGameName()
@@ -139,11 +150,11 @@ public class Game {
         return _messages;
     }
 
-    public void set_messages(List<Message> _messages) {
-        this._messages = _messages;
-    }
     public void addMessage(Message message){
         this._messages.add(message);
+    }
+    public void addGameAction(GameAction action) {
+        _actions.add(action);
     }
 
     public void start() throws InvalidGameException {
@@ -151,5 +162,18 @@ public class Game {
             throw new InvalidGameException("Game not ready, can't start");
         }
         _state = GameState.STARTED;
+    }
+
+    public void setMap(GameMap map)
+    {
+        _map = map;
+    }
+
+    public void setTrainDeck(TrainDeck deck){
+        _trainDeck = deck;
+    }
+
+    public void setDestDeck(DestDeck deck) {
+        _destDeck = deck;
     }
 }
