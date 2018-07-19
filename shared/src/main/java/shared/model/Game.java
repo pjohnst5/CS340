@@ -124,6 +124,17 @@ public class Game {
         throw new InvalidGameException("Couldn't find a player with that ID in this game");
     }
 
+    public void updatePlayer(Player player) throws InvalidGameException {
+        for (int i = 0; i < _players.size(); i++) {
+            if (_players.get(i).getPlayerID().equals(player.getPlayerID())) {
+                _players.remove(i);
+                _players.add(i, player);
+                return;
+            }
+        }
+        throw new InvalidGameException("no player with that id to update");
+    }
+
     public void setGameID(String s) throws InvalidGameException {
         if (s == null || s.isEmpty()) {
             throw new InvalidGameException("GameID cannot be null");

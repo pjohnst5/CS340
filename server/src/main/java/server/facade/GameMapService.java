@@ -7,6 +7,7 @@ import shared.command.ICommand;
 import shared.configuration.ConfigurationManager;
 import shared.model.GameAction;
 import shared.model.GameMap;
+import shared.model.Player;
 import shared.model.decks.DestDeck;
 import shared.model.decks.TrainDeck;
 import shared.model.request.ClaimRouteRequest;
@@ -29,7 +30,6 @@ public class GameMapService {
             String methodName = ConfigurationManager.getString("client_set_map_method");
             String[] paramTypes = {GameMap.class.getCanonicalName()};
             Object[] paramValues = {request.get_map()};
-
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
             //sets TrainDeck in server model
@@ -40,7 +40,6 @@ public class GameMapService {
             String methodName2 = ConfigurationManager.getString("client_set_train_deck_method");
             String[] paramTypes2 = {TrainDeck.class.getCanonicalName()};
             Object[] paramValues2 = {request.get_deck()};
-
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
 
             //Makes game action object
@@ -54,25 +53,35 @@ public class GameMapService {
             String methodName3 = ConfigurationManager.getString("client_add_game_action_method");
             String[] paramTypes3 = {GameAction.class.getCanonicalName()};
             Object[] paramValues3 = {action};
-
             ICommand command3 = new GenericCommand(className3, methodName3, paramTypes3, paramValues3, null);
+
+            //updates player in server model
+            serverModel.updatePlayer(request.get_gameID(), request.get_player());
+
+            //makes command to do same on client
+            String className4 = ConfigurationManager.getString("client_facade_name");
+            String methodName4 = ConfigurationManager.getString("client_update_player_method");
+            String[] paramTypes4 = {Player.class.getCanonicalName()};
+            Object[] paramValues4 = {request.get_player()};
+            ICommand command4 = new GenericCommand(className4, methodName4, paramTypes4, paramValues4, null);
 
             //changes turns on server
             serverModel.changeTurn(request.get_gameID());
 
             //makes command to change turns on client
-            String className4 = ConfigurationManager.getString("client_facade_name");
-            String methodName4 = ConfigurationManager.getString("client_change_turn_method");
-            String[] paramTypes4 = null;
-            Object[] paramValues4 = null;
+            String className5 = ConfigurationManager.getString("client_facade_name");
+            String methodName5 = ConfigurationManager.getString("client_change_turn_method");
+            String[] paramTypes5 = null;
+            Object[] paramValues5 = null;
+            ICommand command5 = new GenericCommand(className5, methodName5, paramTypes5, paramValues5, null);
 
-            ICommand command4 = new GenericCommand(className4, methodName4, paramTypes4, paramValues4, null);
 
             //add commands to list in server model
-            serverModel.addCommand(request.get_gameID(), command);
-            serverModel.addCommand(request.get_gameID(), command2);
-            serverModel.addCommand(request.get_gameID(), command3);
-            serverModel.addCommand(request.get_gameID(), command4);
+            serverModel.addCommand(request.get_gameID(), command);  //set map
+            serverModel.addCommand(request.get_gameID(), command2); //set train deck
+            serverModel.addCommand(request.get_gameID(), command3); //add game history entry
+            serverModel.addCommand(request.get_gameID(), command4); //updates player
+            serverModel.addCommand(request.get_gameID(), command5); //change turn
 
             //gets list of new commands for client
             response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
