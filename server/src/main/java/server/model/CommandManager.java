@@ -32,11 +32,11 @@ public class CommandManager {
     public List<ICommand> getCommands(String gameID, int index) throws ServerException
     {
         if (!_commandList.containsKey(gameID)){
-            throw new ServerException("No game in command manager with that gameID getCommands");
+            throw new ServerException("Game does not exist in Command Manager");
         }
 
         if (_commandList.get(gameID).size() == (index + 1)) { // if (index == size() - 1
-            throw new ServerException("No new commands to get");
+            throw new ServerException("Commands up-to-date");
         }
 
         if (_commandList.get(gameID).size() < index) {
@@ -62,9 +62,17 @@ public class CommandManager {
     public void addCommand(String gameID, ICommand command) throws ServerException
     {
         if (!_commandList.containsKey(gameID)){
-            _commandList.put(gameID, new ArrayList<ICommand>());
+            throw new ServerException("Game does not exist in Command Manager");
         }
         _commandList.get(gameID).add(command);
+    }
+
+
+    public void addGame(String gameID)
+    {
+        if (!_commandList.containsKey(gameID)){
+            _commandList.put(gameID, new ArrayList<ICommand>());
+        }
     }
 
 }

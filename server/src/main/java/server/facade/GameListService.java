@@ -1,5 +1,7 @@
 package server.facade;
 
+import com.sun.org.apache.bcel.internal.generic.ICONST;
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -23,7 +25,7 @@ import shared.model.response.CommandResponse;
 
 
 //Only ServerFacade should touch these
-class GameListFacade {
+class GameListService {
 
     public static IResponse createGame(Game game)
     {
@@ -39,14 +41,11 @@ class GameListFacade {
             //Get map of active games
             GamesWrapper games = new GamesWrapper();
             games.setGames(serverModel.getGames());
-            //Map<String, Game> activeGames = serverModel.getGames();
 
             String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("client_set_games_method");
-            //String[] paramTypes = { activeGames.getClass().getCanonicalName() };
             String[] paramTypes = { games.getClass().getCanonicalName() };
             Object[] paramValues = { games };
-            //Object[] paramValues = { activeGames };
 
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 //-----------------------
@@ -61,8 +60,9 @@ class GameListFacade {
 
            serverModel.addCommand(game.getGameID(), command2);
 //--------------------------
-            response.addCommand(command);
-            response.addCommand(command2);
+            //gets all the commands for that game for the newly joined player
+            List<ICommand> commands = serverModel.getCommands(game.getGameID());
+            response.setCommands(commands);
             response.setSuccess(true);
 
         } catch(ServerException e) {
@@ -90,17 +90,6 @@ class GameListFacade {
             for (int i = 0; i < players.size(); i++){
                 if(players.get(i).getUserName().equals(jr.getUserName())){
                     throw new ServerException("A player with that username is already in the game");
-//                    response.setSuccess(true);
-//                    //Command sent back sets curent game.
-//                    String className = ConfigurationManager.getString("client_facade_name");
-//                    String methodName = ConfigurationManager.getString("client_join_game_method");
-//                    String[] paramTypes = {Player.class.getCanonicalName()};
-//                    Object[] paramValues = {players.get(i)};
-//
-//                    //Client will check if the player joining a game is him/herself. If it is, it sets current game
-//                    ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
-//
-//                    response.addCommand(command);
                 }
                 if (players.get(i).getColor().equals(jr.getColor())){
                     throw new ServerException("A player with that color already exists in the game");

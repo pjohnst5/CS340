@@ -2,12 +2,12 @@ package shared.model;
 
 public class Message {
     private String _message;
-    private String _username;
+    private String _displayName;
     private String _gameID;
 
     public Message() {
         _message = new String();
-        _username = new String();
+        _displayName = new String();
         _gameID = new String();
     }
 
@@ -16,9 +16,9 @@ public class Message {
         return _message;
     }
 
-    public String getUsername()
+    public String getDisplayName()
     {
-        return _username;
+        return _displayName;
     }
 
     public String getGameID()
@@ -32,9 +32,9 @@ public class Message {
         _message = s;
     }
 
-    public void setUsername(String s)
+    public void setDisplayName(String s)
     {
-        _username = s;
+        _displayName = s;
     }
 
     public void setGameID(String s)

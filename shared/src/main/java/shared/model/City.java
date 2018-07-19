@@ -1,15 +1,17 @@
 package shared.model;
 
+import shared.enumeration.CityName;
+
 public class City {
     //TODO: Implement City
 
-    private String _name;
+    private CityName _name;
 
-    public City(String name){
+    public City(CityName name){
         _name = name;
     }
 
-    public String get_name()
+    public CityName get_name()
     {
         return _name;
     }

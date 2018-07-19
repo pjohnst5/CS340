@@ -14,7 +14,7 @@ public class GameLobbyService {
 
         GenericCommand command = new GenericCommand(
                 ConfigurationManager.getString("server_facade_name"),
-                ConfigurationManager.getString("leaveGame"),
+                ConfigurationManager.getString("server_leave_game_method"),
                 paramTypes,
                 paramValues,
                 null);

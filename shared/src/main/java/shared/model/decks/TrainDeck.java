@@ -7,13 +7,13 @@ import java.util.List;
 import shared.enumeration.TrainColor;
 import shared.exception.DeckException;
 
-public class TrainCardDeck {
+public class TrainDeck {
 
     private FaceUpDeck _faceUpDeck;
     private FaceDownDeck _faceDownDeck;
 
     //-------------------------------------------Public Functions---------------------------------------------//
-    public TrainCardDeck()
+    public TrainDeck()
     {
         final int numNormalCards = 96;
         final int numLocomotiveCards = 10;
@@ -59,7 +59,7 @@ public class TrainCardDeck {
                 _faceDownDeck.addCard(tempDeck.get(i));
             } catch(DeckException e)
             {
-                System.out.println("Something cray cray happened when making a new TrainCardDeck: " + e.get_message());
+                System.out.println("Something cray cray happened when making a new TrainDeck: " + e.get_message());
             }
         }
 
@@ -71,7 +71,7 @@ public class TrainCardDeck {
             try {
                 _faceUpDeck.addCard(_faceDownDeck.drawCard());
             } catch(DeckException e){
-                System.out.println("Something cray cray happened when making a new TrainCardDeck: " + e.get_message());
+                System.out.println("Something cray cray happened when making a new TrainDeck: " + e.get_message());
             }
         }
 
@@ -99,10 +99,18 @@ public class TrainCardDeck {
     public FaceDownDeck get_faceDownDeck() {
         return _faceDownDeck;
     }
+
+    public void discardCards(List<TrainCard> cards) throws DeckException {
+        for(int i = 0; i < cards.size(); i++){
+            putTrainCardBack(cards.get(i));
+        }
+    }
     //---------------------------------------------------------------------------------------------------//
 
 
     private void reDealCards() {
+        System.out.println("Re-dealing cards, locomotive count is " + _faceUpDeck._locoMotiveCount);
+
         //adds all face up cards to face down deck
         _faceDownDeck._cards.addAll(_faceUpDeck._cards);
 

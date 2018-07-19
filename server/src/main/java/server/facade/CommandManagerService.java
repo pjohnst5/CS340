@@ -15,7 +15,7 @@ import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
 
 //Package private, only ServerFacade should touch these
-class CommandManagerFacade {
+class CommandManagerService {
 
     public static IResponse getActiveGames()
     {
@@ -48,10 +48,6 @@ class CommandManagerFacade {
 
         try{
             List<ICommand> commands = serverModel.getCommands(gameID, playerID);
-            //reset index
-            int oldIndex = serverModel.getPlayer(playerID).getIndex();
-
-            serverModel.getPlayer(playerID).setIndex(oldIndex + commands.size());
             response.setCommands(commands);
             response.setSuccess(true);
 

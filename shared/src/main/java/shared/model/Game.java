@@ -7,6 +7,8 @@ import shared.enumeration.GameState;
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
 import shared.exception.ReachedZeroPlayersException;
+import shared.model.decks.DestDeck;
+import shared.model.decks.TrainDeck;
 
 public class Game {
     private String _gameName;
@@ -15,6 +17,10 @@ public class Game {
     private int _maxPlayers;
     private GameState _state;
     private List<Message> _messages;
+    private List<GameAction> _actions;
+    private TrainDeck _trainDeck;
+    private DestDeck _destDeck;
+    private GameMap _map;
 
     public Game(String gameName, int maxPlayers) throws InvalidGameException
     {
@@ -31,6 +37,11 @@ public class Game {
         _players = new ArrayList<>();
         _maxPlayers = maxPlayers;
         _state = GameState.NOT_READY;
+        _messages = new ArrayList<>();
+        _actions = new ArrayList<>();
+        _trainDeck = new TrainDeck();
+        _destDeck = new DestDeck();
+        _map = new GameMap();
     }
 
     public String getGameName()
@@ -46,6 +57,15 @@ public class Game {
     public List<Player> getPlayers()
     {
         return _players;
+    }
+
+    public Player getPlayer(String playerId) throws InvalidGameException {
+        for (Player p : _players) {
+            if (p.getPlayerID().equals(playerId)) {
+                return p;
+            }
+        }
+        throw new InvalidGameException("Can't find player with that ID in the game");
     }
 
     public int getMaxPlayers()
@@ -104,17 +124,17 @@ public class Game {
     }
 
     //returns the number of players after removing the player
-    public int removePlayer(String userName) throws ReachedZeroPlayersException
+    public int removePlayer(String playerId) throws InvalidGameException
     {
         for( int i = 0; i < _players.size(); i++)
         {
-            if (_players.get(i).getUserName().equals(userName))
+            if (_players.get(i).getPlayerID().equals(playerId))
             {
                 _players.remove(i);
                 return _players.size();
             }
         }
-        return _players.size();
+        throw new InvalidGameException("Couldn't find a player with that ID in this game");
     }
 
     public void setGameID(String s) throws InvalidGameException
@@ -130,11 +150,11 @@ public class Game {
         return _messages;
     }
 
-    public void set_messages(List<Message> _messages) {
-        this._messages = _messages;
-    }
     public void addMessage(Message message){
         this._messages.add(message);
+    }
+    public void addGameAction(GameAction action) {
+        _actions.add(action);
     }
 
     public void start() throws InvalidGameException {
@@ -142,5 +162,30 @@ public class Game {
             throw new InvalidGameException("Game not ready, can't start");
         }
         _state = GameState.STARTED;
+    }
+
+    public void setMap(GameMap map)
+    {
+        _map = map;
+    }
+
+    public void setTrainDeck(TrainDeck deck){
+        _trainDeck = deck;
+    }
+
+    public void setDestDeck(DestDeck deck) {
+        _destDeck = deck;
+    }
+
+    public TrainDeck getTrainDeck() {
+        return _trainDeck;
+    }
+
+    public DestDeck getDestDeck() {
+        return _destDeck;
+    }
+
+    public GameMap getMap() {
+        return _map;
     }
 }

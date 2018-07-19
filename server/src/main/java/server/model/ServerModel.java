@@ -1,5 +1,6 @@
 package server.model;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,11 +9,15 @@ import java.util.UUID;
 
 import server.exception.ServerException;
 import shared.command.ICommand;
-import shared.exception.InvalidGameException;
 import shared.exception.InvalidUserException;
 import shared.model.Game;
+import shared.model.GameAction;
+import shared.model.GameMap;
+import shared.model.Message;
 import shared.model.Player;
 import shared.model.User;
+import shared.model.decks.DestDeck;
+import shared.model.decks.TrainDeck;
 
 public class ServerModel {
 
@@ -34,14 +39,14 @@ public class ServerModel {
         _manager = CommandManager.getInstance();
     }
 
-    private Map<String, User> _users;
+    private Map<String, User> _users; //usernames to Users
     private Map<String, Player> _players; //playerid's to Player
     private Map<String, Game> _games;  //gameid's to games
     private List<UUID> _uuids;
     private CommandManager _manager;
 
 
-    //Login/Register
+    //------------------Login/Register-------------------------------------------------------//
     public User authenticate(String username, String password) throws ServerException {
 
         //Error checking
@@ -106,48 +111,80 @@ public class ServerModel {
     }
 
 
-    //GameList
+
+
+    //---------------------Adders--------------------------------------------------------//
     public void addNewGame(Game game) throws ServerException {
-        //set gameID
-        //String gameID = UUID.randomUUID().toString();
-        //try {
-            //game.setGameID(gameID);
-
-            //Put game in map
-            _games.put(game.getGameID(), game);
-
-        //} catch(InvalidGameException e) {
-        //    throw new ServerException(e.getMessage());
-        //}
+        if (_games.containsKey(game.getGameID())){
+            throw new ServerException("Game already exists in Server");
+        }
+        _games.put(game.getGameID(), game);
+        _manager.addGame(game.getGameID());
     }
 
+    public void addPlayer(Player player) throws ServerException {
+        _players.put(player.getPlayerID(), player);
+    }
+
+    public void addMessage(String gameID, Message message) throws ServerException {
+        if (!_games.containsKey(gameID)){
+            throw new ServerException("Could not find game to send message in");
+        }
+
+        _games.get(gameID).addMessage(message);
+    }
+
+    public void addGameAction(String gameID, GameAction action) throws ServerException{
+        if (!_games.containsKey(gameID)){
+            throw new ServerException("Could not find game to put action in");
+        }
+        _games.get(gameID).addGameAction(action);
+    }
+
+
+
+    //-------------------------------Setters------------------------------------------------------------//
+    public void setGameMap(String gameID, GameMap map) throws ServerException {
+        if (!_games.containsKey(gameID)){
+            throw new ServerException("The gameID was not found when switching out gameMap on server");
+        }
+        _games.get(gameID).setMap(map);
+    }
+
+    public void setTrainDeck(String gameID, TrainDeck deck) throws ServerException {
+        if (!_games.containsKey(gameID)){
+            throw new ServerException("The gameID was not found when switching out train deck on server");
+        }
+        _games.get(gameID).setTrainDeck(deck);
+    }
+
+    public void setDestDeck(String gameID, DestDeck deck) throws ServerException {
+        if (!_games.containsKey(gameID)){
+            throw new ServerException("The gameID was not found when switching out dest deck on server");
+        }
+        _games.get(gameID).setDestDeck(deck);
+    }
+
+
+
+
+
+
+    //---------------------------------Removers--------------------------------------------//
     public void replaceExistingGame(Game game) throws ServerException {
         _games.put(game.getGameID(), game);
     }
 
-    public void addPlayer(Player player) throws ServerException {
-        if (_players.containsKey(player.getPlayerID())){
-            throw new ServerException("player already exists in server");
-        }
-
-        _players.put(player.getPlayerID(), player);
+    public void removePlayer(String playerID){
+        _players.remove(playerID);
     }
 
 
 
 
-    //Removers
-    public void removePlayer(Player player) throws ServerException {
-        return;
-    }
-
-    public void removeGame(String gameID) throws ServerException {
-        return;
-    }
 
 
-
-    //Getters
+    //------------------------------------Getters-------------------------------------------------------------//
     public Game getGame(String gameID) throws ServerException {
             Game g = _games.get(gameID);
 
@@ -174,26 +211,6 @@ public class ServerModel {
         return _users.get(username);
     }
 
-
-
-    //Commands
-    public void addCommand(String gameID, ICommand command) throws ServerException {
-        if (!_games.containsKey(gameID)){
-            throw new ServerException("Game does not exist: cannot add command to game that doesn't exist");
-        }
-        _manager.addCommand(gameID,command);
-    }
-
-    public List<ICommand> getCommands(String gameID, String playerID) throws ServerException {
-        //gets the players index and gives it to command manager
-        int index = _players.get(playerID).getIndex();
-        return _manager.getCommands(gameID, index);
-    }
-
-    public List<ICommand> getCommands(String gameID) throws ServerException {
-        return _manager.getCommands(gameID);
-    }
-
     public Map<String, Game> getGames() {
         return _games;
     }
@@ -202,9 +219,33 @@ public class ServerModel {
 
 
 
+    //------------Commands-------------------------------------------------------------------------------//
+    public void addCommand(String gameID, ICommand command) throws ServerException {
+        if (!_games.containsKey(gameID)){
+            throw new ServerException("Game does not exist: cannot add command to game that doesn't exist");
+        }
+        _manager.addCommand(gameID,command);
+    }
 
+    public List<ICommand> getCommands(String gameID, String playerID) throws ServerException {
+        //gets the players index
+        int index = _players.get(playerID).getIndex();
 
+        //Gets the list of new commands based on index
+        List<ICommand> commands = _manager.getCommands(gameID, index);
 
+        //gets size of list of new commands
+        int size = commands.size();
 
+        //updates index of the player
+        _players.get(playerID).setIndex(index + size);
 
+        //return list of new commands
+        return commands;
+    }
+
+    //WHOEVER CALLED ME: update the player index!
+    public List<ICommand> getCommands(String gameID) throws ServerException {
+        return _manager.getCommands(gameID);
+    }
 }

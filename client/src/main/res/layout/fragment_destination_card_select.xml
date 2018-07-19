@@ -33,21 +33,22 @@
         android:layout_above="@id/dest_card_frag_select_cards"
         android:weightSum="3">
 
-        <Button
+        <ImageButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:src="@drawable/train_card_green"
             android:layout_weight="1"/>
 
-        <Button
+        <ImageButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:background="@drawable/green_train_button"
             android:layout_weight="1"/>
 
-        <Button
+        <ImageButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:src="@drawable/train_card_green"
             android:layout_weight="1"/>
 
 
