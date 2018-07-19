@@ -45,9 +45,21 @@ public class TrainCardService {
 
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
 
+            //changes turns on server
+            serverModel.changeTurn(request.get_gameID());
+
+            //makes command to change turns on client
+            String className4 = ConfigurationManager.getString("client_facade_name");
+            String methodName4 = ConfigurationManager.getString("client_change_turn_method");
+            String[] paramTypes4 = null;
+            Object[] paramValues4 = null;
+
+            ICommand command4 = new GenericCommand(className4, methodName4, paramTypes4, paramValues4, null);
+
             //adds commands to server model
             serverModel.addCommand(request.get_gameID(), command);
             serverModel.addCommand(request.get_gameID(), command2);
+            serverModel.addCommand(request.get_gameID(), command4);
 
             //gets new list of commands and sets it as response's commands
             response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));

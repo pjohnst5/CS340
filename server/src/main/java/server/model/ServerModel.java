@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import server.exception.ServerException;
 import shared.command.ICommand;
+import shared.exception.InvalidGameException;
 import shared.exception.InvalidUserException;
 import shared.model.Game;
 import shared.model.GameAction;
@@ -163,6 +164,18 @@ public class ServerModel {
             throw new ServerException("The gameID was not found when switching out dest deck on server");
         }
         _games.get(gameID).setDestDeck(deck);
+    }
+
+    public void changeTurn(String gameID) throws ServerException {
+        if (!_games.containsKey(gameID)){
+            throw new ServerException("No game with that ID on server, changing turns failed");
+        }
+        try {
+            _games.get(gameID).changeTurns();
+        } catch(InvalidGameException e)
+        {
+            throw new ServerException(e.getMessage());
+        }
     }
 
 
