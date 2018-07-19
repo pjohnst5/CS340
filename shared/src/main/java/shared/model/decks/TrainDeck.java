@@ -103,6 +103,8 @@ public class TrainDeck {
 
 
     private void reDealCards() {
+        System.out.println("Re-dealing cards, locomotive count is " + _faceUpDeck._locoMotiveCount);
+
         //adds all face up cards to face down deck
         _faceDownDeck._cards.addAll(_faceUpDeck._cards);
 
