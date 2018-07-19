@@ -102,7 +102,7 @@ public class TrainDeck {
 
     public void discardCards(List<TrainCard> cards) throws DeckException {
         for(int i = 0; i < cards.size(); i++){
-            putTrainCardBack(cards.get(i));
+            discardCard(cards.get(i));
         }
     }
     //---------------------------------------------------------------------------------------------------//
