@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shared.enumeration.GameState;
+import shared.exception.DeckException;
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
 import shared.exception.ReachedZeroPlayersException;
@@ -151,6 +152,18 @@ public class Game {
 
         //Sets up player Order
         _turnManager = new TurnManager(this._players);
+
+        //Deals 4 cards to each player
+        try {
+            for (int i = 0; i < _players.size(); i++) {
+                for (int j = 0; j < 4; j++){
+                    _players.get(i).addTrainCard(_trainDeck.drawFaceDownCard());
+                }
+            }
+        } catch (DeckException e) {
+            System.out.println("Failed to deal out cards at beginning of game");
+        }
+
     }
 
     public void setMap(GameMap map) {
