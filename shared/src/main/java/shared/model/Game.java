@@ -189,6 +189,18 @@ public class Game {
         _destDeck = deck;
     }
 
+    public TrainDeck getTrainDeck() {
+        return _trainDeck;
+    }
+
+    public DestDeck getDestDeck() {
+        return _destDeck;
+    }
+
+    public GameMap getMap() {
+        return _map;
+    }
+
     public String playerTurn() throws InvalidGameException
     {
         if (_turnManager == null)

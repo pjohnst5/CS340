@@ -2,7 +2,6 @@ package client.facade;
 
 import client.model.ClientModel;
 import shared.model.Game;
-import shared.model.GameMap;
 import shared.model.GamesWrapper;
 import shared.model.Message;
 import shared.model.Player;
@@ -32,13 +31,16 @@ public class ClientFacade {
     }
 
     public static void sendMessage(Message message){
-        clientModel.sendMessage(message);
+        clientModel.addMessage(message);
     }
 
     public static void leaveGame(Player player) { clientModel.removePlayer(player); }
 
+    public static void setMap(){}
 
+    public static void setTrainDeck(){}
 
+    public static void setDestDeck(){}
 
-
+    public static void addGameAction(){}
 }

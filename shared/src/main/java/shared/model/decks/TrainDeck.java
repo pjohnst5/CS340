@@ -99,6 +99,12 @@ public class TrainDeck {
     public FaceDownDeck get_faceDownDeck() {
         return _faceDownDeck;
     }
+
+    public void discardCards(List<TrainCard> cards) throws DeckException {
+        for(int i = 0; i < cards.size(); i++){
+            putTrainCardBack(cards.get(i));
+        }
+    }
     //---------------------------------------------------------------------------------------------------//
 
 
