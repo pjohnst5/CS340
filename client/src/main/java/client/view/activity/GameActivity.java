@@ -6,9 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
 
+import client.view.fragment.game.play.GameChatFragment;
 import client.view.fragment.game.play.SelectDestinationCardFragment;
 
 public class GameActivity extends AppCompatActivity {
@@ -25,14 +29,22 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.game_content_container);
 
-        if (fragment == null){
-            fragment = new SelectDestinationCardFragment();
+        Fragment gameContentFragment = fm.findFragmentById(R.id.game_content_container);
+        Fragment gameSidebarFragment = fm.findFragmentById(R.id.game_sidebar_container);
+
+        if (gameContentFragment == null){
+            gameContentFragment = new SelectDestinationCardFragment();
             fm.beginTransaction()
-                    .add(R.id.game_content_container, fragment)
+                    .add(R.id.game_content_container, gameContentFragment)
                     .commit();
         }
 
+        if (gameSidebarFragment == null){
+            gameSidebarFragment = new GameChatFragment();
+            fm.beginTransaction()
+                    .add(R.id.game_sidebar_container, gameSidebarFragment)
+                    .commit();
+        }
     }
 }
