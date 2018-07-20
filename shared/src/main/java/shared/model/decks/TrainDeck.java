@@ -88,7 +88,7 @@ public class TrainDeck {
         _faceUpDeck.addCard(_faceDownDeck.drawCard());
     }
 
-    public void discardTrainCard(TrainCard card) throws DeckException {
+    public void discardCard(TrainCard card) throws DeckException {
         _faceDownDeck.addCard(card);
     }
 

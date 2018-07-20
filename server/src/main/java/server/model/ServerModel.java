@@ -178,6 +178,30 @@ public class ServerModel {
         }
     }
 
+    public void updatePlayer(String gameID, Player player) throws ServerException {
+        if (!_games.containsKey(gameID)){
+            throw new ServerException("The gameID was not found when updating player");
+        }
+
+        if (!_players.containsKey(player.getPlayerID())) {
+            throw new ServerException("The PlayerID was not found when updating player");
+        }
+
+        //make sure to keep index up to date
+        int index = _players.get(player.getPlayerID()).getIndex();
+        player.setIndex(index);
+
+        //replace player in server model
+        _players.put(player.getPlayerID(), player);
+
+        try {
+            //updates player in individual game
+            _games.get(gameID).updatePlayer(player);
+        } catch (InvalidGameException e){
+            throw new ServerException(e.getMessage());
+        }
+    }
+
 
 
 
