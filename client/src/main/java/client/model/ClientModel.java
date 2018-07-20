@@ -132,7 +132,7 @@ public class ClientModel extends Observable {
         }
     }
 
-    public void sendMessage(Message message){
+    public void addMessage(Message message){
         if(message != null) {
             String gameId = message.getGameID();
             Game game = this._games.get(gameId);

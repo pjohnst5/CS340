@@ -31,13 +31,16 @@ public class ClientFacade {
     }
 
     public static void sendMessage(Message message){
-        clientModel.sendMessage(message);
+        clientModel.addMessage(message);
     }
 
     public static void leaveGame(Player player) { clientModel.removePlayer(player); }
 
-    //create game addGame(Game game)
-    //join game (adding player to specific game and setting current game if it's you) addPlayer(Player player)
-    //start game (bool started checking the current game) start(String GameId)
-    //send message sendMessage(Message message)
+    public static void setMap(){}
+
+    public static void setTrainDeck(){}
+
+    public static void setDestDeck(){}
+
+    public static void addGameAction(){}
 }
