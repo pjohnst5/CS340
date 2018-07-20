@@ -6,13 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
 
-import client.view.fragment.game.play.GameChatFragment;
+import client.view.fragment.game.play.ChatFragment;
 import client.view.fragment.game.play.SelectDestinationCardFragment;
 
 public class GameActivity extends AppCompatActivity {
@@ -41,10 +38,17 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if (gameSidebarFragment == null){
-            gameSidebarFragment = new GameChatFragment();
+            gameSidebarFragment = new ChatFragment();
             fm.beginTransaction()
                     .add(R.id.game_sidebar_container, gameSidebarFragment)
                     .commit();
         }
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+
+        getSupportActionBar().hide();
     }
 }

@@ -115,16 +115,22 @@ public class JoinGameDialog extends DialogFragment {
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ad.getButton(Dialog.BUTTON_NEGATIVE).callOnClick();
+                ad.getButton(Dialog.BUTTON_NEGATIVE).performClick();
             }
         });
 
         mJoinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ad.getButton(Dialog.BUTTON_POSITIVE).callOnClick();
+                ad.getButton(Dialog.BUTTON_POSITIVE).performClick();
             }
         });
+
+        // TODO: Refactor this portion, you should be able to hide buttons without calling show because it creates two objects to show
+        ad.show();
+        ad.getButton(Dialog.BUTTON_POSITIVE).setVisibility(View.GONE);
+        ad.getButton(Dialog.BUTTON_NEGATIVE).setVisibility(View.GONE);
+        ad.hide();
 
         return ad;
     }

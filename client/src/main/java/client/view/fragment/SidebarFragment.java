@@ -1,6 +1,5 @@
 package client.view.fragment;
 
-import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,7 +8,7 @@ import android.widget.Button;
 
 import com.pjohnst5icloud.tickettoride.R;
 
-import client.view.fragment.game.play.GameChatFragment;
+import client.view.fragment.game.play.ChatFragment;
 import client.view.fragment.game.play.GameHistoryFragment;
 import client.view.fragment.game.play.GameStatusFragment;
 
@@ -32,6 +31,18 @@ public abstract class SidebarFragment extends Fragment {
 
     }
 
+    /**
+     * This initializes the buttons at the top of the sidebar. The tab that is associated with the
+     * type parameter is the currently selected tab
+     *
+     * @param type Which tab is currently selected
+     *
+     * @pre type != null
+     * @pre calling getActivity() does not return null
+     *
+     * @post Sidebar buttons appear as selected based on the type parameter passed int
+     * @post Sidebar content is replaced with appropriate content when tabs are selected
+     */
     public void setupSidebarButtons(ButtonType type){
 
         Button chatButton = getActivity().findViewById(R.id.game_chat_button);
@@ -42,7 +53,7 @@ public abstract class SidebarFragment extends Fragment {
         historyButton.setSelected(false);
         gameStatusButton.setSelected(false);
 
-        View.OnClickListener chatButtonListener = createClickListener(new GameChatFragment());
+        View.OnClickListener chatButtonListener = createClickListener(new ChatFragment());
         View.OnClickListener gameHistoryButtonListener = createClickListener(new GameHistoryFragment());
         View.OnClickListener gameStatusButtonListener = createClickListener(new GameStatusFragment());
 
