@@ -100,9 +100,9 @@ public class TrainDeck {
         return _faceDownDeck;
     }
 
-    public void discardCards(List<TrainCard> cards) throws DeckException {
+    public void discardTrainCards(List<TrainCard> cards) throws DeckException {
         for(int i = 0; i < cards.size(); i++){
-            putTrainCardBack(cards.get(i));
+            discardTrainCard(cards.get(i));
         }
     }
     //---------------------------------------------------------------------------------------------------//
