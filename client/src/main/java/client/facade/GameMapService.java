@@ -27,7 +27,7 @@ public class GameMapService {
         Player player = game.getPlayer(playerId);
 
         if(map.isRouteClaimed(route.getId())){
-            game.getTrainDeck().discardCards(discardedCards);
+            game.getTrainDeck().discardTrainCards(discardedCards);
         }
 
         ClaimRouteRequest request = new ClaimRouteRequest(game.getGameID(), playerId, map, game.getTrainDeck(), player);
