@@ -101,7 +101,6 @@ class GameLobbyService {
             String methodName = ConfigurationManager.getString("client_send_message_method");
             String[] paramTypes = {Message.class.getCanonicalName()};
             Object[] paramValues = {request.get_message()};
-
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
             //add newly made command to list
@@ -131,6 +130,8 @@ class GameLobbyService {
             if (game.get_state() == GameState.STARTED) {
                 throw new ServerException("Can't leave game; game already started!");
             }
+
+            //removes player from server model
             Player player = game.getPlayer(playerId);
             game.removePlayer(playerId);
             serverModel.removePlayer(playerId);
@@ -138,11 +139,11 @@ class GameLobbyService {
             //replace existing game in server
             serverModel.replaceExistingGame(game);
 
+            //makes command to remove player from client's version of game
             String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("client_leave_game_method");
             String[] paramTypes = {Player.class.getCanonicalName()};
             Object[] paramValues = {player};
-
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
             //Makes game action object
@@ -156,7 +157,6 @@ class GameLobbyService {
             String methodName2 = ConfigurationManager.getString("client_add_game_action_method");
             String[] paramTypes2 = {GameAction.class.getCanonicalName()};
             Object[] paramValues2 = {action};
-
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
 
 

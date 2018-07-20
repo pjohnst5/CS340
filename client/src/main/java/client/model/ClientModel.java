@@ -9,6 +9,8 @@ import java.util.Observable;
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
 import shared.model.Game;
+import shared.model.GameAction;
+import shared.model.decks.DestDeck;
 import shared.model.wrapper.GamesWrapper;
 import shared.model.Message;
 import shared.model.Player;
@@ -136,6 +138,38 @@ public class ClientModel extends Observable {
             game.addMessage(message);
             setChanged();
             notifyObservers();
+        }
+    }
+
+    public void addGameAction(GameAction action) {
+        _currentGame.addGameAction(action);
+    }
+
+    public void updatePlayer(Player player)
+    {
+        try {
+            if (_currentGame.getGameID().equals(player.getGameID()))
+            {
+                _currentGame.updatePlayer(player);
+            }
+            _games.get(player.getGameID()).updatePlayer(player);
+        } catch(InvalidGameException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void setDestDeck(DestDeck deck) {
+        _currentGame.setDestDeck(deck);
+        _games.get(_currentGame.getGameID()).setDestDeck(deck);
+    }
+
+    public void changeTurns()
+    {
+        try {
+            _currentGame.changeTurns();
+        } catch(InvalidGameException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

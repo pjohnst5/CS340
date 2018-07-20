@@ -58,9 +58,9 @@ public class DestCardService {
 
             //makes command to change turns on client
             String className4 = ConfigurationManager.getString("client_facade_name");
-            String methodName4 = ConfigurationManager.getString("client_change_turn_method");
-            String[] paramTypes4 = null;
-            Object[] paramValues4 = null;
+            String methodName4 = ConfigurationManager.getString("client_change_turns_method");
+            String[] paramTypes4 = new String[0];
+            Object[] paramValues4 = new String[0];
             ICommand command4 = new GenericCommand(className4, methodName4, paramTypes4, paramValues4, null);
 
 

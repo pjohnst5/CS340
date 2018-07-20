@@ -44,7 +44,16 @@ public class ClientFacade {
 
     public static void setTrainDeck(TrainDeck deck){}
 
-    public static void setDestDeck(DestDeck deck){}
+    public static void setDestDeck(DestDeck deck){ clientModel.setDestDeck(deck); }
 
-    public static void addGameAction(GameAction action){}
+    public static void addGameAction(GameAction action){ clientModel.addGameAction(action); }
+
+    public static void updatePlayer(Player player) {
+        clientModel.updatePlayer(player);
+    }
+
+    public static void changeTurns() //b doesn't do anything, it just couldn't serialize without it
+    {
+        clientModel.changeTurns();
+    }
 }
