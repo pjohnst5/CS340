@@ -47,7 +47,6 @@ class GameLobbyService {
             String methodName = ConfigurationManager.getString("client_start_game_method");
             String[] paramTypes = {String.class.getCanonicalName()};
             Object[] paramValues = {gameID};
-
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
             //Makes game action object
@@ -61,7 +60,6 @@ class GameLobbyService {
             String methodName2 = ConfigurationManager.getString("client_add_game_action_method");
             String[] paramTypes2 = {GameAction.class.getCanonicalName()};
             Object[] paramValues2 = {action};
-
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
 
             //adds commands to list of commands for game

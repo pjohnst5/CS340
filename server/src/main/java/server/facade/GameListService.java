@@ -1,9 +1,6 @@
 package server.facade;
 
-import com.sun.org.apache.bcel.internal.generic.ICONST;
-
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import server.model.ServerModel;
@@ -16,7 +13,7 @@ import shared.exception.MaxPlayersException;
 import shared.exception.PlayerException;
 import shared.configuration.ConfigurationManager;
 import shared.model.Game;
-import shared.model.GamesWrapper;
+import shared.model.wrapper.GamesWrapper;
 import shared.model.Player;
 import shared.model.request.JoinRequest;
 import shared.model.response.IResponse;
@@ -42,12 +39,16 @@ class GameListService {
             GamesWrapper games = new GamesWrapper();
             games.setGames(serverModel.getGames());
 
+            //makes command to set games
             String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("client_set_games_method");
             String[] paramTypes = { games.getClass().getCanonicalName() };
             Object[] paramValues = { games };
-
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
+
+            //adds command to server list of commands
+            serverModel.addCommand(game.getGameID(), command);
+
 //-----------------------
             //New command to join the game the player just created.
             String className2 = ConfigurationManager.getString("client_facade_name");
@@ -58,10 +59,16 @@ class GameListService {
             //Client will check if the player joining a game is him/herself. If it is, it sets current game
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
 
+            //adds command to server list of commands
            serverModel.addCommand(game.getGameID(), command2);
 //--------------------------
+
             //gets all the commands for that game for the newly joined player
             List<ICommand> commands = serverModel.getCommands(game.getGameID());
+
+            //updates index of player, whenever you ask for all the commands, it doesn't update the index so you have to do it
+            serverModel.getPlayer(game.getPlayers().get(0).getPlayerID()).setIndex(commands.size()-1);
+
             response.setCommands(commands);
             response.setSuccess(true);
 

@@ -8,14 +8,11 @@ import java.util.Observable;
 
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
-import shared.exception.ReachedZeroPlayersException;
 import shared.model.Game;
-import shared.model.GamesWrapper;
+import shared.model.wrapper.GamesWrapper;
 import shared.model.Message;
 import shared.model.Player;
 import shared.model.User;
-
-import static android.content.ContentValues.TAG;
 
 public class ClientModel extends Observable {
     private static final String TAG = "client.ClientModel";

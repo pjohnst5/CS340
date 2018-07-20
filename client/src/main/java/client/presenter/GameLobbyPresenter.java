@@ -12,6 +12,7 @@ import client.server.communication.poll.Poller;
 import client.view.fragment.IGameLobbyView;
 import client.server.AsyncServerTask;
 import shared.enumeration.GameState;
+import shared.exception.InvalidGameException;
 import shared.model.Game;
 import shared.model.Message;
 import shared.model.Player;
@@ -59,7 +60,12 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
         Message newMessage = new Message();
         newMessage.setGameID(_model.getCurrentGame().getGameID());
         newMessage.setMessage(message);
-        newMessage.setUsername(user.getUserName());
+        try{
+            newMessage.setDisplayName(_model.getCurrentGame().getPlayer(user.get_playerId()).getDisplayName());
+        } catch (InvalidGameException e)
+        {
+            newMessage.setDisplayName("uh oh something went wrong in GameLobbyPresenter sendMessage");
+        }
         GameLobbyService.sendMessage(this, newMessage);
     }
 

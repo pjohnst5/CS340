@@ -1,5 +1,6 @@
 package shared.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,6 +41,8 @@ public class Player {
         _color = color;
         _index_of_commands = -1;
         _points = 0;
+        _trainCards = new ArrayList<>();
+        _destCards = new ArrayList<>();
     }
 
     public String getUserName() {

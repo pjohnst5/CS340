@@ -10,7 +10,7 @@ import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.configuration.ConfigurationManager;
 import shared.model.Game;
-import shared.model.GamesWrapper;
+import shared.model.wrapper.GamesWrapper;
 import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
 

@@ -69,7 +69,7 @@ public class ClientCommunicator {
             URL url = new URL(HOST_URL + endpoint);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(HTTP_POST);
-            connection.setDoOutput(false);
+            connection.setDoOutput(true);
 
             writer = new PrintWriter(connection.getOutputStream());
             Serializer.serializeToWriter(writer, command);

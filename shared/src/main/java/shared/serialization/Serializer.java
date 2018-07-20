@@ -8,11 +8,10 @@ import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.HashMap;
 
 import shared.command.GenericCommand;
 import shared.command.ICommand;
-import shared.model.GamesWrapper;
+import shared.model.wrapper.GamesWrapper;
 
 public class Serializer implements ISerializer {
 
