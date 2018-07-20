@@ -15,7 +15,7 @@ public class GameHistoryFragment extends SidebarFragment implements IGameHistory
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_game_history, container, false);
 
-        setupSidebarButtons(v, ButtonType.GAME_HISTORY);
+        setupSidebarButtons(ButtonType.GAME_HISTORY);
 
         return v;
     }
