@@ -41,6 +41,7 @@
     <!-- MAIN GAME ACTIVITY -->
     <string name="game_select_dest_card_title">SELECT DESTINATION CARDS</string>
     <string name="game_select_dest_card_subtitle">choose at least two</string>
+    <string name="select">Select</string>
 
     <!-- SIDEBAR TEXT -->
     <string name="chat_title">CHAT</string>
