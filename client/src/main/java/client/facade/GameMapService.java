@@ -6,6 +6,7 @@ import client.model.ClientModel;
 import client.server.AsyncServerTask;
 import shared.command.GenericCommand;
 import shared.configuration.ConfigurationManager;
+import shared.enumeration.ClaimedRoutePointSystem;
 import shared.enumeration.TrainColor;
 import shared.exception.DeckException;
 import shared.exception.InvalidGameException;
@@ -29,13 +30,22 @@ public class GameMapService {
         String playerId = user.get_playerId();
         Player player = game.getPlayer(playerId);
 
-        if(!map.isRouteClaimed(route.getId())){
+        if(!map.isRouteClaimed(route.getId())){                             //ensure the route isn't already claimed
             if (route.get_pathLength() == discardedCards.size()) {          //ensure the route length is the same as the size of discarded cards
                 if(areColorsAreCorrect(route, discardedCards)) {            //ensure that the cards are of the right color to claim route
 
                     //claim the route
+                    //route needs to be claimed on the player
                     map.claimRoute(route.getId(), playerId);
 
+
+                    //give points to player
+                    ClaimedRoutePointSystem pointSystem = new ClaimedRoutePointSystem();
+                    int points = pointSystem.getPoints(route.get_pathLength());
+                    player.addPoints(points);
+
+
+                    //TODO: remove the train cars from the player
 
 
                     //discard the cards
