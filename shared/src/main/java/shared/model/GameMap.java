@@ -1,5 +1,6 @@
 package shared.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import shared.enumeration.ListOfRoutes;
 
 public class GameMap {
     private HashMap<Integer, Route> _routes = new HashMap<>();
+    private List<Route> claimedRoutes = new ArrayList<>();
 
     public GameMap() {
         List<Route> routeList =  new ListOfRoutes().getRoutes();
@@ -27,5 +29,10 @@ public class GameMap {
     public void claimRoute(int routeId, String playerId){
         Route route = _routes.get(routeId);
         route.claimRoute(playerId);
+        claimedRoutes.add(route);
+    }
+
+    public List<Route> getClaimedRoutes() {
+        return claimedRoutes;
     }
 }
