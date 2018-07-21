@@ -8,14 +8,13 @@ import java.util.Observable;
 
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
-import shared.exception.ReachedZeroPlayersException;
 import shared.model.Game;
-import shared.model.GamesWrapper;
+import shared.model.GameAction;
+import shared.model.decks.DestDeck;
+import shared.model.wrapper.GamesWrapper;
 import shared.model.Message;
 import shared.model.Player;
 import shared.model.User;
-
-import static android.content.ContentValues.TAG;
 
 public class ClientModel extends Observable {
     private static final String TAG = "client.ClientModel";
@@ -134,13 +133,45 @@ public class ClientModel extends Observable {
         }
     }
 
-    public void sendMessage(Message message){
+    public void addMessage(Message message){
         if(message != null) {
             String gameId = message.getGameID();
             Game game = this._games.get(gameId);
             game.addMessage(message);
             setChanged();
             notifyObservers();
+        }
+    }
+
+    public void addGameAction(GameAction action) {
+        _currentGame.addGameAction(action);
+    }
+
+    public void updatePlayer(Player player)
+    {
+        try {
+            if (_currentGame.getGameID().equals(player.getGameID()))
+            {
+                _currentGame.updatePlayer(player);
+            }
+            _games.get(player.getGameID()).updatePlayer(player);
+        } catch(InvalidGameException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void setDestDeck(DestDeck deck) {
+        _currentGame.setDestDeck(deck);
+        _games.get(_currentGame.getGameID()).setDestDeck(deck);
+    }
+
+    public void changeTurns()
+    {
+        try {
+            _currentGame.changeTurns();
+        } catch(InvalidGameException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

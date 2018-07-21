@@ -170,14 +170,14 @@ public class CreateGameDialog extends DialogFragment {
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ad.getButton(Dialog.BUTTON_NEGATIVE).callOnClick();
+                ad.getButton(Dialog.BUTTON_NEGATIVE).performClick();
             }
         });
 
         mCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ad.getButton(Dialog.BUTTON_POSITIVE).callOnClick();
+                ad.getButton(Dialog.BUTTON_POSITIVE).performClick();
             }
         });
 

@@ -1,6 +1,8 @@
-package shared.model;
+package shared.model.wrapper;
 
 import java.util.Map;
+
+import shared.model.Game;
 
 public class GamesWrapper {
     private Map<String, Game> _games;

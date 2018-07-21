@@ -88,7 +88,7 @@ public class TrainDeck {
         _faceUpDeck.addCard(_faceDownDeck.drawCard());
     }
 
-    public void putTrainCardBack(TrainCard card) throws DeckException {
+    public void discardTrainCard(TrainCard card) throws DeckException {
         _faceDownDeck.addCard(card);
     }
 
@@ -99,10 +99,18 @@ public class TrainDeck {
     public FaceDownDeck get_faceDownDeck() {
         return _faceDownDeck;
     }
+
+    public void discardTrainCards(List<TrainCard> cards) throws DeckException {
+        for(int i = 0; i < cards.size(); i++){
+            discardTrainCard(cards.get(i));
+        }
+    }
     //---------------------------------------------------------------------------------------------------//
 
 
     private void reDealCards() {
+        System.out.println("Re-dealing cards, locomotive count is " + _faceUpDeck._locoMotiveCount);
+
         //adds all face up cards to face down deck
         _faceDownDeck._cards.addAll(_faceUpDeck._cards);
 

@@ -38,6 +38,16 @@
 
     <string name="join_game_button_text">Join Game</string>
 
+    <!-- MAIN GAME ACTIVITY -->
+    <string name="game_select_dest_card_title">SELECT DESTINATION CARDS</string>
+    <string name="game_select_dest_card_subtitle">choose at least two</string>
+
+    <!-- SIDEBAR TEXT -->
+    <string name="chat_title">CHAT</string>
+    <string name="game_history_title">GAME HISTORY</string>
+    <string name="game_status_title">GAME STATUS</string>
+    <string name="sidebar_open_game_status">Open</string>
+
 
     <!-- GENERIC -->
     <string name="train_color_title_text">Train Color</string>

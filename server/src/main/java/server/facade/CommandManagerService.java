@@ -10,7 +10,7 @@ import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.configuration.ConfigurationManager;
 import shared.model.Game;
-import shared.model.GamesWrapper;
+import shared.model.wrapper.GamesWrapper;
 import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
 
@@ -48,10 +48,6 @@ class CommandManagerService {
 
         try{
             List<ICommand> commands = serverModel.getCommands(gameID, playerID);
-            //reset index
-            int oldIndex = serverModel.getPlayer(playerID).getIndex();
-
-            serverModel.getPlayer(playerID).setIndex(oldIndex + commands.size());
             response.setCommands(commands);
             response.setSuccess(true);
 
