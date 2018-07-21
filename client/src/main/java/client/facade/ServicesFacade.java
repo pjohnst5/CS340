@@ -7,6 +7,7 @@ import shared.exception.DeckException;
 import shared.exception.InvalidGameException;
 import shared.exception.RouteClaimedAlreadyException;
 import shared.model.Message;
+import shared.model.Player;
 import shared.model.Route;
 import shared.model.decks.DestCard;
 import shared.model.decks.TrainCard;
@@ -21,25 +22,25 @@ public class ServicesFacade {
             System.out.println("Ryan, please handle this exception");
         }
     }
-    public void drawFaceUpCard(AsyncServerTask.AsyncCaller caller, TrainCard trainCard){
+    public void drawFaceUpCard(AsyncServerTask.AsyncCaller caller, TrainCard trainCard, Player player){
         TrainCardService trainCardService = new TrainCardService();
-        trainCardService.drawFaceUpCard(caller, trainCard);
+        trainCardService.drawFaceUpCard(caller, trainCard, player);
     }
-    public void drawFaceDownCard(AsyncServerTask.AsyncCaller caller){
+    public void drawFaceDownCard(AsyncServerTask.AsyncCaller caller, Player player){
         TrainCardService trainCardService = new TrainCardService();
-        trainCardService.drawFaceDownCard(caller);
+        trainCardService.drawFaceDownCard(caller, player);
     }
     public void sendMessage(AsyncServerTask.AsyncCaller caller, Message message){
         ChatService service = new ChatService();
         service.sendMessage(caller, message);
     }
-    public void selectDestCard(AsyncServerTask.AsyncCaller caller, DestCard destCard){
+    public void selectDestCard(AsyncServerTask.AsyncCaller caller, DestCard destCard, Player player){
         DestCardService service = new DestCardService();
-        service.selectDestCard(caller, destCard);
+        service.selectDestCard(caller, destCard, player);
     }
-    public void discardDestCard(AsyncServerTask.AsyncCaller caller, DestCard destCard){
+    public void discardDestCard(AsyncServerTask.AsyncCaller caller, DestCard destCard, Player player){
         DestCardService service = new DestCardService();
-        service.discardDestCard(caller, destCard);
+        service.discardDestCard(caller, destCard, player);
     }
     public void leaveGame(AsyncServerTask.AsyncCaller caller, LeaveGameRequest leaveGameRequest){
         GameStatusService service = new GameStatusService();
