@@ -28,6 +28,11 @@ public class Route {
         return _isClaimed;
     }
 
+    public void claimRoute(String playerId){
+        set_claimedBy(playerId);
+        this._isClaimed = true;
+        //TODO: do we change the color after it has been claimed?
+    }
     public void set_claimedBy(String _claimedBy) {
         this._claimedBy = _claimedBy;
     }

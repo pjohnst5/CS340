@@ -3,13 +3,16 @@ package client.facade;
 import java.util.List;
 
 import client.server.AsyncServerTask;
+import shared.exception.DeckException;
+import shared.exception.InvalidGameException;
+import shared.exception.RouteClaimedAlreadyException;
 import shared.model.Message;
 import shared.model.Route;
 import shared.model.decks.DestCard;
 import shared.model.decks.TrainCard;
 
 public class ServicesFacade {
-    public void claimRoute(AsyncServerTask.AsyncCaller caller, Route route, List<TrainCard> discardCards){
+    public void claimRoute(AsyncServerTask.AsyncCaller caller, Route route, List<TrainCard> discardCards) throws DeckException, InvalidGameException, RouteClaimedAlreadyException {
         GameMapService gameMapService = new GameMapService();
         gameMapService.claimRoute(caller, route, discardCards);
     }

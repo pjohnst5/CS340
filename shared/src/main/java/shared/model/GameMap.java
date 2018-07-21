@@ -23,4 +23,9 @@ public class GameMap {
         Route route = _routes.get(routeId);
         return route.isClaimed();
     }
+
+    public void claimRoute(int routeId, String playerId){
+        Route route = _routes.get(routeId);
+        route.claimRoute(playerId);
+    }
 }
