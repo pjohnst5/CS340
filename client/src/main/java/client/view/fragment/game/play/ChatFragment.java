@@ -46,12 +46,11 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
 
     private void testCode(){
         Message message = new Message();
-        message.setDisplayName("DALLAS");
-        message.setGameID("TEMP ID");
+        //message.setDisplayName("DALLAS");
+        //message.setGameID("TEMP ID");
         message.setTimeStamp();
 
         addMessage(message);
-
     }
 
 
@@ -103,6 +102,14 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
 
         return v;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        _presenter.destroy();
+    }
+
 
     @Override
     public void clearInput(){
@@ -163,36 +170,8 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
             LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams)_container.getLayoutParams();
 
             // TODO: set isOwner based on if the ID matches the id in the model
-            boolean isOwner = message.getMessage().length() % 2 == 0;
-
-            // TODO: Set the color based on the Player ID
-            PlayerColor color = PlayerColor.GREEN;
-
-            // For Now, Generate a random color
-            int colorIndex = message.getMessage().length() % 5 + 1;
-            switch (colorIndex){
-                case 1:
-                    color = PlayerColor.BLACK;
-                    break;
-
-                case 2:
-                    color = PlayerColor.BLUE;
-                    break;
-
-                case 3:
-                    color = PlayerColor.GREEN;
-                    break;
-
-                case 4:
-                    color = PlayerColor.RED;
-                    break;
-
-                case 5:
-                default:
-                    color = PlayerColor.YELLOW;
-                    break;
-            }
-            //END GENERATE RANDOM COLORS
+            boolean isOwner = _presenter.getClientDisplayName().equals(message.getDisplayName());
+            PlayerColor color = _presenter.getPlayerColor(message.getDisplayName());
 
             if (isOwner){
                 layout.setMargins(20, 0, 0,0);

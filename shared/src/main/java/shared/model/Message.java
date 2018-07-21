@@ -5,14 +5,12 @@ import java.util.Date;
 
 public class Message {
     private String _message;
-    private String _displayName;
-    private String _gameID;
+    private Player _player;
     private Date _timeStamp;
 
     public Message() {
         _message = "";
-        _displayName = "";
-        _gameID = "";
+        _player = null;
         _timeStamp = new Date();
     }
 
@@ -21,14 +19,18 @@ public class Message {
         return _message;
     }
 
-    public String getDisplayName()
+    public Player getPlayer()
     {
-        return _displayName;
+        return _player;
+    }
+
+    public String getDisplayName() {
+        return _player.getDisplayName();
     }
 
     public String getGameID()
     {
-        return _gameID;
+        return _player.getGameID();
     }
 
     public Date getTimeStamp() {
@@ -41,16 +43,9 @@ public class Message {
         _message = s;
     }
 
-    public void setDisplayName(String s)
-    {
-        _displayName = s;
+    public void setPlayer(Player player) {
+        _player = player;
     }
-
-    public void setGameID(String s)
-    {
-        _gameID = s;
-    }
-
     public void setTimeStamp() {
         _timeStamp = new Date();
     }

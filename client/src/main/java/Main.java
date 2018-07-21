@@ -119,8 +119,8 @@ public class Main {
 
             //sending message
             Message message = new Message();
-            message.setGameID(game.getGameID());
-            message.setDisplayName(player1.getDisplayName());
+            //message.setGameID(game.getGameID());
+            //message.setDisplayName(player1.getDisplayName());
             message.setMessage("hi yall");
 
             MessageRequest mr = new MessageRequest(message);
