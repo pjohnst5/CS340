@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="3">
+    android:weightSum="3"
+    android:background="@color/green">
 
 
     <TextView
@@ -12,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:textAlignment="center"
         style="@style/TitleText"
-        android:text="RAWRRAWRRRRR"/>
+        android:text="@string/game_select_dest_card_title"/>
 
     <TextView
         android:id="@+id/dest_card_frag_subtitle"
@@ -21,7 +22,7 @@
         android:textAlignment="center"
         android:layout_below="@id/dest_card_frag_title"
         style="@style/SubtitleText"
-        android:text="SUBTITLE"/>
+        android:text="@string/game_select_dest_card_subtitle"/>
 
     <LinearLayout
         android:id="@+id/dest_card_frag_cards"
@@ -37,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/train_card_green"
+            android:background="@drawable/button_card"
             android:layout_weight="1"/>
 
         <ImageButton

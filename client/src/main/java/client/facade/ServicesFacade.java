@@ -14,7 +14,12 @@ import shared.model.decks.TrainCard;
 public class ServicesFacade {
     public void claimRoute(AsyncServerTask.AsyncCaller caller, Route route, List<TrainCard> discardCards) throws DeckException, InvalidGameException, RouteClaimedAlreadyException {
         GameMapService gameMapService = new GameMapService();
-        gameMapService.claimRoute(caller, route, discardCards);
+        try{
+            gameMapService.claimRoute(caller, route, discardCards);
+        } catch (Exception e)
+        {
+            System.out.println("Ryan, please handle this exception");
+        }
     }
     public void drawFaceUpCard(AsyncServerTask.AsyncCaller caller, TrainCard trainCard){}
     public void drawFaceDownCard(AsyncServerTask.AsyncCaller caller){}

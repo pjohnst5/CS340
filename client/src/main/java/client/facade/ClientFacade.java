@@ -2,7 +2,11 @@ package client.facade;
 
 import client.model.ClientModel;
 import shared.model.Game;
-import shared.model.GamesWrapper;
+import shared.model.GameAction;
+import shared.model.GameMap;
+import shared.model.decks.DestDeck;
+import shared.model.decks.TrainDeck;
+import shared.model.wrapper.GamesWrapper;
 import shared.model.Message;
 import shared.model.Player;
 import shared.model.User;
@@ -36,11 +40,20 @@ public class ClientFacade {
 
     public static void leaveGame(Player player) { clientModel.removePlayer(player); }
 
-    public static void setMap(){}
+    public static void setMap(GameMap map){}
 
-    public static void setTrainDeck(){}
+    public static void setTrainDeck(TrainDeck deck){}
 
-    public static void setDestDeck(){}
+    public static void setDestDeck(DestDeck deck){ clientModel.setDestDeck(deck); }
 
-    public static void addGameAction(){}
+    public static void addGameAction(GameAction action){ clientModel.addGameAction(action); }
+
+    public static void updatePlayer(Player player) {
+        clientModel.updatePlayer(player);
+    }
+
+    public static void changeTurns() //b doesn't do anything, it just couldn't serialize without it
+    {
+        clientModel.changeTurns();
+    }
 }

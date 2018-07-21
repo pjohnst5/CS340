@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 
 import shared.model.Game;
-import shared.model.GamesWrapper;
+import shared.model.wrapper.GamesWrapper;
 
 public class HashMapDeserializer implements JsonDeserializer<GamesWrapper> {
     @Override

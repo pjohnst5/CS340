@@ -1,9 +1,6 @@
 package server.facade;
 
-import com.sun.org.apache.bcel.internal.generic.ICONST;
-
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import server.model.ServerModel;
@@ -16,7 +13,8 @@ import shared.exception.MaxPlayersException;
 import shared.exception.PlayerException;
 import shared.configuration.ConfigurationManager;
 import shared.model.Game;
-import shared.model.GamesWrapper;
+import shared.model.GameAction;
+import shared.model.wrapper.GamesWrapper;
 import shared.model.Player;
 import shared.model.request.JoinRequest;
 import shared.model.response.IResponse;
@@ -42,26 +40,48 @@ class GameListService {
             GamesWrapper games = new GamesWrapper();
             games.setGames(serverModel.getGames());
 
+            //makes command to set games
             String className = ConfigurationManager.getString("client_facade_name");
             String methodName = ConfigurationManager.getString("client_set_games_method");
             String[] paramTypes = { games.getClass().getCanonicalName() };
             Object[] paramValues = { games };
-
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
+
 //-----------------------
             //New command to join the game the player just created.
             String className2 = ConfigurationManager.getString("client_facade_name");
             String methodName2 = ConfigurationManager.getString("client_join_game_method");
             String[] paramTypes2 = {Player.class.getCanonicalName()};
             Object[] paramValues2 = {game.getPlayers().get(0)}; //gets first player
-
             //Client will check if the player joining a game is him/herself. If it is, it sets current game
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
-
-           serverModel.addCommand(game.getGameID(), command2);
 //--------------------------
+
+            //Makes game action object
+            GameAction action = new GameAction(game.getPlayers().get(0).getDisplayName()," joined the game");
+
+            //adds game action into server model
+            //serverModel.addGameAction(game.getGameID(), action);
+            //Note: we don't add this game action immediately to the game on the server nor will we ever. It would show up twice on client's side if we did that
+
+            //makes command to do same on client
+            String className3 = ConfigurationManager.getString("client_facade_name");
+            String methodName3 = ConfigurationManager.getString("client_add_game_action_method");
+            String[] paramTypes3 = {GameAction.class.getCanonicalName()};
+            Object[] paramValues3 = {action};
+            ICommand command3 = new GenericCommand(className3, methodName3, paramTypes3, paramValues3, null);
+//-----------------------
+
+            serverModel.addCommand(game.getGameID(), command); //set games
+            serverModel.addCommand(game.getGameID(), command2); //join game
+            serverModel.addCommand(game.getGameID(), command3); //game history entry
+
             //gets all the commands for that game for the newly joined player
             List<ICommand> commands = serverModel.getCommands(game.getGameID());
+
+            //updates index of player, whenever you ask for all the commands, it doesn't update the index so you have to do it
+            serverModel.getPlayer(game.getPlayers().get(0).getPlayerID()).setIndex(commands.size()-1);
+
             response.setCommands(commands);
             response.setSuccess(true);
 
@@ -112,12 +132,27 @@ class GameListService {
             String methodName = ConfigurationManager.getString("client_join_game_method");
             String[] paramTypes = {Player.class.getCanonicalName()};
             Object[] paramValues = {player};
-
             //Client will check if the player joining a game is him/herself. If it is, it sets current game
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
-            //Add "player joined command" in the command manager mapped to the gameID
-            serverModel.addCommand(jr.getGameID(),command);
+
+            //Makes game action object
+            GameAction action = new GameAction(jr.getDisplayName()," joined the game");
+
+            //adds game action into server model
+            serverModel.addGameAction(jr.getGameID(), action);
+
+            //makes command to do same on client
+            String className2 = ConfigurationManager.getString("client_facade_name");
+            String methodName2 = ConfigurationManager.getString("client_add_game_action_method");
+            String[] paramTypes2 = {GameAction.class.getCanonicalName()};
+            Object[] paramValues2 = {action};
+            ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
+
+            serverModel.addCommand(jr.getGameID(),command);  //Player joined
+            serverModel.addCommand(jr.getGameID(), command2); //game action of player joined
+
+
 
             //Get list of commands from game the player just joined
             List<ICommand> commands = serverModel.getCommands(player.getGameID());
