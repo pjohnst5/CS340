@@ -87,9 +87,14 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
     @Override
     public void update(Observable o, Object arg) {
         List<Message> messageList = _model.getCurrentGame().get_messages();
-        if (oldSize != messageList.size()){
-            oldSize = messageList.size();
-            _chatView.setMessages(messageList);
+        while (oldSize < messageList.size()) {
+            _chatView.addMessage(messageList.get(oldSize));
+            oldSize++;
         }
+//        if (oldSize != messageList.size()){
+//
+//            oldSize = messageList.size();
+//            _chatView.setMessages(messageList);
+//        }
     }
 }

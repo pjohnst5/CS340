@@ -203,10 +203,10 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
 
     private class ChatListAdapter extends RecyclerView.Adapter<ChatItemHolder> {
 
-        //private List<Message> _messages;
+        private List<Message> _messages;
 
         ChatListAdapter(List<Message> messages) {
-            //_messages = messages;
+            _messages = messages;
         }
 
         @NonNull
