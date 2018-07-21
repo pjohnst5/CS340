@@ -1,5 +1,6 @@
 package client.presenter.game.play;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
@@ -9,16 +10,35 @@ import client.model.ClientModel;
 import client.server.AsyncServerTask;
 import client.view.fragment.game.play.IGameChatView;
 import shared.enumeration.PlayerColor;
+import shared.exception.InvalidGameException;
 import shared.model.Message;
+import shared.model.Player;
 
 public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.AsyncCaller {
 
     private IGameChatView _chatView;
     private ClientModel _model;
+    private Player _player;
+    private ServicesFacade _facade;
+    private List<Message> _messages;
+
+
 
     public ChatPresenter(IGameChatView chatView){
         _chatView = chatView;
         _model = ClientModel.getInstance();
+        _facade = new ServicesFacade();
+
+        try {
+            _player = _model.getCurrentGame().getPlayer(_model.getUser().get_playerId());
+        } catch (InvalidGameException e) {
+            System.out.println("Game is not initilaized, something went wrong");
+            int i = 4 / 0;
+        }
+
+        _messages = _model.getCurrentGame().get_messages();
+        _model.addObserver(this);
+
     }
 
     @Override
@@ -32,13 +52,13 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
         _chatView.showToast(content);
         _chatView.clearInput();
 
+
         Message msg = new Message();
         msg.setMessage(content);
-        //msg.setDisplayName(_model.);
-        //msg.setGameID(_model.getCurrentGame().getGameID());
+        msg.setPlayer(_player);
         msg.setTimeStamp();
 
-        new ServicesFacade().sendMessage(this, msg);
+       _facade.sendMessage(this, msg);
 
         _chatView.addMessage(msg);
 
@@ -47,34 +67,8 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
     }
 
     @Override
-    public PlayerColor getPlayerColor(String displayName) {
-        // TODO: Do the actual logic to get the player color
-        // For Now, Generate a random color
-        int colorIndex = displayName.length() % 5 + 1;
-
-        switch (colorIndex){
-            case 1: return PlayerColor.BLACK;
-            case 2: return PlayerColor.BLUE;
-            case 3: return PlayerColor.GREEN;
-            case 4: return PlayerColor.RED;
-            case 5: return PlayerColor.YELLOW;
-        }
-        return null;
-    }
-
-    @Override
     public String getClientDisplayName() {
-        // TODO: Implement this to retrieve the display name from the client model
-        // For now, generate a username
-
-        Random random = new Random();
-        int i = random.nextInt(100);
-
-        if (i % 4 == 2){
-            return "Gerald";
-        }
-
-        return "";
+        return _player.getDisplayName();
     }
 
     @Override
@@ -90,6 +84,8 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
 
     @Override
     public void update(Observable o, Object arg) {
-        int i = 0/4;
+        if (_messages.size() != _model.getCurrentGame().get_messages().size()){
+            _chatView.setMessages(_model.getCurrentGame().get_messages());
+        }
     }
 }

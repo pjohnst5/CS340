@@ -5,8 +5,6 @@ import shared.enumeration.PlayerColor;
 public interface IChatPresenter {
 
     public void sendMessage(String message);
-
-    public PlayerColor getPlayerColor(String displayName);
     public String getClientDisplayName();
 
     /**

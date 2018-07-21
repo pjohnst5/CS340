@@ -44,29 +44,18 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
 
     List<Message> _messages;
 
-    private void testCode(){
-        Message message = new Message();
-        //message.setDisplayName("DALLAS");
-        //message.setGameID("TEMP ID");
-        message.setTimeStamp();
-
-        addMessage(message);
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_chat_list, container, false);
 
         setupSidebarButtons(ButtonType.CHAT);
-
+        
         _messages = new ArrayList<>();
         _chatAdapter = new ChatListAdapter(_messages);
         _chatRecyclerView = v.findViewById(R.id.chat_list_recycler_view);
         _chatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ((LinearLayoutManager)_chatRecyclerView.getLayoutManager()).setReverseLayout(true);
         _chatRecyclerView.setAdapter(_chatAdapter);
-        testCode();
 
         // Views should not create presenters...
         _presenter = new ChatPresenter(this);
@@ -142,6 +131,13 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
     }
 
     @Override
+    public void setMessages(List<Message> messages){
+        _messages = messages;
+        Collections.sort(_messages, Message.getDescendingComparator());
+        _chatAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void addMessage(Message message) {
         _messages.add(message);
         Collections.sort(_messages, Message.getDescendingComparator());
@@ -171,7 +167,7 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
 
             // TODO: set isOwner based on if the ID matches the id in the model
             boolean isOwner = _presenter.getClientDisplayName().equals(message.getDisplayName());
-            PlayerColor color = _presenter.getPlayerColor(message.getDisplayName());
+            PlayerColor color = message.getPlayer().getColor();
 
             if (isOwner){
                 layout.setMargins(20, 0, 0,0);
