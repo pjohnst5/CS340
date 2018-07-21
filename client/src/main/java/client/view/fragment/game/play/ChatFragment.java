@@ -49,7 +49,7 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
         View v = inflater.inflate(R.layout.fragment_chat_list, container, false);
 
         setupSidebarButtons(ButtonType.CHAT);
-        
+
         _messages = new ArrayList<>();
         _chatAdapter = new ChatListAdapter(_messages);
         _chatRecyclerView = v.findViewById(R.id.chat_list_recycler_view);
@@ -132,7 +132,7 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
 
     @Override
     public void setMessages(List<Message> messages){
-        _messages = messages;
+        _messages = new ArrayList<>(messages);
         Collections.sort(_messages, Message.getDescendingComparator());
         _chatAdapter.notifyDataSetChanged();
     }
@@ -203,10 +203,10 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
 
     private class ChatListAdapter extends RecyclerView.Adapter<ChatItemHolder> {
 
-        private List<Message> _messages;
+        //private List<Message> _messages;
 
         ChatListAdapter(List<Message> messages) {
-            _messages = messages;
+            //_messages = messages;
         }
 
         @NonNull
