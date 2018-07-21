@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ public class GameListFragment extends Fragment implements IGameListView {
     private IGameListPresenter mPresenter;
 
     private GameHolder mCurrentHolder;
+
+    private static final String TAG = "GameListFragment";
 
     private static final String CREATE_GAME_DIALOG_TAG = "CreateGameDialog";
     private static final String JOIN_GAME_DIALOG_TAG = "JoinGameDialog";
@@ -93,6 +96,27 @@ public class GameListFragment extends Fragment implements IGameListView {
         mCurrentlySelectedGame = null;
 
         return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart()");
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume()");
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause()");
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG, "onStop()");
     }
 
     @Override
