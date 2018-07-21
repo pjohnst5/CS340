@@ -62,8 +62,6 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
 
        _facade.sendMessage(this, msg);
 
-        _chatView.addMessage(msg);
-
 
         _chatView.enableInput();
     }
@@ -87,10 +85,26 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
     @Override
     public void update(Observable o, Object arg) {
         List<Message> messageList = _model.getCurrentGame().get_messages();
-        while (oldSize < messageList.size()) {
-            _chatView.addMessage(messageList.get(oldSize));
-            oldSize++;
+
+        if (oldSize != messageList.size()){
+            for (int i = 0; i < messageList.size(); i++){
+                if (_chatView.addMessage(messageList.get(i))){
+                    oldSize++;
+
+                    if (oldSize == messageList.size()){
+                        return;
+                    }
+                }
+            }
         }
+
+//        while (oldSize < messageList.size()) {
+//            Message currentMessage = messageList.get(oldSize);
+//
+//
+//            _chatView.addMessage(messageList.get(oldSize));
+//            oldSize++;
+//        }
 //        if (oldSize != messageList.size()){
 //
 //            oldSize = messageList.size();

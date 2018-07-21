@@ -138,10 +138,12 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
     }
 
     @Override
-    public void addMessage(Message message) {
+    public boolean addMessage(Message message) {
+        if  (_messages.contains(message)) return false;
         _messages.add(message);
         Collections.sort(_messages, Message.getDescendingComparator());
         _chatAdapter.notifyDataSetChanged();
+        return true;
     }
 
     private class ChatItemHolder extends RecyclerView.ViewHolder{

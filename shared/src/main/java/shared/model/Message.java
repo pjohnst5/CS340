@@ -54,6 +54,21 @@ public class Message {
         _timeStamp = timeStamp;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Message)) {
+            return false;
+        }
+        Message other = (Message) o;
+        if (!this._timeStamp.equals(other._timeStamp)) {
+            return false;
+        }
+        if (!this._player.getPlayerID().equals(other._player.getPlayerID())) {
+            return false;
+        }
+        return true;
+    }
+
     public static Comparator<Message> getAscendingComparator(){
         return new Message().new AscendingComparator();
     }
