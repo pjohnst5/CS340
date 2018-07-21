@@ -36,11 +36,11 @@ public class ServicesFacade {
     }
     public void selectDestCard(AsyncServerTask.AsyncCaller caller, DestCard destCard, Player player){
         DestCardService service = new DestCardService();
-        service.selectDestCard(caller, destCard, player);
+        //service.selectDestCard(caller, destCard, player);
     }
     public void discardDestCard(AsyncServerTask.AsyncCaller caller, DestCard destCard, Player player){
         DestCardService service = new DestCardService();
-        service.discardDestCard(caller, destCard, player);
+        //service.discardDestCard(caller, destCard, player);
     }
     public void leaveGame(AsyncServerTask.AsyncCaller caller, LeaveGameRequest leaveGameRequest){
         GameStatusService service = new GameStatusService();
