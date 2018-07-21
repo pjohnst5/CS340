@@ -51,7 +51,7 @@ public class DestDeck {
 
         if (_cards.size() < 3)
         {
-            throw new DeckException("THere are only " + _cards.size() + " cards in the dest card deck");
+            throw new DeckException("There are only " + _cards.size() + " cards in the dest card deck");
         }
 
         for (int i = 0; i < 3; i++){
