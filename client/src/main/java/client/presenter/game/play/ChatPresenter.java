@@ -21,6 +21,7 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
     private Player _player;
     private ServicesFacade _facade;
     private List<Message> _messages;
+    int oldSize;
 
 
 
@@ -37,6 +38,7 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
         }
 
         _messages = _model.getCurrentGame().get_messages();
+        oldSize = 0;
         _model.addObserver(this);
 
     }
@@ -84,8 +86,10 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
 
     @Override
     public void update(Observable o, Object arg) {
-        if (_messages.size() != _model.getCurrentGame().get_messages().size()){
-            _chatView.setMessages(_model.getCurrentGame().get_messages());
+        List<Message> messageList = _model.getCurrentGame().get_messages();
+        if (oldSize != messageList.size()){
+            oldSize = messageList.size();
+            _chatView.setMessages(messageList);
         }
     }
 }
