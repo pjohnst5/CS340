@@ -6,9 +6,9 @@ public class MessageRequest extends IServiceRequest {
 
     private Message _message;
 
-    public MessageRequest(String gameID, String playerID, Message message)
+    public MessageRequest(Message message)
     {
-        super(gameID,playerID);
+        super(message.getPlayer());
         _message = message;
     }
 

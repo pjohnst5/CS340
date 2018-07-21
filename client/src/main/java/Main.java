@@ -123,7 +123,7 @@ public class Main {
             message.setDisplayName(player1.getDisplayName());
             message.setMessage("hi yall");
 
-            MessageRequest mr = new MessageRequest(game.getGameID(), player1.getPlayerID(), message);
+            MessageRequest mr = new MessageRequest(message);
 
             String className5 = ConfigurationManager.getString("server_facade_name");
             String methodName5 = ConfigurationManager.getString("server_send_message_method");
@@ -160,7 +160,7 @@ public class Main {
 
             //working up till here
             DestDeck deck = new DestDeck();
-            DestCardRequest dr = new DestCardRequest(game.getGameID(), player1.getPlayerID(),deck,player1);
+            DestCardRequest dr = new DestCardRequest(deck,player1);
             String className6 = ConfigurationManager.getString("server_facade_name");
             String methodName6 = ConfigurationManager.getString("server_update_dest_deck");
             String[] paramTypes6 = {DestCardRequest.class.getCanonicalName()};

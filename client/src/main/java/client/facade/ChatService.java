@@ -9,7 +9,7 @@ import shared.model.request.MessageRequest;
 public class ChatService {
 
     public void sendMessage(AsyncServerTask.AsyncCaller caller, Message message){
-        MessageRequest request = new MessageRequest(message.getGameID(), message.getDisplayName(), message);
+        MessageRequest request = new MessageRequest(message);
 
         String[] paramTypes = {MessageRequest.class.getCanonicalName()};
         Object[] paramValues = {request};

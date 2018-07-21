@@ -8,8 +8,8 @@ public class TrainCardRequest extends IServiceRequest {
     private TrainDeck _deck;
     private Player _player;
 
-    public TrainCardRequest(String gameID, String playerID, TrainDeck deck, Player player){
-        super(gameID,playerID);
+    public TrainCardRequest(TrainDeck deck, Player player){
+        super(player);
         _deck = deck;
         _player = player;
     }

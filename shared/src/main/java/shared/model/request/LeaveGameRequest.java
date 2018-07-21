@@ -1,9 +1,11 @@
 package shared.model.request;
 
+import shared.model.Player;
+
 public class LeaveGameRequest extends IServiceRequest {
 
-    public LeaveGameRequest(String gameID, String playerID)
+    public LeaveGameRequest(Player player)
     {
-        super(gameID,playerID);
+        super(player);
     }
 }

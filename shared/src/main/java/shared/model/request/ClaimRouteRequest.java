@@ -10,9 +10,9 @@ public class ClaimRouteRequest extends IServiceRequest {
     private TrainDeck _deck;
     private Player _player;
 
-    public ClaimRouteRequest(String gameID, String playerID, GameMap map, TrainDeck deck, Player player)
+    public ClaimRouteRequest(GameMap map, TrainDeck deck, Player player)
     {
-        super(gameID,playerID);
+        super(player);
         _map = map;
         _deck = deck;
         _player = player;

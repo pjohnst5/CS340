@@ -58,7 +58,7 @@ public class GameMapService {
 
 
                     //Send the request to the server
-                    ClaimRouteRequest request = new ClaimRouteRequest(game.getGameID(), playerId, map, game.getTrainDeck(), player);
+                    ClaimRouteRequest request = new ClaimRouteRequest(map, game.getTrainDeck(), player);
 
                     String[] paramTypes = {ClaimRouteRequest.class.getCanonicalName()};
                     Object[] paramValues = {request};

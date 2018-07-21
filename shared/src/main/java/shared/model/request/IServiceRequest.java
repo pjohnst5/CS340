@@ -1,22 +1,22 @@
 package shared.model.request;
 
 
-public abstract class IServiceRequest {
-    private String _gameID;
-    private String _playerID;
+import shared.model.Player;
 
-    public IServiceRequest(String gameID, String playerID){
-        _gameID = gameID;
-        _playerID = playerID;
+public abstract class IServiceRequest {
+    private Player _player;
+
+    public IServiceRequest(Player player){
+        _player = player;
     }
 
     public String get_gameID()
     {
-        return _gameID;
+        return _player.getGameID();
     }
 
     public String get_playerID()
     {
-        return _playerID;
+        return _player.getPlayerID();
     }
 }
