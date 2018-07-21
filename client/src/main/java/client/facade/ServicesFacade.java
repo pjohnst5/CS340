@@ -34,13 +34,13 @@ public class ServicesFacade {
         ChatService service = new ChatService();
         service.sendMessage(caller, message);
     }
-    public void selectDestCard(AsyncServerTask.AsyncCaller caller, DestCard destCard, Player player){
+    public void selectDestCard(AsyncServerTask.AsyncCaller caller, List<DestCard> destCards, Player player){
         DestCardService service = new DestCardService();
-        service.selectDestCard(caller, destCard, player);
+        service.selectDestCard(caller, destCards, player);
     }
-    public void discardDestCard(AsyncServerTask.AsyncCaller caller, DestCard destCard, Player player){
+    public void discardDestCard(AsyncServerTask.AsyncCaller caller, List<DestCard> destCards, Player player){
         DestCardService service = new DestCardService();
-        service.discardDestCard(caller, destCard, player);
+        service.discardDestCard(caller, destCards, player);
     }
     public void leaveGame(AsyncServerTask.AsyncCaller caller, LeaveGameRequest leaveGameRequest){
         GameStatusService service = new GameStatusService();
