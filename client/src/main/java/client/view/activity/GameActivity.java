@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.pjohnst5icloud.tickettoride.R;
 
+import client.server.communication.poll.MainGamePoller;
 import client.view.fragment.game.play.ChatFragment;
 import client.view.fragment.game.play.DestinationCardSelectFragment;
 
@@ -43,6 +44,8 @@ public class GameActivity extends AppCompatActivity {
                     .add(R.id.game_sidebar_container, gameSidebarFragment)
                     .commit();
         }
+
+        MainGamePoller.instance().start();
     }
 
     @Override

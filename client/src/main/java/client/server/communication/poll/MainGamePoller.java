@@ -4,21 +4,21 @@ import client.model.ClientModel;
 import client.server.communication.ServerProxy;
 import shared.command.GenericCommand;
 import shared.command.ICommand;
-import shared.exception.ServerProxyException;
 import shared.configuration.ConfigurationManager;
+import shared.exception.ServerProxyException;
 
-public class GameLobbyPoller extends Poller {
+public class MainGamePoller extends Poller {
 
-    private static final String TASK_ID = GameLobbyPoller.class.getName();
+    private static final String TASK_ID = MainGamePoller.class.getName();
     private static final int TASK_INTERVAL = ConfigurationManager.getInt("poller_interval");
 
     private PollerTask _task;
     private ICommand _serverRequest;
 
-    private static GameLobbyPoller _instance = new GameLobbyPoller();
-    public static GameLobbyPoller instance() { return _instance; }
-    private GameLobbyPoller(){
+    private static MainGamePoller _instance = new MainGamePoller();
+    public static MainGamePoller instance() { return _instance; }
 
+    private MainGamePoller(){
         super();
 
         System.out.println("Class NAME: " + TASK_ID);
@@ -50,6 +50,7 @@ public class GameLobbyPoller extends Poller {
                 paramValues,
                 null
         );
+
     }
 
     public boolean start() {
@@ -60,21 +61,13 @@ public class GameLobbyPoller extends Poller {
         return _instance._stop(TASK_ID);
     }
 
-
-
     private static void callback(){
         try {
-
             ServerProxy.instance().sendCommand(_instance._serverRequest);
-            System.out.println("\u001B[31m" + "Generated Output from " + TASK_ID + "\u001B[0m");
-
+            System.out.println("Generated Output from " + TASK_ID);
         } catch (ServerProxyException e) {
-
             // TODO: Give real feedback
-            System.out.println(TASK_ID + " Failed");
-
+            System.out.println("Poller " + TASK_ID + " failed");
         }
     }
-
-
 }
