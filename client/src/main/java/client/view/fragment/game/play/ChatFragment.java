@@ -131,18 +131,15 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
     }
 
     @Override
-    public void setMessages(List<Message> messages){
-        _messages = new ArrayList<>(messages);
-        Collections.sort(_messages, Message.getDescendingComparator());
-        _chatAdapter.notifyDataSetChanged();
-    }
-
-    @Override
     public boolean addMessage(Message message) {
         if  (_messages.contains(message)) return false;
         _messages.add(message);
         Collections.sort(_messages, Message.getDescendingComparator());
-        _chatAdapter.notifyDataSetChanged();
+
+        getActivity().runOnUiThread(() ->{
+            _chatAdapter.notifyDataSetChanged();
+        });
+
         return true;
     }
 
