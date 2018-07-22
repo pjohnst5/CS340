@@ -20,8 +20,7 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
     private ClientModel _model;
     private Player _player;
     private ServicesFacade _facade;
-    private List<Message> _messages;
-    int oldSize;
+    private int _oldSize;
 
 
 
@@ -37,8 +36,7 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
             int i = 4 / 0;
         }
 
-        _messages = _model.getCurrentGame().get_messages();
-        oldSize = 0;
+        _oldSize = 0;
         _model.addObserver(this);
         update();
 
@@ -59,7 +57,6 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
         Message msg = new Message();
         msg.setMessage(content);
         msg.setPlayer(_player);
-        msg.setTimeStamp();
 
        _facade.sendMessage(this, msg);
 
@@ -74,27 +71,26 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
 
     @Override
     public void destroy() {
-        // TODO: Detach from client model
-        int i = 0/4;
+        _model.deleteObserver(this);
     }
 
     @Override
     public void onServerResponseComplete(Exception exception) {
-        int i = 0/4;
+        _chatView.showToast(exception.getMessage());
     }
 
     private void update(){
         List<Message> messageList = _model.getCurrentGame().get_messages();
 
-        if (oldSize != messageList.size()){
+        if (_oldSize != messageList.size()){
 
             // Because the list is growing, it is actually a improves performance
             // to start at the end of messageList
             for (int i = messageList.size() - 1; i >= 0; i--){
                 if (_chatView.addMessage(messageList.get(i))){
-                    oldSize++;
+                    _oldSize++;
 
-                    if (oldSize == messageList.size()){
+                    if (_oldSize == messageList.size()){
                         return;
                     }
                 }

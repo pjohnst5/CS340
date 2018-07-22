@@ -72,6 +72,6 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
 //
 //    @Override
 //    public void showToast(String message) {
-//        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+//        getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show());
 //    }
 }

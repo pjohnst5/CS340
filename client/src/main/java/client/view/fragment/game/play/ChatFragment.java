@@ -127,7 +127,7 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
 
     @Override
     public void showToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        getActivity().runOnUiThread(() -> Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show());
     }
 
     @Override
