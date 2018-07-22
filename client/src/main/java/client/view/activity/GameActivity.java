@@ -13,6 +13,7 @@ import client.server.communication.ServerProxy;
 import client.server.communication.poll.MainGamePoller;
 import client.view.fragment.game.play.ChatFragment;
 import client.view.fragment.game.play.DestinationCardSelectFragment;
+import client.view.fragment.game.play.GameMapFragment;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -33,7 +34,8 @@ public class GameActivity extends AppCompatActivity {
         Fragment gameSidebarFragment = fm.findFragmentById(R.id.game_sidebar_container);
 
         if (gameContentFragment == null){
-            gameContentFragment = new DestinationCardSelectFragment();
+//            gameContentFragment = new DestinationCardSelectFragment(); //FIXME: testing
+            gameContentFragment = GameMapFragment.newInstance();
             fm.beginTransaction()
                     .add(R.id.game_content_container, gameContentFragment)
                     .commit();
@@ -46,7 +48,7 @@ public class GameActivity extends AppCompatActivity {
                     .commit();
         }
 
-        ServerProxy.instance().usePoller(MainGamePoller.instance());
+//        ServerProxy.instance().usePoller(MainGamePoller.instance()); // FIXME: testing
     }
 
     @Override

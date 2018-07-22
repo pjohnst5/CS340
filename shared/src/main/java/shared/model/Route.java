@@ -1,5 +1,6 @@
 package shared.model;
 
+import shared.enumeration.CityName;
 import shared.enumeration.TrainColor;
 
 public class Route {
@@ -8,10 +9,11 @@ public class Route {
     private boolean _isClaimed;
     private int _pathLength;
     private TrainColor _color;
-    private City _source;
-    private City _dest;
+    private CityName _source;
+    private CityName _dest;
+    private boolean _isDoubleRoute;
 
-    public Route(City city1, City city2, int pathLength, TrainColor color) {
+    public Route(CityName city1, CityName city2, int pathLength, TrainColor color) {
         this._source = city1;
         this._dest = city2;
         this._isClaimed = false;
@@ -49,11 +51,16 @@ public class Route {
         return _color;
     }
 
-    public City get_source() {
+    public CityName get_source() {
         return _source;
     }
 
-    public City get_dest() {
+    public CityName get_dest() {
         return _dest;
+    }
+
+    public Route setDoubleRoute(Boolean isDouble) {
+        _isDoubleRoute = isDouble;
+        return this;
     }
 }

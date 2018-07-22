@@ -30,6 +30,9 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
         _model = ClientModel.getInstance();
         _facade = new ServicesFacade();
 
+        if (_model.getCurrentGame() == null) {
+            return;
+        }
         try {
             _player = _model.getCurrentGame().getPlayer(_model.getUser().get_playerId());
         } catch (InvalidGameException e) {
