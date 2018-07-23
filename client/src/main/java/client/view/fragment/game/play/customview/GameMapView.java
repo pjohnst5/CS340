@@ -9,12 +9,15 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import shared.enumeration.CityManager;
 import shared.enumeration.CityName;
@@ -35,9 +38,15 @@ public class GameMapView extends FrameLayout {
 //        ASPECT_RATIO = (double)ConfigurationManager.getInt("board_width") / (double)ConfigurationManager.getInt("board_height"); // FIXME
         ASPECT_RATIO = 1600.0 / 1088.0;
         CITY_RADIUS = 15;
-        CITY_RADIUS_SM = 8;
+        CITY_RADIUS_SM = 7;
     }
 
+    public enum MapSize {
+        MEDIUM,
+        SMALL
+    }
+
+    private MapSize _mapSize;
     private boolean _initialized;
 
     private Presenter _presenter;
@@ -72,6 +81,7 @@ public class GameMapView extends FrameLayout {
         _cityPaintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
         _cityPaintBorder.setColor(0xff101010);
         _cityRadius = CITY_RADIUS;
+        _mapSize = MapSize.MEDIUM;
     }
 
     public void initializeData(Presenter presenter) {
@@ -106,6 +116,8 @@ public class GameMapView extends FrameLayout {
                 _selectedRoute.redraw();
             }
         }
+        rv.setSelected(true);
+        rv.redraw();
         _selectedRoute = rv;
     }
 
@@ -116,11 +128,36 @@ public class GameMapView extends FrameLayout {
             initializeGraphics();
         }
 
+        // draw claimed routes first
+        int childCount = getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            RouteView rv = (RouteView) getChildAt(i);
+            if (rv.getRoute().isClaimed()) {
+                rv.drawRoute(canvas);
+            }
+        }
+
+        // draw routes
+        for (int i = 0; i < childCount; i++) {
+            RouteView rv = (RouteView) getChildAt(i);
+            if (rv != _selectedRoute) {
+                if (!rv.getRoute().isClaimed()) {
+                    rv.drawRoute(canvas);
+                }
+            }
+        }
+
+        // draw cities
         for (City city : _cities) {
             float x = city.getX();
             float y = city.getY();
             canvas.drawCircle(x, y, _cityRadius + 2, _cityPaintBorder);
             canvas.drawCircle(x, y, _cityRadius, _cityPaint);
+        }
+
+        // if a route is selected, draw it last
+        if (_selectedRoute != null) {
+            _selectedRoute.drawRoute(canvas);
         }
     }
 
@@ -137,7 +174,11 @@ public class GameMapView extends FrameLayout {
         Bitmap backgroundImage = Bitmap.createScaledBitmap(bitmap, _width, _height, false);
         Drawable backgroundDrawable = new BitmapDrawable(getResources(), backgroundImage);
 
-        if (_height < 800) _cityRadius = CITY_RADIUS_SM;
+        if (_height < 800) {
+            _cityRadius = CITY_RADIUS_SM;
+            _mapSize = MapSize.SMALL;
+            RouteView.setLineWidth(_mapSize);
+        }
 
         // FIXME: do this differently
         CityManager.getInstance().newBoardSize(_width, _height);
@@ -151,6 +192,52 @@ public class GameMapView extends FrameLayout {
 
         setBackground(backgroundDrawable);
         _initialized = true;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                touchEventDown(event);
+                break;
+        }
+        return true;
+    }
+
+    private void touchEventDown(MotionEvent event) {
+        // find the closest route to touch point
+        float touchX = event.getX();
+        float touchY = event.getY();
+
+        RouteView closestRouteView = null;
+        int closestViewDistance = -1;
+        int childCount = getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            RouteView rv = (RouteView) getChildAt(i);
+            if (rv.getRoute().isClaimed()) {
+                continue;
+            }
+            int dist = rv.getDistance(touchX, touchY);
+            if (dist >= 0) {
+                // FIXME: what about routes that are the same distance?
+                if (closestRouteView == null) {
+                    closestRouteView = rv;
+                    closestViewDistance = dist;
+                } else {
+                    if (dist < closestViewDistance) {
+                        closestRouteView = rv;
+                        closestViewDistance = dist;
+                    }
+                }
+            }
+        }
+
+        // closest route is selected
+        if (closestRouteView == null) {
+            // do nothing
+            return;
+        }
+        routeSelected(closestRouteView);
     }
 
     private void calculateRouteCoordinates(RouteView routeView) {
@@ -185,7 +272,7 @@ public class GameMapView extends FrameLayout {
         }
 
         // this is a double route; calculate offset
-        double offsetLength = ((double)RouteView.LINE_WIDTH / 2.0) + 2.0;
+        double offsetLength = ((double)RouteView.getLineWidth() / 2.0) + 2.0;
         int xOffset = (int) Math.round(offsetLength * Math.sin(c1Angle));
         int yOffset = (int) Math.round(offsetLength * Math.cos(c1Angle));
         if (c1.getX() > c2.getX() && c1.getY() > c2.getY()) xOffset = -xOffset;
