@@ -42,7 +42,9 @@ public class ClientFacade {
 
     public static void setMap(GameMap map){}
 
-    public static void setTrainDeck(TrainDeck deck){}
+    public static void setTrainDeck(TrainDeck deck){
+        clientModel.setTrainDeck(deck);
+    }
 
     public static void setDestDeck(DestDeck deck){ clientModel.setDestDeck(deck); }
 

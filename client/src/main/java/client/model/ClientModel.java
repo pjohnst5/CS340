@@ -11,6 +11,7 @@ import shared.exception.MaxPlayersException;
 import shared.model.Game;
 import shared.model.GameAction;
 import shared.model.decks.DestDeck;
+import shared.model.decks.TrainDeck;
 import shared.model.wrapper.GamesWrapper;
 import shared.model.Message;
 import shared.model.Player;
@@ -159,11 +160,25 @@ public class ClientModel extends Observable {
         {
             System.out.println(e.getMessage());
         }
+        setChanged();
+        notifyObservers();
     }
 
     public void setDestDeck(DestDeck deck) {
         _currentGame.setDestDeck(deck);
         _games.get(_currentGame.getGameID()).setDestDeck(deck);
+
+
+        setChanged();
+        notifyObservers();
+    }
+
+    public void setTrainDeck(TrainDeck deck){
+        _currentGame.setTrainDeck(deck);
+        _games.get(_currentGame.getGameID()).setTrainDeck(deck);
+
+        setChanged();
+        notifyObservers();
     }
 
     public void changeTurns()

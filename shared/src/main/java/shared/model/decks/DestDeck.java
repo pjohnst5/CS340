@@ -75,4 +75,7 @@ public class DestDeck {
         }
     }
 
+    public List<DestCard> get_cards() {
+        return _cards;
+    }
 }

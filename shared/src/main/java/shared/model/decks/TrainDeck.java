@@ -105,6 +105,14 @@ public class TrainDeck {
             discardTrainCard(cards.get(i));
         }
     }
+
+    public void phase2DrawFaceDown() throws DeckException {
+        _faceDownDeck.drawCard();
+    }
+
+    public void phase2DrawFaceUp() throws DeckException {
+        _faceUpDeck.removeCard(_faceUpDeck._cards.get(0));
+    }
     //---------------------------------------------------------------------------------------------------//
 
 
@@ -206,6 +214,10 @@ public class TrainDeck {
                 throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
             }
             _cards.add(card);
+        }
+
+        public int sizeOfFaceDownDeck(){
+            return this._cards.size();
         }
 
     }
