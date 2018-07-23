@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import shared.enumeration.ListOfRoutes;
+import shared.enumeration.PlayerColor;
 
 public class GameMap {
     private HashMap<Integer, Route> _routes = new HashMap<>();
@@ -26,9 +27,9 @@ public class GameMap {
         return route.isClaimed();
     }
 
-    public void claimRoute(int routeId, String playerId){
+    public void claimRoute(int routeId, String playerId, PlayerColor playerColor){
         Route route = _routes.get(routeId);
-        route.claimRoute(playerId);
+        route.claimRoute(playerId, playerColor);
         claimedRoutes.add(route);
     }
 

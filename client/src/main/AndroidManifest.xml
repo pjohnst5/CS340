@@ -21,11 +21,6 @@
         <activity android:name="client.view.activity.GameListActivity" />
         <activity android:name="client.view.activity.GameLobbyActivity" />
         <activity android:name="client.view.activity.GameActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
         </activity>
     </application>
 

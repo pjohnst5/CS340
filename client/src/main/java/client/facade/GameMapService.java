@@ -36,7 +36,7 @@ public class GameMapService {
 
                     //claim the route
                     //route needs to be claimed on the player
-                    map.claimRoute(route.getId(), playerId);
+                    map.claimRoute(route.getId(), playerId, player.getColor());
 
 
                     //give points to player
