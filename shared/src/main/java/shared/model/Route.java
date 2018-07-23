@@ -1,17 +1,19 @@
 package shared.model;
 
 import shared.enumeration.CityName;
+import shared.enumeration.PlayerColor;
 import shared.enumeration.TrainColor;
 
 public class Route {
     private static int _id = 0;
     private String _claimedBy;
     private boolean _isClaimed;
+    private PlayerColor _claimedColor;
     private int _pathLength;
     private TrainColor _color;
     private CityName _source;
     private CityName _dest;
-    private boolean _isDoubleRoute;
+    private int _doubleRouteIndex;
 
     public Route(CityName city1, CityName city2, int pathLength, TrainColor color) {
         this._source = city1;
@@ -30,10 +32,10 @@ public class Route {
         return _isClaimed;
     }
 
-    public void claimRoute(String playerId){
+    public void claimRoute(String playerId, PlayerColor playerColor){
         set_claimedBy(playerId);
         this._isClaimed = true;
-        //TODO: do we change the color after it has been claimed?
+        this._claimedColor = playerColor;
     }
     public void set_claimedBy(String _claimedBy) {
         this._claimedBy = _claimedBy;
@@ -51,6 +53,10 @@ public class Route {
         return _color;
     }
 
+    public PlayerColor get_claimedColor() {
+        return _claimedColor;
+    }
+
     public CityName get_source() {
         return _source;
     }
@@ -59,8 +65,12 @@ public class Route {
         return _dest;
     }
 
-    public Route setDoubleRoute(Boolean isDouble) {
-        _isDoubleRoute = isDouble;
+    public Route setDoubleRoute(int index) {
+        _doubleRouteIndex = index;
         return this;
+    }
+
+    public int getDoubleRoute() {
+        return _doubleRouteIndex;
     }
 }

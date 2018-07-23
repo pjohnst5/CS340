@@ -21,7 +21,7 @@ public class ListOfRoutes {
 
     public ListOfRoutes(){
         _routes = new ArrayList<>();
-        _routes.add(new Route(CityName.LOS_ANGELES, CityName.NEW_ORLEANS, 0, BLUE));
+//        _routes.add(new Route(CityName.LOS_ANGELES, CityName.NEW_ORLEANS, 0, BLUE)); //FIXME: i don't think this one is right
         _routes.add(new Route(CityName.VANCOUVER, CityName.CALGARY, 3, GRAY));
         _routes.add(new Route(CityName.VANCOUVER, CityName.SEATTLE, 1, GRAY));
         _routes.add(new Route(CityName.VANCOUVER, CityName.SEATTLE, 1, GRAY));
@@ -60,9 +60,9 @@ public class ListOfRoutes {
         _routes.add(new Route(CityName.SANTA_FE, CityName.OKLAHOMA_CITY, 3, BLUE));
         _routes.add(new Route(CityName.SANTA_FE, CityName.DENVER, 2, GRAY));
         _routes.add(new Route(CityName.OKLAHOMA_CITY, CityName.DENVER, 4, RED));
+        _routes.add(new Route(CityName.OKLAHOMA_CITY, CityName.DENVER, 4, PINK));
         _routes.add(new Route(CityName.KANSAS_CITY, CityName.DENVER, 4, BLACK));
         _routes.add(new Route(CityName.KANSAS_CITY, CityName.DENVER, 4, ORANGE));
-        _routes.add(new Route(CityName.OKLAHOMA_CITY, CityName.DENVER, 4, PINK));
         _routes.add(new Route(CityName.WINNIPEG, CityName.DULUTH, 4, BLACK));
         _routes.add(new Route(CityName.WINNIPEG, CityName.SAULT_STE_MARIE, 6, GRAY));
         _routes.add(new Route(CityName.DULUTH, CityName.SAULT_STE_MARIE, 3, GRAY));
@@ -125,8 +125,28 @@ public class ListOfRoutes {
         _routes.add(new Route(CityName.NEW_YORK_CITY, CityName.BOSTON, 2, RED));
         _routes.add(new Route(CityName.MONTREAL, CityName.BOSTON, 2, GRAY));
         _routes.add(new Route(CityName.MONTREAL, CityName.BOSTON, 2, GRAY));
+
+        markDoubleRoutes();
     }
     public List<Route> getRoutes(){
         return _routes;
+    }
+
+    private void markDoubleRoutes() { // FIXME: remove double routes for games with less than 4 players
+        int len = _routes.size();
+        for (int i = 0; i < len; i++) {
+            Route r1 = _routes.get(i);
+            if (r1.getDoubleRoute() > 0) continue;
+            for (int j = i+1; j < len; j++) {
+                Route r2 = _routes.get(j);
+                if (r2.getDoubleRoute() > 0) continue;
+                if ((r1.get_source() == r2.get_source() && r1.get_dest() == r2.get_dest()) ||
+                        (r1.get_source() == r2.get_dest() && r1.get_dest() == r2.get_source())) {
+                    r1.setDoubleRoute(1);
+                    r2.setDoubleRoute(2);
+                    break;
+                }
+            }
+        }
     }
 }
