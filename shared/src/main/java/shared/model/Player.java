@@ -2,7 +2,6 @@ package shared.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import shared.enumeration.PlayerColor;
 import shared.exception.PlayerException;
@@ -122,5 +121,6 @@ public class Player {
 
     public int getNumRoutes(){
         return 0; // FIXME: implement
+
     }
 }

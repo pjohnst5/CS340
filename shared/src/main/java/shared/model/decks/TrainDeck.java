@@ -107,10 +107,12 @@ public class TrainDeck {
     }
 
     public void phase2DrawFaceDown() throws DeckException {
+        //FIXME: delete after phase 2
         _faceDownDeck.drawCard();
     }
 
     public void phase2DrawFaceUp() throws DeckException {
+        //FIXME: delete after phase 2
         _faceUpDeck.removeCard(_faceUpDeck._cards.get(0));
     }
     //---------------------------------------------------------------------------------------------------//

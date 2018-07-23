@@ -11,6 +11,7 @@ import shared.exception.InvalidGameException;
 import shared.exception.NotEnoughTrainCarsException;
 import shared.exception.RouteClaimedAlreadyException;
 import shared.model.City;
+import shared.model.GameAction;
 import shared.model.GameMap;
 import shared.model.Message;
 import shared.model.Player;
@@ -56,6 +57,7 @@ public class ServicesFacade {
     }
 
     public void phase2PassoffScenarios(){
+        //FIXME: delete after phase 2
         ClientModel clientModel = ClientModel.getInstance();
         Player user;
         try {
@@ -70,10 +72,18 @@ public class ServicesFacade {
             List<Player> otherPlayers = clientModel.getCurrentGame().getPlayers();
             for(int i = 0; i< otherPlayers.size(); i++) {
                 Player player = otherPlayers.get(i);
-                player.addTrainCard(new TrainCard(TrainColor.BLUE));
-                player.getTrainCars().removeCars(10+i);
-                player.addDestCard(new DestCard(new City(CityName.NEW_ORLEANS), new City(CityName.LAS_VEGAS), 20));
-                clientModel.updatePlayer(player);
+                if(player != user) {
+                    player.addTrainCard(new TrainCard(TrainColor.BLUE));
+                    player.getTrainCars().removeCars(10 + i);
+                    player.addDestCard(new DestCard(new City(CityName.NEW_ORLEANS), new City(CityName.LAS_VEGAS), 20));
+                    clientModel.updatePlayer(player);
+
+                    //add chat message from any player
+                    Message message = new Message();
+                    message.setPlayer(player);
+                    message.setMessage("Hello from " + player.getDisplayName());
+                    clientModel.addMessage(message);
+                }
             }
 
             //Scenarios for decks
@@ -89,7 +99,11 @@ public class ServicesFacade {
             //claiming a route
             GameMap gameMap = clientModel.getCurrentGame().getMap();
             Route route = gameMap.get_routes().get(0);
+            clientModel.claimRoute(route, user);
 
+            //Add game history entries
+            GameAction action = new GameAction("TEST ACTION", "testing that an action can be added to the model");
+            clientModel.addGameAction(action);
 
 
         } catch (InvalidGameException | NotEnoughTrainCarsException | DeckException e) {

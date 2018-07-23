@@ -10,6 +10,7 @@ import shared.enumeration.ClaimedRoutePointSystem;
 import shared.enumeration.TrainColor;
 import shared.exception.DeckException;
 import shared.exception.InvalidGameException;
+import shared.exception.NotEnoughTrainCarsException;
 import shared.exception.RouteClaimedAlreadyException;
 import shared.exception.UnableToClaimRouteException;
 import shared.model.Game;
@@ -45,7 +46,11 @@ public class GameMapService {
                     player.addPoints(points);
 
 
-                    //TODO: remove the train cars from the player
+                    try {
+                        player.getTrainCars().removeCars(discardedCards.size());
+                    } catch (NotEnoughTrainCarsException e) {
+                        e.printStackTrace();
+                    }
 
 
                     //discard the cards

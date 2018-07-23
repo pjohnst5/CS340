@@ -10,6 +10,8 @@ import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
 import shared.model.Game;
 import shared.model.GameAction;
+import shared.model.GameMap;
+import shared.model.Route;
 import shared.model.decks.DestDeck;
 import shared.model.decks.TrainDeck;
 import shared.model.wrapper.GamesWrapper;
@@ -146,6 +148,16 @@ public class ClientModel extends Observable {
 
     public void addGameAction(GameAction action) {
         _currentGame.addGameAction(action);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void claimRoute(Route route, Player player){
+        GameMap map = getCurrentGame().getMap();
+        map.claimRoute(route.getId(), player.getPlayerID(), player.getColor());
+
+        setChanged();
+        notifyObservers();
     }
 
     public void updatePlayer(Player player)
