@@ -33,7 +33,8 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
             _player = _model.getCurrentGame().getPlayer(_model.getUser().get_playerId());
         } catch (InvalidGameException e) {
             System.out.println("Game is not initilaized, something went wrong");
-            int i = 4 / 0;
+            e.printStackTrace();
+            System.exit(1);
         }
 
         _oldSize = 0;

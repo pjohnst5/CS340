@@ -21,4 +21,10 @@ public class DestCard implements ICard {
     {
         return _cities;
     }
+
+    @Override
+    public String toString(){
+        return _cities.getKey().toString() + " - " + _cities.getValue().toString();
+    }
+
 }

@@ -1,77 +1,134 @@
 package client.view.fragment.game.play;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import shared.enumeration.CityName;
-import shared.model.City;
+import client.presenter.game.play.DestinationCardSelectPresenter;
+import client.presenter.game.play.IDestinationCardSelectPresenter;
 import shared.model.decks.DestCard;
-import shared.model.decks.ICard;
 
 public class DestinationCardSelectFragment extends Fragment implements IDestinationCardSelectView {
 
-    private List<ICard> _cards;
+    private List<DestCard> _cards;
 
     private static final int CARD_WIDTH = 264;
     private static final int CARD_HEIGHT = 166;
 
-    private void testCode(){
-        _cards = new ArrayList<>();
-        _cards.add(new DestCard(new City(CityName.LOS_ANGELES), new City(CityName.NEW_YORK_CITY), 21));
-        _cards.add(new DestCard(new City(CityName.DULUTH), new City(CityName.HOUSTON), 8));
-        _cards.add(new DestCard(new City(CityName.SAULT_STE_MARIE), new City(CityName.NASHVILLE), 8));
-    }
+    private IDestinationCardSelectPresenter _presenter;
+    private RecyclerView _cardsRecyclerView;
+    private CardAdapter _cardAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_destination_card_select, container, false);
 
+        _cards = new ArrayList<>();
+        _cardAdapter = new CardAdapter();
+        _cardsRecyclerView = v.findViewById(R.id.dest_card_select_recycler_view);
+        _cardsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ((LinearLayoutManager)_cardsRecyclerView.getLayoutManager()).setReverseLayout(true);
+        _cardsRecyclerView.setAdapter(_cardAdapter);
 
+        _presenter = new DestinationCardSelectPresenter(this);
 
         return v;
     }
 
-/*
+    @Override
+    public boolean addCard(DestCard card) {
+        //if (_cards.contains(card)) return false;
+        _cards.add(card);
+
+        getActivity().runOnUiThread(() -> {
+            _cardAdapter.notifyItemChanged(_cards.size()-1);
+        });
+        return true;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        _presenter.destroy();
+    }
+
     private class CardItemHolder extends RecyclerView.ViewHolder {
 
-        private DestCard card;
+        private final int CARD_LENGTH = 294;
 
+        private DestCard _card;
+        //private int _parentWidth;
+        //private int _numColumns;
+
+        private ImageView _cardHolder;
+        private TextView _destinationTitle;
+        private TextView _points;
 
         CardItemHolder(LayoutInflater inflater, ViewGroup parent){
-            super(inflater.inflate(R.layout.card_item))
+            super(inflater.inflate(R.layout.card_item, parent, false));
 
-            int width = parent.getWidth();
-            int numColumns = width / 266;
+            _cardHolder = itemView.findViewById(R.id.card_item_image_view);
+            _destinationTitle = itemView.findViewById(R.id.card_item_destination_text);
+            _points = itemView.findViewById(R.id.dest_card_point_value);
 
-            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) itemView.getLayoutParams();
-            params.height = h;
-            itemView.setLayoutParams(params);
+            //_parentWidth = parent.getWidth();
+            //_numColumns = _parentWidth / CARD_LENGTH;
 
-            return
+        }
+
+        public void bind(DestCard card){
+
+            _card = card;
+
+            int points = card.get_worth();
+            String destinationName = card.toString();
+
+            _destinationTitle.setText(destinationName);
+            _points.setText(Integer.toString(points));
+
 
         }
 
     }
-*/
+
+    private class CardAdapter extends RecyclerView.Adapter<CardItemHolder> {
+
+        @NonNull
+        @Override
+        public CardItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            return new CardItemHolder(inflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull CardItemHolder holder, int position) {
+            DestCard card = _cards.get(position);
+            holder.bind(card);
+        }
+
+        @Override
+        public int getItemCount() {
+            return _cards.size();
+        }
+    }
 
 
-//    @Override
-//    public void setPresenter(ILoginPresenter presenter) {
-//        mPresenter = presenter;
-//    }
-
-//
-//    @Override
-//    public void showToast(String message) {
-//        getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show());
-//    }
+    @Override
+    public void showToast(String message) {
+        getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show());
+    }
 }

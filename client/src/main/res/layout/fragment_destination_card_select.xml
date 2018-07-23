@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="3">
+    android:layout_height="match_parent">
 
 
     <TextView
@@ -23,9 +22,17 @@
         style="@style/SubtitleText"
         android:text="@string/game_select_dest_card_subtitle"/>
 
+    <Button
+        android:id="@+id/dest_card_frag_select_cards"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:text="@string/select"
+        android:layout_alignParentBottom="true"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/dest_card_frag_subtitle"
         android:layout_above="@id/dest_card_frag_select_cards"
         android:gravity="center">
@@ -33,7 +40,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/dest_card_select_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/dark_red">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -72,13 +80,7 @@
 
     <!--</LinearLayout>-->
 
-    <Button
-        android:id="@+id/dest_card_frag_select_cards"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
-        android:text="@string/select"
-        android:layout_alignParentBottom="true"/>
+
 
 
 

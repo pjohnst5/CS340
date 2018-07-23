@@ -16,4 +16,9 @@ public class City {
         return _name;
     }
 
+    @Override
+    public String toString(){
+        return _name.name().replace("_", " ");
+    }
+
 }

@@ -77,7 +77,7 @@ public class GameHistoryFragment extends SidebarFragment implements IGameHistory
         private TextView _timestamp;
         private RelativeLayout _container;
 
-        public ActionItemHolder(LayoutInflater inflater, ViewGroup parent){
+        ActionItemHolder(LayoutInflater inflater, ViewGroup parent){
             super(inflater.inflate(R.layout.game_action_item, parent, false));
 
             _description = itemView.findViewById(R.id.game_action_item_description);
