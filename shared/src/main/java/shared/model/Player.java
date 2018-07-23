@@ -113,6 +113,14 @@ public class Player {
     public TrainCars getTrainCars() {
         return trainCars;
     }
-    public void getNumTrainCards(){}
-    public void getNumRoutes(){}
+    public int getNumTrainCards(){
+        return _trainCards.size();
+    }
+    public List<TrainCard> getTrainCards() {
+        return _trainCards;
+    }
+
+    public int getNumRoutes(){
+        return 0; // FIXME: implement
+    }
 }

@@ -17,6 +17,10 @@ public class TrainCars {
             throw new NotEnoughTrainCarsException();
     }
 
+    public int getCount() {
+        return _numberOfCars;
+    }
+
     public boolean isFinalRound(){
         return this._isFinalRound;
     }

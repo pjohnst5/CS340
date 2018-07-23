@@ -248,7 +248,7 @@ public class GameMapView extends FrameLayout {
 
         // closest route is selected
         if (closestRouteView == null) {
-            // do nothing
+            // there's no route that's close by
             return;
         }
         routeSelected(closestRouteView);

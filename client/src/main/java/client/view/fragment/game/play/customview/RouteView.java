@@ -170,7 +170,7 @@ public class RouteView extends View {
 
         _linePaint.setStrokeWidth(_lineWidth);
         _claimedPaint.setStrokeWidth(_lineWidth);
-//        _claimedPaint.setPathEffect(new DashPathEffect(new float[] {segmentLength, LINE_GAP}, 0));
+        _claimedPaint.setPathEffect(new DashPathEffect(new float[] {segmentLength, LINE_GAP}, 0));
     }
 
     @Override
@@ -191,7 +191,7 @@ public class RouteView extends View {
         canvas.drawPath(_path, _linePaint);
     }
 
-    public int getDistance(float touchX, float touchY) {
+    public int getDistance(float touchX, float touchY) { // FIXME: I don't think this is working correctly
         if (!_bounds.contains(touchX, touchY)) {
             return -1;
         }
