@@ -16,11 +16,8 @@ import android.widget.FrameLayout;
 import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import shared.enumeration.CityManager;
-import shared.enumeration.CityName;
 import shared.enumeration.ListOfRoutes;
 import shared.model.City;
 import shared.model.Route;
@@ -49,7 +46,7 @@ public class GameMapView extends FrameLayout {
     private MapSize _mapSize;
     private boolean _initialized;
 
-    private Presenter _presenter;
+    private HostFragment _host;
     private List<City> _cities;
     private List<Route> _routes;
 
@@ -64,8 +61,8 @@ public class GameMapView extends FrameLayout {
 //    private List<RouteView> _routeViews;
     private RouteView _selectedRoute;
 
-    public interface Presenter {
-
+    public interface HostFragment {
+        public void RouteSelected(Route route);
     }
 
     public GameMapView(Context context) {
@@ -84,8 +81,8 @@ public class GameMapView extends FrameLayout {
         _mapSize = MapSize.MEDIUM;
     }
 
-    public void initializeData(Presenter presenter) {
-        _presenter = presenter;
+    public void initializeData(HostFragment host) {
+        _host = host;
 
         _cities = CityManager.getInstance().getCities();
         _routes = new ListOfRoutes().getRoutes();
@@ -110,15 +107,22 @@ public class GameMapView extends FrameLayout {
     }
 
     public void routeSelected(RouteView rv) {
+        boolean newRoute = false;
         if (_selectedRoute != null) {
             if (_selectedRoute != rv) {
                 _selectedRoute.setSelected(false);
                 _selectedRoute.redraw();
+                newRoute = true;
             }
         }
-        rv.setSelected(true);
-        rv.redraw();
-        _selectedRoute = rv;
+        if (rv != null) {
+            rv.setSelected(true);
+            rv.redraw();
+            _selectedRoute = rv;
+        }
+        if (newRoute) {
+            _host.RouteSelected(_selectedRoute.getRoute());
+        }
     }
 
     @Override
@@ -158,6 +162,16 @@ public class GameMapView extends FrameLayout {
         // if a route is selected, draw it last
         if (_selectedRoute != null) {
             _selectedRoute.drawRoute(canvas);
+        }
+    }
+
+    public void redraw() {
+        invalidate();
+        requestLayout();
+
+        int childCount = getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            ((RouteView) getChildAt(i)).redraw();
         }
     }
 

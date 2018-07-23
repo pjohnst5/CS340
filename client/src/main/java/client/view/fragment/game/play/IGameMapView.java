@@ -7,6 +7,7 @@ import client.presenter.game.play.IGameMapPresenter;
  */
 
 public interface IGameMapView {
+    public void updateMap();
     public void setPresenter(IGameMapPresenter presenter);
     public void showToast(String message);
 }
