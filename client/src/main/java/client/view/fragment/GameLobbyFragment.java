@@ -131,7 +131,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
     @Override
     public void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show());
     }
 
 

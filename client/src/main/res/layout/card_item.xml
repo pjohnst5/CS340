@@ -3,23 +3,42 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp">
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingEnd="10dp"
+    android:paddingStart="10dp">
 
     <RelativeLayout
-        android:id="@+id/chat_list_message_parent"
+        android:id="@+id/card_item_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:gravity="end"
-        android:background="@drawable/chat_list_item_blue">
+        android:padding="5dp"
+        android:gravity="center"
+        android:background="@drawable/card_item_black">
 
         <ImageView
             android:id="@+id/card_item_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/train_card_back"/>
+            android:src="@drawable/destination_card"/>
+
+        <TextView
+            android:id="@+id/card_item_destination_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="35dp"
+            android:textStyle="bold"
+            android:text="Taylorsville, UT - Dallas, TX"/>
+
+        <TextView
+            android:id="@+id/dest_card_point_value"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="202dp"
+            android:layout_marginTop="103dp"
+            android:textAlignment="center"
+            style="@style/PointsText" />
 
 
     </RelativeLayout>

@@ -58,6 +58,39 @@ public class Game {
         return _players;
     }
 
+    /**
+     * Checks if there is a player with displayName in the current game object.
+     * @param displayName the display name of the player to be validated
+     * @return Returns true id there is a player with the specified display name in
+     *         the current game object. Returns false otherwise.
+     */
+    public boolean playerDisplayNameExists(String displayName){
+        for (Player p : _players) {
+            if (p.getDisplayName().equals(displayName)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Retrieves the player in the current game object associated with the provided display name.
+     * @param displayName the display name of the target player
+     * @return Returns the player in the current game object associated with the provided display
+     *         name if it exists. Returns null otherwise.
+     * @throws InvalidGameException
+     */
+    public Player getPlayerByDisplayName(String displayName) {
+        for (Player p : _players) {
+            if (p.getDisplayName().equals(displayName)){
+                return p;
+            }
+        }
+
+        return null;
+    }
+
     public Player getPlayer(String playerId) throws InvalidGameException {
         for (Player p : _players) {
             if (p.getPlayerID().equals(playerId)) {
@@ -153,6 +186,10 @@ public class Game {
 
     public void addGameAction(GameAction action) {
         _actions.add(action);
+    }
+
+    public List<GameAction> getGameActions(){
+        return this._actions;
     }
 
     public void start() throws InvalidGameException {

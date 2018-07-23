@@ -20,4 +20,10 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="PointsText">
+        <item name="android:textColor">@color/dark_red</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
 </resources>

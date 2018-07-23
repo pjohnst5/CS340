@@ -50,4 +50,8 @@ public class City {
     public int getY() {
         return _aspectCoordinates.y();
     }
+    @Override
+    public String toString(){
+        return _name.name().replace("_", " ");
+    }
 }

@@ -95,6 +95,7 @@ class GameLobbyService {
 
             //add message to game
             serverModel.addMessage(request.get_gameID(), request.get_message());
+            request.get_message().setTimeStamp();
 
             //make command to do the same for clients
             String className = ConfigurationManager.getString("client_facade_name");
