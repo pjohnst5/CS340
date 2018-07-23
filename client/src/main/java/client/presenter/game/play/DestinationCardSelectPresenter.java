@@ -1,8 +1,5 @@
 package client.presenter.game.play;
 
-import android.app.Fragment;
-
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,8 +15,6 @@ public class DestinationCardSelectPresenter
 
     private IDestinationCardSelectView _selectView;
     private ClientModel _model;
-
-    private boolean updateme = true;
 
     public DestinationCardSelectPresenter(IDestinationCardSelectView selectView){
 
@@ -40,11 +35,10 @@ public class DestinationCardSelectPresenter
 
     }
 
-    private void update(){
-            _selectView.addCard(new DestCard(new City(CityName.LOS_ANGELES), new City(CityName.NEW_YORK_CITY), 21));
-            _selectView.addCard(new DestCard(new City(CityName.DULUTH), new City(CityName.HOUSTON), 8));
-            _selectView.addCard(new DestCard(new City(CityName.SAULT_STE_MARIE), new City(CityName.NASHVILLE), 8));
-        updateme = false;
+    private void update() {
+        _selectView.addCard(new DestCard(new City(CityName.LOS_ANGELES), new City(CityName.NEW_YORK_CITY), 21));
+        _selectView.addCard(new DestCard(new City(CityName.DULUTH), new City(CityName.HOUSTON), 13));
+        _selectView.addCard(new DestCard(new City(CityName.SAULT_STE_MARIE), new City(CityName.NASHVILLE), 8));
     }
 
     @Override
