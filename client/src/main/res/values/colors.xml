@@ -33,11 +33,15 @@
     <color name="dark_red">#b91d47</color>
 
     <!-- Train Car Colors? -->
+    <color name="train_dark_grey">#a1a0a0</color>
     <color name="train_light_grey">#e1e1e1</color>
     <color name="train_light_blue">#b9e0f6</color>
     <color name="train_light_green">#c0e4a2</color>
     <color name="train_light_red">#f8ccd9</color>
     <color name="train_light_yellow">#ffe99f</color>
+    <color name="train_light_white">#ffffff</color>
+    <color name="train_light_orange">#ffb368</color>
+    <color name="train_light_purple">#d9a5ff</color>
 
     <color name="train_light_grey_disabled">#797979</color>
     <color name="train_light_blue_disabled">#6e838e</color>

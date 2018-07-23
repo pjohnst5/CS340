@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,6 +33,7 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
     private static final int CARD_WIDTH = 264;
     private static final int CARD_HEIGHT = 166;
     private final int CARD_LENGTH = 294;
+    private boolean _cardsLoaded;
 
 
     private IDestinationCardSelectPresenter _presenter;
@@ -50,11 +51,46 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
         _cardsRecyclerView.setAdapter(_cardAdapter);
 
         _selectedCards = new HashSet<>();
+        _cardsLoaded = false;
 
         _presenter = new DestinationCardSelectPresenter(this);
 
         return v;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        _presenter.update();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser && !_cardsLoaded){
+            _cardsLoaded = true;
+            _presenter.update();
+        }
+
+    }
+//
+//    private void setGridlayoutSpan(){
+//
+//        ViewTreeObserver vto = this.getViewTreeObserver();
+//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                width = _cardsRecyclerView.getWidth();
+//                height = button.getHeight();
+//
+//                _numColumns = _parentWidth / CARD_LENGTH;
+//                if (_numColumns == 0) _numColumns = 1;
+//
+//                ((GridLayoutManager)_cardsRecyclerView.getLayoutManager()).setSpanCount(_numColumns);
+//            }
+//        });
+//    }
 
     @Override
     public boolean addCard(DestCard card) {
@@ -96,6 +132,7 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
 
             _parentWidth = parent.getWidth();
             _numColumns = _parentWidth / CARD_LENGTH;
+            if (_numColumns == 0) _numColumns = 1;
 
             ((GridLayoutManager)_cardsRecyclerView.getLayoutManager()).setSpanCount(_numColumns);
             itemView.setOnClickListener(this);
@@ -112,7 +149,6 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
             _points.setText(Integer.toString(points));
 
         }
-
 
 
         @Override

@@ -35,7 +35,8 @@ public class DestinationCardSelectPresenter
 
     }
 
-    private void update() {
+    @Override
+    public void update() {
         _selectView.addCard(new DestCard(new City(CityName.LOS_ANGELES), new City(CityName.NEW_YORK_CITY), 21));
         _selectView.addCard(new DestCard(new City(CityName.DULUTH), new City(CityName.HOUSTON), 13));
         _selectView.addCard(new DestCard(new City(CityName.SAULT_STE_MARIE), new City(CityName.NASHVILLE), 8));
@@ -43,6 +44,6 @@ public class DestinationCardSelectPresenter
 
     @Override
     public void update(Observable o, Object arg) {
-        update();
+        //update();
     }
 }

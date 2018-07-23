@@ -12,6 +12,7 @@
         android:layout_alignParentBottom="true"/>
 
     <Button
+        android:id="@+id/game_status_open_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sidebar_open_game_status"/>

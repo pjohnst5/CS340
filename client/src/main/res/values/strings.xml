@@ -48,6 +48,8 @@
     <string name="game_history_title">GAME HISTORY</string>
     <string name="game_status_title">GAME STATUS</string>
     <string name="sidebar_open_game_status">Open</string>
+    <string name="game_status_dialog_title">Game Status</string>
+    <string name="close_modal_button_text">X</string>
 
 
     <!-- GENERIC -->
