@@ -26,6 +26,7 @@ import java.util.List;
 
 import client.presenter.chat.ChatPresenter;
 import client.presenter.chat.IChatPresenter;
+import client.view.activity.GameActivity;
 import client.view.fragment.SidebarFragment;
 import shared.enumeration.PlayerColor;
 import shared.model.Message;
@@ -48,7 +49,9 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_chat_list, container, false);
 
-        setupSidebarButtons(ButtonType.CHAT);
+        if (getActivity() instanceof GameActivity) {
+            setupSidebarButtons(ButtonType.CHAT);
+        }
 
         _messages = new ArrayList<>();
         _chatAdapter = new ChatListAdapter(_messages);

@@ -51,22 +51,6 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
     }
 
     @Override
-    public void sendMessage(String message) {
-        if (message.equals("")) { return; }
-        User user = _model.getUser();
-        Message newMessage = new Message();
-        //newMessage.setGameID(_model.getCurrentGame().getGameID());
-        newMessage.setMessage(message);
-//        try{
-//            newMessage.setDisplayName(_model.getCurrentGame().getPlayer(user.get_playerId()).getDisplayName());
-//        } catch (InvalidGameException e)
-//        {
-//            newMessage.setDisplayName("uh oh something went wrong in GameLobbyPresenter sendMessage");
-//        }
-        GameLobbyService.sendMessage(this, newMessage);
-    }
-
-    @Override
     public void startGame() {
         Game game = _model.getCurrentGame();
         if (game.get_state() != GameState.READY) {

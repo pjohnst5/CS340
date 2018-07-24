@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.pjohnst5icloud.tickettoride.R;
 import java.util.List;
 
 import client.presenter.game_lobby.IGameLobbyPresenter;
+import client.util.ColorPicker;
 import client.view.activity.GameActivity;
 import shared.enumeration.GameState;
 import shared.model.Game;
@@ -35,7 +37,6 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
     private RecyclerView mPlayerListRecyclerView;
     private RecyclerView mChatRecyclerView;
     private PlayerListAdapter mPlayerListAdapter;
-    private ChatAdapter mChatAdapter;
 
     private Game mCurrentGame;
     private IGameLobbyPresenter mPresenter;
@@ -60,20 +61,12 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
                 mPresenter.leaveGame();
             }
         });
+        mLeaveButton.setEnabled(false);
+        mLeaveButton.setVisibility(View.INVISIBLE); // FIXME: leave game feature not implemented
 
-        mSendChatText = v.findViewById(R.id.send_chat_text_view);
-        mSendChatButton = v.findViewById(R.id.send_chat_button);
-        mSendChatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.sendMessage(mSendChatText.getText().toString());
-            }
-        });
 
         mPlayerListRecyclerView = v.findViewById(R.id.player_list_recycler_view);
         mPlayerListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mChatRecyclerView = v.findViewById(R.id.chat_list_recycler_view);
-        mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         updateView(mCurrentGame);
         return v;
@@ -85,7 +78,6 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
         List<Player> players = mCurrentGame.getPlayers();
         if (players == null) {return; }
         mPlayerListAdapter = new PlayerListAdapter(players);
-//        mChatAdapter = new ChatAdapter(mCurrentGame.getMessages());
         mPlayerListRecyclerView.setAdapter(mPlayerListAdapter);
         GameState state = mCurrentGame.get_state();
         if (state == GameState.READY) {
@@ -93,11 +85,6 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
         } else {
             mStartButton.setEnabled(false);
         }
-    }
-
-    @Override
-    public void addMessage(Message message) {
-        // FIXME: just put messages in the game object?
     }
 
     @Override
@@ -137,13 +124,16 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
     private class PlayerHolder extends RecyclerView.ViewHolder {
         private TextView mPlayerNameView;
         private Player mPlayer;
+        private LinearLayout _container;
         public PlayerHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.player_list_item, parent, false));
             mPlayerNameView = itemView.findViewById(R.id.list_item_player_name);
+            _container = itemView.findViewById(R.id.list_item_player_container);
         }
         public void bind(Player player) {
             mPlayer = player;
             mPlayerNameView.setText(mPlayer.getUserName());
+            _container.setBackgroundColor(ColorPicker.getRouteColor(getResources(), mPlayer.getColor()));
         }
     }
     private class PlayerListAdapter extends RecyclerView.Adapter<PlayerHolder> {
@@ -168,30 +158,6 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
         @Override
         public int getItemCount() {
             return mPlayers.size();
-        }
-    }
-    private class MessageHolder extends RecyclerView.ViewHolder {
-
-        public MessageHolder(View itemView) {
-            super(itemView);
-        }
-    }
-    private class ChatAdapter extends RecyclerView.Adapter<MessageHolder> {
-
-        @NonNull
-        @Override
-        public MessageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return null;
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return 0;
         }
     }
 }

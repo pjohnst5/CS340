@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="10">
+
+    <FrameLayout
+        android:id="@+id/game_lobby_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5">
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/game_lobby_chat_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:background="@color/train_light_grey"
+        android:layout_weight="5">
+    </FrameLayout>
+
+</LinearLayout>
