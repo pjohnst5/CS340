@@ -10,9 +10,12 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
+
+import org.w3c.dom.Text;
 
 import client.view.activity.GameListActivity;
 import client.presenter.ILoginPresenter;
@@ -22,6 +25,7 @@ import client.presenter.ILoginPresenter;
  */
 
 public class LoginFragment extends Fragment implements ILoginView {
+    private TextView mConfirmPasswordLabel;
     private EditText mUsernameField;
     private EditText mPasswordField;
     private EditText mConfirmPasswordField;
@@ -35,6 +39,7 @@ public class LoginFragment extends Fragment implements ILoginView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
+        mConfirmPasswordLabel = v.findViewById(R.id.login_confirm_password_label);
         mUsernameField = v.findViewById(R.id.login_username);
         mPasswordField = v.findViewById(R.id.login_password);
         mConfirmPasswordField = v.findViewById(R.id.login_confirm_password);
@@ -44,8 +49,21 @@ public class LoginFragment extends Fragment implements ILoginView {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 isRegister = b;
                 mConfirmPasswordField.setEnabled(b);
+
+                if (isRegister) {
+                    mConfirmPasswordField.setVisibility(View.VISIBLE);
+                    mConfirmPasswordLabel.setVisibility(View.VISIBLE);
+                } else {
+                    mConfirmPasswordField.setVisibility(View.GONE);
+                    mConfirmPasswordLabel.setVisibility(View.GONE);
+                }
             }
         });
+        isRegister = false;
+        mSubmitOptionSwitch.setChecked(false);
+        mConfirmPasswordField.setVisibility(View.GONE);
+        mConfirmPasswordLabel.setVisibility(View.GONE);
+
         mSubmitButton = v.findViewById(R.id.login_submit_button);
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override

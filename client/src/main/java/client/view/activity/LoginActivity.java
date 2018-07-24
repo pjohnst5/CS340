@@ -22,6 +22,13 @@ public class LoginActivity extends SingleFragmentActivity {
     }
 
     @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+
+        getSupportActionBar().hide();
+    }
+
+    @Override
     protected Fragment createFragment() {
         ILoginView view = new LoginFragment();
         ILoginPresenter presenter = new LoginPresenter(view);

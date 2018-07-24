@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:gravity="center">
+    android:background="@drawable/ttr_background"
+    android:layout_centerHorizontal="true">
+
+    <ImageView
+        android:id="@+id/login_title_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/logo"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="@string/login_title"
         android:textSize="30sp" />
 
     <GridLayout
-        android:layout_width="match_parent"
+        android:id="@+id/login_grid_layout"
+        android:layout_below="@id/login_title_image_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:horizontalSpacing="0dp"
         android:orientation="horizontal"
-        android:padding="8dp"
+        android:layout_centerHorizontal="true"
+        android:columnCount="2"
         android:rowCount="3"
+        android:horizontalSpacing="0dp"
+        android:padding="8dp"
         android:useDefaultMargins="false"
+        android:layout_marginTop="30dp"
+        android:background="@color/translucent_background"
         android:verticalSpacing="0dp">
 
         <TextView
@@ -34,6 +49,8 @@
             android:id="@+id/login_username"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:minWidth="400dp"
+            android:maxWidth="800dp"
             android:hint="@string/login_username_hint" />
 
         <TextView
@@ -48,9 +65,12 @@
             android:id="@+id/login_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:minWidth="400dp"
+            android:maxWidth="800dp"
             android:hint="@string/login_password_hint" />
 
         <TextView
+            android:id="@+id/login_confirm_password_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -62,6 +82,8 @@
             android:id="@+id/login_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:minWidth="400dp"
+            android:maxWidth="800dp"
             android:hint="@string/login_confirm_password_hint" />
 
     </GridLayout>
@@ -71,16 +93,26 @@
         android:id="@+id/login_submit_option_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:showText="true"
+        android:thumbTextPadding="20dp"
+        android:layout_below="@id/login_grid_layout"
+        android:layout_centerHorizontal="true"
         android:textOff="@string/login_switch_login_label"
         android:textOn="@string/login_switch_register_label"
-        android:layout_margin="16dp"/>
+        android:thumb="@drawable/switch_thumb"
+        android:track="@drawable/switch_bg" />
 
     <Button
         android:id="@+id/login_submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_submit_button"
+        android:textSize="20sp"
+        android:padding="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/login_submit_option_switch"
+        android:background="@drawable/button_green"
         android:layout_margin="16dp"/>
 
-</LinearLayout>
+</RelativeLayout>

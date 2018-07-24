@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import client.facade.ServicesFacade;
 import client.presenter.game.play.DestinationCardSelectPresenter;
 import client.presenter.game.play.IDestinationCardSelectPresenter;
 import shared.model.decks.DestCard;
@@ -29,6 +32,9 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
 
     private List<DestCard> _cards;
     private Set<CardItemHolder> _selectedCards;
+    private Set<CardItemHolder> _unselectedCards;
+
+    private static boolean setup = true;
 
     private static final int CARD_WIDTH = 264;
     private static final int CARD_HEIGHT = 166;
@@ -39,6 +45,9 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
     private IDestinationCardSelectPresenter _presenter;
     private RecyclerView _cardsRecyclerView;
     private CardAdapter _cardAdapter;
+    private LinearLayout _recyclerViewContainer;
+    private Button _submitButton;
+    private int _numCardsRequired;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,51 +55,63 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
 
         _cards = new ArrayList<>();
         _cardAdapter = new CardAdapter();
+        _recyclerViewContainer = v.findViewById(R.id.dest_card_linear_layout);
         _cardsRecyclerView = v.findViewById(R.id.dest_card_select_recycler_view);
         _cardsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         _cardsRecyclerView.setAdapter(_cardAdapter);
 
         _selectedCards = new HashSet<>();
+        _unselectedCards = new HashSet<>();
         _cardsLoaded = false;
 
         _presenter = new DestinationCardSelectPresenter(this);
 
+        setGridlayoutSpan();
+
+        if (setup) {
+            _numCardsRequired = 2;
+            setup = false;
+        } else {
+            _numCardsRequired = 1;
+        }
+
+        _submitButton = v.findViewById(R.id.dest_card_frag_select_cards);
+        _submitButton.setOnClickListener((view) -> {
+
+            if (_selectedCards.size() < _numCardsRequired) return;
+
+            List<DestCard> selectedCards = new ArrayList<>();
+            for (CardItemHolder holder : _selectedCards){
+                selectedCards.add(holder.getDestCard());
+            }
+
+            List<DestCard> unselectedCards = new ArrayList<>();
+            for (CardItemHolder holder : _unselectedCards){
+                unselectedCards.add(holder.getDestCard());
+            }
+
+            _presenter.submitData(selectedCards, unselectedCards);
+        });
+
         return v;
+    }
+
+    private void setGridlayoutSpan() {
+
+        ViewTreeObserver vto = _recyclerViewContainer.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(() -> {
+            int numColumns = _recyclerViewContainer.getWidth() / CARD_LENGTH;
+            if (numColumns == 0) numColumns = 1;
+
+            ((GridLayoutManager) _cardsRecyclerView.getLayoutManager()).setSpanCount(numColumns);
+        });
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        _presenter.update();
+        _presenter.init();
     }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (isVisibleToUser && !_cardsLoaded){
-            _cardsLoaded = true;
-            _presenter.update();
-        }
-
-    }
-//
-//    private void setGridlayoutSpan(){
-//
-//        ViewTreeObserver vto = this.getViewTreeObserver();
-//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                width = _cardsRecyclerView.getWidth();
-//                height = button.getHeight();
-//
-//                _numColumns = _parentWidth / CARD_LENGTH;
-//                if (_numColumns == 0) _numColumns = 1;
-//
-//                ((GridLayoutManager)_cardsRecyclerView.getLayoutManager()).setSpanCount(_numColumns);
-//            }
-//        });
-//    }
 
     @Override
     public boolean addCard(DestCard card) {
@@ -114,9 +135,6 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
         private final int CARD_LENGTH = 294;
 
         private DestCard _card;
-        private int _parentWidth;
-        private int _numColumns;
-
         private RelativeLayout _cardBorder;
         private ImageView _cardHolder;
         private TextView _destinationTitle;
@@ -130,12 +148,10 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
             _destinationTitle = itemView.findViewById(R.id.card_item_destination_text);
             _points = itemView.findViewById(R.id.dest_card_point_value);
 
-            _parentWidth = parent.getWidth();
-            _numColumns = _parentWidth / CARD_LENGTH;
-            if (_numColumns == 0) _numColumns = 1;
-
-            ((GridLayoutManager)_cardsRecyclerView.getLayoutManager()).setSpanCount(_numColumns);
             itemView.setOnClickListener(this);
+            _unselectedCards.add(this);
+
+            _presenter.init();
         }
 
         public void bind(DestCard card){
@@ -150,14 +166,20 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
 
         }
 
+        public DestCard getDestCard(){
+            return this._card;
+        }
+
 
         @Override
         public void onClick(View view) {
             if (_selectedCards.contains(this)){
                 _selectedCards.remove(this);
+                _unselectedCards.add(this);
                 _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_black));
             } else {
                 _selectedCards.add(this);
+                _unselectedCards.remove(this);
                 _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_blue));
             }
         }

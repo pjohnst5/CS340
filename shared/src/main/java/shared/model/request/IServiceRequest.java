@@ -19,4 +19,6 @@ public abstract class IServiceRequest {
     {
         return _player.getPlayerID();
     }
+
+    public Player get_player() { return _player; }
 }
