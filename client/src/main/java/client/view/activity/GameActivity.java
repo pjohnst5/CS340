@@ -13,6 +13,7 @@ import client.server.communication.ServerProxy;
 import client.server.communication.poll.MainGamePoller;
 import client.view.fragment.game.play.ChatFragment;
 import client.view.fragment.game.play.DestinationCardSelectFragment;
+import client.view.fragment.game.play.GameMapFragment;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -34,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
 
         if (gameContentFragment == null){
             gameContentFragment = new DestinationCardSelectFragment();
+//            gameContentFragment = GameMapFragment.newInstance();
             fm.beginTransaction()
                     .add(R.id.game_content_container, gameContentFragment)
                     .commit();

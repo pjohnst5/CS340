@@ -10,12 +10,17 @@ import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import client.model.ClientModel;
 import client.presenter.game.play.ChatPresenter;
 import client.presenter.game.play.GameMapPresenter;
 import client.presenter.game.play.IGameMapPresenter;
 import client.view.fragment.game.play.customview.GameMapView;
 import client.view.fragment.game.play.customview.RouteView;
 import shared.enumeration.CityManager;
+import shared.enumeration.ListOfRoutes;
 import shared.model.GameMap;
 import shared.model.Route;
 
@@ -37,20 +42,10 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         View v = inflater.inflate(R.layout.fragment_game_map, container, false);
 
         _gameMap = v.findViewById(R.id.game_map);
-        _gameMap.initializeData(this);
-//        _gameMap.setRouteOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (view instanceof RouteView) {
-//                    RouteView rv = (RouteView) view;
-//                    ViewParent parent = rv.getParent();
-//                    if (parent == _gameMap) { // in this case, we DO want to compare references
-//                        _gameMap.routeSelected(rv);
-//                        rv.setSelected(true);
-//                    }
-//                }
-//            }
-//        });
+//        GameMap mapModel = ClientModel.getInstance().getCurrentGame().getMap();
+//        List<Route> routes = new ArrayList<>(mapModel.get_routes().values());
+        List<Route> routes = new ListOfRoutes().getRoutes();
+        _gameMap.initializeData(this, CityManager.getInstance().getCities(), routes);
         _presenter = new GameMapPresenter(this);
 
         return v;

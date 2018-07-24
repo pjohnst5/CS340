@@ -43,7 +43,6 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
 
     @Override
     public void update(Observable observable, Object o) {
-        // TODO: redraw the map
         _mapView.updateMap();
     }
 }

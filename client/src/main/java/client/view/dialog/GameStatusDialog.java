@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import client.model.ClientModel;
+import client.util.ColorPicker;
 import shared.enumeration.PlayerColor;
 import shared.enumeration.TrainColor;
 import shared.model.Game;
@@ -72,11 +73,14 @@ public class GameStatusDialog extends DialogFragment {
         }
 
         _playerRecyclerView = v.findViewById(R.id.game_status_stats_recycler_view);
-        _playerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        _playerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         _playerRecyclerView.setAdapter(new PlayerAdapter(players));
 
         Map<TrainColor, Integer> cardCounts = countNumCards(myPlayer.getTrainCards());
 
+        _cardRecyclerView = v.findViewById(R.id.game_status_card_recycler_view);
+        _cardRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        _cardRecyclerView.setAdapter(new CardAdapter(cardCounts));
 
         ad.show();
         ad.getButton(Dialog.BUTTON_NEGATIVE).setVisibility(View.GONE);
@@ -109,7 +113,7 @@ public class GameStatusDialog extends DialogFragment {
             _cards.setText(player.getNumTrainCards());
             _routes.setText(player.getNumRoutes());
             PlayerColor color = player.getColor();
-            _playerName.setTextColor(getPlayerColor(color));
+            _playerName.setTextColor(ColorPicker.getRouteColor(getResources(), color));
         }
     }
 
@@ -136,45 +140,6 @@ public class GameStatusDialog extends DialogFragment {
         }
     }
 
-    private int getPlayerColor(PlayerColor color) {
-        Resources res = getResources();
-        switch (color){
-            case BLUE:
-                return ResourcesCompat.getColor(res, R.color.blue, null);
-            case GREEN:
-                return ResourcesCompat.getColor(res, R.color.green, null);
-            case RED:
-                return ResourcesCompat.getColor(res, R.color.red, null);
-            case YELLOW:
-                return ResourcesCompat.getColor(res, R.color.yellow, null);
-            default:
-                return ResourcesCompat.getColor(res, R.color.route_black, null);
-        }
-    }
-    private int getTrainColor(TrainColor color) {
-        Resources res = getResources();
-        switch (color) {
-            case RED:
-                return ResourcesCompat.getColor(res, R.color.red, null);
-            case BLUE:
-                return ResourcesCompat.getColor(res, R.color.blue, null);
-            case GRAY:
-                return ResourcesCompat.getColor(res, R.color.gray, null);
-            case PINK:
-                return ResourcesCompat.getColor(res, R.color.pink, null);
-            case GREEN:
-                return ResourcesCompat.getColor(res, R.color.green, null);
-            case WHITE:
-                return ResourcesCompat.getColor(res, R.color.white, null);
-            case ORANGE:
-                return ResourcesCompat.getColor(res, R.color.route_orange, null);
-            case YELLOW:
-                return ResourcesCompat.getColor(res, R.color.route_yellow, null);
-            default:
-                return ResourcesCompat.getColor(res, R.color.route_black, null);
-        }
-    }
-
     private class CardHolder extends RecyclerView.ViewHolder {
         private LinearLayout _container;
         private TextView _countView;
@@ -185,7 +150,7 @@ public class GameStatusDialog extends DialogFragment {
         }
 
         public void bind(Map.Entry<TrainColor, Integer> cardCount) {
-            _container.setBackgroundColor(getTrainColor(cardCount.getKey()));
+            _container.setBackgroundColor(ColorPicker.getRouteColor(getResources(), cardCount.getKey()));
             _countView.setText(cardCount.getValue());
         }
     }

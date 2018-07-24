@@ -3,7 +3,6 @@ package shared.enumeration;
 import java.util.ArrayList;
 import java.util.List;
 
-import shared.model.City;
 import shared.model.Route;
 
 import static shared.enumeration.TrainColor.BLACK;

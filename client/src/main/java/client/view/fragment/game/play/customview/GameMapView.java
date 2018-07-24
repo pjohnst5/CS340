@@ -58,7 +58,6 @@ public class GameMapView extends FrameLayout {
     private Paint _cityPaint;
     private Paint _cityPaintBorder;
 
-//    private List<RouteView> _routeViews;
     private RouteView _selectedRoute;
 
     public interface HostFragment {
@@ -81,29 +80,18 @@ public class GameMapView extends FrameLayout {
         _mapSize = MapSize.MEDIUM;
     }
 
-    public void initializeData(HostFragment host) {
+    public void initializeData(HostFragment host, List<City> cities, List<Route> routes) {
         _host = host;
 
-        _cities = CityManager.getInstance().getCities();
-        _routes = new ListOfRoutes().getRoutes();
+//        _cities = CityManager.getInstance().getCities();
+//        _routes = new ListOfRoutes().getRoutes();
+        _cities = cities;
+        _routes = routes;
 
         for (Route r : _routes) {
             RouteView rv = new RouteView(getContext()).initialize(r);
             addView(rv);
-//            calculateRouteCoordinates(rv, -1);
         }
-//        invalidate();
-//        requestLayout();
-    }
-
-    public void setRouteOnClickListener(View.OnClickListener listener) {
-        int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            getChildAt(i).setOnClickListener(listener);
-        }
-//        for (RouteView r : _routeViews) {
-//            r.setOnClickListener(listener);
-//        }
     }
 
     public void routeSelected(RouteView rv) {
@@ -176,10 +164,10 @@ public class GameMapView extends FrameLayout {
     }
 
     private void initializeGraphics() {
-//        if (_presenter == null) { // FIXME: uncomment
-//            // data hasn't been initialized yet
-//            return;
-//        }
+        if (_host == null) {
+            // data hasn't been initialized yet
+            return;
+        }
 
         // match height to the maximum of the parent container
         _height = getHeight() - (getPaddingTop() + getPaddingBottom());
@@ -191,8 +179,8 @@ public class GameMapView extends FrameLayout {
         if (_height < 800) {
             _cityRadius = CITY_RADIUS_SM;
             _mapSize = MapSize.SMALL;
-            RouteView.setLineWidth(_mapSize);
         }
+        RouteView.setLineWidth(_mapSize);
 
         // FIXME: do this differently
         CityManager.getInstance().newBoardSize(_width, _height);
@@ -233,12 +221,12 @@ public class GameMapView extends FrameLayout {
             }
             int dist = rv.getDistance(touchX, touchY);
             if (dist >= 0) {
-                // FIXME: what about routes that are the same distance?
                 if (closestRouteView == null) {
                     closestRouteView = rv;
                     closestViewDistance = dist;
                 } else {
                     if (dist < closestViewDistance) {
+                        // cases where routes are the same distance are negligible
                         closestRouteView = rv;
                         closestViewDistance = dist;
                     }
