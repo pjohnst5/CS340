@@ -56,6 +56,10 @@ public class ServicesFacade {
         service.leaveGame(caller, leaveGameRequest);
     }
 
+    public void requestDestCards(AsyncServerTask.AsyncCaller caller, Player player){
+        new DestCardService().requestDestCards(caller, player);
+    }
+
     public void phase2PassoffScenarios() {
         //FIXME: delete after phase 2
         ClientModel clientModel = ClientModel.getInstance();

@@ -1,16 +1,23 @@
 package server.facade;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import server.exception.ServerException;
 import server.model.ServerModel;
 import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.configuration.ConfigurationManager;
+import shared.exception.DeckException;
 import shared.model.GameAction;
 import shared.model.Player;
+import shared.model.decks.DestCard;
 import shared.model.decks.DestDeck;
 import shared.model.request.DestCardRequest;
 import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
+import shared.model.wrapper.ThreeDestCardWrapper;
+import sun.security.krb5.internal.crypto.Des;
 
 public class DestCardService {
 
@@ -76,6 +83,49 @@ public class DestCardService {
 
 
         } catch (ServerException e) {
+            response.setSuccess(false);
+            response.setErrorMessage(e.getMessage());
+        }
+
+        return response;
+    }
+
+    public static IResponse getThreeDestCards(Player player){
+
+        CommandResponse response = new CommandResponse();
+        ServerModel serverModel = ServerModel.getInstance();
+
+        try {
+
+            List<DestCard> cardsList;
+            synchronized (serverModel){
+                cardsList = serverModel
+                .getGame(player.getGameID())
+                .getDestDeck()
+                .getThreeCards();
+            }
+
+            ThreeDestCardWrapper wrapper = new ThreeDestCardWrapper();
+            wrapper.setCards(cardsList);
+
+            String[] paramTypes = { ThreeDestCardWrapper.class.getCanonicalName() };
+            Object[] paramValues ={ wrapper };
+
+            GenericCommand command = new GenericCommand(
+                    ConfigurationManager.get("client_facade_name"),
+                    ConfigurationManager.get("set_destination_option_cards"),
+                    paramTypes,
+                    paramValues,
+                    null
+            );
+
+            List<ICommand> commandList = new ArrayList<>();
+            commandList.add(command);
+
+            response.setCommands(commandList);
+            response.setSuccess(true);
+
+        } catch (ServerException | DeckException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
         }

@@ -1,6 +1,7 @@
 package server.facade;
 
 import shared.model.Game;
+import shared.model.Player;
 import shared.model.request.ClaimRouteRequest;
 import shared.model.request.DestCardRequest;
 import shared.model.request.JoinRequest;
@@ -95,6 +96,10 @@ public class ServerFacade {
     public static IResponse updateDestDeck(DestCardRequest request)
     {
         return DestCardService.updateDestDeck(request);
+    }
+
+    public static IResponse getThreeDestCards(Player player){
+        return DestCardService.getThreeDestCards(player);
     }
 
 

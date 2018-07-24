@@ -1,15 +1,21 @@
 package client.facade;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import client.model.ClientModel;
 import shared.model.Game;
 import shared.model.GameAction;
 import shared.model.GameMap;
+import shared.model.decks.DestCard;
 import shared.model.decks.DestDeck;
 import shared.model.decks.TrainDeck;
 import shared.model.wrapper.GamesWrapper;
 import shared.model.Message;
 import shared.model.Player;
 import shared.model.User;
+import shared.model.wrapper.ThreeDestCardWrapper;
 
 public class ClientFacade {
     static ClientModel clientModel = ClientModel.getInstance();
@@ -57,5 +63,9 @@ public class ClientFacade {
     public static void changeTurns() //b doesn't do anything, it just couldn't serialize without it
     {
         clientModel.changeTurns();
+    }
+
+    public static void setDestOptionCards(ThreeDestCardWrapper wrapper) {
+        clientModel.setDestOptionCards(wrapper.getDestCards());
     }
 }

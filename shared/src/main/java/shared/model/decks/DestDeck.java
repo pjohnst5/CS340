@@ -2,6 +2,7 @@ package shared.model.decks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import shared.enumeration.CityName;
 import shared.exception.DeckException;
@@ -43,6 +44,21 @@ public class DestDeck {
         _cards.add(new DestCard(new City(CityName.MONTREAL), new City(CityName.NEW_ORLEANS), 13));
         _cards.add(new DestCard(new City(CityName.SAULT_STE_MARIE), new City(CityName.OKLAHOMA_CITY), 9));
         _cards.add(new DestCard(new City(CityName.SEATTLE), new City(CityName.LOS_ANGELES), 9));
+
+        shuffleDeck();
+    }
+
+    private void shuffleDeck(){
+        Random rand = new Random();
+        for (int i = 0; i < _cards.size(); i++){
+            int  n = rand.nextInt(_cards.size()-1);
+
+            DestCard tempCard = _cards.get(i);
+            _cards.set(i,_cards.get(n));
+            _cards.set(n, tempCard);
+        }
+
+
     }
 
     public final List<DestCard> getThreeCards() throws DeckException

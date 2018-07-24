@@ -1,4 +1,4 @@
-package client.presenter.game.play;
+package client.presenter.chat;
 
 import shared.enumeration.PlayerColor;
 

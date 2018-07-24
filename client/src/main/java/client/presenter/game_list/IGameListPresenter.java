@@ -1,4 +1,4 @@
-package client.presenter;
+package client.presenter.game_list;
 
 import shared.enumeration.PlayerColor;
 

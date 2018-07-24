@@ -1,6 +1,5 @@
-package client.presenter;
+package client.presenter.game_lobby;
 
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,10 +11,8 @@ import client.server.communication.poll.Poller;
 import client.view.fragment.IGameLobbyView;
 import client.server.AsyncServerTask;
 import shared.enumeration.GameState;
-import shared.exception.InvalidGameException;
 import shared.model.Game;
 import shared.model.Message;
-import shared.model.Player;
 import shared.model.User;
 
 public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncServerTask.AsyncCaller {
@@ -42,7 +39,7 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
                 _model.deleteObserver(this);
                 ServerProxy.instance().stopPoller();
                 _view.leaveGame();
-            } else if (currentGame.get_state() == GameState.STARTED) {
+            } else if (currentGame.get_state() == GameState.SETUP) {
                 // started the game
                 _model.deleteObserver(this);
                 ServerProxy.instance().stopPoller();

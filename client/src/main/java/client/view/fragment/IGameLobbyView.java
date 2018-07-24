@@ -1,6 +1,6 @@
 package client.view.fragment;
 
-import client.presenter.IGameLobbyPresenter;
+import client.presenter.game_lobby.IGameLobbyPresenter;
 import shared.model.Game;
 import shared.model.Message;
 

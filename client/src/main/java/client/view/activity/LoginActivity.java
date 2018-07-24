@@ -10,8 +10,8 @@ import java.io.IOException;
 
 import client.view.fragment.ILoginView;
 import client.view.fragment.LoginFragment;
-import client.presenter.ILoginPresenter;
-import client.presenter.LoginPresenter;
+import client.presenter.login.ILoginPresenter;
+import client.presenter.login.LoginPresenter;
 import shared.configuration.ConfigurationManager;
 
 public class LoginActivity extends SingleFragmentActivity {

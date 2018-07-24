@@ -2,7 +2,7 @@ package client.view.fragment;
 
 import java.util.List;
 
-import client.presenter.IGameListPresenter;
+import client.presenter.game_list.IGameListPresenter;
 import shared.model.Game;
 
 public interface IGameListView {

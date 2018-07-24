@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import client.presenter.game.play.ChatPresenter;
-import client.presenter.game.play.IChatPresenter;
+import client.presenter.chat.ChatPresenter;
+import client.presenter.chat.IChatPresenter;
 import client.view.fragment.SidebarFragment;
 import shared.enumeration.PlayerColor;
 import shared.model.Message;

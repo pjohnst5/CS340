@@ -62,4 +62,24 @@ public class DestCardService {
                 null);
         new AsyncServerTask(caller).execute(command);
     }
+
+    /**
+     * Request 3 destination cards from the server to begin the game
+     * @param caller The caller of this method
+     */
+    public void requestDestCards(AsyncServerTask.AsyncCaller caller, Player player){
+
+        String[] paramTypes = { player.getClass().getCanonicalName() };
+        Object[] paramValues = { player };
+
+        GenericCommand command = new GenericCommand(
+                ConfigurationManager.getString("server_facade_name"),
+                ConfigurationManager.getString("server_request_three_dest_cards"),
+                paramTypes,
+                paramValues,
+                null
+        );
+
+        new AsyncServerTask(caller).execute(command);
+    }
 }

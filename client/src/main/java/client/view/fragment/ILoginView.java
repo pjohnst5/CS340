@@ -1,6 +1,6 @@
 package client.view.fragment;
 
-import client.presenter.ILoginPresenter;
+import client.presenter.login.ILoginPresenter;
 
 public interface ILoginView {
     public void changeViewGameList();

@@ -3,6 +3,7 @@ package client.model;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
@@ -12,6 +13,7 @@ import shared.model.Game;
 import shared.model.GameAction;
 import shared.model.GameMap;
 import shared.model.Route;
+import shared.model.decks.DestCard;
 import shared.model.decks.DestDeck;
 import shared.model.decks.TrainDeck;
 import shared.model.wrapper.GamesWrapper;
@@ -180,6 +182,13 @@ public class ClientModel extends Observable {
         _currentGame.setDestDeck(deck);
         _games.get(_currentGame.getGameID()).setDestDeck(deck);
 
+
+        setChanged();
+        notifyObservers();
+    }
+
+    public void setDestOptionCards(List<DestCard> cards){
+        _currentGame.setDestOptionCards(cards);
 
         setChanged();
         notifyObservers();

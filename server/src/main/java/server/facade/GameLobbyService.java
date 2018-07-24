@@ -2,14 +2,11 @@ package server.facade;
 
 import java.util.List;
 
-import javax.print.DocFlavor;
-
 import server.model.ServerModel;
 import server.exception.ServerException;
 import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.enumeration.GameState;
-import shared.exception.InvalidGameException;
 import shared.configuration.ConfigurationManager;
 import shared.model.Game;
 import shared.model.GameAction;
@@ -34,6 +31,8 @@ class GameLobbyService {
             switch (game.get_state()) {
                 case NOT_READY:
                     throw new ServerException("Game is not full, can't start without max players");
+                case SETUP:
+                    throw new ServerException("Game has already started, can't start it twice.");
                 case STARTED:
                     throw new ServerException("Game has already started, can't start it twice.");
                 case FINISHED:

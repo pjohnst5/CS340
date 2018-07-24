@@ -1,7 +1,5 @@
 package shared.model;
 
-import org.omg.CORBA.BAD_TYPECODE;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +7,7 @@ import shared.enumeration.GameState;
 import shared.exception.DeckException;
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
-import shared.exception.ReachedZeroPlayersException;
+import shared.model.decks.DestCard;
 import shared.model.decks.DestDeck;
 import shared.model.decks.TrainDeck;
 
@@ -25,6 +23,9 @@ public class Game {
     private DestDeck _destDeck;
     private GameMap _map;
     private TurnManager _turnManager;
+
+    private List<DestCard>_destOptionCards;
+
 
     public Game(String gameName, int maxPlayers) throws InvalidGameException {
         if (maxPlayers < 2 || maxPlayers > 5) {
@@ -44,6 +45,19 @@ public class Game {
         _trainDeck = new TrainDeck();
         _destDeck = new DestDeck();
         _map = new GameMap();
+        _destOptionCards = null;
+    }
+
+    public void setDestOptionCards(List<DestCard> cards){
+        _destOptionCards = cards;
+    }
+
+    public List<DestCard> getDestOptionCards(){
+        return _destOptionCards;
+    }
+
+    public boolean destOptionCardsEmpty(){
+        return _destOptionCards == null;
     }
 
     public String getGameName() {
@@ -196,7 +210,7 @@ public class Game {
         if (_state != GameState.READY) {
             throw new InvalidGameException("Game not ready, can't start");
         }
-        _state = GameState.STARTED;
+        _state = GameState.SETUP;
 
         //Sets up player Order
         _turnManager = new TurnManager(this._players);

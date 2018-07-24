@@ -20,7 +20,7 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.List;
 
-import client.presenter.IGameListPresenter;
+import client.presenter.game_list.IGameListPresenter;
 import client.server.communication.poll.GameListPoller;
 import client.view.activity.GameLobbyActivity;
 import client.view.dialog.CreateGameDialog;

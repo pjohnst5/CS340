@@ -1,4 +1,4 @@
-package client.presenter.game.play;
+package client.presenter.game_history;
 
 import shared.model.Player;
 

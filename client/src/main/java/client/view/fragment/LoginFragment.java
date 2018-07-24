@@ -15,10 +15,8 @@ import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
 
-import org.w3c.dom.Text;
-
 import client.view.activity.GameListActivity;
-import client.presenter.ILoginPresenter;
+import client.presenter.login.ILoginPresenter;
 
 /**
  * Created by jtyler17 on 7/7/18.

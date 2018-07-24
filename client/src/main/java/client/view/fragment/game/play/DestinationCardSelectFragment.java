@@ -23,9 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import client.facade.ServicesFacade;
-import client.presenter.game.play.DestinationCardSelectPresenter;
-import client.presenter.game.play.IDestinationCardSelectPresenter;
+import client.presenter.select_dest_card.DestCardSelectPresenter;
+import client.presenter.select_dest_card.IDestCardSelectPresenter;
 import shared.model.decks.DestCard;
 
 public class DestinationCardSelectFragment extends Fragment implements IDestinationCardSelectView {
@@ -42,7 +41,7 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
     private boolean _cardsLoaded;
 
 
-    private IDestinationCardSelectPresenter _presenter;
+    private IDestCardSelectPresenter _presenter;
     private RecyclerView _cardsRecyclerView;
     private CardAdapter _cardAdapter;
     private LinearLayout _recyclerViewContainer;
@@ -64,7 +63,7 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
         _unselectedCards = new HashSet<>();
         _cardsLoaded = false;
 
-        _presenter = new DestinationCardSelectPresenter(this);
+        _presenter = new DestCardSelectPresenter(this);
 
         setGridlayoutSpan();
 
@@ -76,6 +75,7 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
         }
 
         _submitButton = v.findViewById(R.id.dest_card_frag_select_cards);
+        _submitButton.setEnabled(false);
         _submitButton.setOnClickListener((view) -> {
 
             if (_selectedCards.size() < _numCardsRequired) return;
@@ -105,12 +105,6 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
 
             ((GridLayoutManager) _cardsRecyclerView.getLayoutManager()).setSpanCount(numColumns);
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        _presenter.init();
     }
 
     @Override
@@ -151,7 +145,7 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
             itemView.setOnClickListener(this);
             _unselectedCards.add(this);
 
-            _presenter.init();
+            //_presenter.init();
         }
 
         public void bind(DestCard card){
@@ -181,6 +175,12 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
                 _selectedCards.add(this);
                 _unselectedCards.remove(this);
                 _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_blue));
+            }
+
+            if (_selectedCards.size() < _numCardsRequired){
+                _submitButton.setEnabled(false);
+            } else {
+                _submitButton.setEnabled(true);
             }
         }
     }

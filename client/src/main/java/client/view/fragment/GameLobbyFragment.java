@@ -18,9 +18,8 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.List;
 
-import client.presenter.IGameLobbyPresenter;
+import client.presenter.game_lobby.IGameLobbyPresenter;
 import client.view.activity.GameActivity;
-import client.view.activity.GameLobbyActivity;
 import shared.enumeration.GameState;
 import shared.model.Game;
 import shared.model.Message;

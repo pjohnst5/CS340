@@ -1,4 +1,4 @@
-package client.presenter;
+package client.presenter.login;
 
 public interface ILoginPresenter {
 

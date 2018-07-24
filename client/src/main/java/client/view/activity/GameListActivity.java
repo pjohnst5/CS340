@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 
 import client.view.fragment.GameListFragment;
 import client.view.fragment.IGameListView;
-import client.presenter.GameListPresenter;
-import client.presenter.IGameListPresenter;
+import client.presenter.game_list.GameListPresenter;
+import client.presenter.game_list.IGameListPresenter;
 
 public class GameListActivity extends SingleFragmentActivity {
 

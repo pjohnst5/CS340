@@ -1,15 +1,13 @@
-package client.presenter.game.play;
+package client.presenter.chat;
 
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Random;
 
 import client.facade.ServicesFacade;
 import client.model.ClientModel;
 import client.server.AsyncServerTask;
 import client.view.fragment.game.play.IGameChatView;
-import shared.enumeration.PlayerColor;
 import shared.exception.InvalidGameException;
 import shared.model.Message;
 import shared.model.Player;

@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 
 import client.view.fragment.GameLobbyFragment;
 import client.view.fragment.IGameLobbyView;
-import client.presenter.GameLobbyPresenter;
-import client.presenter.IGameLobbyPresenter;
+import client.presenter.game_lobby.GameLobbyPresenter;
+import client.presenter.game_lobby.IGameLobbyPresenter;
 
 public class GameLobbyActivity extends SingleFragmentActivity {
 

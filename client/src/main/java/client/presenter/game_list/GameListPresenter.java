@@ -1,4 +1,4 @@
-package client.presenter;
+package client.presenter.game_list;
 
 import java.util.ArrayList;
 import java.util.List;
