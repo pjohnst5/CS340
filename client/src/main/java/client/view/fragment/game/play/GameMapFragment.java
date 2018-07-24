@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
@@ -14,13 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.model.ClientModel;
-import client.presenter.game.play.ChatPresenter;
 import client.presenter.game.play.GameMapPresenter;
 import client.presenter.game.play.IGameMapPresenter;
 import client.view.fragment.game.play.customview.GameMapView;
-import client.view.fragment.game.play.customview.RouteView;
 import shared.enumeration.CityManager;
-import shared.enumeration.ListOfRoutes;
 import shared.model.GameMap;
 import shared.model.Route;
 
