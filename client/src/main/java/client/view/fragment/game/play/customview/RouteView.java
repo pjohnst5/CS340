@@ -156,7 +156,7 @@ public class RouteView extends View {
         }
         canvas.drawPath(_path, selectedPaint);
         canvas.drawPath(_path, _linePaint);
-//        canvas.drawRect(_bounds, _boundsPaint);
+//        canvas.drawRect(_bounds, _boundsPaint); // uncomment to see route bounding boxes
     }
 
     public int getDistance(float touchX, float touchY) {

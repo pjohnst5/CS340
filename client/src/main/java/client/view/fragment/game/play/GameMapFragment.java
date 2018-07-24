@@ -42,9 +42,9 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         View v = inflater.inflate(R.layout.fragment_game_map, container, false);
 
         _gameMap = v.findViewById(R.id.game_map);
-//        GameMap mapModel = ClientModel.getInstance().getCurrentGame().getMap();
-//        List<Route> routes = new ArrayList<>(mapModel.get_routes().values());
-        List<Route> routes = new ListOfRoutes().getRoutes();
+        GameMap mapModel = ClientModel.getInstance().getCurrentGame().getMap();
+        List<Route> routes = new ArrayList<>(mapModel.get_routes().values());
+//        List<Route> routes = new ListOfRoutes().getRoutes();
         _gameMap.initializeData(this, CityManager.getInstance().getCities(), routes);
         _presenter = new GameMapPresenter(this);
 

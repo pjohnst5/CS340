@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import server.exception.ServerException;
+import server.handler.DebugAddPlayerHandler;
 import server.handler.DefaultHandler;
 import server.handler.ExecCommandHandler;
 import shared.configuration.ConfigurationManager;
@@ -49,6 +50,7 @@ public class ServerCommunicator {
 
     public void setupContext(HttpServer server) {
         server.createContext(ConfigurationManager.get("execute_command_endpoint"), new ExecCommandHandler());
+        server.createContext(DebugAddPlayerHandler.END_POINT_HANDLE, new DebugAddPlayerHandler());
         server.createContext("/", new DefaultHandler());
     }
 }

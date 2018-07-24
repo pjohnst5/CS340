@@ -182,7 +182,7 @@ public class GameMapView extends FrameLayout {
         }
         RouteView.setLineWidth(_mapSize);
 
-        // FIXME: do this differently
+        // redo all the city and route coordinates from the resized board
         CityManager.getInstance().newBoardSize(_width, _height);
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
