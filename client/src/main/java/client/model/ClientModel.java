@@ -50,6 +50,25 @@ public class ClientModel extends Observable {
         }
     }
 
+    /**
+     * Retrieves the current player if exists.
+     * @return The Player object or null if it does not exist
+     */
+    public Player getCurrentPlayer(){
+        String playerId = getUser().get_playerId();
+
+        Player player = null;
+
+        try {
+            player = getCurrentGame().getPlayer(playerId);
+        } catch(InvalidGameException e) {
+            e.printStackTrace();
+            System.out.println("This is the real Error");
+        }
+
+        return player;
+    }
+
     public Game getCurrentGame() {
         return _currentGame;
     }

@@ -9,6 +9,7 @@ public abstract class DestCardSelectState {
 
     private IDestCardSelectPresenter _presenter;
 
+    public DestCardSelectState() {}
     public DestCardSelectState(IDestCardSelectPresenter presenter){
         _presenter = presenter;
     }
@@ -16,6 +17,7 @@ public abstract class DestCardSelectState {
     public IDestCardSelectPresenter presenter() {
         return _presenter;
     }
+    public void setPresenter(IDestCardSelectPresenter presenter) { _presenter = presenter; }
 
     public void init() {}
     public abstract int getNumCardsRequired();

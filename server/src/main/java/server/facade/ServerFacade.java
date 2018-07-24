@@ -4,6 +4,7 @@ import shared.model.Game;
 import shared.model.Player;
 import shared.model.request.ClaimRouteRequest;
 import shared.model.request.DestCardRequest;
+import shared.model.request.DestCardSetupRequest;
 import shared.model.request.JoinRequest;
 import shared.model.Message;
 import shared.model.request.LeaveGameRequest;
@@ -93,6 +94,10 @@ public class ServerFacade {
 
 
     //Dest Card functions
+    public static IResponse sendSetupResults(DestCardSetupRequest request){
+        return DestCardService.updateDestDeck(request);
+    }
+
     public static IResponse updateDestDeck(DestCardRequest request)
     {
         return DestCardService.updateDestDeck(request);

@@ -3,6 +3,8 @@ package client.view.fragment.game.play;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -94,6 +96,14 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
         });
 
         return v;
+    }
+
+    @Override
+    public void switchToGameMap(){
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.game_content_container, new GameMapFragment())
+        .commit();
     }
 
     private void setGridlayoutSpan() {

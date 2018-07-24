@@ -13,10 +13,39 @@ import shared.model.decks.DestCard;
 import shared.model.decks.DestDeck;
 import shared.model.decks.TrainDeck;
 import shared.model.request.DestCardRequest;
+import shared.model.request.DestCardSetupRequest;
+import shared.model.wrapper.ThreeDestCardWrapper;
 
 public class DestCardService {
     private ClientModel _client_instance = ClientModel.getInstance();
     private Game _game = _client_instance.getCurrentGame();
+
+    public void sendSetupResults(AsyncServerTask.AsyncCaller caller,
+                                 ThreeDestCardWrapper keep,
+                                 ThreeDestCardWrapper discard,
+                                 Player player){
+
+        DestCardSetupRequest request = new DestCardSetupRequest(player, keep, discard);
+
+        for (DestCard card : keep.getDestCards()){
+            player.addDestCard(card);
+        }
+
+        String[] paramTypes = { request.getClass().getCanonicalName() };
+        Object[] paramValues = { request };
+
+        GenericCommand command = new GenericCommand(
+                ConfigurationManager.get("server_facade_name"),
+                ConfigurationManager.get("server_send_setup_results"),
+                paramTypes,
+                paramValues,
+                null
+        );
+
+        new AsyncServerTask(caller).execute(command);
+
+    }
+
     public void selectDestCard(AsyncServerTask.AsyncCaller caller, List<DestCard> destCards, Player player){
         DestDeck deck = _game.getDestDeck();
 

@@ -8,6 +8,7 @@ import client.model.ClientModel;
 import shared.exception.InvalidGameException;
 import shared.model.Player;
 import shared.model.decks.DestCard;
+import shared.model.wrapper.ThreeDestCardWrapper;
 
 public class DestCardSelectSetupState extends DestCardSelectState {
 
@@ -16,24 +17,15 @@ public class DestCardSelectSetupState extends DestCardSelectState {
     private ClientModel _model = ClientModel.getInstance();
     private ServicesFacade _facade = new ServicesFacade();
 
+
+    public DestCardSelectSetupState() { }
     public DestCardSelectSetupState(IDestCardSelectPresenter presenter) {
         super(presenter);
     }
 
     @Override
     public void init(){
-
-        String playerId;
-        Player player = null;
-        try {
-            playerId = _model.getUser().get_playerId();
-            player = _model.getCurrentGame().getPlayer(playerId);
-        } catch(InvalidGameException e) {
-            e.printStackTrace();
-            System.out.println("This is the real Error");
-        }
-
-        _facade.requestDestCards(presenter(), player);
+        _facade.requestDestCards(presenter(), _model.getCurrentPlayer());
     }
 
     @Override
@@ -44,18 +36,16 @@ public class DestCardSelectSetupState extends DestCardSelectState {
     @Override
     public void submitData(List<DestCard> cardsSelected, List<DestCard> cardsDiscarded) {
 
-        String playerId = _model.getUser().get_playerId();
-        Player player = null;
-        try {
-            player = _model.getCurrentGame().getPlayer(playerId);
-        } catch (InvalidGameException e) {
-            e.printStackTrace();
-            System.out.println("RAWR");
-        }
+        Player player = _model.getCurrentPlayer();
 
-        //_facade.returnSetupInformation(this, cardsSelected, cardsDiscarded);
-        //_facade.selectDestCard(this, cardsSelected, player);
-        //_facade.discardDestCard(this, cardsDiscarded, player);
+        ThreeDestCardWrapper keep = new ThreeDestCardWrapper(cardsSelected);
+        ThreeDestCardWrapper discard = new ThreeDestCardWrapper(cardsDiscarded);
+
+
+        _facade.sendSetupResults(presenter(), keep, discard, player);
+
+        presenter().setState(new DestCardSelectSetupPendingState(presenter()));
+
     }
 
     @Override

@@ -9,6 +9,8 @@ public class DestCardSelectSetupCompleteState extends DestCardSelectState {
 
     private static final int NUM_CARDS_REQUIRED = 1;
 
+    public DestCardSelectSetupCompleteState() { }
+
     public DestCardSelectSetupCompleteState(IDestCardSelectPresenter presenter) {
         super(presenter);
     }

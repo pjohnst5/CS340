@@ -21,6 +21,7 @@ import shared.model.decks.DestDeck;
 import shared.model.decks.TrainCard;
 import shared.model.decks.TrainDeck;
 import shared.model.request.LeaveGameRequest;
+import shared.model.wrapper.ThreeDestCardWrapper;
 
 public class ServicesFacade {
     public void claimRoute(AsyncServerTask.AsyncCaller caller, Route route, List<TrainCard> discardCards) throws DeckException, InvalidGameException, RouteClaimedAlreadyException {
@@ -43,6 +44,11 @@ public class ServicesFacade {
         ChatService service = new ChatService();
         service.sendMessage(caller, message);
     }
+
+    public void sendSetupResults(AsyncServerTask.AsyncCaller caller, ThreeDestCardWrapper keep, ThreeDestCardWrapper discard, Player player){
+        new DestCardService().sendSetupResults(caller, keep, discard, player);
+    }
+
     public void selectDestCard(AsyncServerTask.AsyncCaller caller, List<DestCard> destCards, Player player){
         DestCardService service = new DestCardService();
         service.selectDestCard(caller, destCards, player);

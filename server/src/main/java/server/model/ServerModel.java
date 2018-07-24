@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import server.exception.ServerException;
 import shared.command.ICommand;
+import shared.exception.DeckException;
 import shared.exception.InvalidGameException;
 import shared.exception.InvalidUserException;
 import shared.model.Game;
@@ -17,6 +18,7 @@ import shared.model.GameMap;
 import shared.model.Message;
 import shared.model.Player;
 import shared.model.User;
+import shared.model.decks.DestCard;
 import shared.model.decks.DestDeck;
 import shared.model.decks.TrainDeck;
 
@@ -142,6 +144,18 @@ public class ServerModel {
         _games.get(gameID).addGameAction(action);
     }
 
+
+    public void addDestCardToDeck(String gameID, DestCard card) throws ServerException {
+
+        try {
+            if (!_games.containsKey(gameID)) {
+                throw new ServerException("The gameID was not found when adding discard back to deck");
+            }
+            _games.get(gameID).getDestDeck().putDestCardBack(card);
+        } catch (DeckException e){
+            throw new ServerException("Could not add card back into deck", e);
+        }
+    }
 
 
     //-------------------------------Setters------------------------------------------------------------//

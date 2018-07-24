@@ -23,6 +23,7 @@ public class Game {
     private DestDeck _destDeck;
     private GameMap _map;
     private TurnManager _turnManager;
+    private int _playersSetup;
 
     private List<DestCard>_destOptionCards;
 
@@ -46,6 +47,7 @@ public class Game {
         _destDeck = new DestDeck();
         _map = new GameMap();
         _destOptionCards = null;
+        _playersSetup = 0;
     }
 
     public void setDestOptionCards(List<DestCard> cards){
@@ -70,6 +72,15 @@ public class Game {
 
     public List<Player> getPlayers() {
         return _players;
+    }
+
+    public int playerCompletedSetup(){
+        _playersSetup++;
+        return _playersSetup;
+    }
+
+    public int getNumPlayersCompletedSetup(){
+        return _playersSetup;
     }
 
     /**
@@ -120,6 +131,10 @@ public class Game {
 
     public GameState get_state() {
         return _state;
+    }
+
+    public void set_state(GameState state){
+        _state = state;
     }
 
 

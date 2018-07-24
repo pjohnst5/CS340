@@ -68,4 +68,8 @@ public class ClientFacade {
     public static void setDestOptionCards(ThreeDestCardWrapper wrapper) {
         clientModel.setDestOptionCards(wrapper.getDestCards());
     }
+
+    public static void playerCompletedSetup(){
+        clientModel.getCurrentGame().playerCompletedSetup();
+    }
 }
