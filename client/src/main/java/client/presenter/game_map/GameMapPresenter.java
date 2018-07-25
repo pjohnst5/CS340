@@ -1,11 +1,14 @@
-package client.presenter.game.play;
+package client.presenter.game_map;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import client.model.ClientModel;
 import client.server.AsyncServerTask;
-import client.view.fragment.game.play.IGameMapView;
+import client.view.fragment.game_map.IGameMapView;
+import shared.exception.InvalidGameException;
+import shared.model.Player;
 import shared.model.Route;
 
 /**
@@ -27,6 +30,20 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
     }
 
     @Override
+    public List<Player> getPlayers() {
+        return _model.getCurrentGame().getPlayers();
+    }
+
+    @Override
+    public String getCurrentTurnPlayerId(){
+        try {
+            return _model.getCurrentGame().playerTurn();
+        } catch (InvalidGameException e){
+            return "";
+        }
+    }
+
+    @Override
     public void destroy() {
         _model.deleteObserver(this);
     }
@@ -44,5 +61,6 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
     @Override
     public void update(Observable observable, Object o) {
         _mapView.updateMap();
+        _mapView.updatePlayerTurn();
     }
 }

@@ -1,4 +1,4 @@
-package client.view.fragment;
+package client.view.fragment.game_lobby;
 
 import client.presenter.game_lobby.IGameLobbyPresenter;
 import shared.model.Game;

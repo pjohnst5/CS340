@@ -19,7 +19,8 @@ public abstract class DestCardSelectState {
     }
     public void setPresenter(IDestCardSelectPresenter presenter) { _presenter = presenter; }
 
-    public void init() {}
+    public void enterState() {}
+    public void exitState(){}
     public abstract int getNumCardsRequired();
     public abstract void update(Observable o, Object arg);
     public abstract void submitData(List<DestCard> cardsSelected, List<DestCard> cardsDiscarded);

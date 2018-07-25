@@ -8,8 +8,8 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import client.view.fragment.ILoginView;
-import client.view.fragment.LoginFragment;
+import client.view.fragment.login.ILoginView;
+import client.view.fragment.login.LoginFragment;
 import client.presenter.login.ILoginPresenter;
 import client.presenter.login.LoginPresenter;
 import shared.configuration.ConfigurationManager;

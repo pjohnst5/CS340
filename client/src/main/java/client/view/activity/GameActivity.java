@@ -11,9 +11,8 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import client.server.communication.ServerProxy;
 import client.server.communication.poll.MainGamePoller;
-import client.view.fragment.game.play.ChatFragment;
-import client.view.fragment.game.play.DestinationCardSelectFragment;
-import client.view.fragment.game.play.GameMapFragment;
+import client.view.fragment.chat.ChatFragment;
+import client.view.fragment.select_dest_card.DestCardSelectFragment;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -34,7 +33,7 @@ public class GameActivity extends AppCompatActivity {
         Fragment gameSidebarFragment = fm.findFragmentById(R.id.game_sidebar_container);
 
         if (gameContentFragment == null){
-            gameContentFragment = new DestinationCardSelectFragment();
+            gameContentFragment = new DestCardSelectFragment();
 //            gameContentFragment = GameMapFragment.newInstance();
             fm.beginTransaction()
                     .add(R.id.game_content_container, gameContentFragment)

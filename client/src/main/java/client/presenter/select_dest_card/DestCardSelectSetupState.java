@@ -24,8 +24,13 @@ public class DestCardSelectSetupState extends DestCardSelectState {
     }
 
     @Override
-    public void init(){
+    public void enterState(){
         _facade.requestDestCards(presenter(), _model.getCurrentPlayer());
+    }
+
+    @Override
+    public void exitState(){
+        presenter().disableInput();
     }
 
     @Override

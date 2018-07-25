@@ -1,4 +1,4 @@
-package client.view.fragment.game.play;
+package client.view.fragment.select_dest_card;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,9 +27,10 @@ import java.util.Set;
 
 import client.presenter.select_dest_card.DestCardSelectPresenter;
 import client.presenter.select_dest_card.IDestCardSelectPresenter;
+import client.view.fragment.game_map.GameMapFragment;
 import shared.model.decks.DestCard;
 
-public class DestinationCardSelectFragment extends Fragment implements IDestinationCardSelectView {
+public class DestCardSelectFragment extends Fragment implements IDestCardSelectView {
 
     private List<DestCard> _cards;
     private Set<CardItemHolder> _selectedCards;
@@ -47,8 +48,8 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
     private RecyclerView _cardsRecyclerView;
     private CardAdapter _cardAdapter;
     private LinearLayout _recyclerViewContainer;
+    private TextView _overlayMessage;
     private Button _submitButton;
-    private int _numCardsRequired;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,21 +67,16 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
         _cardsLoaded = false;
 
         _presenter = new DestCardSelectPresenter(this);
-
         setGridlayoutSpan();
 
-        if (setup) {
-            _numCardsRequired = 2;
-            setup = false;
-        } else {
-            _numCardsRequired = 1;
-        }
+        _overlayMessage = v.findViewById(R.id.dest_card_overlay_message);
+        hideOverlayMessage();
 
         _submitButton = v.findViewById(R.id.dest_card_frag_select_cards);
         _submitButton.setEnabled(false);
         _submitButton.setOnClickListener((view) -> {
 
-            if (_selectedCards.size() < _numCardsRequired) return;
+            if (_selectedCards.size() < _presenter.getNumCardsRequired()) return;
 
             List<DestCard> selectedCards = new ArrayList<>();
             for (CardItemHolder holder : _selectedCards){
@@ -96,6 +92,41 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
         });
 
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        _presenter.destroy();
+    }
+
+    @Override
+    public void disableSubmitButton() {
+        _submitButton.setEnabled(false);
+    }
+
+    @Override
+    public void showOverlayMessage(String message) {
+        getActivity().runOnUiThread(() -> {
+            _overlayMessage.setVisibility(View.VISIBLE);
+            _overlayMessage.setText(message);
+        });
+    }
+
+    @Override
+    public void hideOverlayMessage() {
+        getActivity().runOnUiThread(() -> _overlayMessage.setVisibility(View.GONE));
+    }
+
+    @Override
+    public void disableCardSelect() {
+        for (CardItemHolder card : _selectedCards){
+            card.disable();
+        }
+
+        for (CardItemHolder card : _unselectedCards){
+            card.disable();
+        }
     }
 
     @Override
@@ -126,12 +157,6 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
             _cardAdapter.notifyItemChanged(_cards.size()-1);
         });
         return true;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        _presenter.destroy();
     }
 
     private class CardItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -174,6 +199,9 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
             return this._card;
         }
 
+        public void disable(){
+            itemView.setOnClickListener(null);
+        }
 
         @Override
         public void onClick(View view) {
@@ -187,7 +215,7 @@ public class DestinationCardSelectFragment extends Fragment implements IDestinat
                 _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_blue));
             }
 
-            if (_selectedCards.size() < _numCardsRequired){
+            if (_selectedCards.size() < _presenter.getNumCardsRequired()){
                 _submitButton.setEnabled(false);
             } else {
                 _submitButton.setEnabled(true);

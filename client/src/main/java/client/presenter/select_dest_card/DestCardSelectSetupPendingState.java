@@ -25,15 +25,25 @@ public class DestCardSelectSetupPendingState extends DestCardSelectState {
     }
 
     @Override
+    public void enterState() {
+        presenter().showOverlayMessage("Please wait while the other players select their cards...");
+    }
+
+    @Override
+    public void exitState(){
+        presenter().hideOverlayMessage();
+        presenter().switchToGameMap();
+    }
+
+    @Override
     public void update(Observable o, Object arg) {
 
         int numPlayersCompleted = _model.getCurrentGame().getNumPlayersCompletedSetup();
         int numPlayers = _model.getCurrentGame().getMaxPlayers();
 
         if (numPlayersCompleted >= numPlayers){
-            presenter().setState(new DestCardSelectSetupCompleteState(presenter()));
             _model.getCurrentGame().set_state(GameState.STARTED);
-            presenter().switchToGameMap();
+            presenter().setState(new DestCardSelectSetupCompleteState(presenter()));
         }
 
     }

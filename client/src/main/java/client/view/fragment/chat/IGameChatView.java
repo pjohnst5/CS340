@@ -1,4 +1,4 @@
-package client.view.fragment.game.play;
+package client.view.fragment.chat;
 
 import java.util.List;
 

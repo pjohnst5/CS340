@@ -70,6 +70,6 @@ public class ClientFacade {
     }
 
     public static void playerCompletedSetup(){
-        clientModel.getCurrentGame().playerCompletedSetup();
+        clientModel.playerCompletedSetup();
     }
 }

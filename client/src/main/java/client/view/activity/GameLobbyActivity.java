@@ -9,11 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.pjohnst5icloud.tickettoride.R;
 
-import client.view.fragment.GameLobbyFragment;
-import client.view.fragment.IGameLobbyView;
+import client.view.fragment.game_lobby.GameLobbyFragment;
+import client.view.fragment.game_lobby.IGameLobbyView;
 import client.presenter.game_lobby.GameLobbyPresenter;
 import client.presenter.game_lobby.IGameLobbyPresenter;
-import client.view.fragment.game.play.ChatFragment;
+import client.view.fragment.chat.ChatFragment;
 
 public class GameLobbyActivity extends AppCompatActivity {
 

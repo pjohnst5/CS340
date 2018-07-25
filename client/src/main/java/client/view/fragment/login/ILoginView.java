@@ -1,4 +1,4 @@
-package client.view.fragment;
+package client.view.fragment.login;
 
 import client.presenter.login.ILoginPresenter;
 

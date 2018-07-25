@@ -1,4 +1,4 @@
-package client.view.fragment;
+package client.view.fragment.game_lobby;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +24,6 @@ import client.util.ColorPicker;
 import client.view.activity.GameActivity;
 import shared.enumeration.GameState;
 import shared.model.Game;
-import shared.model.Message;
 import shared.model.Player;
 
 public class GameLobbyFragment extends Fragment implements IGameLobbyView {

@@ -1,4 +1,4 @@
-package client.view.fragment;
+package client.view.fragment.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import client.view.activity.GameListActivity;
 import client.presenter.login.ILoginPresenter;
+import client.view.fragment.login.ILoginView;
 
 /**
  * Created by jtyler17 on 7/7/18.

@@ -1,4 +1,4 @@
-package client.view.fragment.game.play.customview;
+package client.view.fragment.game_map.customview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,7 +10,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.pjohnst5icloud.tickettoride.R;
@@ -18,7 +17,6 @@ import com.pjohnst5icloud.tickettoride.R;
 import java.util.List;
 
 import shared.enumeration.CityManager;
-import shared.enumeration.ListOfRoutes;
 import shared.model.City;
 import shared.model.Route;
 

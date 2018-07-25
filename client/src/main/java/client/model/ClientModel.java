@@ -229,4 +229,11 @@ public class ClientModel extends Observable {
             System.out.println(e.getMessage());
         }
     }
+
+    public void playerCompletedSetup(){
+        getCurrentGame().playerCompletedSetup();
+
+        setChanged();
+        notifyObservers();
+    }
 }

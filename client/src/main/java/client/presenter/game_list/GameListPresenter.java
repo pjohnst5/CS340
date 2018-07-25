@@ -12,7 +12,7 @@ import client.model.ClientModel;
 import client.server.communication.ServerProxy;
 import client.server.communication.poll.GameListPoller;
 import client.server.communication.poll.Poller;
-import client.view.fragment.IGameListView;
+import client.view.fragment.game_list.IGameListView;
 import client.server.AsyncServerTask;
 import shared.enumeration.PlayerColor;
 import shared.exception.InvalidGameException;

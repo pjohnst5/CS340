@@ -1,4 +1,4 @@
-package client.view.fragment;
+package client.view.fragment.game_list;
 
 import android.app.Activity;
 import android.content.Intent;
