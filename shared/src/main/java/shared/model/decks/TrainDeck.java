@@ -9,8 +9,8 @@ import shared.exception.DeckException;
 
 public class TrainDeck {
 
-    public FaceUpDeck _faceUpDeck;
-    public FaceDownDeck _faceDownDeck;
+    private FaceUpDeck _faceUpDeck;
+    private FaceDownDeck _faceDownDeck;
 
     //-------------------------------------------Public Functions---------------------------------------------//
     public TrainDeck()
@@ -50,8 +50,8 @@ public class TrainDeck {
         Collections.shuffle(tempDeck);
 
         //Instantiate new face up and face down decks
-        _faceDownDeck = new FaceDownDeck(this);
-        _faceUpDeck = new FaceUpDeck(this);
+        _faceDownDeck = new FaceDownDeck();
+        _faceUpDeck = new FaceUpDeck();
 
         //Sets tempDeck as face down deck
         for (int i = 0; i < tempDeck.size(); i++){
@@ -157,27 +157,25 @@ public class TrainDeck {
     private class FaceUpDeck {
         int _locoMotiveCount;
         List<TrainCard> _cards;
-        TrainDeck _parent;
 
-        private FaceUpDeck(TrainDeck parent) {
+        private FaceUpDeck() {
             _cards = new ArrayList<>();
             _locoMotiveCount = 0;
-            _parent = parent;
         }
 
         public List<TrainCard> getCards(){
             return _cards;
         }
 
-        public void addCard(TrainCard card) throws DeckException
+        private void addCard(TrainCard card) throws DeckException
         {
             if (_cards.size() == 5){
                 throw new DeckException("Already 5 cards in face up deck");
             }
 
-//            if (_parent._faceDownDeck.get_cards().size() + this._cards.size() > 110){
-//                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
-//            }
+            if (_faceDownDeck._cards.size() + _faceUpDeck._cards.size() == 110){
+                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
+            }
 
             _cards.add(card);
 
@@ -210,17 +208,14 @@ public class TrainDeck {
             }
         }
 
-
     }
 
     //FaceDownDeck is private and only TrainDeck has it
     private class FaceDownDeck {
         List<TrainCard> _cards;
-        TrainDeck _parent;
 
-        private FaceDownDeck(TrainDeck parent) {
+        private FaceDownDeck() {
             _cards = new ArrayList<>();
-            _parent = parent;
         }
 
         private TrainCard drawCard() throws DeckException {
@@ -231,9 +226,9 @@ public class TrainDeck {
         }
 
         private void addCard(TrainCard card) throws DeckException {
-//            if (this._cards.size() + _parent.get_faceUpDeck().getCards().size() == 110){
-//                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
-//            }
+            if (_faceDownDeck._cards.size() + _faceUpDeck._cards.size() == 110){
+                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
+            }
             _cards.add(card);
         }
 
@@ -241,9 +236,5 @@ public class TrainDeck {
             return this._cards.size();
         }
 
-        public List<TrainCard> get_cards()
-        {
-            return _cards;
-        }
     }
 }
