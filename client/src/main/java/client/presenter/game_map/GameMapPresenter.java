@@ -26,6 +26,11 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
         if (_model.getCurrentGame() == null) {
             return;
         }
+
+        int numDestCards = _model.getCurrentGame().getDestDeck().get_cards().size();
+        int numTrainCards = _model.getCurrentGame().getTrainDeck().sizeOfFaceDownDeck();
+        _mapView.updateDeckCount(numDestCards, numTrainCards);
+
         _model.addObserver(this);
     }
 
@@ -60,7 +65,12 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
 
     @Override
     public void update(Observable observable, Object o) {
+
+        int numDestCards = _model.getCurrentGame().getDestDeck().get_cards().size();
+        int numTrainCards = _model.getCurrentGame().getTrainDeck().sizeOfFaceDownDeck();
+
         _mapView.updateMap();
         _mapView.updatePlayerTurn();
+        _mapView.updateDeckCount(numDestCards, numTrainCards);
     }
 }

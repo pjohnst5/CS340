@@ -10,5 +10,6 @@ public interface IGameMapView {
     public void updateMap();
     public void setPresenter(IGameMapPresenter presenter);
     public void updatePlayerTurn();
+    public void updateDeckCount(int destCards, int trainCards);
     public void showToast(String message);
 }
