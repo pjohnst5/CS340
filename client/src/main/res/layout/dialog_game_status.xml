@@ -88,6 +88,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/game_status_card_count_display"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/game_status_stats_container_linear_layout"
@@ -102,4 +103,41 @@
 
     </LinearLayout>
 
+    <HorizontalScrollView
+        android:layout_below="@id/game_status_card_count_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/game_status_face_up_card1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/train_card_blue"/>
+            <ImageView
+                android:id="@+id/game_status_face_up_card2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/train_card_blue"/>
+            <ImageView
+                android:id="@+id/game_status_face_up_card3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/train_card_blue"/>
+            <ImageView
+                android:id="@+id/game_status_face_up_card4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/train_card_blue"/>
+            <ImageView
+                android:id="@+id/game_status_face_up_card5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/train_card_blue"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
 </RelativeLayout>
