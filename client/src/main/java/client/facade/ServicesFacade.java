@@ -79,13 +79,9 @@ public class ServicesFacade {
             // Scenarios for current user
             user = clientModel.getCurrentGame().getPlayer(clientModel.getUser().get_playerId());
             user.addPoints(10);
-            view.showToast("Current user got 10 points");
             user.addTrainCard(new TrainCard(TrainColor.BLUE));
-            view.showToast("Current user got a blue train card");
             user.addDestCard(new DestCard(new City(CityName.NEW_ORLEANS), new City(CityName.LAS_VEGAS), 20));
-            view.showToast("Current user got a new destination card");
             clientModel.updatePlayer(user);
-            view.showToast("Current user updated");
 
             //Scenarios for all other players
             List<Player> otherPlayers = clientModel.getCurrentGame().getPlayers();
@@ -93,41 +89,30 @@ public class ServicesFacade {
                 Player player = otherPlayers.get(i);
                 if(player != user) {
                     player.addTrainCard(new TrainCard(TrainColor.GRAY));
-                    view.showToast(player.getDisplayName() + " got a gray train card");
                     player.addTrainCard(new TrainCard(TrainColor.RED));
-                    view.showToast(player.getDisplayName() + " got a Red train card");
                     int num = 10 + i;
                     player.getTrainCars().removeCars(num);
-                    view.showToast(player.getDisplayName() + " lost " + num + " train cars");
                     player.addDestCard(new DestCard(new City(CityName.NEW_ORLEANS), new City(CityName.LAS_VEGAS), 20));
-                    view.showToast(player.getDisplayName() + " got a destination card");
                     clientModel.updatePlayer(player);
-                    view.showToast(player.getDisplayName() + " updated");
 
                     //add chat message from any player
                     Message message = new Message();
                     message.setPlayer(player);
                     message.setMessage("Hello from " + player.getDisplayName());
                     clientModel.addMessage(message);
-                    view.showToast(player.getDisplayName() + " sent a new message");
                 }
             }
 
             //Scenarios for decks
             TrainDeck trainDeck = clientModel.getCurrentGame().getTrainDeck();
             trainDeck.phase2DrawFaceUp();
-            view.showToast("Draw from face up deck");
             trainDeck.phase2DrawFaceDown();
-            view.showToast("Draw from face down deck");
             clientModel.setTrainDeck(trainDeck);
-            view.showToast("Train deck updated");
 
 
             DestDeck destDeck = clientModel.getCurrentGame().getDestDeck();
             destDeck.getThreeCards();
-            view.showToast("Draw 3 from destination card deck");
             clientModel.setDestDeck(destDeck);
-            view.showToast("Destination card deck updated");
 
             //claiming a route
             GameMap gameMap = clientModel.getCurrentGame().getMap();
@@ -141,11 +126,9 @@ public class ServicesFacade {
             } catch (NotEnoughTrainCarsException e) {
                 e.printStackTrace();
             }
-            view.showToast("New route claimed by user");
 
             //change turns
             clientModel.changeTurns();
-            view.showToast("Change turns");
 
         } catch (InvalidGameException | NotEnoughTrainCarsException | DeckException e) {
             e.printStackTrace();
