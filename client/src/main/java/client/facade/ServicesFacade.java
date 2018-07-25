@@ -1,6 +1,10 @@
 package client.facade;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import client.model.ClientModel;
 import client.server.AsyncServerTask;
@@ -111,7 +115,10 @@ public class ServicesFacade {
 
             //claiming a route
             GameMap gameMap = clientModel.getCurrentGame().getMap();
-            Route route = gameMap.get_routes().get(0);
+            HashMap<UUID, Route> routes = gameMap.get_routes();
+            Set<UUID> keys = routes.keySet();
+            UUID key = keys.iterator().next();
+            Route route = routes.get(key);
             clientModel.claimRoute(route, user);
 
             //change turns
