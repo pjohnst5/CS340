@@ -77,25 +77,24 @@ public class ServicesFacade {
             user.addTrainCard(new TrainCard(TrainColor.BLUE));
             user.addDestCard(new DestCard(new City(CityName.NEW_ORLEANS), new City(CityName.LAS_VEGAS), 20));
             clientModel.updatePlayer(user);
-            Thread.sleep(6000);
 
             //Scenarios for all other players
             List<Player> otherPlayers = clientModel.getCurrentGame().getPlayers();
             for(int i = 0; i< otherPlayers.size(); i++) {
                 Player player = otherPlayers.get(i);
                 if(player != user) {
-                    player.addTrainCard(new TrainCard(TrainColor.BLUE));
+                    player.addTrainCard(new TrainCard(TrainColor.GRAY));
+                    player.addTrainCard(new TrainCard(TrainColor.RED));
                     player.getTrainCars().removeCars(10 + i);
                     player.addDestCard(new DestCard(new City(CityName.NEW_ORLEANS), new City(CityName.LAS_VEGAS), 20));
                     clientModel.updatePlayer(player);
-                    Thread.sleep(6000);
 
                     //add chat message from any player
                     Message message = new Message();
                     message.setPlayer(player);
                     message.setMessage("Hello from " + player.getDisplayName());
                     clientModel.addMessage(message);
-                    Thread.sleep(6000);
+//                    Thread.sleep(6000);
                 }
             }
 
@@ -104,26 +103,25 @@ public class ServicesFacade {
             trainDeck.phase2DrawFaceUp();
             trainDeck.phase2DrawFaceDown();
             clientModel.setTrainDeck(trainDeck);
-            Thread.sleep(6000);
+//            Thread.sleep(6000);
 
             DestDeck destDeck = clientModel.getCurrentGame().getDestDeck();
             destDeck.getThreeCards();
             clientModel.setDestDeck(destDeck);
-            Thread.sleep(6000);
 
             //claiming a route
-            GameMap gameMap = clientModel.getCurrentGame().getMap();
-            Route route = gameMap.get_routes().get(0);
-            clientModel.claimRoute(route, user);
-            Thread.sleep(6000);
+//            GameMap gameMap = clientModel.getCurrentGame().getMap();
+//            Route route = gameMap.get_routes().get(0);
+//            clientModel.claimRoute(route, user);
 
             //Add game history entries
             GameAction action = new GameAction("TEST ACTION", "testing that an action can be added to the model");
             clientModel.addGameAction(action);
-            Thread.sleep(6000);
 
+            //change turns
+            clientModel.changeTurns();
 
-        } catch (InvalidGameException | NotEnoughTrainCarsException | DeckException | InterruptedException e) {
+        } catch (InvalidGameException | NotEnoughTrainCarsException | DeckException e) {
             e.printStackTrace();
         }
     }
