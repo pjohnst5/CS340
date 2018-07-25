@@ -110,13 +110,9 @@ public class ServicesFacade {
             clientModel.setDestDeck(destDeck);
 
             //claiming a route
-//            GameMap gameMap = clientModel.getCurrentGame().getMap();
-//            Route route = gameMap.get_routes().get(0);
-//            clientModel.claimRoute(route, user);
-
-            //Add game history entries
-            GameAction action = new GameAction("TEST ACTION", "testing that an action can be added to the model");
-            clientModel.addGameAction(action);
+            GameMap gameMap = clientModel.getCurrentGame().getMap();
+            Route route = gameMap.get_routes().get(0);
+            clientModel.claimRoute(route, user);
 
             //change turns
             clientModel.changeTurns();
