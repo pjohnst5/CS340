@@ -16,7 +16,7 @@ public class TrainDeck {
     public TrainDeck()
     {
         final int numNormalCards = 96;
-        final int numLocomotiveCards = 10;
+        final int numLocomotiveCards = 14;
         final int numFaceUpCards = 5;
         List<TrainCard> tempDeck = new ArrayList<>();
 
@@ -114,6 +114,7 @@ public class TrainDeck {
     public void phase2DrawFaceUp() throws DeckException {
         //FIXME: delete after phase 2
         _faceUpDeck.removeCard(_faceUpDeck._cards.get(0));
+        _faceUpDeck.addCard(_faceDownDeck.drawCard());
     }
 
     public int sizeOfFaceDownDeck(){
