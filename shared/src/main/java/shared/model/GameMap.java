@@ -24,12 +24,12 @@ public class GameMap {
         return _routes;
     }
 
-    public boolean isRouteClaimed(int routeId){
+    public boolean isRouteClaimed(UUID routeId){
         Route route = _routes.get(routeId);
         return route.isClaimed();
     }
 
-    public void claimRoute(int routeId, String playerId, PlayerColor playerColor){
+    public void claimRoute(UUID routeId, String playerId, PlayerColor playerColor){
         Route route = _routes.get(routeId);
         route.claimRoute(playerId, playerColor);
         claimedRoutes.add(route);
