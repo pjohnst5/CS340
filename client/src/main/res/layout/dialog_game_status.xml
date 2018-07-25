@@ -104,8 +104,9 @@
     </LinearLayout>
 
     <HorizontalScrollView
+        android:id="@+id/game_status_deck_cards"
         android:layout_below="@id/game_status_card_count_display"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="horizontal"
@@ -140,4 +141,19 @@
 
         </LinearLayout>
     </HorizontalScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game_status_deck_cards"
+        android:gravity="center">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/game_status_dest_card_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp" />
+
+    </LinearLayout>
 </RelativeLayout>
