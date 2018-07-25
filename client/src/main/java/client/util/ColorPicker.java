@@ -48,7 +48,7 @@ public class ColorPicker {
     }
 
     public static int getPlayerColor(Resources res, PlayerColor color) {
-        switch (color){
+        switch (color) {
             case BLUE:
                 return ResourcesCompat.getColor(res, R.color.blue, null);
             case GREEN:
