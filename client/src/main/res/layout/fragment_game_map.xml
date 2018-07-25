@@ -3,13 +3,19 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <HorizontalScrollView
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <client.view.fragment.game_map.customview.GameMapView
+
+        <HorizontalScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/game_map"
-            android:background="@drawable/map"/> <!-- NOTE: don't remove this line or onDraw() never gets called!-->
-    </HorizontalScrollView>
+            android:layout_height="wrap_content">
+            <client.view.fragment.game_map.customview.GameMapView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/game_map"
+                android:background="@drawable/map"/> <!-- NOTE: don't remove this line or onDraw() never gets called!-->
+        </HorizontalScrollView>
+
+    </ScrollView>
 </LinearLayout>
