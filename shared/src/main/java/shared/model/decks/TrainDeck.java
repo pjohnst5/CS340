@@ -120,6 +120,10 @@ public class TrainDeck {
         return _faceDownDeck.sizeOfFaceDownDeck();
     }
 
+    public List<TrainCard> getFaceUpTrainCards(){
+        return _faceUpDeck.getCards();
+    }
+
     //---------------------------------------------------------------------------------------------------//
 
 
@@ -156,6 +160,10 @@ public class TrainDeck {
         private FaceUpDeck() {
             _cards = new ArrayList<>();
             _locoMotiveCount = 0;
+        }
+
+        public List<TrainCard> getCards(){
+            return _cards;
         }
 
         private void addCard(TrainCard card) throws DeckException

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -77,6 +78,60 @@ public class GameStatusDialog extends DialogFragment {
         _cardRecyclerView = v.findViewById(R.id.game_status_card_recycler_view);
         _cardRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         _cardRecyclerView.setAdapter(new CardAdapter(cardCounts));
+
+        List<TrainCard> faceUpCards = ClientModel.getInstance().getCurrentGame().getTrainDeck().getFaceUpTrainCards();
+        ImageView[] trainCards = {
+                v.findViewById(R.id.game_status_face_up_card1),
+                v.findViewById(R.id.game_status_face_up_card2),
+                v.findViewById(R.id.game_status_face_up_card3),
+                v.findViewById(R.id.game_status_face_up_card4),
+                v.findViewById(R.id.game_status_face_up_card5),
+        };
+
+        for (int i = 0; i < faceUpCards.size(); i++) {
+            TrainCard card = faceUpCards.get(i);
+            switch (card.get_color()){
+                case BLACK:
+                    trainCards[i].setImageResource(R.drawable.train_card_black);
+                    break;
+
+                case BLUE:
+                    trainCards[i].setImageResource(R.drawable.train_card_blue);
+                    break;
+
+                case GREEN:
+                    trainCards[i].setImageResource(R.drawable.train_card_green);
+                    break;
+
+                case RED:
+                    trainCards[i].setImageResource(R.drawable.train_card_red);
+                    break;
+
+                case YELLOW:
+                    trainCards[i].setImageResource(R.drawable.train_card_yellow);
+                    break;
+
+                case GRAY:
+                    trainCards[i].setImageResource(R.drawable.train_card_black);
+                    break;
+
+                case PINK:
+                    trainCards[i].setImageResource(R.drawable.train_card_purple);
+                    break;
+
+                case WHITE:
+                    trainCards[i].setImageResource(R.drawable.train_card_white);
+                    break;
+
+                case ORANGE:
+                    trainCards[i].setImageResource(R.drawable.train_card_orange);
+                    break;
+
+                case LOCOMOTIVE:
+                    trainCards[i].setImageResource(R.drawable.train_card_loco);
+                    break;
+            }
+        }
 
         ad.show();
         ad.getButton(Dialog.BUTTON_NEGATIVE).setVisibility(View.GONE);
