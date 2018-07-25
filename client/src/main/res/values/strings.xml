@@ -43,7 +43,7 @@
     <string name="game_select_dest_card_subtitle">choose at least two</string>
     <string name="claim_route_button_text">Claim Route</string>
     <string name="draw_train_card_text">Draw Train Card</string>
-    <string name="draw_dest_card_text">Draw Destination Card`</string>
+    <string name="draw_dest_card_text">Draw Destination Card</string>
     <string name="select">Select</string>
 
     <!-- SIDEBAR TEXT -->

@@ -9,10 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +21,7 @@ import java.util.List;
 import client.model.ClientModel;
 import client.presenter.game_map.GameMapPresenter;
 import client.presenter.game_map.IGameMapPresenter;
+import client.util.ColorPicker;
 import client.view.fragment.game_map.customview.GameMapView;
 import shared.enumeration.CityManager;
 import shared.model.GameMap;
@@ -41,6 +39,9 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     private RecyclerView _turnIndicator;
     private List<Player> _players;
 
+    private TextView _destCardCount;
+    private TextView _trainCardCount;
+
     public static GameMapFragment newInstance() {
         return new GameMapFragment();
     }
@@ -52,6 +53,9 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         _turnIndicator = v.findViewById(R.id.game_map_player_turn_recycler_view);
         _turnIndicator.setLayoutManager(new LinearLayoutManager(getActivity()));
         _turnIndicator.setAdapter(new PlayerTurnAdapter());
+
+        _destCardCount = v.findViewById(R.id.game_map_dest_card_count);
+        _trainCardCount = v.findViewById(R.id.game_map_train_card_count);
 
 
         _gameMap = v.findViewById(R.id.game_map);
@@ -80,7 +84,7 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
 
     @Override
     public void updateMap() {
-        _gameMap.redraw();
+        getActivity().runOnUiThread(() -> _gameMap.redraw());
     }
 
     @Override
@@ -116,29 +120,7 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
 
         public void bind(Player player){
 
-            Drawable playerColor = getResources().getDrawable(R.drawable.button_grey);
-            switch (player.getColor()){
-                case BLACK:
-                    playerColor = getResources().getDrawable(R.drawable.button_grey);
-                    break;
-
-                case BLUE:
-                    playerColor = getResources().getDrawable(R.drawable.button_blue);
-                    break;
-
-                case GREEN:
-                    playerColor = getResources().getDrawable(R.drawable.button_green);
-                    break;
-
-                case RED:
-                    playerColor = getResources().getDrawable(R.drawable.button_red);
-                    break;
-
-                case YELLOW:
-                    playerColor = getResources().getDrawable(R.drawable.button_yellow);
-                    break;
-
-            }
+            Drawable playerColor = ColorPicker.turnOrderIndicator(getResources(), player.getColor());
 
             Drawable containerColor = getResources().getDrawable(R.color.train_black_border);
 
@@ -150,6 +132,14 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
             _playerTurnItemLabel.setBackground(playerColor);
             _container.setBackground(containerColor);
         }
+    }
+
+    @Override
+    public void updateDeckCount(int destCards, int trainCards) {
+        getActivity().runOnUiThread(() ->{
+            _destCardCount.setText(Integer.toString(destCards));
+            _trainCardCount.setText(Integer.toString(trainCards));
+        });
     }
 
     private class PlayerTurnAdapter extends RecyclerView.Adapter<PlayerTurnIndicatorHolder> {

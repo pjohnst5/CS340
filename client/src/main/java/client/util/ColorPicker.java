@@ -1,6 +1,7 @@
 package client.util;
 
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 
 import com.pjohnst5icloud.tickettoride.R;
@@ -60,5 +61,21 @@ public class ColorPicker {
             default:
                 return ResourcesCompat.getColor(res, R.color.route_black, null);
         }
+    }
+
+    public static Drawable turnOrderIndicator(Resources res, PlayerColor color) {
+        switch (color){
+            case BLACK:
+                return res.getDrawable(R.drawable.button_grey);
+            case BLUE:
+                return res.getDrawable(R.drawable.button_blue);
+            case GREEN:
+                return res.getDrawable(R.drawable.button_green);
+            case RED:
+                return res.getDrawable(R.drawable.button_red);
+            case YELLOW:
+                return res.getDrawable(R.drawable.button_yellow);
+        }
+        return res.getDrawable(R.drawable.button_grey);
     }
 }

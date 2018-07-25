@@ -115,6 +115,11 @@ public class TrainDeck {
         //FIXME: delete after phase 2
         _faceUpDeck.removeCard(_faceUpDeck._cards.get(0));
     }
+
+    public int sizeOfFaceDownDeck(){
+        return _faceDownDeck.sizeOfFaceDownDeck();
+    }
+
     //---------------------------------------------------------------------------------------------------//
 
 
