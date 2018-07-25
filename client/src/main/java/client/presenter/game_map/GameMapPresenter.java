@@ -1,4 +1,4 @@
-package client.presenter.game.play;
+package client.presenter.game_map;
 
 import java.util.Observable;
 import java.util.Observer;

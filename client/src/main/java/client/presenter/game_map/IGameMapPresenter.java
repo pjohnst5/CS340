@@ -1,4 +1,4 @@
-package client.presenter.game.play;
+package client.presenter.game_map;
 
 import shared.model.Route;
 
