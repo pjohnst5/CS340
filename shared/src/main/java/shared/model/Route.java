@@ -1,11 +1,13 @@
 package shared.model;
 
+import java.util.UUID;
+
 import shared.enumeration.CityName;
 import shared.enumeration.PlayerColor;
 import shared.enumeration.TrainColor;
 
 public class Route {
-    private static int _id = 0;
+    private UUID _id;
     private String _claimedBy;
     private boolean _isClaimed;
     private PlayerColor _claimedColor;
@@ -21,10 +23,10 @@ public class Route {
         this._isClaimed = false;
         this._pathLength = pathLength;
         this._color = color;
-        _id = _id + 1;
+        _id = UUID.randomUUID();
     }
 
-    public int getId(){
+    public UUID getId(){
         return _id;
     }
 

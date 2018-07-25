@@ -9,10 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +21,7 @@ import java.util.List;
 import client.model.ClientModel;
 import client.presenter.game_map.GameMapPresenter;
 import client.presenter.game_map.IGameMapPresenter;
+import client.util.ColorPicker;
 import client.view.fragment.game_map.customview.GameMapView;
 import shared.enumeration.CityManager;
 import shared.model.GameMap;
@@ -122,29 +120,7 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
 
         public void bind(Player player){
 
-            Drawable playerColor = getResources().getDrawable(R.drawable.button_grey);
-            switch (player.getColor()){
-                case BLACK:
-                    playerColor = getResources().getDrawable(R.drawable.button_grey);
-                    break;
-
-                case BLUE:
-                    playerColor = getResources().getDrawable(R.drawable.button_blue);
-                    break;
-
-                case GREEN:
-                    playerColor = getResources().getDrawable(R.drawable.button_green);
-                    break;
-
-                case RED:
-                    playerColor = getResources().getDrawable(R.drawable.button_red);
-                    break;
-
-                case YELLOW:
-                    playerColor = getResources().getDrawable(R.drawable.button_yellow);
-                    break;
-
-            }
+            Drawable playerColor = ColorPicker.turnOrderIndicator(getResources(), player.getColor());
 
             Drawable containerColor = getResources().getDrawable(R.color.train_black_border);
 

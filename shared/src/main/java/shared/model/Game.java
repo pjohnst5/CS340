@@ -284,4 +284,16 @@ public class Game {
         }
         _turnManager.changeTurns();
     }
+
+    public int getNumClaimedRoutes(String playerId) {
+        int count = 0;
+        for (Route r : _map.get_routes().values()) {
+            if (r.isClaimed()) {
+                if (r.get_claimedBy().equals(playerId)) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
 }

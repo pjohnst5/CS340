@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
 
@@ -40,10 +41,13 @@ public class GameStatusFragment extends SidebarFragment implements IGameStatusVi
         _testButton = v.findViewById(R.id.game_status_test_button);
         _testButton.setOnClickListener((view) -> {
             ServicesFacade facade = new ServicesFacade();
-            facade.phase2PassoffScenarios();
+            facade.phase2PassoffScenarios(this);
         });
 
         return v;
     }
 
+    public void showToast(String message) {
+        getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show());
+    }
 }

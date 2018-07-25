@@ -1,9 +1,14 @@
 package client.facade;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import client.model.ClientModel;
 import client.server.AsyncServerTask;
+import client.view.fragment.game_status.IGameStatusView;
 import shared.enumeration.CityName;
 import shared.enumeration.TrainColor;
 import shared.exception.DeckException;
@@ -66,7 +71,7 @@ public class ServicesFacade {
         new DestCardService().requestDestCards(caller, player);
     }
 
-    public void phase2PassoffScenarios() {
+    public void phase2PassoffScenarios(IGameStatusView view) {
         //FIXME: delete after phase 2
         ClientModel clientModel = ClientModel.getInstance();
         Player user;
@@ -77,25 +82,24 @@ public class ServicesFacade {
             user.addTrainCard(new TrainCard(TrainColor.BLUE));
             user.addDestCard(new DestCard(new City(CityName.NEW_ORLEANS), new City(CityName.LAS_VEGAS), 20));
             clientModel.updatePlayer(user);
-            Thread.sleep(6000);
 
             //Scenarios for all other players
             List<Player> otherPlayers = clientModel.getCurrentGame().getPlayers();
             for(int i = 0; i< otherPlayers.size(); i++) {
                 Player player = otherPlayers.get(i);
                 if(player != user) {
-                    player.addTrainCard(new TrainCard(TrainColor.BLUE));
-                    player.getTrainCars().removeCars(10 + i);
+                    player.addTrainCard(new TrainCard(TrainColor.GRAY));
+                    player.addTrainCard(new TrainCard(TrainColor.RED));
+                    int num = 10 + i;
+                    player.getTrainCars().removeCars(num);
                     player.addDestCard(new DestCard(new City(CityName.NEW_ORLEANS), new City(CityName.LAS_VEGAS), 20));
                     clientModel.updatePlayer(player);
-                    Thread.sleep(6000);
 
                     //add chat message from any player
                     Message message = new Message();
                     message.setPlayer(player);
                     message.setMessage("Hello from " + player.getDisplayName());
                     clientModel.addMessage(message);
-                    Thread.sleep(6000);
                 }
             }
 
@@ -104,27 +108,34 @@ public class ServicesFacade {
             trainDeck.phase2DrawFaceUp();
             trainDeck.phase2DrawFaceDown();
             clientModel.setTrainDeck(trainDeck);
-            Thread.sleep(6000);
+
 
             DestDeck destDeck = clientModel.getCurrentGame().getDestDeck();
             destDeck.getThreeCards();
             clientModel.setDestDeck(destDeck);
-            Thread.sleep(6000);
 
             //claiming a route
             GameMap gameMap = clientModel.getCurrentGame().getMap();
-            Route route = gameMap.get_routes().get(0);
+            HashMap<UUID, Route> routes = gameMap.get_routes();
+            Set<UUID> keys = routes.keySet();
+            UUID key = keys.iterator().next();
+            Route route = routes.get(key);
             clientModel.claimRoute(route, user);
-            Thread.sleep(6000);
+            try {
+                user.getTrainCars().removeCars(route.get_pathLength());
+            } catch (NotEnoughTrainCarsException e) {
+                e.printStackTrace();
+            }
 
-            //Add game history entries
-            GameAction action = new GameAction("TEST ACTION", "testing that an action can be added to the model");
-            clientModel.addGameAction(action);
-            Thread.sleep(6000);
+            //change turns
+            clientModel.changeTurns();
 
-
-        } catch (InvalidGameException | NotEnoughTrainCarsException | DeckException | InterruptedException e) {
+        } catch (InvalidGameException | NotEnoughTrainCarsException | DeckException e) {
             e.printStackTrace();
         }
     }
+     private void updateUser(Player user, IGameStatusView view, ClientModel clientModel){
+
+     }
+
 }

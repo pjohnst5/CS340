@@ -3,12 +3,13 @@ package shared.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import shared.enumeration.ListOfRoutes;
 import shared.enumeration.PlayerColor;
 
 public class GameMap {
-    private HashMap<Integer, Route> _routes = new HashMap<>();
+    private HashMap<UUID, Route> _routes = new HashMap<>();
     private List<Route> claimedRoutes = new ArrayList<>();
 
     public GameMap() {
@@ -16,18 +17,19 @@ public class GameMap {
         for(int i = 0; i < routeList.size(); i++){
             _routes.put(routeList.get(i).getId(), routeList.get(i));
         }
+        System.out.println();
     }
 
-    public HashMap<Integer, Route> get_routes() {
+    public HashMap<UUID, Route> get_routes() {
         return _routes;
     }
 
-    public boolean isRouteClaimed(int routeId){
+    public boolean isRouteClaimed(UUID routeId){
         Route route = _routes.get(routeId);
         return route.isClaimed();
     }
 
-    public void claimRoute(int routeId, String playerId, PlayerColor playerColor){
+    public void claimRoute(UUID routeId, String playerId, PlayerColor playerColor){
         Route route = _routes.get(routeId);
         route.claimRoute(playerId, playerColor);
         claimedRoutes.add(route);
