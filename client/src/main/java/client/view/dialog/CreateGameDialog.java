@@ -65,7 +65,7 @@ public class CreateGameDialog extends DialogFragment {
         mNumPlayers = v.findViewById(R.id.dialog_max_players);
         mNumPlayers.setMinValue(2);
         mNumPlayers.setMaxValue(5);
-        mNumPlayers.setValue(4);
+        mNumPlayers.setValue(2);
         mNumPlayers.setWrapSelectorWheel(false);
 
         mTrainColorButtons = new Button[] {
