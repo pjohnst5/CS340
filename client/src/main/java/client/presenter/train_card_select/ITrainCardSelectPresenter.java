@@ -1,4 +1,6 @@
 package client.presenter.train_card_select;
 
-public interface ITrainCardSelectPresenter {
+import client.server.AsyncServerTask;
+
+public interface ITrainCardSelectPresenter extends AsyncServerTask.AsyncCaller {
 }

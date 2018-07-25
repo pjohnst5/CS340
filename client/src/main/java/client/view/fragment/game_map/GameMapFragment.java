@@ -1,4 +1,4 @@
-package client.view.fragment.game.play;
+package client.view.fragment.game_map;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.model.ClientModel;
-import client.presenter.game.play.GameMapPresenter;
-import client.presenter.game.play.IGameMapPresenter;
-import client.view.fragment.game.play.customview.GameMapView;
+import client.presenter.game_map.GameMapPresenter;
+import client.presenter.game_map.IGameMapPresenter;
+import client.view.fragment.game_map.customview.GameMapView;
 import shared.enumeration.CityManager;
 import shared.model.GameMap;
 import shared.model.Route;

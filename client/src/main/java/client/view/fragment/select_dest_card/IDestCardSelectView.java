@@ -1,4 +1,4 @@
-package client.view.fragment.game.play;
+package client.view.fragment.select_dest_card;
 
 import shared.model.decks.DestCard;
 

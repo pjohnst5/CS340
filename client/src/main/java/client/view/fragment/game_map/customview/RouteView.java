@@ -1,4 +1,4 @@
-package client.view.fragment.game.play.customview;
+package client.view.fragment.game_map.customview;
 
 import android.content.Context;
 import android.graphics.Canvas;

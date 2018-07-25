@@ -6,7 +6,7 @@
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <client.view.fragment.game.play.customview.GameMapView
+        <client.view.fragment.game_map.customview.GameMapView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/game_map"

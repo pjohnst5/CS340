@@ -8,12 +8,10 @@ import client.model.ClientModel;
 import client.server.communication.ServerProxy;
 import client.server.communication.poll.GameLobbyPoller;
 import client.server.communication.poll.Poller;
-import client.view.fragment.IGameLobbyView;
+import client.view.fragment.game_lobby.IGameLobbyView;
 import client.server.AsyncServerTask;
 import shared.enumeration.GameState;
 import shared.model.Game;
-import shared.model.Message;
-import shared.model.User;
 
 public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncServerTask.AsyncCaller {
     private IGameLobbyView _view;

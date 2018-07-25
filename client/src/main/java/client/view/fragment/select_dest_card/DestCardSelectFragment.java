@@ -1,4 +1,4 @@
-package client.view.fragment.game.play;
+package client.view.fragment.select_dest_card;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +27,7 @@ import java.util.Set;
 
 import client.presenter.select_dest_card.DestCardSelectPresenter;
 import client.presenter.select_dest_card.IDestCardSelectPresenter;
+import client.view.fragment.game_map.GameMapFragment;
 import shared.model.decks.DestCard;
 
 public class DestCardSelectFragment extends Fragment implements IDestCardSelectView {

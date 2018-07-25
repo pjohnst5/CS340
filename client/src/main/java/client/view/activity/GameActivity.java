@@ -11,8 +11,8 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import client.server.communication.ServerProxy;
 import client.server.communication.poll.MainGamePoller;
-import client.view.fragment.game.play.ChatFragment;
-import client.view.fragment.game.play.DestCardSelectFragment;
+import client.view.fragment.chat.ChatFragment;
+import client.view.fragment.select_dest_card.DestCardSelectFragment;
 
 public class GameActivity extends AppCompatActivity {
 

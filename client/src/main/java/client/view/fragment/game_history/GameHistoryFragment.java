@@ -1,4 +1,4 @@
-package client.view.fragment.game.play;
+package client.view.fragment.game_history;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

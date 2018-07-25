@@ -1,6 +1,6 @@
-package client.view.fragment.game.play;
+package client.view.fragment.game_map;
 
-import client.presenter.game.play.IGameMapPresenter;
+import client.presenter.game_map.IGameMapPresenter;
 
 /**
  * Created by jtyler17 on 7/21/18.

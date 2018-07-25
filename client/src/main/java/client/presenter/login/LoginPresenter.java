@@ -7,7 +7,7 @@ import java.util.Observer;
 
 import client.facade.LoginService;
 import client.model.ClientModel;
-import client.view.fragment.ILoginView;
+import client.view.fragment.login.ILoginView;
 import client.server.AsyncServerTask;
 
 public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTask.AsyncCaller {

@@ -7,7 +7,7 @@ import java.util.Observer;
 import client.facade.ServicesFacade;
 import client.model.ClientModel;
 import client.server.AsyncServerTask;
-import client.view.fragment.game.play.IGameChatView;
+import client.view.fragment.chat.IGameChatView;
 import shared.exception.InvalidGameException;
 import shared.model.Message;
 import shared.model.Player;

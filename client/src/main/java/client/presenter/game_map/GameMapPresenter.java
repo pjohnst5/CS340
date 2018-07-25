@@ -5,7 +5,7 @@ import java.util.Observer;
 
 import client.model.ClientModel;
 import client.server.AsyncServerTask;
-import client.view.fragment.game.play.IGameMapView;
+import client.view.fragment.game_map.IGameMapView;
 import shared.model.Route;
 
 /**

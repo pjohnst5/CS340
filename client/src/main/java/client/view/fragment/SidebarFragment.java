@@ -8,9 +8,9 @@ import android.widget.Button;
 
 import com.pjohnst5icloud.tickettoride.R;
 
-import client.view.fragment.game.play.ChatFragment;
-import client.view.fragment.game.play.GameHistoryFragment;
-import client.view.fragment.game.play.GameStatusFragment;
+import client.view.fragment.chat.ChatFragment;
+import client.view.fragment.game_history.GameHistoryFragment;
+import client.view.fragment.game_status.GameStatusFragment;
 
 public abstract class SidebarFragment extends Fragment {
 

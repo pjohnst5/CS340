@@ -5,7 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import client.model.ClientModel;
-import client.view.fragment.game.play.IDestCardSelectView;
+import client.view.fragment.select_dest_card.IDestCardSelectView;
 import shared.enumeration.GameState;
 import shared.model.decks.DestCard;
 
