@@ -21,6 +21,10 @@ public class ThreeDestCardWrapper {
     public void setCards(List<DestCard> cards){
         numCards = cards.size();
 
+        card1 = null;
+        card2 = null;
+        card3 = null;
+
         switch (numCards){
             case 3:
                 card3 = cards.get(2);
