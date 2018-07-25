@@ -78,17 +78,14 @@ public class DestDeck {
     }
 
     public void putDestCardBack(DestCard card) throws DeckException {
-        for (int i = 0; i < _cards.size(); i++){
-            if (card.get_cities().equals(_cards.get(i).get_cities())){
-                throw new DeckException("Dest card already exists in deck, cannot put it back");
-            }
-
-            if (_cards.size() == 30)
-            {
-                throw new DeckException("Dest card deck already has 30 cards");
-            }
-            _cards.add(card);
+        if (_cards.size() == 30){
+            throw new DeckException("Dest card deck already has 30 cards");
         }
+
+        if (_cards.contains(card)){
+            throw new DeckException("Dest card already exists in deck, cannot put it back");
+        }
+        _cards.add(card);
     }
 
     public List<DestCard> get_cards() {
