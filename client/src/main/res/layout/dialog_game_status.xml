@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="6">
+            android:weightSum="9">
 
             <TextView
                 android:layout_width="0dp"
@@ -61,8 +61,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="@string/cards"
-                android:layout_weight="1"/>
+                android:text="@string/train_cards"
+                android:layout_weight="2"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/dest_cards"
+                android:layout_weight="2"/>
 
             <TextView
                 android:layout_width="0dp"

@@ -2,12 +2,9 @@ package client.view.dialog;
 
 
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +17,6 @@ import android.widget.TextView;
 
 import com.pjohnst5icloud.tickettoride.R;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +34,7 @@ public class GameStatusDialog extends DialogFragment {
 
     private RecyclerView _playerRecyclerView;
     private RecyclerView _cardRecyclerView;
+    private Player _myPlayer;
 
     public static GameStatusDialog newInstance() {
         return new GameStatusDialog();
@@ -64,19 +61,18 @@ public class GameStatusDialog extends DialogFragment {
         Game currentGame = model.getCurrentGame();
         List<Player> players = currentGame.getPlayers();
         String playerId = model.getUser().get_playerId();
-        Player myPlayer = null;
         for (Player p : players) {
             if (p.getPlayerID().equals(playerId)) {
-                myPlayer = p;
+                _myPlayer = p;
                 break;
             }
         }
 
         _playerRecyclerView = v.findViewById(R.id.game_status_stats_recycler_view);
         _playerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        _playerRecyclerView.setAdapter(new PlayerAdapter(players));
+        _playerRecyclerView.setAdapter(new PlayerAdapter(currentGame));
 
-        Map<TrainColor, Integer> cardCounts = countNumCards(myPlayer.getTrainCards());
+        Map<TrainColor, Integer> cardCounts = countNumCards(_myPlayer.getTrainCards());
 
         _cardRecyclerView = v.findViewById(R.id.game_status_card_recycler_view);
         _cardRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -95,31 +91,42 @@ public class GameStatusDialog extends DialogFragment {
         private TextView _playerName;
         private TextView _points;
         private TextView _trains;
-        private TextView _cards;
+        private TextView _trainCards;
+        private TextView _destCards;
         private TextView _routes;
         public PlayerHolder(LayoutInflater inflater, ViewGroup parent){
             super(inflater.inflate(R.layout.player_status_list_item, parent, false));
             _playerName = itemView.findViewById(R.id.game_status_player_name);
             _points = itemView.findViewById(R.id.game_status_player_points);
             _trains = itemView.findViewById(R.id.game_status_player_trains);
-            _cards = itemView.findViewById(R.id.game_status_player_cards);
+            _trainCards = itemView.findViewById(R.id.game_status_player_train_cards);
+            _destCards = itemView.findViewById(R.id.game_status_player_dest_cards);
             _routes = itemView.findViewById(R.id.game_status_player_routes);
         }
 
-        public void bind(Player player) {
+        public void bind(Player player, int numRoutes) {
             _playerName.setText(player.getDisplayName());
             _points.setText(Integer.toString(player.getPoints()));
             _trains.setText(Integer.toString(player.getTrainCars().getCount()));
-            _cards.setText(Integer.toString(player.getNumTrainCards()));
-            _routes.setText(Integer.toString(player.getNumRoutes()));
+            _trainCards.setText(Integer.toString(player.getNumTrainCards()));
+            _destCards.setText(Integer.toString(player.getDestCards().size()));
+            _routes.setText(Integer.toString(numRoutes));
             PlayerColor color = player.getColor();
             _playerName.setTextColor(ColorPicker.getRouteColor(getResources(), color));
+            if (player.getDisplayName().equals(_myPlayer.getDisplayName())) {
+                itemView.setBackgroundColor(0xffbbbbbb);
+//                ((View)_playerName.getParent()).setBackgroundColor(0xffbbbbbb);
+            }
         }
     }
 
     private class PlayerAdapter extends RecyclerView.Adapter<PlayerHolder> {
+        private Game _currentGame;
         private List<Player> _players;
-        public PlayerAdapter(List<Player> players) {_players = players;}
+        public PlayerAdapter(Game currentGame) {
+            _currentGame = currentGame;
+            _players = _currentGame.getPlayers();
+        }
 
         @NonNull
         @Override
@@ -131,7 +138,7 @@ public class GameStatusDialog extends DialogFragment {
         @Override
         public void onBindViewHolder(@NonNull PlayerHolder holder, int position) {
             Player player = _players.get(position);
-            holder.bind(player);
+            holder.bind(player, _currentGame.getNumClaimedRoutes(player.getPlayerID()));
         }
 
         @Override

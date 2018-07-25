@@ -56,7 +56,8 @@
     <string name="close_modal_button_text">X</string>
     <string name="points">Points</string>
     <string name="trains">Trains</string>
-    <string name="cards">Cards</string>
+    <string name="train_cards">Train Cards</string>
+    <string name="dest_cards">Destination Cards</string>
     <string name="routes">Routes</string>
 
 

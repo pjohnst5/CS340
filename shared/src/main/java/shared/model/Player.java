@@ -120,8 +120,7 @@ public class Player {
         return _trainCards;
     }
 
-    public int getNumRoutes(){
-        return 0; // FIXME: implement
-
+    public List<DestCard> getDestCards() {
+        return _destCards;
     }
 }
