@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import client.model.ClientModel;
 import client.server.AsyncServerTask;
+import client.view.fragment.game_status.IGameStatusView;
 import shared.enumeration.CityName;
 import shared.enumeration.TrainColor;
 import shared.exception.DeckException;
@@ -70,17 +71,14 @@ public class ServicesFacade {
         new DestCardService().requestDestCards(caller, player);
     }
 
-    public void phase2PassoffScenarios() {
+    public void phase2PassoffScenarios(IGameStatusView view) {
         //FIXME: delete after phase 2
         ClientModel clientModel = ClientModel.getInstance();
         Player user;
         try {
             // Scenarios for current user
             user = clientModel.getCurrentGame().getPlayer(clientModel.getUser().get_playerId());
-            user.addPoints(10);
-            user.addTrainCard(new TrainCard(TrainColor.BLUE));
-            user.addDestCard(new DestCard(new City(CityName.NEW_ORLEANS), new City(CityName.LAS_VEGAS), 20));
-            clientModel.updatePlayer(user);
+            updateUser(user, view, clientModel);
 
             //Scenarios for all other players
             List<Player> otherPlayers = clientModel.getCurrentGame().getPlayers();
@@ -109,6 +107,7 @@ public class ServicesFacade {
             clientModel.setTrainDeck(trainDeck);
 //            Thread.sleep(6000);
 
+
             DestDeck destDeck = clientModel.getCurrentGame().getDestDeck();
             destDeck.getThreeCards();
             clientModel.setDestDeck(destDeck);
@@ -120,12 +119,27 @@ public class ServicesFacade {
             UUID key = keys.iterator().next();
             Route route = routes.get(key);
             clientModel.claimRoute(route, user);
+            try {
+                user.getTrainCars().removeCars(route.get_pathLength());
+            } catch (NotEnoughTrainCarsException e) {
+                e.printStackTrace();
+            }
 
             //change turns
             clientModel.changeTurns();
 
-        } catch (InvalidGameException | NotEnoughTrainCarsException | DeckException e) {
+        } catch (InvalidGameException | NotEnoughTrainCarsException | DeckException | InterruptedException e) {
             e.printStackTrace();
         }
     }
+     private void updateUser(Player user, IGameStatusView view, ClientModel clientModel){
+         user.addPoints(10);
+         view.showToast("user got 10 points");
+         user.addTrainCard(new TrainCard(TrainColor.BLUE));
+         view.showToast("user got a blue train card");
+         user.addDestCard(new DestCard(new City(CityName.NEW_ORLEANS), new City(CityName.LAS_VEGAS), 20));
+         view.showToast("user got a new destination card");
+         clientModel.updatePlayer(user);
+     }
+
 }
