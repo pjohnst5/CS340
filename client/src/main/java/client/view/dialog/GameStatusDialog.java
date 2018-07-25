@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.pjohnst5icloud.tickettoride.R;
@@ -25,16 +26,19 @@ import java.util.Map;
 
 import client.model.ClientModel;
 import client.util.ColorPicker;
+import client.view.fragment.select_dest_card.DestCardSelectFragment;
 import shared.enumeration.PlayerColor;
 import shared.enumeration.TrainColor;
 import shared.model.Game;
 import shared.model.Player;
+import shared.model.decks.DestCard;
 import shared.model.decks.TrainCard;
 
 public class GameStatusDialog extends DialogFragment {
 
     private RecyclerView _playerRecyclerView;
     private RecyclerView _cardRecyclerView;
+    private RecyclerView _destCardRecyclerView;
     private Player _myPlayer;
 
     public static GameStatusDialog newInstance() {
@@ -131,7 +135,12 @@ public class GameStatusDialog extends DialogFragment {
                     trainCards[i].setImageResource(R.drawable.train_card_loco);
                     break;
             }
+
         }
+
+        _destCardRecyclerView = v.findViewById(R.id.game_status_dest_card_recycler_view);
+        _destCardRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        _destCardRecyclerView.setAdapter(new DestCardAdapter(_myPlayer.getDestCards()));
 
         ad.show();
         ad.getButton(Dialog.BUTTON_NEGATIVE).setVisibility(View.GONE);
@@ -258,5 +267,65 @@ public class GameStatusDialog extends DialogFragment {
             counts.put(color, prevCount);
         }
         return counts;
+    }
+
+    private class DestCardHolder extends RecyclerView.ViewHolder{
+
+        private final int CARD_LENGTH = 294;
+
+        private DestCard _card;
+        private RelativeLayout _cardBorder;
+        private ImageView _cardHolder;
+        private TextView _destinationTitle;
+        private TextView _points;
+
+        DestCardHolder(LayoutInflater inflater, ViewGroup parent){
+            super(inflater.inflate(R.layout.card_item, parent, false));
+
+            _cardHolder = itemView.findViewById(R.id.card_item_image_view);
+            _cardBorder = itemView.findViewById(R.id.card_item_border);
+            _destinationTitle = itemView.findViewById(R.id.card_item_destination_text);
+            _points = itemView.findViewById(R.id.dest_card_point_value);
+        }
+
+        public void bind(DestCard card){
+            _card = card;
+
+            int points = card.get_worth();
+            String destinationName = card.toString();
+
+            _destinationTitle.setText(destinationName);
+            _points.setText(Integer.toString(points));
+        }
+
+        public DestCard getDestCard(){
+            return this._card;
+        }
+    }
+
+    private class DestCardAdapter extends RecyclerView.Adapter<DestCardHolder> {
+        private List<DestCard> _cards;
+
+        public DestCardAdapter(List<DestCard> cards) {
+            _cards = cards;
+        }
+
+        @NonNull
+        @Override
+        public DestCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            return new DestCardHolder(inflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull DestCardHolder holder, int position) {
+            DestCard card = _cards.get(position);
+            holder.bind(card);
+        }
+
+        @Override
+        public int getItemCount() {
+            return _cards.size();
+        }
     }
 }
