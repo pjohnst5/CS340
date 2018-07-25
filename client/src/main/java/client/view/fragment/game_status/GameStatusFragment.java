@@ -48,6 +48,6 @@ public class GameStatusFragment extends SidebarFragment implements IGameStatusVi
     }
 
     public void showToast(String message) {
-        getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show());
+        getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show());
     }
 }
