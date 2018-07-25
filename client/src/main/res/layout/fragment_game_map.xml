@@ -77,5 +77,59 @@
         android:visibility="gone"
         android:text="zoom"/>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:clipToPadding="false"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/game_map_dest_deck_relative_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-220dp"
+                android:src="@drawable/ticket_back"/>
+
+            <TextView
+                android:id="@+id/game_map_dest_card_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="5dp"
+                style="@style/PointsText"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/game_map_dest_deck_relative_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-80dp"
+                android:src="@drawable/train_card_back_standing"/>
+
+            <TextView
+                android:id="@+id/game_map_train_card_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="25dp"
+                style="@style/PointsText"/>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -39,6 +39,9 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     private RecyclerView _turnIndicator;
     private List<Player> _players;
 
+    private TextView _destCardCount;
+    private TextView _trainCardCount;
+
     public static GameMapFragment newInstance() {
         return new GameMapFragment();
     }
@@ -50,6 +53,9 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         _turnIndicator = v.findViewById(R.id.game_map_player_turn_recycler_view);
         _turnIndicator.setLayoutManager(new LinearLayoutManager(getActivity()));
         _turnIndicator.setAdapter(new PlayerTurnAdapter());
+
+        _destCardCount = v.findViewById(R.id.game_map_dest_card_count);
+        _trainCardCount = v.findViewById(R.id.game_map_train_card_count);
 
 
         _gameMap = v.findViewById(R.id.game_map);
@@ -78,7 +84,7 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
 
     @Override
     public void updateMap() {
-        _gameMap.redraw();
+        getActivity().runOnUiThread(() -> _gameMap.redraw());
     }
 
     @Override
@@ -126,6 +132,14 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
             _playerTurnItemLabel.setBackground(playerColor);
             _container.setBackground(containerColor);
         }
+    }
+
+    @Override
+    public void updateDeckCount(int destCards, int trainCards) {
+        getActivity().runOnUiThread(() ->{
+            _destCardCount.setText(Integer.toString(destCards));
+            _trainCardCount.setText(Integer.toString(trainCards));
+        });
     }
 
     private class PlayerTurnAdapter extends RecyclerView.Adapter<PlayerTurnIndicatorHolder> {
