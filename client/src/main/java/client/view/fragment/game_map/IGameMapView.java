@@ -9,5 +9,6 @@ import client.presenter.game_map.IGameMapPresenter;
 public interface IGameMapView {
     public void updateMap();
     public void setPresenter(IGameMapPresenter presenter);
+    public void updatePlayerTurn();
     public void showToast(String message);
 }

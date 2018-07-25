@@ -30,11 +30,8 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
     private Button mStartButton;
     private Button mLeaveButton;
-    private EditText mSendChatText;
-    private Button mSendChatButton;
 
     private RecyclerView mPlayerListRecyclerView;
-    private RecyclerView mChatRecyclerView;
     private PlayerListAdapter mPlayerListAdapter;
 
     private Game mCurrentGame;
@@ -101,7 +98,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
     @Override
     public void leaveGame() {
-        getActivity().getSupportFragmentManager().popBackStack(); // FIXME: I think this works...
+        getActivity().getSupportFragmentManager().popBackStack(); // FIXME: doesn't work
     }
 
     @Override
@@ -132,7 +129,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
         public void bind(Player player) {
             mPlayer = player;
             mPlayerNameView.setText(mPlayer.getUserName());
-            _container.setBackgroundColor(ColorPicker.getRouteColor(getResources(), mPlayer.getColor()));
+            _container.setBackgroundColor(ColorPicker.getPlayerColor(getResources(), mPlayer.getColor()));
         }
     }
     private class PlayerListAdapter extends RecyclerView.Adapter<PlayerHolder> {
