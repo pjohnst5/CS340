@@ -108,10 +108,10 @@ public class GameStatusDialog extends DialogFragment {
 
         public void bind(Player player) {
             _playerName.setText(player.getDisplayName());
-            _points.setText(player.getPoints());
-            _trains.setText(player.getTrainCars().getCount());
-            _cards.setText(player.getNumTrainCards());
-            _routes.setText(player.getNumRoutes());
+            _points.setText(Integer.toString(player.getPoints()));
+            _trains.setText(Integer.toString(player.getTrainCars().getCount()));
+            _cards.setText(Integer.toString(player.getNumTrainCards()));
+            _routes.setText(Integer.toString(player.getNumRoutes()));
             PlayerColor color = player.getColor();
             _playerName.setTextColor(ColorPicker.getRouteColor(getResources(), color));
         }
@@ -151,7 +151,7 @@ public class GameStatusDialog extends DialogFragment {
 
         public void bind(Map.Entry<TrainColor, Integer> cardCount) {
             _container.setBackgroundColor(ColorPicker.getRouteColor(getResources(), cardCount.getKey()));
-            _countView.setText(cardCount.getValue());
+            _countView.setText(Integer.toString(cardCount.getValue()));
         }
     }
 

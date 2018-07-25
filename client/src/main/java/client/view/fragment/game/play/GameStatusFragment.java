@@ -31,9 +31,9 @@ public class GameStatusFragment extends SidebarFragment implements IGameStatusVi
 
         _openButton = v.findViewById(R.id.game_status_open_dialog);
         _openButton.setOnClickListener((view) -> {
-            FragmentManager manager = getFragmentManager();
+            FragmentManager manager = getActivity().getSupportFragmentManager();
             GameStatusDialog dialog = GameStatusDialog.newInstance();
-            dialog.setTargetFragment((Fragment)GameStatusFragment.this, VIEW_GAME_STATUS_DIALOG_CODE);
+            dialog.setTargetFragment(GameStatusFragment.this, VIEW_GAME_STATUS_DIALOG_CODE);
             dialog.show(manager, VIEW_GAME_STATUS_DIALOG_TAG);
         });
 

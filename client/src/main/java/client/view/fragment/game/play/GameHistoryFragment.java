@@ -75,6 +75,7 @@ public class GameHistoryFragment extends SidebarFragment implements IGameHistory
 
         private TextView _description;
         private TextView _timestamp;
+        private TextView _nameDisplay;
         private RelativeLayout _container;
 
         ActionItemHolder(LayoutInflater inflater, ViewGroup parent){
@@ -83,6 +84,7 @@ public class GameHistoryFragment extends SidebarFragment implements IGameHistory
             _description = itemView.findViewById(R.id.game_action_item_description);
             _timestamp = itemView.findViewById(R.id.game_action_item_timestamp);
             _container = itemView.findViewById(R.id.game_action_item_parent);
+            _nameDisplay = itemView.findViewById(R.id.game_action_item_display_name);
         }
 
         public void bind(GameAction action){
@@ -91,6 +93,7 @@ public class GameHistoryFragment extends SidebarFragment implements IGameHistory
 
             _description.setText(action.get_actionDescription());
             _timestamp.setText(action.getTimestamp().toString());
+            _nameDisplay.setText(action.get_displayName());
 
             PlayerColor color = player.getColor();
 

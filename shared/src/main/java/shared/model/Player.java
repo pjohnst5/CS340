@@ -16,8 +16,8 @@ public class Player {
     private PlayerColor _color;
     private List<TrainCard> _trainCards;
     private List<DestCard> _destCards;
-    private TrainCars trainCars;
-    private int _index_of_commands; //i.e if this is -1, the player has recieved no commands, if 0 he has received and executed the first command
+    private TrainCars _trainCars;
+    private int _index_of_commands; //i.e if this is -1, the player has received no commands, if 0 he has received and executed the first command
     private int _points;
 
 
@@ -41,6 +41,7 @@ public class Player {
         _color = color;
         _index_of_commands = -1;
         _points = 0;
+        _trainCars = new TrainCars();
         _trainCards = new ArrayList<>();
         _destCards = new ArrayList<>();
     }
@@ -110,7 +111,7 @@ public class Player {
     }
 
     public TrainCars getTrainCars() {
-        return trainCars;
+        return _trainCars;
     }
     public int getNumTrainCards(){
         return _trainCards.size();

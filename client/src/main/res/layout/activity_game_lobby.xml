@@ -9,17 +9,18 @@
         android:id="@+id/game_lobby_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="5">
+        android:layout_weight="3">
     </FrameLayout>
 
     <FrameLayout
+        android:paddingTop="15dp"
         android:id="@+id/game_lobby_chat_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingStart="2dp"
         android:paddingEnd="2dp"
         android:background="@color/train_light_grey"
-        android:layout_weight="5">
+        android:layout_weight="7">
     </FrameLayout>
 
 </LinearLayout>
