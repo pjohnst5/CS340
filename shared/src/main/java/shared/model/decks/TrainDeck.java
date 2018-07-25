@@ -114,7 +114,7 @@ public class TrainDeck {
     public void phase2DrawFaceUp() throws DeckException {
         //FIXME: delete after phase 2
         _faceUpDeck.removeCard(_faceUpDeck._cards.get(0));
-        _faceUpDeck.addCard(_faceDownDeck.drawCard());
+        //_faceUpDeck.addCard(_faceDownDeck.drawCard());
     }
 
     public int sizeOfFaceDownDeck(){
@@ -173,9 +173,9 @@ public class TrainDeck {
                 throw new DeckException("Already 5 cards in face up deck");
             }
 
-            if (_faceDownDeck._cards.size() + _faceUpDeck._cards.size() == 110){
-                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
-            }
+//            if (_faceDownDeck._cards.size() + _faceUpDeck._cards.size() == 110){
+//                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
+//            }
 
             _cards.add(card);
 
@@ -226,9 +226,9 @@ public class TrainDeck {
         }
 
         private void addCard(TrainCard card) throws DeckException {
-            if (_faceDownDeck._cards.size() + _faceUpDeck._cards.size() == 110){
-                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
-            }
+//            if (_faceDownDeck._cards.size() + _faceUpDeck._cards.size() == 110){
+//                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
+//            }
             _cards.add(card);
         }
 
