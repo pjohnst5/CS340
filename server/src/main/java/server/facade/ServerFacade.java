@@ -5,11 +5,11 @@ import shared.model.Player;
 import shared.model.request.ClaimRouteRequest;
 import shared.model.request.DestCardRequest;
 import shared.model.request.DestCardSetupRequest;
+import shared.model.request.FaceDownRequest;
+import shared.model.request.FaceUpRequest;
 import shared.model.request.JoinRequest;
-import shared.model.Message;
 import shared.model.request.LeaveGameRequest;
 import shared.model.request.MessageRequest;
-import shared.model.request.TrainCardRequest;
 import shared.model.response.IResponse;
 
 public class ServerFacade {
@@ -86,25 +86,30 @@ public class ServerFacade {
 
 
     //Train Card functions
-    public static IResponse updateTrainDeck(TrainCardRequest request)
+    public static IResponse drawFaceUp(FaceUpRequest request)
     {
-        return TrainCardService.updateTrainDeck(request);
+        return TrainCardService.drawFaceUp(request);
+    }
+
+    public static IResponse drawFaceDown(FaceDownRequest request)
+    {
+        return TrainCardService.drawFaceDown(request);
     }
 
 
 
     //Dest Card functions
     public static IResponse sendSetupResults(DestCardSetupRequest request){
-        return DestCardService.updateDestDeck(request);
-    }
-
-    public static IResponse updateDestDeck(DestCardRequest request)
-    {
-        return DestCardService.updateDestDeck(request);
+        return DestCardService.sendSetupResults(request);
     }
 
     public static IResponse getThreeDestCards(Player player){
         return DestCardService.getThreeDestCards(player);
+    }
+
+    public static IResponse drawDestCards(DestCardRequest request)
+    {
+        return DestCardService.drawDestCards(request);
     }
 
 
