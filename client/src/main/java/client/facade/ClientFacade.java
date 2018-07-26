@@ -8,6 +8,7 @@ import client.model.ClientModel;
 import shared.model.Game;
 import shared.model.GameAction;
 import shared.model.GameMap;
+import shared.model.Route;
 import shared.model.decks.DestCard;
 import shared.model.decks.DestDeck;
 import shared.model.decks.TrainDeck;
@@ -48,6 +49,10 @@ public class ClientFacade {
 
     public static void setMap(GameMap map){}
 
+    public static void claimRoute(Route route) {
+        clientModel.claimRoute(route);
+    }
+
     public static void setTrainDeck(TrainDeck deck){
         clientModel.setTrainDeck(deck);
     }
@@ -60,9 +65,17 @@ public class ClientFacade {
         clientModel.updatePlayer(player);
     }
 
-    public static void changeTurns() //b doesn't do anything, it just couldn't serialize without it
+    public static void changeTurns()
     {
         clientModel.changeTurns();
+    }
+
+    public static void lastRound(){
+        clientModel.lastRound();
+    }
+
+    public static void endGame() {
+        clientModel.endGame();
     }
 
     public static void setDestOptionCards(ThreeDestCardWrapper wrapper) {

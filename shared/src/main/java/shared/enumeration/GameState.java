@@ -5,5 +5,6 @@ public enum GameState {
     READY,
     SETUP,
     STARTED,
+    LAST_ROUND,
     FINISHED
 }

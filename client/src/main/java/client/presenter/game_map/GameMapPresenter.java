@@ -56,7 +56,7 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
     @Override
     public void routeSelected(Route route) {
         // TODO: implement -- see if the route can be claimed; if it's the player's turn, enable the claim button; etc.
-        
+
 
         // At the end:
         if (!_model.isMyTurn()) {

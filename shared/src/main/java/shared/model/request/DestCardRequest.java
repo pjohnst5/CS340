@@ -2,19 +2,24 @@ package shared.model.request;
 
 import shared.model.Player;
 import shared.model.decks.DestDeck;
+import shared.model.wrapper.ThreeDestCardWrapper;
 
 public class DestCardRequest extends IServiceRequest {
 
-    private DestDeck _deck;
+    private ThreeDestCardWrapper _keepCards;
+    private ThreeDestCardWrapper _discardCards;
 
-    public DestCardRequest(DestDeck deck, Player player) {
+    public DestCardRequest(Player player, ThreeDestCardWrapper keep, ThreeDestCardWrapper discard) {
         super(player);
-        _deck = deck;
+        _keepCards = keep;
+        _discardCards = discard;
     }
 
-    public DestDeck get_deck()
-    {
-        return _deck;
+    public ThreeDestCardWrapper get_discardCards() {
+        return _discardCards;
     }
 
+    public ThreeDestCardWrapper get_keepCards() {
+        return _keepCards;
+    }
 }

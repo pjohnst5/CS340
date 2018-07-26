@@ -1,35 +1,30 @@
 package shared.model.request;
 
+import java.util.List;
+
 import shared.model.GameMap;
 import shared.model.Player;
+import shared.model.Route;
+import shared.model.decks.TrainCard;
 import shared.model.decks.TrainDeck;
 
 public class ClaimRouteRequest extends IServiceRequest {
 
-    private GameMap _map;
-    private TrainDeck _deck;
-    private Player _player;
+    private Route _route;
+    private List<TrainCard> _discarded;
 
-    public ClaimRouteRequest(GameMap map, TrainDeck deck, Player player)
+    public ClaimRouteRequest(Route route, List<TrainCard> discarded, Player player)
     {
         super(player);
-        _map = map;
-        _deck = deck;
-        _player = player;
+        _route = route;
+        _discarded = discarded;
     }
 
-    public GameMap get_map()
-    {
-        return _map;
+    public Route get_route() {
+        return _route;
     }
 
-    public TrainDeck get_deck()
-    {
-        return _deck;
-    }
-
-    public Player get_player()
-    {
-        return _player;
+    public List<TrainCard> get_discarded() {
+        return _discarded;
     }
 }
