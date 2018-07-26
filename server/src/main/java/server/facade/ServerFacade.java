@@ -77,7 +77,7 @@ public class ServerFacade {
 
 
     //Game Map functions
-    public static IResponse claimRoute(ClaimRouteRequest request)
+    public static IResponse claimRoute(ClaimRouteRequest request) //TODO: IMPLEMENT ME
     {
         return GameMapService.claimRoute(request);
     }
@@ -85,12 +85,12 @@ public class ServerFacade {
 
 
     //Train Card functions
-    public static IResponse drawFaceUp(FaceUpRequest request)
+    public static IResponse drawFaceUp(FaceUpRequest request)  //TODO: IMPLEMENT ME
     {
         return TrainCardService.drawFaceUp(request);
     }
 
-    public static IResponse drawFaceDown(FaceDownRequest request)
+    public static IResponse drawFaceDown(FaceDownRequest request) //TODO: IMPLEMENT ME
     {
         return TrainCardService.drawFaceDown(request);
     }
@@ -106,7 +106,7 @@ public class ServerFacade {
         return DestCardService.getThreeDestCards(player);
     }
 
-    public static IResponse drawDestCards(DestCardRequest request)
+    public static IResponse drawDestCards(DestCardRequest request) //TODO: IMPLEMENT ME
     {
         return DestCardService.drawDestCards(request);
     }
