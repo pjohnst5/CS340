@@ -1,7 +1,6 @@
 package shared.model.request;
 
 import shared.model.Player;
-import shared.model.decks.DestDeck;
 import shared.model.wrapper.ThreeDestCardWrapper;
 
 public class DestCardRequest extends IServiceRequest {

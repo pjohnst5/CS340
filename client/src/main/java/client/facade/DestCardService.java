@@ -11,9 +11,7 @@ import shared.model.Game;
 import shared.model.Player;
 import shared.model.decks.DestCard;
 import shared.model.decks.DestDeck;
-import shared.model.decks.TrainDeck;
 import shared.model.request.DestCardRequest;
-import shared.model.request.DestCardSetupRequest;
 import shared.model.wrapper.ThreeDestCardWrapper;
 
 public class DestCardService {
@@ -24,7 +22,7 @@ public class DestCardService {
                                  ThreeDestCardWrapper discard,
                                  Player player){
 
-        DestCardSetupRequest request = new DestCardSetupRequest(player, keep, discard);
+        DestCardRequest request = new DestCardRequest(player, keep, discard);
 
         for (DestCard card : keep.getDestCards()){
             player.addDestCard(card);
