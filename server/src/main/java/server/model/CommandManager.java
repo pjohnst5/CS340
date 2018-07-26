@@ -56,6 +56,10 @@ public class CommandManager {
      * @pre index >= -1
      *
      * @return      the List of Commands after the given index
+     *
+     * @exception   if gameID isn't in map, throws exception
+     * @exception   if index is the size of the list + 1, throws exception
+     * @exception   if index is greater than or equal to the size of the list, throws exception
      */
     public List<ICommand> getCommands(String gameID, int index) throws ServerException
     {
@@ -87,6 +91,8 @@ public class CommandManager {
      * @pre _commandList.contains(gameID) == true
      *
      * @return      the List of Commands for that game
+     *
+     * @exception   if gameID isn't in map, throws exception
      */
     public List<ICommand> getCommands (String gameID) throws ServerException
     {
@@ -108,6 +114,8 @@ public class CommandManager {
      * @pre index >= -1
      *
      * @post new _currentGames.get(gameID).size() = old _currentGames.get(gameID).size() + 1
+     *
+     * @exception   if gameID isn't in map, throws exception
      */
     public void addCommand(String gameID, ICommand command) throws ServerException
     {
