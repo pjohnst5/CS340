@@ -236,4 +236,18 @@ public class ClientModel extends Observable {
         setChanged();
         notifyObservers();
     }
+
+    public boolean isMyTurn() {
+        String playerId = _user.get_playerId();
+        if (playerId == null) { return false; }
+        if (_currentGame == null) { return false; }
+        try {
+            if (playerId.equals(_currentGame.playerTurn())) {
+                return true;
+            }
+        } catch (InvalidGameException e) {
+            return false;
+        }
+        return false;
+    }
 }

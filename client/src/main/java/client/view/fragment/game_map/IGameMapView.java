@@ -8,8 +8,9 @@ import client.presenter.game_map.IGameMapPresenter;
 
 public interface IGameMapView {
     public void updateMap();
-    public void setPresenter(IGameMapPresenter presenter);
     public void updatePlayerTurn();
     public void updateDeckCount(int destCards, int trainCards);
+    public void setClaimRouteButtonEnabled(boolean enabled);
+    public void setPresenter(IGameMapPresenter presenter);
     public void showToast(String message);
 }
