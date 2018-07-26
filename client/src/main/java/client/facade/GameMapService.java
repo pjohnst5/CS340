@@ -34,34 +34,6 @@ public class GameMapService {
         if(!map.isRouteClaimed(route.getId())){                             //ensure the route isn't already claimed
             if (route.get_pathLength() == discardedCards.size()) {          //ensure the route length is the same as the size of discarded cards
                 if(areColorsAreCorrect(route, discardedCards)) {            //ensure that the cards are of the right color to claim route
-
-                    //claim the route
-                    //route needs to be claimed on the player
-                    map.claimRoute(route.getId(), playerId, player.getColor());
-
-
-                    //give points to player
-                    ClaimedRoutePointSystem pointSystem = new ClaimedRoutePointSystem();
-                    int points = pointSystem.getPoints(route.get_pathLength());
-                    player.addPoints(points);
-
-
-                    try {
-                        player.getTrainCars().removeCars(discardedCards.size());
-                    } catch (NotEnoughTrainCarsException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    //discard the cards
-                    //remove cards from player and add cards back to TrainDeck
-                    for (int i = 0; i < discardedCards.size(); i++) {
-                        player.removeTrainCard(discardedCards.get(i));
-                    }
-                    game.getTrainDeck().discardTrainCards(discardedCards);
-
-
-
                     //Send the request to the server
                     ClaimRouteRequest request = new ClaimRouteRequest(map, game.getTrainDeck(), player);
 

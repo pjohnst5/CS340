@@ -21,6 +21,10 @@ import shared.model.City;
 import shared.model.Route;
 
 /**
+ * The GameMapView is a custom view object which extends FrameLayout, allowing it to
+ * contain child views (RouteView objects) as well as scroll correctly in it's
+ * parent view object.
+ * @invariant for all child view objects: (child instanceof RouteView) == true
  * Created by jtyler17 on 7/21/18.
  */
 
@@ -65,12 +69,12 @@ public class GameMapView extends FrameLayout {
     public GameMapView(Context context) {
         this(context, null);
     }
+
     public GameMapView(Context context, AttributeSet attrs) {
         super(context, attrs);
         _initialized = false;
 
         _cityPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//        _cityPaint = new Paint();
         _cityPaint.setColor(0xffff0000);
         _cityPaintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
         _cityPaintBorder.setColor(0xff101010);
@@ -80,9 +84,6 @@ public class GameMapView extends FrameLayout {
 
     public void initializeData(HostFragment host, List<City> cities, List<Route> routes) {
         _host = host;
-
-//        _cities = CityManager.getInstance().getCities();
-//        _routes = new ListOfRoutes().getRoutes();
         _cities = cities;
         _routes = routes;
 
@@ -92,7 +93,7 @@ public class GameMapView extends FrameLayout {
         }
     }
 
-    public void routeSelected(RouteView rv) {
+    private void routeSelected(RouteView rv) {
         boolean newRoute = false;
         if (_selectedRoute != null) {
             if (_selectedRoute != rv) {

@@ -17,12 +17,4 @@
         android:layout_height="wrap_content"
         android:text="@string/sidebar_open_game_status"/>
 
-    <!--FIXME: delete button after phase 2-->
-    <Button
-        android:id="@+id/game_status_test_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/game_status_open_dialog"
-        android:text="@string/game_status_test_button"/>
-
 </RelativeLayout>
