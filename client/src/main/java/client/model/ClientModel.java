@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import shared.enumeration.GameState;
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
 import shared.model.Game;
@@ -173,12 +174,19 @@ public class ClientModel extends Observable {
         notifyObservers();
     }
 
-    public void claimRoute(Route route, Player player){
-        GameMap map = getCurrentGame().getMap();
-        map.claimRoute(route.getId(), player.getPlayerID(), player.getColor());
+    public void claimRoute(Route route){
+        try {
+            Game game = getCurrentGame();
+            Player player = game.getPlayer(route.get_claimedBy());
 
-        setChanged();
-        notifyObservers();
+            GameMap map = game.getMap();
+            map.claimRoute(route.getId(), player.getPlayerID(), player.getColor());
+
+            setChanged();
+            notifyObservers();
+        } catch (InvalidGameException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updatePlayer(Player player)
@@ -233,6 +241,18 @@ public class ClientModel extends Observable {
     public void playerCompletedSetup(){
         getCurrentGame().playerCompletedSetup();
 
+        setChanged();
+        notifyObservers();
+    }
+
+    public void endGame() {
+        _currentGame.set_state(GameState.FINISHED);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void lastRound() {
+        _currentGame.set_state(GameState.LAST_ROUND);
         setChanged();
         notifyObservers();
     }

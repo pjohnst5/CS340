@@ -17,8 +17,7 @@ import shared.model.request.DestCardSetupRequest;
 import shared.model.wrapper.ThreeDestCardWrapper;
 
 public class DestCardService {
-    private ClientModel _client_instance = ClientModel.getInstance();
-    private Game _game = _client_instance.getCurrentGame();
+    private Game _game = ClientModel.getInstance().getCurrentGame();
 
     public void sendSetupResults(AsyncServerTask.AsyncCaller caller,
                                  ThreeDestCardWrapper keep,

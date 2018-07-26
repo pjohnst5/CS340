@@ -12,8 +12,7 @@ import shared.model.decks.TrainDeck;
 import shared.model.request.TrainCardRequest;
 
 public class TrainCardService {
-    private ClientModel _client_instance = ClientModel.getInstance();
-    private Game _game = _client_instance.getCurrentGame();
+    private Game _game = ClientModel.getInstance().getCurrentGame();
 
     public void drawFaceUpCard(AsyncServerTask.AsyncCaller caller, TrainCard trainCard, Player player){
         TrainDeck deck = _game.getTrainDeck();
