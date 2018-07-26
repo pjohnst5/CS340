@@ -28,6 +28,8 @@ public class ColorPicker {
                 return ResourcesCompat.getColor(res, R.color.route_orange, null);
             case YELLOW:
                 return ResourcesCompat.getColor(res, R.color.route_yellow, null);
+            case LOCOMOTIVE:
+                return ResourcesCompat.getColor(res, R.color.magenta, null);
             default:
                 return ResourcesCompat.getColor(res, R.color.route_black, null);
         }
