@@ -1,13 +1,16 @@
 package client.presenter.game_map;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 import client.model.ClientModel;
 import client.server.AsyncServerTask;
 import client.view.fragment.game_map.IGameMapView;
+import shared.enumeration.TrainColor;
 import shared.exception.InvalidGameException;
+import shared.model.Game;
 import shared.model.Player;
 import shared.model.Route;
 
@@ -56,6 +59,9 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
     @Override
     public void routeSelected(Route route) {
         // TODO: implement -- see if the route can be claimed; if it's the player's turn, enable the claim button; etc.
+        Game currentGame = _model.getCurrentGame();
+        Player myPlayer = _model.getMyPlayer();
+        Map<TrainColor, Integer> trainCards = myPlayer.countNumTrainCards();
 
 
         // At the end:

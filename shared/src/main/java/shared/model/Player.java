@@ -1,9 +1,12 @@
 package shared.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import shared.enumeration.PlayerColor;
+import shared.enumeration.TrainColor;
 import shared.exception.PlayerException;
 import shared.model.decks.DestCard;
 import shared.model.decks.TrainCard;
@@ -122,5 +125,22 @@ public class Player {
 
     public List<DestCard> getDestCards() {
         return _destCards;
+    }
+
+    public Map<TrainColor, Integer> countNumTrainCards() {
+        Map<TrainColor, Integer> counts = new HashMap<>();
+        for (TrainColor color : TrainColor.values()) {
+            if (color == TrainColor.GRAY) {
+                continue;
+            }
+            counts.put(color, 0);
+        }
+        for (TrainCard c : _trainCards) {
+            TrainColor color = c.get_color();
+            int prevCount = counts.get(color);
+            prevCount++;
+            counts.put(color, prevCount);
+        }
+        return counts;
     }
 }

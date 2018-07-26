@@ -262,6 +262,17 @@ public class ClientModel extends Observable {
         }
         return false;
     }
+
+    public Player getMyPlayer() {
+        String playerId = _user.get_playerId();
+        if (playerId == null) { return null; }
+        if (_currentGame == null) { return null; }
+        try {
+            return _currentGame.getPlayer(playerId);
+        } catch (InvalidGameException e) {
+            return null;
+        }
+    }
     public void endGame() {
         _currentGame.set_state(GameState.FINISHED);
         setChanged();
