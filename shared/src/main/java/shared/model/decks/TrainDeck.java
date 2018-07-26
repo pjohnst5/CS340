@@ -16,7 +16,7 @@ public class TrainDeck {
     public TrainDeck()
     {
         final int numNormalCards = 96;
-        final int numLocomotiveCards = 10;
+        final int numLocomotiveCards = 14;
         final int numFaceUpCards = 5;
         List<TrainCard> tempDeck = new ArrayList<>();
 
@@ -89,31 +89,18 @@ public class TrainDeck {
     }
 
     public void discardTrainCard(TrainCard card) throws DeckException {
+        if (_faceUpDeck._cards.size() + _faceDownDeck._cards.size() == 110)
+        {
+            throw new DeckException("There are already 110 cards in the train deck, can't add another");
+        }
+
         _faceDownDeck.addCard(card);
-    }
-
-    public FaceUpDeck get_faceUpDeck() {
-        return _faceUpDeck;
-    }
-
-    public FaceDownDeck get_faceDownDeck() {
-        return _faceDownDeck;
     }
 
     public void discardTrainCards(List<TrainCard> cards) throws DeckException {
         for(int i = 0; i < cards.size(); i++){
             discardTrainCard(cards.get(i));
         }
-    }
-
-    public void phase2DrawFaceDown() throws DeckException {
-        //FIXME: delete after phase 2
-        _faceDownDeck.drawCard();
-    }
-
-    public void phase2DrawFaceUp() throws DeckException {
-        //FIXME: delete after phase 2
-        _faceUpDeck.removeCard(_faceUpDeck._cards.get(0));
     }
 
     public int sizeOfFaceDownDeck(){
@@ -172,10 +159,6 @@ public class TrainDeck {
                 throw new DeckException("Already 5 cards in face up deck");
             }
 
-            if (_faceDownDeck._cards.size() + _faceUpDeck._cards.size() == 110){
-                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
-            }
-
             _cards.add(card);
 
             if (card.get_color() == TrainColor.LOCOMOTIVE){
@@ -225,9 +208,6 @@ public class TrainDeck {
         }
 
         private void addCard(TrainCard card) throws DeckException {
-            if (_faceDownDeck._cards.size() + _faceUpDeck._cards.size() == 110){
-                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
-            }
             _cards.add(card);
         }
 

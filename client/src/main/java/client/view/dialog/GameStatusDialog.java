@@ -115,10 +115,6 @@ public class GameStatusDialog extends DialogFragment {
                     trainCards[i].setImageResource(R.drawable.train_card_yellow);
                     break;
 
-                case GRAY:
-                    trainCards[i].setImageResource(R.drawable.train_card_black);
-                    break;
-
                 case PINK:
                     trainCards[i].setImageResource(R.drawable.train_card_purple);
                     break;
@@ -258,6 +254,9 @@ public class GameStatusDialog extends DialogFragment {
     private Map<TrainColor, Integer> countNumCards(List<TrainCard> cards) {
         Map<TrainColor, Integer> counts = new HashMap<>();
         for (TrainColor color : TrainColor.values()) {
+            if (color == TrainColor.GRAY) {
+                continue;
+            }
             counts.put(color, 0);
         }
         for (TrainCard c : cards) {

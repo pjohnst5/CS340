@@ -154,7 +154,7 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
         _cards.add(card);
 
         getActivity().runOnUiThread(() -> {
-            _cardAdapter.notifyItemChanged(_cards.size()-1);
+            _cardAdapter.notifyDataSetChanged();
         });
         return true;
     }
@@ -185,6 +185,11 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
 
         public void bind(DestCard card){
 
+            if (card == null) {
+                _unselectedCards.remove(this);
+                return;
+            }
+
             _card = card;
 
             int points = card.get_worth();
@@ -205,11 +210,17 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
 
         @Override
         public void onClick(View view) {
-            if (_selectedCards.contains(this)){
+            if (_selectedCards.size() == 0){
+                //_selectedCards.remove(this);
+                _selectedCards.add(this);
+                _unselectedCards.remove(this);
+                _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_blue));
+            } else if (_selectedCards.size() > 0 && _selectedCards.contains(this)){
+                //_selectedCards.add(this);
                 _selectedCards.remove(this);
                 _unselectedCards.add(this);
                 _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_black));
-            } else {
+            } else if (_selectedCards.size() > 0 && !_selectedCards.contains(this)){
                 _selectedCards.add(this);
                 _unselectedCards.remove(this);
                 _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_blue));
