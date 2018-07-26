@@ -14,15 +14,13 @@ import shared.model.Player;
 import shared.model.decks.DestCard;
 import shared.model.decks.DestDeck;
 import shared.model.request.DestCardRequest;
-import shared.model.request.DestCardSetupRequest;
 import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
 import shared.model.wrapper.ThreeDestCardWrapper;
-import sun.security.krb5.internal.crypto.Des;
 
 public class DestCardService {
 
-    public static IResponse sendSetupResults(DestCardSetupRequest request){
+    public static IResponse sendSetupResults(DestCardRequest request){
 
         CommandResponse response = new CommandResponse();
         ServerModel serverModel = ServerModel.getInstance();
@@ -30,7 +28,7 @@ public class DestCardService {
         try {
 
             // Add the discarded cards back to the deck
-            List<DestCard> discardedCards = request.getDiscardCards().getDestCards();
+            List<DestCard> discardedCards = request.get_discardCards().getDestCards();
             for (DestCard card : discardedCards) {
                 serverModel.addDestCardToDeck(request.get_gameID(), card);
             }
