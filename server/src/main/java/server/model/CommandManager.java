@@ -8,11 +8,22 @@ import java.util.Map;
 import server.exception.ServerException;
 import shared.command.ICommand;
 
+/**
+ * Matrix stores a matrix of numbers, and provides a full range of common matrix operations.
+ *
+ * @invariant getInstance() != null
+ * @invariant _commandList != null
+ */
 public class CommandManager {
 
     private static CommandManager _instance;
     private Map<String, List<ICommand>> _commandList;
 
+    /**
+     * Returns the CommandManager instance, this class is a singleton
+     *
+     * @return      the ServerFacade instance
+     */
     public static CommandManager getInstance()
     {
         if (_instance == null) {
@@ -22,6 +33,11 @@ public class CommandManager {
         return _instance;
     }
 
+    /**
+     * Constructs a new CommandManage
+     *
+     * @return      A CommandManager object
+     */
     private CommandManager()
     {
         _commandList = new HashMap<>();
@@ -29,6 +45,18 @@ public class CommandManager {
 
 
 
+    /**
+     * Returns the list of commands after the index given of the given game
+     *
+     * @param  gameID  the gameID
+     * @param  index the index to which commands have already been successfully taken (it will get index + 1 to the end)
+     *
+     * @pre gameID != null
+     * @pre _commandList.contains(gameID) == true
+     * @pre index >= -1
+     *
+     * @return      the List of Commands after the given index
+     */
     public List<ICommand> getCommands(String gameID, int index) throws ServerException
     {
         if (!_commandList.containsKey(gameID)){
@@ -49,6 +77,17 @@ public class CommandManager {
         return commands.subList(index+1,size);
     }
 
+
+    /**
+     * Returns the entire list of commands for the given game
+     *
+     * @param  gameID  the gameID
+     *
+     * @pre gameID != null
+     * @pre _commandList.contains(gameID) == true
+     *
+     * @return      the List of Commands for that game
+     */
     public List<ICommand> getCommands (String gameID) throws ServerException
     {
         if (!_commandList.containsKey(gameID)){
@@ -58,7 +97,18 @@ public class CommandManager {
     }
 
 
-
+    /**
+     * Adds the given command to the list of commands for that game
+     *
+     * @param  gameID  the gameID
+     * @param  command the command to add
+     *
+     * @pre gameID != null
+     * @pre _commandList.contains(gameID) == true
+     * @pre index >= -1
+     *
+     * @post new _currentGames.get(gameID).size() = old _currentGames.get(gameID).size() + 1
+     */
     public void addCommand(String gameID, ICommand command) throws ServerException
     {
         if (!_commandList.containsKey(gameID)){
@@ -67,7 +117,16 @@ public class CommandManager {
         _commandList.get(gameID).add(command);
     }
 
-
+    /**
+     * Adds the gameID to the map of _currentGames
+     *
+     * @param  gameID  the gameID of a new game
+     *
+     * @pre gameID != null
+     *
+     * @post new _currentGames.size() = old _currentGames.size() + 1
+     *
+     */
     public void addGame(String gameID)
     {
         if (!_commandList.containsKey(gameID)){
