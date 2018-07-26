@@ -37,13 +37,6 @@ public class GameStatusFragment extends SidebarFragment implements IGameStatusVi
             dialog.show(manager, VIEW_GAME_STATUS_DIALOG_TAG);
         });
 
-        // FIXME: delete after phase 2
-        _testButton = v.findViewById(R.id.game_status_test_button);
-        _testButton.setOnClickListener((view) -> {
-            ServicesFacade facade = new ServicesFacade();
-            facade.phase2PassoffScenarios(this);
-        });
-
         return v;
     }
 

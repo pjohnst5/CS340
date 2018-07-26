@@ -52,7 +52,6 @@
     <string name="game_status_title">GAME STATUS</string>
     <string name="sidebar_open_game_status">Open</string>
     <string name="game_status_dialog_title">Game Status</string>
-    <string name="game_status_test_button">TA\'s Click Here</string> <!--FIXME: delete after phase 2!-->
     <string name="close_modal_button_text">X</string>
     <string name="points">Points</string>
     <string name="trains">Trains</string>
