@@ -9,7 +9,7 @@ import server.exception.ServerException;
 import shared.command.ICommand;
 
 /**
- * Matrix stores a matrix of numbers, and provides a full range of common matrix operations.
+ * CommandManager provides access to lists of commands for each game
  *
  * @invariant getInstance() != null
  * @invariant _commandList != null
