@@ -281,18 +281,21 @@ public class Game {
             }
         }
 
-        //Case where it's the first person to have 2 or less cars
+        //Case where someone triggers last round by having 2 or less train cards
         if (_state != GameState.LAST_ROUND && _players.get(indexOfPersonWhosTurnIsEnding).getTrainCars().isFinalRound()) {
             _state = GameState.LAST_ROUND;
             _playerToEndOn = _players.get(indexOfPersonWhosTurnIsEnding).getPlayerID();
         } else if (_state == GameState.LAST_ROUND && _turnManager.getCurrentPlayer().equals(_playerToEndOn)) { //case where the person who triggered the last round just finished their turn
             _state = GameState.FINISHED;
-        } else { //normal change turn scenario
-            _turnManager.changeTurns();
-            for (int i = 0; i < _players.size(); i++){
-                _players.get(i).resetCardsDrawnThisTurn();
-            }
+            return;
         }
+
+
+        _turnManager.changeTurns();
+        for (int i = 0; i < _players.size(); i++){
+            _players.get(i).resetCardsDrawnThisTurn();
+        }
+
     }
 
     public int getNumClaimedRoutes(String playerId) {
