@@ -7,6 +7,7 @@ import java.util.Map;
 
 import shared.enumeration.PlayerColor;
 import shared.enumeration.TrainColor;
+import shared.exception.NotEnoughTrainCarsException;
 import shared.exception.PlayerException;
 import shared.model.decks.DestCard;
 import shared.model.decks.TrainCard;
@@ -22,6 +23,7 @@ public class Player {
     private TrainCars _trainCars;
     private int _index_of_commands; //i.e if this is -1, the player has received no commands, if 0 he has received and executed the first command
     private int _points;
+    private int _cardsDrawnThisTurn;
 
 
     public Player(String userName, String displayName, PlayerColor color, String gameId, String playerId) throws PlayerException {
@@ -47,6 +49,7 @@ public class Player {
         _trainCars = new TrainCars();
         _trainCards = new ArrayList<>();
         _destCards = new ArrayList<>();
+        _cardsDrawnThisTurn = 0;
     }
 
     public String getUserName() {
@@ -108,9 +111,19 @@ public class Player {
         _destCards.add(card);
     }
 
-    public void removeTrainCard(TrainCard card)
+    private void removeTrainCard(TrainCard card)
     {
-        _trainCards.remove(card);
+        for (int i = 0; i < _trainCards.size(); i++){
+            if (_trainCards.get(i).get_color() == card.get_color()){
+                _trainCards.remove(i);
+            }
+        }
+    }
+
+    public void removeTrainCards(List<TrainCard> cards) {
+        for (int i = 0; i < cards.size(); i++){
+            removeTrainCard(cards.get(i));
+        }
     }
 
     public TrainCars getTrainCars() {
@@ -142,5 +155,21 @@ public class Player {
             counts.put(color, prevCount);
         }
         return counts;
+    }
+
+    public void removeTrains(int num) throws NotEnoughTrainCarsException {
+        _trainCars.removeCars(num);
+    }
+
+    public int get_cardsDrawnThisTurn() {
+        return _cardsDrawnThisTurn;
+    }
+
+    public void incrementCardsDrawnThisTurn(){
+        _cardsDrawnThisTurn++;
+    }
+
+    public void resetCardsDrawnThisTurn() {
+        _cardsDrawnThisTurn = 0;
     }
 }
