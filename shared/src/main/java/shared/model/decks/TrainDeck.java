@@ -173,20 +173,22 @@ public class TrainDeck {
 
         private void removeCard(TrainCard card) throws DeckException
         {
-            try {
-                if (!_cards.remove(card)) {
-                    throw new DeckException("Train Card not in face up deck, remove failed");
+            boolean found = false;
+            for (int i = 0; i < _cards.size(); i++) {
+                if (_cards.get(i).get_color() == card.get_color()){
+                    _cards.remove(i);
+                    found = true;
+                    break;
                 }
+            }
 
-                //Card was successfully removed, is it locomotive?
-                if (card.get_color() == TrainColor.LOCOMOTIVE) {
-                    _locoMotiveCount--;
-                }
+            if (!found){
+                throw new DeckException("Card was not in face up deck, couldn't remove it");
+            }
 
-            } catch(ClassCastException e){
-                throw new DeckException("Class cast null exception when removing card from face up deck " + e.getMessage());
-            } catch(NullPointerException e) {
-                throw new DeckException("remove card face up exception, requested card is null");
+            //Card was successfully removed, is it locomotive?
+            if (card.get_color() == TrainColor.LOCOMOTIVE) {
+                _locoMotiveCount--;
             }
         }
 

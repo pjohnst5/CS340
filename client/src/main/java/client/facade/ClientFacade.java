@@ -1,15 +1,10 @@
 package client.facade;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import client.model.ClientModel;
 import shared.model.Game;
 import shared.model.GameAction;
 import shared.model.GameMap;
 import shared.model.Route;
-import shared.model.decks.DestCard;
 import shared.model.decks.DestDeck;
 import shared.model.decks.TrainDeck;
 import shared.model.wrapper.GamesWrapper;
@@ -68,14 +63,6 @@ public class ClientFacade {
     public static void changeTurns()
     {
         clientModel.changeTurns();
-    }
-
-    public static void lastRound(){
-        clientModel.lastRound();
-    }
-
-    public static void endGame() {
-        clientModel.endGame();
     }
 
     public static void setDestOptionCards(ThreeDestCardWrapper wrapper) {

@@ -22,46 +22,54 @@ import shared.model.decks.TrainCard;
 import shared.model.request.ClaimRouteRequest;
 
 public class GameMapService {
-    public void claimRoute(AsyncServerTask.AsyncCaller caller, Route route, List<TrainCard> discardedCards) throws DeckException, InvalidGameException, RouteClaimedAlreadyException, UnableToClaimRouteException {
-        ClientModel client_instance = ClientModel.getInstance();
+    private ClientModel client_instance = ClientModel.getInstance();
 
-        Game game = client_instance.getCurrentGame();
-        GameMap map = game.getMap();
-        User user = client_instance.getUser();
-        String playerId = user.get_playerId();
-        Player player = game.getPlayer(playerId);
+    private Game game = client_instance.getCurrentGame();
+    private GameMap map = game.getMap();
+    private User user = client_instance.getUser();
+    private String playerId = user.get_playerId();
+    private Player player = game.getPlayer(playerId);
 
-        if(!map.isRouteClaimed(route.getId())){                             //ensure the route isn't already claimed
-            if (route.get_pathLength() == discardedCards.size()) {          //ensure the route length is the same as the size of discarded cards
-                if(areColorsAreCorrect(route, discardedCards)) {            //ensure that the cards are of the right color to claim route
-                    //Send the request to the server
-                    ClaimRouteRequest request = new ClaimRouteRequest(map, game.getTrainDeck(), player);
+    public GameMapService() throws InvalidGameException {
+    }
 
-                    String[] paramTypes = {ClaimRouteRequest.class.getCanonicalName()};
-                    Object[] paramValues = {request};
+    public void claimRoute(AsyncServerTask.AsyncCaller caller, Route route, List<TrainCard> discardedCards) throws UnableToClaimRouteException {
+        if(canBeClaimed(route, discardedCards)){
+            //Send the request to the server
+            ClaimRouteRequest request = new ClaimRouteRequest(route, discardedCards, player);
 
-                    GenericCommand command = new GenericCommand(
-                            ConfigurationManager.getString("server_facade_name"),
-                            ConfigurationManager.getString("server_claim_route_method"),
-                            paramTypes,
-                            paramValues,
-                            null);
-                    new AsyncServerTask(caller).execute(command);
-                }
-                else {
-                    throw new UnableToClaimRouteException("Incorrect colors used to claim route");
-                }
-            }
-            else {
-                throw new UnableToClaimRouteException("Not enough cards to claim the route");
-            }
+            String[] paramTypes = {ClaimRouteRequest.class.getCanonicalName()};
+            Object[] paramValues = {request};
+
+            GenericCommand command = new GenericCommand(
+                    ConfigurationManager.getString("server_facade_name"),
+                    ConfigurationManager.getString("server_claim_route_method"),
+                    paramTypes,
+                    paramValues,
+                    null);
+            new AsyncServerTask(caller).execute(command);
         }
         else {
-            throw new RouteClaimedAlreadyException();
+            throw new UnableToClaimRouteException("There was an error when trying to claim the route");
         }
     }
 
-    private boolean areColorsAreCorrect(Route route, List<TrainCard> cards){
+    public boolean canBeClaimed(Route route, List<TrainCard> discardedCards) {
+        //check if the route isn't already claimed
+        //check if the route length is the same as the size of discarded cards
+        //check if that the cards are of the right color to claim route
+        return !isRouteClaimed(route) && areLengthsTheSame(route, discardedCards) && areColorsAreCorrect(route, discardedCards);
+    }
+
+    public boolean isRouteClaimed(Route route){
+        return map.isRouteClaimed(route.getId());
+    }
+
+    public boolean areLengthsTheSame(Route route, List<TrainCard> discardedCards){
+        return route.get_pathLength() == discardedCards.size();
+    }
+
+    public boolean areColorsAreCorrect(Route route, List<TrainCard> cards){
         TrainColor routeColor = route.get_color();
 
         if(routeColor != TrainColor.GRAY){
