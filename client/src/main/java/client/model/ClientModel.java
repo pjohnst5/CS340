@@ -233,6 +233,8 @@ public class ClientModel extends Observable {
     {
         try {
             _currentGame.changeTurns();
+            setChanged();
+            notifyObservers();
         } catch(InvalidGameException e) {
             System.out.println(e.getMessage());
         }
@@ -272,16 +274,5 @@ public class ClientModel extends Observable {
         } catch (InvalidGameException e) {
             return null;
         }
-    }
-    public void endGame() {
-        _currentGame.set_state(GameState.FINISHED);
-        setChanged();
-        notifyObservers();
-    }
-
-    public void lastRound() {
-        _currentGame.set_state(GameState.LAST_ROUND);
-        setChanged();
-        notifyObservers();
     }
 }

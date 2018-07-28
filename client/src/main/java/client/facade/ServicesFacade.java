@@ -1,30 +1,17 @@
 package client.facade;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
-import client.model.ClientModel;
 import client.server.AsyncServerTask;
-import client.view.fragment.game_status.IGameStatusView;
-import shared.enumeration.CityName;
-import shared.enumeration.TrainColor;
 import shared.exception.DeckException;
 import shared.exception.InvalidGameException;
-import shared.exception.NotEnoughTrainCarsException;
 import shared.exception.RouteClaimedAlreadyException;
-import shared.model.City;
-import shared.model.GameAction;
-import shared.model.GameMap;
 import shared.model.Message;
 import shared.model.Player;
 import shared.model.Route;
 import shared.model.decks.DestCard;
-import shared.model.decks.DestDeck;
 import shared.model.decks.TrainCard;
-import shared.model.decks.TrainDeck;
+import shared.model.request.DestCardRequest;
 import shared.model.request.LeaveGameRequest;
 import shared.model.wrapper.ThreeDestCardWrapper;
 
@@ -39,7 +26,7 @@ public class ServicesFacade {
     }
     public void drawFaceUpCard(AsyncServerTask.AsyncCaller caller, TrainCard trainCard, Player player){
         TrainCardService trainCardService = new TrainCardService();
-        trainCardService.drawFaceUpCard(caller, trainCard, player);
+        trainCardService.drawFaceUpCard(caller, player, trainCard);
     }
     public void drawFaceDownCard(AsyncServerTask.AsyncCaller caller, Player player){
         TrainCardService trainCardService = new TrainCardService();
@@ -54,20 +41,17 @@ public class ServicesFacade {
         new DestCardService().sendSetupResults(caller, keep, discard, player);
     }
 
-    public void selectDestCard(AsyncServerTask.AsyncCaller caller, List<DestCard> destCards, Player player){
+    public void selectDestCard(AsyncServerTask.AsyncCaller caller, DestCardRequest request){
         DestCardService service = new DestCardService();
-        service.selectDestCard(caller, destCards, player);
-    }
-    public void discardDestCard(AsyncServerTask.AsyncCaller caller, List<DestCard> destCards, Player player){
-        DestCardService service = new DestCardService();
-        service.discardDestCard(caller, destCards, player);
-    }
-    public void leaveGame(AsyncServerTask.AsyncCaller caller, LeaveGameRequest leaveGameRequest){
-        GameStatusService service = new GameStatusService();
-        service.leaveGame(caller, leaveGameRequest);
+        service.selectDestCards(caller, request);
     }
 
     public void requestDestCards(AsyncServerTask.AsyncCaller caller, Player player){
-        new DestCardService().requestDestCards(caller, player);
+        new DestCardService().drawThreeDestCards(caller, player);
+    }
+
+    public void leaveGame(AsyncServerTask.AsyncCaller caller, LeaveGameRequest leaveGameRequest){
+        GameStatusService service = new GameStatusService();
+        service.leaveGame(caller, leaveGameRequest);
     }
 }
