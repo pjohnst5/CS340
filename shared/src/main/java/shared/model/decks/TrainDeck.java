@@ -89,32 +89,18 @@ public class TrainDeck {
     }
 
     public void discardTrainCard(TrainCard card) throws DeckException {
+        if (_faceUpDeck._cards.size() + _faceDownDeck._cards.size() == 110)
+        {
+            throw new DeckException("There are already 110 cards in the train deck, can't add another");
+        }
+
         _faceDownDeck.addCard(card);
-    }
-
-    public FaceUpDeck get_faceUpDeck() {
-        return _faceUpDeck;
-    }
-
-    public FaceDownDeck get_faceDownDeck() {
-        return _faceDownDeck;
     }
 
     public void discardTrainCards(List<TrainCard> cards) throws DeckException {
         for(int i = 0; i < cards.size(); i++){
             discardTrainCard(cards.get(i));
         }
-    }
-
-    public void phase2DrawFaceDown() throws DeckException {
-        //FIXME: delete after phase 2
-        _faceDownDeck.drawCard();
-    }
-
-    public void phase2DrawFaceUp() throws DeckException {
-        //FIXME: delete after phase 2
-        _faceUpDeck.removeCard(_faceUpDeck._cards.get(0));
-        _faceUpDeck.addCard(_faceDownDeck.drawCard());
     }
 
     public int sizeOfFaceDownDeck(){
@@ -173,10 +159,6 @@ public class TrainDeck {
                 throw new DeckException("Already 5 cards in face up deck");
             }
 
-            if (_faceDownDeck._cards.size() + _faceUpDeck._cards.size() == 110){
-                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
-            }
-
             _cards.add(card);
 
             if (card.get_color() == TrainColor.LOCOMOTIVE){
@@ -191,20 +173,22 @@ public class TrainDeck {
 
         private void removeCard(TrainCard card) throws DeckException
         {
-            try {
-                if (!_cards.remove(card)) {
-                    throw new DeckException("Train Card not in face up deck, remove failed");
+            boolean found = false;
+            for (int i = 0; i < _cards.size(); i++) {
+                if (_cards.get(i).get_color() == card.get_color()){
+                    _cards.remove(i);
+                    found = true;
+                    break;
                 }
+            }
 
-                //Card was successfully removed, is it locomotive?
-                if (card.get_color() == TrainColor.LOCOMOTIVE) {
-                    _locoMotiveCount--;
-                }
+            if (!found){
+                throw new DeckException("Card was not in face up deck, couldn't remove it");
+            }
 
-            } catch(ClassCastException e){
-                throw new DeckException("Class cast null exception when removing card from face up deck " + e.getMessage());
-            } catch(NullPointerException e) {
-                throw new DeckException("remove card face up exception, requested card is null");
+            //Card was successfully removed, is it locomotive?
+            if (card.get_color() == TrainColor.LOCOMOTIVE) {
+                _locoMotiveCount--;
             }
         }
 
@@ -226,9 +210,6 @@ public class TrainDeck {
         }
 
         private void addCard(TrainCard card) throws DeckException {
-            if (_faceDownDeck._cards.size() + _faceUpDeck._cards.size() == 110){
-                throw new DeckException("There are already 110 cards in the Train deck total : Face Up: " + _faceUpDeck._cards.size() + " face down: " + _cards.size());
-            }
             _cards.add(card);
         }
 

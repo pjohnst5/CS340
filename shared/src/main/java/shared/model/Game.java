@@ -9,6 +9,7 @@ import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
 import shared.model.decks.DestCard;
 import shared.model.decks.DestDeck;
+import shared.model.decks.TrainCard;
 import shared.model.decks.TrainDeck;
 
 public class Game {
@@ -24,6 +25,8 @@ public class Game {
     private GameMap _map;
     private TurnManager _turnManager;
     private int _playersSetup;
+    private String _playerToEndOn;
+    private boolean _gameOver;
 
     private List<DestCard>_destOptionCards;
 
@@ -48,6 +51,8 @@ public class Game {
         _map = new GameMap();
         _destOptionCards = null;
         _playersSetup = 0;
+        _playerToEndOn = new String();
+        _gameOver = false;
     }
 
     public void setDestOptionCards(List<DestCard> cards){
@@ -133,27 +138,11 @@ public class Game {
         return _state;
     }
 
-    public void set_state(GameState state){
-        _state = state;
-    }
+    //This should only be done internally
+//    public void set_state(GameState state){
+//        _state = state;
+//    }
 
-
-    public void setGameName(String s) throws InvalidGameException {
-        if (s.isEmpty() || s == null) {
-            throw new InvalidGameException("shared.model.Game must have a name");
-        }
-        _gameName = s;
-    }
-
-    public void setMaxPlayers(int i) throws InvalidGameException {
-        if (i < 2 || i > 5) {
-            throw new InvalidGameException("Max players must be between 2 and 5 inclusive");
-        }
-        if (i < _players.size()) {
-            throw new InvalidGameException(_players.size() + " players are already playing, cannot change max num of players to " + i);
-        }
-        _maxPlayers = i;
-    }
 
     //returns the number of players after adding the player, otherwise throws an exception
     public int addPlayer(Player p) throws MaxPlayersException {
@@ -282,7 +271,31 @@ public class Game {
         {
             throw new InvalidGameException("Game hasn't started yet");
         }
+
+        int indexOfPersonWhosTurnIsEnding = -1;
+
+        for (int i = 0; i < _players.size(); i++){
+            if (_players.get(i).getPlayerID().equals(_turnManager.getCurrentPlayer())) {
+                indexOfPersonWhosTurnIsEnding = i;
+                break;
+            }
+        }
+
+        //Case where someone triggers last round by having 2 or less train cards
+        if (_state != GameState.LAST_ROUND && _players.get(indexOfPersonWhosTurnIsEnding).getTrainCars().isFinalRound()) {
+            _state = GameState.LAST_ROUND;
+            _playerToEndOn = _players.get(indexOfPersonWhosTurnIsEnding).getPlayerID();
+        } else if (_state == GameState.LAST_ROUND && _turnManager.getCurrentPlayer().equals(_playerToEndOn)) { //case where the person who triggered the last round just finished their turn
+            _state = GameState.FINISHED;
+            return;
+        }
+
+
         _turnManager.changeTurns();
+        for (int i = 0; i < _players.size(); i++){
+            _players.get(i).resetCardsDrawnThisTurn();
+        }
+
     }
 
     public int getNumClaimedRoutes(String playerId) {
@@ -296,4 +309,17 @@ public class Game {
         }
         return count;
     }
+
+    public void claimRoute(Route route, Player player) throws InvalidGameException {
+        if (_map.isRouteClaimed(route.getId())) {
+            throw new InvalidGameException("Can't claim route, it's already claimed");
+        }
+        _map.claimRoute(route.getId(), player.getPlayerID(), player.getColor());
+    }
+
+
+    public boolean getGameOver() {
+        return _gameOver;
+    }
+
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import shared.enumeration.GameState;
 import shared.exception.InvalidGameException;
 import shared.exception.MaxPlayersException;
 import shared.model.Game;
@@ -173,12 +174,19 @@ public class ClientModel extends Observable {
         notifyObservers();
     }
 
-    public void claimRoute(Route route, Player player){
-        GameMap map = getCurrentGame().getMap();
-        map.claimRoute(route.getId(), player.getPlayerID(), player.getColor());
+    public void claimRoute(Route route){
+        try {
+            Game game = getCurrentGame();
+            Player player = game.getPlayer(route.get_claimedBy());
 
-        setChanged();
-        notifyObservers();
+            GameMap map = game.getMap();
+            map.claimRoute(route.getId(), player.getPlayerID(), player.getColor());
+
+            setChanged();
+            notifyObservers();
+        } catch (InvalidGameException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updatePlayer(Player player)
@@ -225,6 +233,8 @@ public class ClientModel extends Observable {
     {
         try {
             _currentGame.changeTurns();
+            setChanged();
+            notifyObservers();
         } catch(InvalidGameException e) {
             System.out.println(e.getMessage());
         }
@@ -235,5 +245,34 @@ public class ClientModel extends Observable {
 
         setChanged();
         notifyObservers();
+    }
+
+    public boolean isMyTurn() {
+        String playerId = _user.get_playerId();
+        if (playerId == null) {
+            return false;
+        }
+        if (_currentGame == null) {
+            return false;
+        }
+        try {
+            if (playerId.equals(_currentGame.playerTurn())) {
+                return true;
+            }
+        } catch (InvalidGameException e) {
+            return false;
+        }
+        return false;
+    }
+
+    public Player getMyPlayer() {
+        String playerId = _user.get_playerId();
+        if (playerId == null) { return null; }
+        if (_currentGame == null) { return null; }
+        try {
+            return _currentGame.getPlayer(playerId);
+        } catch (InvalidGameException e) {
+            return null;
+        }
     }
 }

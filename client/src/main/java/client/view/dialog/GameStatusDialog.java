@@ -19,14 +19,12 @@ import android.widget.TextView;
 
 import com.pjohnst5icloud.tickettoride.R;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import client.model.ClientModel;
 import client.util.ColorPicker;
-import client.view.fragment.select_dest_card.DestCardSelectFragment;
 import shared.enumeration.PlayerColor;
 import shared.enumeration.TrainColor;
 import shared.model.Game;
@@ -77,7 +75,7 @@ public class GameStatusDialog extends DialogFragment {
         _playerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         _playerRecyclerView.setAdapter(new PlayerAdapter(currentGame));
 
-        Map<TrainColor, Integer> cardCounts = countNumCards(_myPlayer.getTrainCards());
+        Map<TrainColor, Integer> cardCounts = _myPlayer.countNumTrainCards();
 
         _cardRecyclerView = v.findViewById(R.id.game_status_card_recycler_view);
         _cardRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -249,23 +247,6 @@ public class GameStatusDialog extends DialogFragment {
         public int getItemCount() {
             return _counts.size();
         }
-    }
-
-    private Map<TrainColor, Integer> countNumCards(List<TrainCard> cards) {
-        Map<TrainColor, Integer> counts = new HashMap<>();
-        for (TrainColor color : TrainColor.values()) {
-            if (color == TrainColor.GRAY) {
-                continue;
-            }
-            counts.put(color, 0);
-        }
-        for (TrainCard c : cards) {
-            TrainColor color = c.get_color();
-            int prevCount = counts.get(color);
-            prevCount++;
-            counts.put(color, prevCount);
-        }
-        return counts;
     }
 
     private class DestCardHolder extends RecyclerView.ViewHolder{

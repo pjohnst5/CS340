@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,8 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     private TextView _destCardCount;
     private TextView _trainCardCount;
 
+    private Button _claimRouteButton;
+
     public static GameMapFragment newInstance() {
         return new GameMapFragment();
     }
@@ -57,11 +60,14 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         _destCardCount = v.findViewById(R.id.game_map_dest_card_count);
         _trainCardCount = v.findViewById(R.id.game_map_train_card_count);
 
+        _claimRouteButton = v.findViewById(R.id.game_map_claim_route_button);
+        _claimRouteButton.setVisibility(View.INVISIBLE);
+        _claimRouteButton.setEnabled(false);
+
 
         _gameMap = v.findViewById(R.id.game_map);
         GameMap mapModel = ClientModel.getInstance().getCurrentGame().getMap();
         List<Route> routes = new ArrayList<>(mapModel.get_routes().values());
-//        List<Route> routes = new ListOfRoutes().getRoutes();
         _gameMap.initializeData(this, CityManager.getInstance().getCities(), routes);
         _presenter = new GameMapPresenter(this);
 
@@ -79,7 +85,14 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
 
     @Override
     public void RouteSelected(Route route) {
-        _presenter.routeSelected(route);
+        if (route == null) {
+            _claimRouteButton.setVisibility(View.INVISIBLE);
+            _claimRouteButton.setEnabled(false);
+        } else {
+            _claimRouteButton.setVisibility(View.VISIBLE);
+            _claimRouteButton.setEnabled(false);
+            _presenter.routeSelected(route);
+        }
     }
 
     @Override
@@ -100,10 +113,12 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     @Override
     public void updatePlayerTurn() {
         _players = _presenter.getPlayers();
-
         getActivity().runOnUiThread(() -> _turnIndicator.setAdapter(new PlayerTurnAdapter()) );
+    }
 
-
+    @Override
+    public void setClaimRouteButtonEnabled(boolean enabled) {
+        _claimRouteButton.setEnabled(enabled);
     }
 
     private class PlayerTurnIndicatorHolder extends RecyclerView.ViewHolder {

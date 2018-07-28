@@ -1,14 +1,14 @@
 package server.facade;
 
-import server.exception.ServerException;
 import server.model.ServerModel;
+
 import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.configuration.ConfigurationManager;
+import shared.enumeration.ClaimedRoutePointSystem;
 import shared.model.GameAction;
-import shared.model.GameMap;
 import shared.model.Player;
-import shared.model.decks.DestDeck;
+import shared.model.Route;
 import shared.model.decks.TrainDeck;
 import shared.model.request.ClaimRouteRequest;
 import shared.model.response.CommandResponse;
@@ -22,76 +22,93 @@ public class GameMapService {
         ServerModel serverModel = ServerModel.getInstance();
 
         try {
-            //sets game map in server model
-            serverModel.setGameMap(request.get_gameID(), request.get_map());
 
-            //makes command to do same on client
-            String className = ConfigurationManager.getString("client_facade_name");
-            String methodName = ConfigurationManager.getString("client_set_map_method");
-            String[] paramTypes = {GameMap.class.getCanonicalName()};
-            Object[] paramValues = {request.get_map()};
-            ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
+            //claims route for game
+            serverModel.getGame(request.get_gameID()).claimRoute(request.get_route(), request.get_player());
 
-            //sets TrainDeck in server model
-            serverModel.setTrainDeck(request.get_gameID(), request.get_deck());
+            //this claims route that got passed in as a param. We'll eventually send this back to the client
+            request.get_route().claimRoute(request.get_playerID(),request.get_player().getColor());
 
-            //makes command to do the same on client
-            String className2 = ConfigurationManager.getString("client_facade_name");
-            String methodName2 = ConfigurationManager.getString("client_set_train_deck_method");
-            String[] paramTypes2 = {TrainDeck.class.getCanonicalName()};
-            Object[] paramValues2 = {request.get_deck()};
-            ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
+            //put cards back into the train deck
+            serverModel.getGame(request.get_gameID()).getTrainDeck().discardTrainCards(request.get_discarded());
 
-            //Makes game action object
-            GameAction action = new GameAction(serverModel.getPlayer(request.get_playerID()).getDisplayName(), " claimed a route");
+            //gets player from server
+            Player player = serverModel.getPlayer(request.get_playerID());
+
+            //takes train cards out of player's hand who just claimed the route (client already did this but server didn't yet)
+            player.removeTrainCards(request.get_discarded());
+
+            //takes train cars away from player who just claimed the route
+            player.removeTrains(request.get_route().get_pathLength());
+
+            //updates player points
+            player.addPoints(new ClaimedRoutePointSystem().getPoints(request.get_route().get_pathLength()));
+
+            //updates player dest ticket completion status
+            //TODO : Implement me
+
+            //update player in server (to keep map of Players and players in Games synced)
+            serverModel.updatePlayer(player.getGameID(), player);
+
+            //Makes game action object saying this player claimed the route
+            GameAction action = new GameAction(request.get_player().getDisplayName(), " claimed the route " + request.get_route().toString());
 
             //adds game action into server model
             serverModel.addGameAction(request.get_gameID(), action);
 
-            //makes command to do same on client
+            //changes turns for the game (This will handle any logic for changing to last round or ending the game)
+            serverModel.getGame(request.get_gameID()).changeTurns();
+
+
+
+            //command to claim route for client
+            String className = ConfigurationManager.getString("client_facade_name");
+            String methodName = ConfigurationManager.getString("client_claim_route_method");
+            String[] paramTypes = { Route.class.getCanonicalName()};
+            Object[] paramValues = { request.get_route() };
+            ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
+            serverModel.addCommand(request.get_gameID(), command);
+
+            //command to update train deck for client
+            String className2 = ConfigurationManager.getString("client_facade_name");
+            String methodName2 = ConfigurationManager.getString("client_set_train_deck_method");
+            String[] paramTypes2 = {TrainDeck.class.getCanonicalName()};
+            Object[] paramValues2 = {serverModel.getGame(request.get_gameID()).getTrainDeck()};
+            ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
+            serverModel.addCommand(request.get_gameID(), command2);
+
+            //command to update the player for client
             String className3 = ConfigurationManager.getString("client_facade_name");
-            String methodName3 = ConfigurationManager.getString("client_add_game_action_method");
-            String[] paramTypes3 = {GameAction.class.getCanonicalName()};
-            Object[] paramValues3 = {action};
+            String methodName3 = ConfigurationManager.getString("client_update_player_method");
+            String[] paramTypes3 = {Player.class.getCanonicalName()};
+            Object[] paramValues3 = {serverModel.getPlayer(request.get_playerID())};
             ICommand command3 = new GenericCommand(className3, methodName3, paramTypes3, paramValues3, null);
+            serverModel.addCommand(request.get_gameID(), command3);
 
-            //updates player in server model
-            serverModel.updatePlayer(request.get_gameID(), request.get_player());
-
-            //makes command to do same on client
+            //command to add game action claim route for client
             String className4 = ConfigurationManager.getString("client_facade_name");
-            String methodName4 = ConfigurationManager.getString("client_update_player_method");
-            String[] paramTypes4 = {Player.class.getCanonicalName()};
-            Object[] paramValues4 = {request.get_player()};
+            String methodName4 = ConfigurationManager.getString("client_add_game_action_method");
+            String[] paramTypes4 = {GameAction.class.getCanonicalName()};
+            Object[] paramValues4 = {action};
             ICommand command4 = new GenericCommand(className4, methodName4, paramTypes4, paramValues4, null);
+            serverModel.addCommand(request.get_gameID(), command4);
 
-            //changes turns on server
-            serverModel.changeTurn(request.get_gameID());
-
-            //makes command to change turns on client
+            //command to change turns for client
             String className5 = ConfigurationManager.getString("client_facade_name");
-            String methodName5 = ConfigurationManager.getString("client_change_turn_method");
-            String[] paramTypes5 = null;
-            Object[] paramValues5 = null;
+            String methodName5 = ConfigurationManager.getString("client_change_turns_method");
+            String[] paramTypes5 = new String[0];
+            Object[] paramValues5 = new Object[0];
             ICommand command5 = new GenericCommand(className5, methodName5, paramTypes5, paramValues5, null);
+            serverModel.addCommand(request.get_gameID(), command5);
 
-
-            //add commands to list in server model
-            serverModel.addCommand(request.get_gameID(), command);  //set map
-            serverModel.addCommand(request.get_gameID(), command2); //set train deck
-            serverModel.addCommand(request.get_gameID(), command3); //add game history entry
-            serverModel.addCommand(request.get_gameID(), command4); //updates player
-            serverModel.addCommand(request.get_gameID(), command5); //change turn
-
-            //gets list of new commands for client
-            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
+            //sets updated list of commands as response's list
             response.setSuccess(true);
+            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
 
-        } catch(ServerException e) {
+        } catch(Exception e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
         }
-
         return response;
     }
 }
