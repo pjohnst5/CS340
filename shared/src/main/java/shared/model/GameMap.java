@@ -35,6 +35,10 @@ public class GameMap {
         claimedRoutes.add(route);
     }
 
+    public Route getRoute(UUID routeId) {
+        return _routes.get(routeId);
+    }
+
     public List<Route> getClaimedRoutes() {
         return claimedRoutes;
     }

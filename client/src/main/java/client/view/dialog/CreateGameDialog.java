@@ -153,6 +153,7 @@ public class CreateGameDialog extends DialogFragment {
 //                            Toast.makeText(getActivity(), "Game name can't be empty", Toast.LENGTH_SHORT).show();
 //
 //                        } else if (displayName.equals("")) {
+
 //                            Toast.makeText(getActivity(), "Display name can't be empty", Toast.LENGTH_SHORT).show();
 //
 //                        }

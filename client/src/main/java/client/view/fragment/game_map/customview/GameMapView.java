@@ -93,6 +93,10 @@ public class GameMapView extends FrameLayout {
         }
     }
 
+    public Route getSelectedRoute() {
+        return _selectedRoute.getRoute();
+    }
+
     private void routeSelected(RouteView rv) {
         boolean newRoute = false;
         if (_selectedRoute != null) {

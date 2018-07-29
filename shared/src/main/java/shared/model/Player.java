@@ -2,6 +2,7 @@ package shared.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -155,6 +156,29 @@ public class Player {
             counts.put(color, prevCount);
         }
         return counts;
+    }
+
+    public List<TrainCard> getCardsFromCounts(Map<TrainColor, Integer> counts) {
+        // NOTE: method does not remove cards from player's hand; it just returns a list of pointers to card objects
+        List<TrainCard> cards = new ArrayList<>();
+        Map<TrainColor, Integer> cardCounts = new HashMap<>(counts);
+        for (Map.Entry<TrainColor, Integer> colorCount : cardCounts.entrySet()) {
+            Iterator<TrainCard> it = _trainCards.iterator();
+            while (colorCount.getValue() > 0) {
+                if (it.hasNext()) {
+                    TrainCard curCard = it.next();
+                    if (curCard.get_color() == colorCount.getKey()) {
+                        cards.add(curCard);
+                        int newVal = colorCount.getValue() - 1;
+                        colorCount.setValue(newVal);
+                    }
+                } else {
+                    // player doesn't have the train cards to match the request
+                    return null;
+                }
+            }
+        }
+        return cards;
     }
 
     public void removeTrains(int num) throws NotEnoughTrainCarsException {

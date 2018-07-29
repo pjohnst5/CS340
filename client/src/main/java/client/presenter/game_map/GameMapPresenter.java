@@ -1,24 +1,31 @@
 package client.presenter.game_map;
 
+import android.util.Log;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import client.facade.ServicesFacade;
 import client.model.ClientModel;
 import client.server.AsyncServerTask;
 import client.view.fragment.game_map.IGameMapView;
 import shared.enumeration.TrainColor;
+import shared.exception.DeckException;
 import shared.exception.InvalidGameException;
+import shared.exception.RouteClaimedAlreadyException;
 import shared.model.Game;
 import shared.model.Player;
 import shared.model.Route;
+import shared.model.decks.TrainCard;
 
 /**
  * Created by jtyler17 on 7/23/18.
  */
 
 public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServerTask.AsyncCaller {
+    private static final String TAG = "GameMapPresenter";
     private IGameMapView _mapView;
     private ClientModel _model;
 
@@ -58,17 +65,10 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
 
     @Override
     public void routeSelected(Route route) {
-        // TODO: implement -- see if the route can be claimed; if it's the player's turn, enable the claim button; etc.
-        Game currentGame = _model.getCurrentGame();
-        Player myPlayer = _model.getMyPlayer();
-        Map<TrainColor, Integer> trainCards = myPlayer.countNumTrainCards();
-
-
-        // At the end:
         if (!_model.isMyTurn()) {
             return;
         }
-
+        _mapView.setClaimRouteButtonEnabled(true);
     }
 
     @Override
@@ -85,5 +85,21 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
         _mapView.updateMap();
         _mapView.updatePlayerTurn();
         _mapView.updateDeckCount(numDestCards, numTrainCards);
+    }
+
+    @Override
+    public Player getMyPlayer() {
+        return _model.getMyPlayer();
+    }
+
+    @Override
+    public void claimRoute(Route route, Map<TrainColor, Integer> selectedCards) {
+        List<TrainCard> discardCards = _model.getMyPlayer().getCardsFromCounts(selectedCards);
+        try {
+            new ServicesFacade().claimRoute(this, route, discardCards);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            onServerResponseComplete(e);
+        }
     }
 }

@@ -44,7 +44,7 @@ public class GameStatusDialog extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+public Dialog onCreateDialog(Bundle savedInstanceState) {
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_game_status, null);
 
         Button closeDialogButton = v.findViewById(R.id.game_status_close_dialog);

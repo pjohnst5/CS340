@@ -6,6 +6,7 @@ import android.support.v4.content.res.ResourcesCompat;
 
 import com.pjohnst5icloud.tickettoride.R;
 
+import shared.enumeration.CityName;
 import shared.enumeration.PlayerColor;
 import shared.enumeration.TrainColor;
 
@@ -79,5 +80,35 @@ public class ColorPicker {
                 return res.getDrawable(R.drawable.button_yellow);
         }
         return res.getDrawable(R.drawable.button_grey);
+    }
+
+    public static String trainCardColorName(Resources res, TrainColor color) {
+        switch (color) {
+            case RED:
+                return res.getString(R.string.color_red);
+            case BLUE:
+                return res.getString(R.string.color_blue);
+            case PINK:
+                return res.getString(R.string.pink);
+            case BLACK:
+                return res.getString(R.string.color_black);
+            case GREEN:
+                return res.getString(R.string.color_green);
+            case WHITE:
+                return res.getString(R.string.white);
+            case ORANGE:
+                return res.getString(R.string.orange);
+            case YELLOW:
+                return res.getString(R.string.color_yellow);
+            case GRAY:
+                return res.getString(R.string.gray);
+            case LOCOMOTIVE:
+                return res.getString(R.string.locomotive);
+        }
+        return null;
+    }
+
+    public static String convertCityNameToString(CityName city) {
+        return city.name().replace("_", " ");
     }
 }

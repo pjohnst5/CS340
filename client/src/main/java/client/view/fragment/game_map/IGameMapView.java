@@ -1,6 +1,8 @@
 package client.view.fragment.game_map;
 
 import client.presenter.game_map.IGameMapPresenter;
+import shared.model.Player;
+import shared.model.Route;
 
 /**
  * Created by jtyler17 on 7/21/18.
