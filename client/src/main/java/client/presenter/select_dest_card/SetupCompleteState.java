@@ -5,13 +5,13 @@ import java.util.Observable;
 
 import shared.model.decks.DestCard;
 
-public class DestCardSelectSetupCompleteState extends DestCardSelectState {
+public class SetupCompleteState extends DestCardSelectState {
 
     private static final int NUM_CARDS_REQUIRED = 1;
 
-    public DestCardSelectSetupCompleteState() { }
+    public SetupCompleteState() { }
 
-    public DestCardSelectSetupCompleteState(IDestCardSelectPresenter presenter) {
+    public SetupCompleteState(IDestCardSelectPresenter presenter) {
         super(presenter);
     }
 

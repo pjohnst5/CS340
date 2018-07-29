@@ -5,18 +5,17 @@ import java.util.Observable;
 
 import client.facade.ServicesFacade;
 import client.model.ClientModel;
-import shared.enumeration.GameState;
 import shared.exception.InvalidGameException;
 import shared.model.decks.DestCard;
 
-public class DestCardSelectSetupPendingState extends DestCardSelectState {
+public class SetupPendingState extends DestCardSelectState {
 
     private ClientModel _model = ClientModel.getInstance();
     private ServicesFacade _facade = new ServicesFacade();
 
-    public DestCardSelectSetupPendingState() { }
+    public SetupPendingState() { }
 
-    public DestCardSelectSetupPendingState(IDestCardSelectPresenter presenter) {
+    public SetupPendingState(IDestCardSelectPresenter presenter) {
         super(presenter);
     }
 
@@ -49,7 +48,7 @@ public class DestCardSelectSetupPendingState extends DestCardSelectState {
                 e.printStackTrace();
                 return;
             }
-            presenter().setState(new DestCardSelectSetupCompleteState(presenter()));
+            presenter().setState(new SetupCompleteState(presenter()));
         }
 
     }

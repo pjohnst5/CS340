@@ -16,9 +16,9 @@ public class DestCardSelectPresenter
     private ClientModel _model;
 
     private static DestCardSelectState _state;
-    private static DestCardSelectSetupState _setupState = new DestCardSelectSetupState();
-    private static DestCardSelectSetupPendingState _resultsPendingState = new DestCardSelectSetupPendingState();
-    private static DestCardSelectSetupCompleteState _setupCompleteState = new DestCardSelectSetupCompleteState();
+    private static StateSetup _setupState = new StateSetup();
+    private static SetupPendingState _resultsPendingState = new SetupPendingState();
+    private static SetupCompleteState _setupCompleteState = new SetupCompleteState();
 
     public DestCardSelectPresenter(IDestCardSelectView selectView){
 

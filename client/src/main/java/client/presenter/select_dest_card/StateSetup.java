@@ -5,12 +5,11 @@ import java.util.Observable;
 
 import client.facade.ServicesFacade;
 import client.model.ClientModel;
-import shared.exception.InvalidGameException;
 import shared.model.Player;
 import shared.model.decks.DestCard;
 import shared.model.wrapper.ThreeDestCardWrapper;
 
-public class DestCardSelectSetupState extends DestCardSelectState {
+public class StateSetup extends DestCardSelectState {
 
     private static final int NUM_CARDS_REQUIRED = 2;
 
@@ -18,8 +17,8 @@ public class DestCardSelectSetupState extends DestCardSelectState {
     private ServicesFacade _facade = new ServicesFacade();
 
 
-    public DestCardSelectSetupState() { }
-    public DestCardSelectSetupState(IDestCardSelectPresenter presenter) {
+    public StateSetup() { }
+    public StateSetup(IDestCardSelectPresenter presenter) {
         super(presenter);
     }
 
@@ -49,7 +48,7 @@ public class DestCardSelectSetupState extends DestCardSelectState {
 
         _facade.sendSetupResults(presenter(), keep, discard, player);
 
-        presenter().setState(new DestCardSelectSetupPendingState(presenter()));
+        presenter().setState(new SetupPendingState(presenter()));
 
     }
 
