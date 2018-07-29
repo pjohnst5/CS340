@@ -1,9 +1,12 @@
 package client.view.fragment.game_map;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,14 +20,18 @@ import android.widget.Toast;
 import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import client.model.ClientModel;
 import client.presenter.game_map.GameMapPresenter;
 import client.presenter.game_map.IGameMapPresenter;
 import client.util.ColorPicker;
+import client.view.dialog.ClaimRouteDialog;
 import client.view.fragment.game_map.customview.GameMapView;
 import shared.enumeration.CityManager;
+import shared.enumeration.TrainColor;
 import shared.model.GameMap;
 import shared.model.Player;
 import shared.model.Route;
@@ -45,6 +52,9 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
 
     private Button _claimRouteButton;
 
+    private static final String CLAIM_ROUTE_DIALOG_TAG = "ClaimRouteDialog";
+    private static final int CLAIM_ROUTE_DIALOG_CODE = 0;
+
     public static GameMapFragment newInstance() {
         return new GameMapFragment();
     }
@@ -63,6 +73,12 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         _claimRouteButton = v.findViewById(R.id.game_map_claim_route_button);
         _claimRouteButton.setVisibility(View.INVISIBLE);
         _claimRouteButton.setEnabled(false);
+        _claimRouteButton.setOnClickListener((view) -> {
+            FragmentManager manager = getFragmentManager();
+            ClaimRouteDialog dialog = ClaimRouteDialog.newInstance(_gameMap.getSelectedRoute().getId(), _presenter.getMyPlayer().getPlayerID());
+            dialog.setTargetFragment(GameMapFragment.this, CLAIM_ROUTE_DIALOG_CODE);
+            dialog.show(manager, CLAIM_ROUTE_DIALOG_TAG);
+        });
 
 
         _gameMap = v.findViewById(R.id.game_map);
@@ -81,6 +97,18 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         super.onDestroyView();
 
         _presenter.destroy();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == CLAIM_ROUTE_DIALOG_CODE) {
+            Map<TrainColor, Integer> selectedCards = (HashMap<TrainColor, Integer>) data.getSerializableExtra(ClaimRouteDialog.EXTRA_SELECTED_CARDS);
+            _presenter.claimRoute(_gameMap.getSelectedRoute(), selectedCards);
+        }
     }
 
     @Override

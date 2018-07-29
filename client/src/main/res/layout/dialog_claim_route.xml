@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/claim_route_close_dialog"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/button_red"
+        android:text="@string/close_modal_button_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/claim_route_title"
+        style="@style/TitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:paddingEnd="40dp"
+        android:paddingStart="40dp"
+        android:text="@string/claim_route_title_text"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/claim_route_route_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/claim_route_title"
+        tools:text="Vancouver - Calgary (Red) -- 0/5" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/claim_route_card_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/claim_route_route_name" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border_two_dp"
+        app:layout_constraintTop_toBottomOf="@+id/claim_route_card_recycler">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_two_dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/claim_route_cancel_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="75dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_action_grey"
+                android:text="@string/cancel" />
+
+            <Button
+                android:id="@+id/claim_route_accept_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="75dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_action_blue"
+                android:text="@string/create_game_button" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

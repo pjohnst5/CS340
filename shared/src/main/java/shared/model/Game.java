@@ -2,6 +2,7 @@ package shared.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import shared.enumeration.GameState;
 import shared.exception.DeckException;
@@ -316,7 +317,6 @@ public class Game {
         }
         _map.claimRoute(route.getId(), player.getPlayerID(), player.getColor());
     }
-
 
     public boolean getGameOver() {
         return _gameOver;

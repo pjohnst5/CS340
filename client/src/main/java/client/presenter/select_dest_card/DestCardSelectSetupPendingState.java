@@ -6,6 +6,7 @@ import java.util.Observable;
 import client.facade.ServicesFacade;
 import client.model.ClientModel;
 import shared.enumeration.GameState;
+import shared.exception.InvalidGameException;
 import shared.model.decks.DestCard;
 
 public class DestCardSelectSetupPendingState extends DestCardSelectState {
@@ -42,7 +43,12 @@ public class DestCardSelectSetupPendingState extends DestCardSelectState {
         int numPlayers = _model.getCurrentGame().getMaxPlayers();
 
         if (numPlayersCompleted >= numPlayers){
-            _model.getCurrentGame().set_state(GameState.STARTED);
+            try {
+                _model.getCurrentGame().start();
+            } catch (InvalidGameException e) {
+                e.printStackTrace();
+                return;
+            }
             presenter().setState(new DestCardSelectSetupCompleteState(presenter()));
         }
 
