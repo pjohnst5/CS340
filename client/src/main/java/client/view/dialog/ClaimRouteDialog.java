@@ -160,6 +160,8 @@ public class ClaimRouteDialog extends DialogFragment {
     private class TrainCardHolder extends RecyclerView.ViewHolder implements NumberPicker.OnValueChangeListener {
         private TextView _trainColorView;
         private NumberPicker _numCardsPicker;
+        private Button _minusButton;
+        private Button _plusButton;
         private TextView _indicatorView;
         private int _maxCards;
         private TrainColor _trainColor;
@@ -167,7 +169,19 @@ public class ClaimRouteDialog extends DialogFragment {
             super(inflater.inflate(R.layout.claim_route_list_item, parent, false));
             _trainColorView = itemView.findViewById(R.id.list_item_train_card_color);
             _numCardsPicker = itemView.findViewById(R.id.list_item_select_num_cards);
+            _minusButton = itemView.findViewById(R.id.claim_route_minus_button);
+            _plusButton = itemView.findViewById(R.id.claim_route_plus_button);
             _indicatorView = itemView.findViewById(R.id.list_item_selected_indicator);
+            _minusButton.setOnClickListener((view) -> {
+                int value = _numCardsPicker.getValue();
+                value--;
+                _numCardsPicker.setValue(value); // number picker checks for us if it's below the minimum
+            });
+            _plusButton.setOnClickListener((view) -> {
+                int value = _numCardsPicker.getValue();
+                value++;
+                _numCardsPicker.setValue(value);
+            });
         }
         public void bind(Pair<TrainColor, Integer> cards, int initialValue) {
             _trainColor = cards.getKey();
