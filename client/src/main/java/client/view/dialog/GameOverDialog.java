@@ -71,7 +71,7 @@ public Dialog onCreateDialog(Bundle savedInstanceState) {
         }
 
         _winnerTextView = v.findViewById(R.id.game_over_winner);
-        _winnerTextView.setText(currentGame.getWinner() + " wins!"); // FIXME: implement
+//        _winnerTextView.setText(currentGame.getWinner().name() + " wins!"); // FIXME: implement
 
         _playerRecyclerView = v.findViewById(R.id.game_over_stats_recycler_view);
         _playerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

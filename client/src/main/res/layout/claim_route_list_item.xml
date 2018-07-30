@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:weightSum="6">
 
@@ -7,18 +8,44 @@
         android:id="@+id/list_item_train_card_color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"/>
+        android:layout_weight="2"
+        android:textSize="24sp"
+        tools:text="Blue" />
 
-    <NumberPicker
-        android:id="@+id/list_item_select_num_cards"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"/>
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:weightSum="6"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/claim_route_minus_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/claim_route_minus"/>
+        <NumberPicker
+            android:id="@+id/list_item_select_num_cards"
+            android:layout_width="0dp"
+            android:layout_height="24sp"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"/>
+        <Button
+            android:id="@+id/claim_route_plus_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/claim_route_plus"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/list_item_selected_indicator"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"/>
+        android:layout_weight="2"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        tools:text="0/4" />
 
 </LinearLayout>

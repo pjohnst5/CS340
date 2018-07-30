@@ -62,6 +62,8 @@
 
     <!-- CLAIM ROUTE DIALOG -->
     <string name="claim_route_title_text">Claim Route</string>
+    <string name="claim_route_plus">+</string>
+    <string name="claim_route_minus">-</string>
 
     <!-- GAME OVER DIALOG -->
     <string name="game_over_dialog_title">Game Over</string>
