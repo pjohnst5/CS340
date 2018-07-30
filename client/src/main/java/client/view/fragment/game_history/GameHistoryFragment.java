@@ -26,11 +26,9 @@ import shared.model.Player;
 
 public class GameHistoryFragment extends SidebarFragment implements IGameHistoryView {
 
-    private IGameHistoryPresenter _presenter;
-
     private List<GameAction> _actions;
     private GameHistoryAdapter _historyAdapter;
-    private RecyclerView _historyRecyclerView;
+    private IGameHistoryPresenter _presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,14 +36,18 @@ public class GameHistoryFragment extends SidebarFragment implements IGameHistory
 
         setupSidebarButtons(ButtonType.GAME_HISTORY);
 
+        // Initialize Simple Members
         _actions = new ArrayList<>();
         _historyAdapter = new GameHistoryAdapter();
-        _historyRecyclerView = v.findViewById(R.id.game_history_recycler_view);
+        _presenter = new GameHistoryPresenter(this);
+
+        // Initialize View Members
+        RecyclerView _historyRecyclerView = v.findViewById(R.id.game_history_recycler_view);
+
+        // Modify View Members
         _historyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ((LinearLayoutManager)_historyRecyclerView.getLayoutManager()).setReverseLayout(true);
         _historyRecyclerView.setAdapter(_historyAdapter);
-
-        _presenter = new GameHistoryPresenter(this);
 
         return v;
     }
@@ -53,6 +55,7 @@ public class GameHistoryFragment extends SidebarFragment implements IGameHistory
     @Override
     public boolean addAction(GameAction action){
         if (_actions.contains(action)) return false;
+
         _actions.add(action);
         Collections.sort(_actions, GameAction.getDescendingComparator());
 

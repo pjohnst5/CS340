@@ -1,7 +1,5 @@
 package client.view.fragment.chat;
 
-import java.util.List;
-
 import shared.model.Message;
 
 public interface IGameChatView {
@@ -13,4 +11,5 @@ public interface IGameChatView {
     public void disableSendButton();
     public void showToast(String message);
     public boolean addMessage(Message message);
+
 }

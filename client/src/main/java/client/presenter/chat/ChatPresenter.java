@@ -33,7 +33,6 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
         try {
             _player = _model.getCurrentGame().getPlayer(_model.getUser().get_playerId());
         } catch (InvalidGameException e) {
-            System.out.println("Game is not initilaized, something went wrong");
             e.printStackTrace();
             System.exit(1);
         }
@@ -47,22 +46,15 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
     @Override
     public void sendMessage(String content) {
 
-        // TODO: UPDATE send to the server here
-
         _chatView.disableInput();
         _chatView.disableSendButton();
-
-        _chatView.showToast(content);
         _chatView.clearInput();
-
 
         Message msg = new Message();
         msg.setMessage(content);
         msg.setPlayer(_player);
 
-       _facade.sendMessage(this, msg);
-
-
+        _facade.sendMessage(this, msg);
         _chatView.enableInput();
     }
 

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,58 +27,51 @@ import shared.model.Player;
 
 public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
-    private Button mStartButton;
-    private Button mLeaveButton;
-
-    private RecyclerView mPlayerListRecyclerView;
-    private PlayerListAdapter mPlayerListAdapter;
-
-    private Game mCurrentGame;
-    private IGameLobbyPresenter mPresenter;
-
+    private Game _currentGame;
+    private Button _startButton;
+    private RecyclerView _playerListRecyclerView;
+    private IGameLobbyPresenter _presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_game_lobby, container, false);
 
-        mStartButton = v.findViewById(R.id.start_game_button);
-        mStartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.startGame();
-            }
-        });
+        // Initialize View Members
+        Button _leaveButton = v.findViewById(R.id.leave_game_button);
+        _startButton = v.findViewById(R.id.start_game_button);
+        _playerListRecyclerView = v.findViewById(R.id.player_list_recycler_view);
 
-        mLeaveButton = v.findViewById(R.id.leave_game_button);
-        mLeaveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.leaveGame();
-            }
-        });
-        mLeaveButton.setEnabled(false);
-        mLeaveButton.setVisibility(View.INVISIBLE); // FIXME: leave game feature not implemented
+        // Modify View Members
+        _leaveButton.setEnabled(false);
+        _leaveButton.setVisibility(View.INVISIBLE); // FIXME: leave game feature not implemented
+        _playerListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        // Set View OnClickListeners
+        _leaveButton.setOnClickListener((view) -> _presenter.leaveGame());
+        _startButton.setOnClickListener((view) -> _presenter.startGame());
 
-        mPlayerListRecyclerView = v.findViewById(R.id.player_list_recycler_view);
-        mPlayerListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        updateView(mCurrentGame);
+        updateView(_currentGame);
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        _presenter.destroy();
+    }
+
     private void updateView(Game game) {
-        mCurrentGame = game;
-        if (mCurrentGame == null) { return; }
-        List<Player> players = mCurrentGame.getPlayers();
+        _currentGame = game;
+        if (_currentGame == null) { return; }
+        List<Player> players = _currentGame.getPlayers();
         if (players == null) {return; }
-        mPlayerListAdapter = new PlayerListAdapter(players);
-        mPlayerListRecyclerView.setAdapter(mPlayerListAdapter);
-        GameState state = mCurrentGame.get_state();
+        PlayerListAdapter _playerListAdapter = new PlayerListAdapter(players);
+        _playerListRecyclerView.setAdapter(_playerListAdapter);
+        GameState state = _currentGame.get_state();
         if (state == GameState.READY) {
-            mStartButton.setEnabled(true);
+            _startButton.setEnabled(true);
         } else {
-            mStartButton.setEnabled(false);
+            _startButton.setEnabled(false);
         }
     }
 
@@ -103,12 +95,12 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
     @Override
     public void setPresenter(IGameLobbyPresenter presenter) {
-        mPresenter = presenter;
+        _presenter = presenter;
     }
 
     @Override
     public void setCurrentGame(Game currentGame) {
-        mCurrentGame = currentGame;
+        _currentGame = currentGame;
     }
 
     @Override
@@ -118,24 +110,25 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
 
     private class PlayerHolder extends RecyclerView.ViewHolder {
-        private TextView mPlayerNameView;
-        private Player mPlayer;
+        private TextView _playerNameView;
         private LinearLayout _container;
+
         public PlayerHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.player_list_item, parent, false));
-            mPlayerNameView = itemView.findViewById(R.id.list_item_player_name);
+
+            _playerNameView = itemView.findViewById(R.id.list_item_player_name);
             _container = itemView.findViewById(R.id.list_item_player_container);
         }
+
         public void bind(Player player) {
-            mPlayer = player;
-            mPlayerNameView.setText(mPlayer.getUserName());
-            _container.setBackgroundColor(ColorPicker.getPlayerColor(getResources(), mPlayer.getColor()));
+            _playerNameView.setText(player.getUserName());
+            _container.setBackgroundColor(ColorPicker.getPlayerColor(getResources(), player.getColor()));
         }
     }
     private class PlayerListAdapter extends RecyclerView.Adapter<PlayerHolder> {
-        List<Player> mPlayers;
+        List<Player> _players;
         public PlayerListAdapter(List<Player> players) {
-            mPlayers = players;
+            _players = players;
         }
 
         @NonNull
@@ -147,13 +140,13 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
         @Override
         public void onBindViewHolder(@NonNull PlayerHolder holder, int position) {
-            Player player = mPlayers.get(position);
+            Player player = _players.get(position);
             holder.bind(player);
         }
 
         @Override
         public int getItemCount() {
-            return mPlayers.size();
+            return _players.size();
         }
     }
 }

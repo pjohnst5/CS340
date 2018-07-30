@@ -57,6 +57,11 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
         ServerProxy.instance().usePoller(_poller);
     }
 
+    @Override
+    public void destroy() {
+        ServerProxy.instance().stopPoller();
+        _model.deleteObserver(this);
+    }
 
     /**
      * Method to be called when the observable ClientModel updates. Called when Game is either
@@ -74,17 +79,13 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
      */
     @Override
     public void update(Observable observable, Object o) {
-        if (observable instanceof ClientModel) {
-            Game currentGame = _model.getCurrentGame();
-            if (currentGame != null) {
-                _model.deleteObserver(this);
-                ServerProxy.instance().stopPoller();
-                _view.joinGame();
-            } else {
-                Map<String, Game> gameMap = _model.getGames();
-                List<Game> games = new ArrayList(gameMap.values());
-                _view.updateGameList(games);
-            }
+        Game currentGame = _model.getCurrentGame();
+        if (currentGame != null) {
+            _view.joinGame();
+        } else {
+            Map<String, Game> gameMap = _model.getGames();
+            List<Game> games = new ArrayList<>(gameMap.values());
+            _view.updateGameList(games);
         }
     }
 
@@ -137,12 +138,10 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
     @Override
     public void createGame(String gameName, String displayName, PlayerColor color, int maxPlayers) {
 
-        if (!validateCreateGameRequest(gameName, displayName)) {
-            return;
-        }
+        if (!validateCreateGameRequest(gameName, displayName)) { return; }
 
-        Game game = null;
-        Player player = null;
+        Game game;
+        Player player;
         User user = _model.getUser();
         String gameId = UUID.randomUUID().toString();
 
@@ -152,16 +151,18 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
             game = new Game(gameName, maxPlayers);
             game.setGameID(gameId);
             game.addPlayer(player);
+            GameListService.createGame(this, game);
 
         } catch (PlayerException e) {
             e.printStackTrace();
             _view.showToast("Invalid player object");
+
         } catch (InvalidGameException | MaxPlayersException e) {
             e.printStackTrace();
             _view.showToast("Invalid game object");
+
         }
 
-        GameListService.createGame(this, game);
     }
 
     /**

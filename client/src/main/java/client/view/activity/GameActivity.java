@@ -17,8 +17,14 @@ import client.view.fragment.select_dest_card.DestCardSelectFragment;
 public class GameActivity extends AppCompatActivity {
 
     public static Intent newIntent(Context packageContext) {
-        Intent intent = new Intent(packageContext, GameActivity.class);
-        return intent;
+        return new Intent(packageContext, GameActivity.class);
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+
+        getSupportActionBar().hide();
     }
 
     @Override
@@ -34,7 +40,6 @@ public class GameActivity extends AppCompatActivity {
 
         if (gameContentFragment == null){
             gameContentFragment = new DestCardSelectFragment();
-//            gameContentFragment = GameMapFragment.newInstance();
             fm.beginTransaction()
                     .add(R.id.game_content_container, gameContentFragment)
                     .commit();
@@ -48,12 +53,5 @@ public class GameActivity extends AppCompatActivity {
         }
 
         ServerProxy.instance().usePoller(MainGamePoller.instance());
-    }
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-
-        getSupportActionBar().hide();
     }
 }

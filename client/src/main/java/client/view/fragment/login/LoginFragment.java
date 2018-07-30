@@ -2,12 +2,12 @@ package client.view.fragment.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -15,69 +15,68 @@ import android.widget.Toast;
 
 import com.pjohnst5icloud.tickettoride.R;
 
+import client.presenter.login.LoginPresenter;
 import client.view.activity.GameListActivity;
 import client.presenter.login.ILoginPresenter;
-import client.view.fragment.login.ILoginView;
-
-/**
- * Created by jtyler17 on 7/7/18.
- */
 
 public class LoginFragment extends Fragment implements ILoginView {
-    private TextView mConfirmPasswordLabel;
-    private EditText mUsernameField;
-    private EditText mPasswordField;
-    private EditText mConfirmPasswordField;
-    private Switch mSubmitOptionSwitch;
-    private Button mSubmitButton;
-    private ILoginPresenter mPresenter;
 
-    private boolean isRegister;
+    private TextView _confirmPasswordLabel;
+    private EditText _usernameField;
+    private EditText _passwordField;
+    private EditText _confirmPasswordField;
+    private ILoginPresenter _presenter;
+
+    private boolean _registerSelected;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
-        mConfirmPasswordLabel = v.findViewById(R.id.login_confirm_password_label);
-        mUsernameField = v.findViewById(R.id.login_username);
-        mPasswordField = v.findViewById(R.id.login_password);
-        mConfirmPasswordField = v.findViewById(R.id.login_confirm_password);
-        mSubmitOptionSwitch = v.findViewById(R.id.login_submit_option_switch);
-        mSubmitOptionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                isRegister = b;
-                mConfirmPasswordField.setEnabled(b);
+        // Initialize Simple Members
+        _registerSelected = false;
+        _presenter = new LoginPresenter(this);
 
-                if (isRegister) {
-                    mConfirmPasswordField.setVisibility(View.VISIBLE);
-                    mConfirmPasswordLabel.setVisibility(View.VISIBLE);
-                } else {
-                    mConfirmPasswordField.setVisibility(View.GONE);
-                    mConfirmPasswordLabel.setVisibility(View.GONE);
-                }
-            }
-        });
-        isRegister = false;
+        // Initialize View Members
+        Switch mSubmitOptionSwitch = v.findViewById(R.id.login_submit_option_switch);
+        Button mSubmitButton = v.findViewById(R.id.login_submit_button);
+        _confirmPasswordLabel = v.findViewById(R.id.login_confirm_password_label);
+        _usernameField = v.findViewById(R.id.login_username);
+        _passwordField = v.findViewById(R.id.login_password);
+        _confirmPasswordField = v.findViewById(R.id.login_confirm_password);
+
+        // Modify View Members
         mSubmitOptionSwitch.setChecked(false);
-        mConfirmPasswordField.setVisibility(View.GONE);
-        mConfirmPasswordLabel.setVisibility(View.GONE);
+        _confirmPasswordField.setVisibility(View.GONE);
+        _confirmPasswordLabel.setVisibility(View.GONE);
 
-        mSubmitButton = v.findViewById(R.id.login_submit_button);
-        mSubmitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onSubmit();
+        // Set View OnClickListeners
+        mSubmitOptionSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
+            _registerSelected = b;
+            _confirmPasswordField.setEnabled(b);
+
+            if (_registerSelected) {
+                _confirmPasswordField.setVisibility(View.VISIBLE);
+                _confirmPasswordLabel.setVisibility(View.VISIBLE);
+            } else {
+                _confirmPasswordField.setVisibility(View.GONE);
+                _confirmPasswordLabel.setVisibility(View.GONE);
             }
         });
 
-        isRegister = false;
+        mSubmitButton.setOnClickListener((view) -> onSubmit());
 
         return v;
     }
 
     @Override
-    public void changeViewGameList() {
+    public void onDestroyView(){
+        super.onDestroyView();
+        _presenter.destroy();
+    }
+
+    @Override
+    public void switchToGameList() {
         // when the presenter observes a successful sign-in, changes to the game list view
         Intent intent = GameListActivity.newIntent(getActivity());
         startActivity(intent);
@@ -85,21 +84,22 @@ public class LoginFragment extends Fragment implements ILoginView {
 
     @Override
     public void setPresenter(ILoginPresenter presenter) {
-        mPresenter = presenter;
+        _presenter = presenter;
     }
 
     private void onSubmit() {
-        if (mPresenter == null) {
+        if (_presenter == null) {
             return;
         }
-        String username = mUsernameField.getText().toString();
-        String password = mPasswordField.getText().toString();
-        String checkPassword = mConfirmPasswordField.getText().toString();
+        String username = _usernameField.getText().toString();
+        String password = _passwordField.getText().toString();
+        String checkPassword = _confirmPasswordField.getText().toString();
 
-        if (isRegister){
-            mPresenter.register(username, password, checkPassword);
+
+        if (_registerSelected){
+            _presenter.register(username, password, checkPassword);
         } else {
-            mPresenter.login(username, password);
+            _presenter.login(username, password);
         }
 
     }

@@ -12,15 +12,11 @@ import client.presenter.game_list.IGameListPresenter;
 public class GameListActivity extends SingleFragmentActivity {
 
     public static Intent newIntent(Context packageContext) {
-        Intent intent = new Intent(packageContext, GameListActivity.class);
-        return intent;
+        return new Intent(packageContext, GameListActivity.class);
     }
 
     @Override
     protected Fragment createFragment() {
-        IGameListView view = new GameListFragment();
-        IGameListPresenter presenter = new GameListPresenter(view);
-        view.setPresenter(presenter);
-        return (Fragment) view;
+        return new GameListFragment();
     }
 }

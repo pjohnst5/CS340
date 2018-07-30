@@ -23,13 +23,15 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
     }
 
     @Override
+    public void destroy(){
+        _model.deleteObserver(this);
+    }
+
+    @Override
     public void update(Observable observable, Object o) {
         Log.i(TAG,"Updating LoginPresenter");
-        if (observable instanceof ClientModel) {
-            if (_model.getUser() != null) {
-                _model.deleteObserver(this);
-                _view.changeViewGameList();
-            }
+        if (_model.getUser() != null) {
+            _view.switchToGameList();
         }
     }
 
@@ -61,19 +63,17 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
     @Override
     public void login(String username, String password) {
 
-        if (!validateArguments(username, password, password))
-            return;
-
+        if (!validateArguments(username, password, password)) { return; }
         LoginService.login(this, username, password);
+
     }
 
     @Override
     public void register(String username, String password, String checkPassword) {
 
-        if (!validateArguments(username, password, checkPassword))
-            return;
-
+        if (!validateArguments(username, password, checkPassword)) { return; }
         LoginService.register(this, username, password);
+
     }
 
     @Override

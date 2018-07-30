@@ -8,17 +8,13 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import client.view.fragment.login.ILoginView;
 import client.view.fragment.login.LoginFragment;
-import client.presenter.login.ILoginPresenter;
-import client.presenter.login.LoginPresenter;
 import shared.configuration.ConfigurationManager;
 
 public class LoginActivity extends SingleFragmentActivity {
 
     public static Intent newIntent(Context packageContext) {
-        Intent intent = new Intent(packageContext, LoginActivity.class);
-        return intent;
+        return new Intent(packageContext, LoginActivity.class);
     }
 
     @Override
@@ -30,10 +26,7 @@ public class LoginActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        ILoginView view = new LoginFragment();
-        ILoginPresenter presenter = new LoginPresenter(view);
-        view.setPresenter(presenter);
-        return (Fragment) view;
+        return new LoginFragment();
     }
 
     @Override

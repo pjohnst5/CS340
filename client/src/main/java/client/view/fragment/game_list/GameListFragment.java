@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.List;
 
+import client.presenter.game_list.GameListPresenter;
 import client.presenter.game_list.IGameListPresenter;
 import client.server.communication.poll.GameListPoller;
 import client.view.activity.GameLobbyActivity;
@@ -29,80 +29,77 @@ import shared.enumeration.PlayerColor;
 import shared.model.Game;
 
 public class GameListFragment extends Fragment implements IGameListView {
-    private RecyclerView mGameListRecyclerView;
-    private Button mCreateGameButton;
-    private Button mJoinGameButton;
-    private Game mCurrentlySelectedGame;
 
-    private GameListAdapter mGameListAdapter;
-    private IGameListPresenter mPresenter;
-
-    private GameHolder mCurrentHolder;
-
-    private static final String TAG = "GameListFragment";
-
-    private static final String CREATE_GAME_DIALOG_TAG = "CreateGameDialog";
-    private static final String JOIN_GAME_DIALOG_TAG = "JoinGameDialog";
+    private Game _currentlySelectedGame;
+    private GameHolder _currentHolder;
+    private RecyclerView _gameListRecyclerView;
+    private IGameListPresenter _presenter;
 
     private static final int CREATE_GAME_DIALOG_CODE = 0;
     private static final int JOIN_GAME_DIALOG_CODE = 1;
+
+    private static final String TAG = "GameListFragment";
+    private static final String CREATE_GAME_DIALOG_TAG = "CreateGameDialog";
+    private static final String JOIN_GAME_DIALOG_TAG = "JoinGameDialog";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_game_list, container, false);
 
-        mGameListRecyclerView = v.findViewById(R.id.game_list_recycler_view);
-        mGameListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // Initialize Simple Members
+        _currentlySelectedGame = null;
+        _presenter = new GameListPresenter(this);
 
-        mCreateGameButton = v.findViewById(R.id.create_game_button);
-        mCreateGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager manager = getFragmentManager();
-                CreateGameDialog dialog = CreateGameDialog.newInstance();
-                dialog.setTargetFragment(GameListFragment.this, CREATE_GAME_DIALOG_CODE);
-                dialog.show(manager, CREATE_GAME_DIALOG_TAG);
-//                dialog.hideDefaultButtons();
+        // Initialize View Members
+        Button _joinGameButton = v.findViewById(R.id.join_game_button);
+        Button _createGameButton = v.findViewById(R.id.create_game_button);
+        _gameListRecyclerView = v.findViewById(R.id.game_list_recycler_view);
 
-                GameListPoller.instance().stop();
+        // Modify View Members
+        _gameListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // Set View OnClickListeners
+        _joinGameButton.setOnClickListener((view) -> {
+            if (_currentlySelectedGame == null){
+                showToast("Please Select a game first");
+                return;
             }
-        });
-        mJoinGameButton = v.findViewById(R.id.join_game_button);
-        mJoinGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                if (mCurrentlySelectedGame == null){
-                    showToast("Please Select a game first");
-                    return;
-                }
+            GameListPoller.instance().stop();
 
-                Bundle args = new Bundle();
-                args.putString("GameId", mCurrentlySelectedGame.getGameID());
+            Bundle args = new Bundle();
+            args.putString("GameId", _currentlySelectedGame.getGameID());
 
-                GameListPoller.instance().stop();
-
-                FragmentManager manager = getFragmentManager();
-                JoinGameDialog dialog = JoinGameDialog.newInstance();
-                dialog.setArguments(args);
-                dialog.setTargetFragment(GameListFragment.this, JOIN_GAME_DIALOG_CODE);
-                dialog.show(manager, JOIN_GAME_DIALOG_TAG);
-                /*if (mCurrentlySelectedGame != null) {
-                    mPresenter.joinGame(mCurrentlySelectedGame.getGameID());
-                }*/
-            }
+            FragmentManager manager = getFragmentManager();
+            JoinGameDialog dialog = JoinGameDialog.newInstance();
+            dialog.setArguments(args);
+            dialog.setTargetFragment(GameListFragment.this, JOIN_GAME_DIALOG_CODE);
+            dialog.show(manager, JOIN_GAME_DIALOG_TAG);
         });
 
-        mCurrentlySelectedGame = null;
+
+        _createGameButton.setOnClickListener((view) -> {
+            GameListPoller.instance().stop();
+
+            FragmentManager manager = getFragmentManager();
+            CreateGameDialog dialog = CreateGameDialog.newInstance();
+            dialog.setTargetFragment(GameListFragment.this, CREATE_GAME_DIALOG_CODE);
+            dialog.show(manager, CREATE_GAME_DIALOG_TAG);
+
+        });
 
         return v;
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        _presenter.destroy();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
+        if (resultCode != Activity.RESULT_OK) { return; }
 
         if (requestCode == CREATE_GAME_DIALOG_CODE) {
 
@@ -113,7 +110,7 @@ public class GameListFragment extends Fragment implements IGameListView {
 
             PlayerColor playerColor = getColorChoice(color);
 
-            mPresenter.createGame(gameName, displayName, playerColor, maxPlayers);
+            _presenter.createGame(gameName, displayName, playerColor, maxPlayers);
         }
 
         if (requestCode == JOIN_GAME_DIALOG_CODE) {
@@ -122,7 +119,7 @@ public class GameListFragment extends Fragment implements IGameListView {
 
             PlayerColor playerColor = getColorChoice(color);
 
-            mPresenter.joinGame(displayName, playerColor, mCurrentlySelectedGame.getGameID());
+            _presenter.joinGame(displayName, playerColor, _currentlySelectedGame.getGameID());
         }
     }
 
@@ -146,14 +143,14 @@ public class GameListFragment extends Fragment implements IGameListView {
         getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show());
     }
 
-    public void _updateGamesList(List<Game> games){
-        if (games == null) {return;}
-        mGameListAdapter = new GameListAdapter(games);
-        mGameListRecyclerView.setAdapter(mGameListAdapter);
-        if (mCurrentlySelectedGame != null) {
-            if (!currentlySelectedIsInList(games)) {
-                mCurrentlySelectedGame = null;
-            }
+    private void _updateGamesList(List<Game> games){
+        if (games == null) { return; }
+
+        GameListAdapter _gameListAdapter = new GameListAdapter(games);
+        _gameListRecyclerView.setAdapter(_gameListAdapter);
+
+        if (_currentlySelectedGame != null && !currentlySelectedIsInList(games)) {
+            _currentlySelectedGame = null;
         }
     }
 
@@ -170,14 +167,9 @@ public class GameListFragment extends Fragment implements IGameListView {
         startActivity(intent);
     }
 
-    @Override
-    public void setPresenter(IGameListPresenter presenter) {
-        mPresenter = presenter;
-    }
-
     private boolean currentlySelectedIsInList(List<Game> games) {
         for (Game game : games) {
-            if (game.getGameID() == mCurrentlySelectedGame.getGameID()) {
+            if (game.getGameID().equals(_currentlySelectedGame.getGameID())) {
                 return true;
             }
         }
@@ -223,19 +215,19 @@ public class GameListFragment extends Fragment implements IGameListView {
 
         @Override
         public void onClick(View view) {
-            if (mCurrentHolder != null){
-                mCurrentHolder.deselect();
+            if (_currentHolder != null){
+                _currentHolder.deselect();
             }
-            mCurrentlySelectedGame = mGame;
-            mCurrentHolder = this;
+            _currentlySelectedGame = mGame;
+            _currentHolder = this;
             this.select();
         }
     }
 
     private class GameListAdapter extends RecyclerView.Adapter<GameHolder> {
 
-        private List<Game> mGames;
-        public GameListAdapter(List<Game> games) {mGames = games;}
+        private List<Game> _games;
+        public GameListAdapter(List<Game> games) {_games = games;}
         @NonNull
         @Override
         public GameHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -245,13 +237,13 @@ public class GameListFragment extends Fragment implements IGameListView {
 
         @Override
         public void onBindViewHolder(@NonNull GameHolder holder, int position) {
-            Game game = mGames.get(position);
+            Game game = _games.get(position);
             holder.bind(game);
         }
 
         @Override
         public int getItemCount() {
-            return mGames.size();
+            return _games.size();
         }
     }
 }

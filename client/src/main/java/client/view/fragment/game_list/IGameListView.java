@@ -9,6 +9,6 @@ public interface IGameListView {
 
     public void updateGameList(List<Game> games);
     public void joinGame();
-    public void setPresenter(IGameListPresenter presenter);
     public void showToast(String message);
+
 }

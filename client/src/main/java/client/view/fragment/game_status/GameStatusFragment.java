@@ -19,9 +19,6 @@ import shared.enumeration.GameState;
 
 public class GameStatusFragment extends SidebarFragment implements IGameStatusView {
 
-    private Button _openButton;
-    private Button _gameOverButton;
-
     private static final String TAG="GameStatusFragment";
     private static final String VIEW_GAME_STATUS_DIALOG_TAG = "OpenGameStatusDialog";
     private static final String GAME_OVER_DIALOG_TAG = "GameOverDialog";
@@ -34,7 +31,20 @@ public class GameStatusFragment extends SidebarFragment implements IGameStatusVi
 
         setupSidebarButtons(ButtonType.GAME_STATUS);
 
-        _openButton = v.findViewById(R.id.game_status_open_dialog);
+        // Initialize Simple Members
+        GameState state = ClientModel.getInstance().getCurrentGame().get_state();
+
+        // Initialize View Members
+        Button _openButton = v.findViewById(R.id.game_status_open_dialog);
+        Button _gameOverButton = v.findViewById(R.id.game_over_close_dialog);
+
+        // Modify View Members
+        if (state != GameState.FINISHED) {
+            _gameOverButton.setVisibility(View.INVISIBLE);
+            _gameOverButton.setEnabled(false);
+        }
+
+        // Set View OnClickListeners
         _openButton.setOnClickListener((view) -> {
             FragmentManager manager = getActivity().getSupportFragmentManager();
             GameStatusDialog dialog = GameStatusDialog.newInstance();
@@ -42,19 +52,12 @@ public class GameStatusFragment extends SidebarFragment implements IGameStatusVi
             dialog.show(manager, VIEW_GAME_STATUS_DIALOG_TAG);
         });
 
-        _gameOverButton = v.findViewById(R.id.game_over_open_dialog);
-        GameState state = ClientModel.getInstance().getCurrentGame().get_state();
-        if (state != GameState.FINISHED) {
-            _gameOverButton.setVisibility(View.INVISIBLE);
-            _gameOverButton.setEnabled(false);
-        } else {
-            _gameOverButton.setOnClickListener((view) -> {
-                FragmentManager manager = getActivity().getSupportFragmentManager();
-                GameOverDialog dialog = GameOverDialog.newInstance();
-                dialog.setTargetFragment(GameStatusFragment.this, GAME_OVER_DIALOG_CODE);
-                dialog.show(manager, GAME_OVER_DIALOG_TAG);
-            });
-        }
+        _gameOverButton.setOnClickListener((view) -> {
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            GameOverDialog dialog = GameOverDialog.newInstance();
+            dialog.setTargetFragment(GameStatusFragment.this, GAME_OVER_DIALOG_CODE);
+            dialog.show(manager, GAME_OVER_DIALOG_TAG);
+        });
 
         return v;
     }

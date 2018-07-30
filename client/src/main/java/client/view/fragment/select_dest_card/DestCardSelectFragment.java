@@ -32,48 +32,47 @@ import shared.model.decks.DestCard;
 
 public class DestCardSelectFragment extends Fragment implements IDestCardSelectView {
 
+    private final int CARD_LENGTH = 294;
+    private static final int CARD_WIDTH = 264;
+    private static final int CARD_HEIGHT = 166;
+
     private List<DestCard> _cards;
     private Set<CardItemHolder> _selectedCards;
     private Set<CardItemHolder> _unselectedCards;
 
-    private static boolean setup = true;
-
-    private static final int CARD_WIDTH = 264;
-    private static final int CARD_HEIGHT = 166;
-    private final int CARD_LENGTH = 294;
-    private boolean _cardsLoaded;
-
-
-    private IDestCardSelectPresenter _presenter;
-    private RecyclerView _cardsRecyclerView;
-    private CardAdapter _cardAdapter;
-    private LinearLayout _recyclerViewContainer;
-    private TextView _overlayMessage;
     private Button _submitButton;
+    private CardAdapter _cardAdapter;
+    private TextView _overlayMessage;
+    private RecyclerView _cardsRecyclerView;
+    private LinearLayout _recyclerViewContainer;
+    private IDestCardSelectPresenter _presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_destination_card_select, container, false);
 
+        // Initialize Simple Members
         _cards = new ArrayList<>();
         _cardAdapter = new CardAdapter();
+        _selectedCards = new HashSet<>();
+        _unselectedCards = new HashSet<>();
+        _presenter = new DestCardSelectPresenter(this);
+
+        // Initialize View Members
         _recyclerViewContainer = v.findViewById(R.id.dest_card_linear_layout);
         _cardsRecyclerView = v.findViewById(R.id.dest_card_select_recycler_view);
         _cardsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         _cardsRecyclerView.setAdapter(_cardAdapter);
-
-        _selectedCards = new HashSet<>();
-        _unselectedCards = new HashSet<>();
-        _cardsLoaded = false;
-
-        _presenter = new DestCardSelectPresenter(this);
-        setGridlayoutSpan();
-
         _overlayMessage = v.findViewById(R.id.dest_card_overlay_message);
-        hideOverlayMessage();
-
         _submitButton = v.findViewById(R.id.dest_card_frag_select_cards);
+
+
+        // Modify View Members
+        setGridlayoutSpan();
+        hideOverlayMessage();
         _submitButton.setEnabled(false);
+
+        // Set View OnClickListeners
         _submitButton.setOnClickListener((view) -> {
 
             if (_selectedCards.size() < _presenter.getNumCardsRequired()) return;
@@ -180,7 +179,6 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
             itemView.setOnClickListener(this);
             _unselectedCards.add(this);
 
-            //_presenter.init();
         }
 
         public void bind(DestCard card){

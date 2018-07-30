@@ -35,15 +35,11 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
 
     private static final int MAX_CHARACTERS_IN_MESSAGE = 160;
 
+    private List<Message> _messages;
     private IChatPresenter _presenter;
-
     private EditText _messageInputBox;
     private Button _sendMessageButton;
-    private RecyclerView _chatRecyclerView;
-
     private ChatListAdapter _chatAdapter;
-
-    List<Message> _messages;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -53,21 +49,32 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
             setupSidebarButtons(ButtonType.CHAT);
         }
 
+        // Initialize Simple Members
         _messages = new ArrayList<>();
-        _chatAdapter = new ChatListAdapter(_messages);
-        _chatRecyclerView = v.findViewById(R.id.chat_list_recycler_view);
-        _chatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ((LinearLayoutManager)_chatRecyclerView.getLayoutManager()).setReverseLayout(true);
-        _chatRecyclerView.setAdapter(_chatAdapter);
-
-        // Views should not create presenters...
         _presenter = new ChatPresenter(this);
+        _chatAdapter = new ChatListAdapter(_messages);
 
         InputFilter[] filterArray = new InputFilter[1];
         filterArray[0] = new InputFilter.LengthFilter(MAX_CHARACTERS_IN_MESSAGE);
 
+        // Initialize View Members
+        RecyclerView _chatRecyclerView = v.findViewById(R.id.chat_list_recycler_view);
         _messageInputBox = v.findViewById(R.id.chat_list_input_message);
+        _sendMessageButton = v.findViewById(R.id.chat_list_send_chat_button);
+
+        // Modify View Members
+        _sendMessageButton.setEnabled(false);
         _messageInputBox.setFilters(filterArray);
+        _chatRecyclerView.setAdapter(_chatAdapter);
+        _chatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ((LinearLayoutManager)_chatRecyclerView.getLayoutManager()).setReverseLayout(true);
+
+        // Set View OnClickListeners
+        _sendMessageButton.setOnClickListener((view) -> {
+            _presenter.sendMessage(_messageInputBox.getText().toString());
+            _messageInputBox.clearFocus();
+        });
+
         _messageInputBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -85,20 +92,12 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
             }
         });
 
-        _sendMessageButton = v.findViewById(R.id.chat_list_send_chat_button);
-        _sendMessageButton.setEnabled(false);
-        _sendMessageButton.setOnClickListener((view) -> {
-            _presenter.sendMessage(_messageInputBox.getText().toString());
-            _messageInputBox.clearFocus();
-        });
-
         return v;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         _presenter.destroy();
     }
 
@@ -136,6 +135,7 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
     @Override
     public boolean addMessage(Message message) {
         if  (_messages.contains(message)) return false;
+
         _messages.add(message);
         Collections.sort(_messages, Message.getDescendingComparator());
 

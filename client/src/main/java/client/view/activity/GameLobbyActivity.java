@@ -18,8 +18,7 @@ import client.view.fragment.chat.ChatFragment;
 public class GameLobbyActivity extends AppCompatActivity {
 
     public static Intent newIntent(Context packageContext) {
-        Intent intent = new Intent(packageContext, GameLobbyActivity.class);
-        return intent;
+        return new Intent(packageContext, GameLobbyActivity.class);
     }
 
     @Override
