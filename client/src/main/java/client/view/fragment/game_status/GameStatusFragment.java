@@ -40,8 +40,8 @@ public class GameStatusFragment extends SidebarFragment implements IGameStatusVi
 
         // Modify View Members
         if (state != GameState.FINISHED) {
-            _gameOverButton.setVisibility(View.INVISIBLE);
             _gameOverButton.setEnabled(false);
+            _gameOverButton.setVisibility(View.INVISIBLE);
         }
 
         // Set View OnClickListeners

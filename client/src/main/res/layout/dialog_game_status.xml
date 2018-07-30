@@ -158,10 +158,4 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/game_over_open_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/game_status_deck_cards"
-        android:text="Game Over" />
 </RelativeLayout>
