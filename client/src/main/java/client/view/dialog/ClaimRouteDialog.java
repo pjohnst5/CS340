@@ -2,7 +2,6 @@ package client.view.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,13 +18,11 @@ import android.widget.TextView;
 
 import com.pjohnst5icloud.tickettoride.R;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import client.facade.GameMapService;
@@ -38,7 +35,6 @@ import shared.model.Pair;
 import shared.model.Player;
 import shared.model.Route;
 import shared.model.decks.TrainCard;
-import shared.serialization.Serializer;
 
 public class ClaimRouteDialog extends DialogFragment {
 

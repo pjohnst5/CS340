@@ -11,6 +11,7 @@ import client.facade.ServicesFacade;
 import client.model.ClientModel;
 import client.server.AsyncServerTask;
 import client.view.fragment.game_map.IGameMapView;
+import shared.enumeration.GameState;
 import shared.enumeration.TrainColor;
 import shared.exception.DeckException;
 import shared.exception.InvalidGameException;
@@ -85,6 +86,10 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
         _mapView.updateMap();
         _mapView.updatePlayerTurn();
         _mapView.updateDeckCount(numDestCards, numTrainCards);
+
+        if (_model.getCurrentGame().get_state() == GameState.FINISHED) {
+            _mapView.gameOver();
+        }
     }
 
     @Override

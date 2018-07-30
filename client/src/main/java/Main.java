@@ -160,13 +160,13 @@ public class Main {
 
             //working up till here
             DestDeck deck = new DestDeck();
-//            DestCardRequest dr = new DestCardRequest(deck,player1);
+            DestCardRequest dr = new DestCardRequest(deck,player1);
             String className6 = ConfigurationManager.getString("server_facade_name");
             String methodName6 = ConfigurationManager.getString("server_update_dest_deck");
             String[] paramTypes6 = {DestCardRequest.class.getCanonicalName()};
-//            Object[] paramValues6 = {dr};
-//            ICommand command6 = new GenericCommand(className6, methodName6, paramTypes6, paramValues6, null);
-//            proxy.sendCommand(command6);
+            Object[] paramValues6 = {dr};
+            ICommand command6 = new GenericCommand(className6, methodName6, paramTypes6, paramValues6, null);
+            proxy.sendCommand(command6);
 
 
 

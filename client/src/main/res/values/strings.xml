@@ -58,9 +58,13 @@
     <string name="train_cards">Train Cards</string>
     <string name="dest_cards">Destination Cards</string>
     <string name="routes">Routes</string>
+    <string name="sidebar_open_game_over">Final Scores</string>
 
     <!-- CLAIM ROUTE DIALOG -->
     <string name="claim_route_title_text">Claim Route</string>
+
+    <!-- GAME OVER DIALOG -->
+    <string name="game_over_dialog_title">Game Over</string>
 
     <!-- GENERIC -->
     <string name="train_color_title_text">Train Color</string>

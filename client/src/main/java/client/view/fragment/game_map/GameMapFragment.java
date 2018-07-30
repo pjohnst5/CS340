@@ -29,6 +29,7 @@ import client.presenter.game_map.GameMapPresenter;
 import client.presenter.game_map.IGameMapPresenter;
 import client.util.ColorPicker;
 import client.view.dialog.ClaimRouteDialog;
+import client.view.dialog.GameOverDialog;
 import client.view.fragment.game_map.customview.GameMapView;
 import shared.enumeration.CityManager;
 import shared.enumeration.TrainColor;
@@ -53,7 +54,11 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     private Button _claimRouteButton;
 
     private static final String CLAIM_ROUTE_DIALOG_TAG = "ClaimRouteDialog";
+    private static final String GAME_OVER_DIALOG_TAG = "GameOverDialog";
     private static final int CLAIM_ROUTE_DIALOG_CODE = 0;
+    private static final int GAME_OVER_DIALOG_CODE = 1;
+
+    private boolean _gameOver;
 
     public static GameMapFragment newInstance() {
         return new GameMapFragment();
@@ -88,6 +93,8 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         _presenter = new GameMapPresenter(this);
 
         _players = _presenter.getPlayers();
+
+        _gameOver = false;
 
         return v;
     }
@@ -147,6 +154,17 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     @Override
     public void setClaimRouteButtonEnabled(boolean enabled) {
         _claimRouteButton.setEnabled(enabled);
+    }
+
+    @Override
+    public void gameOver() {
+        if (!_gameOver) {
+            _gameOver = true;
+            FragmentManager manager = getFragmentManager();
+            GameOverDialog dialog = GameOverDialog.newInstance();
+            dialog.setTargetFragment(GameMapFragment.this, GAME_OVER_DIALOG_CODE);
+            dialog.show(manager, GAME_OVER_DIALOG_TAG);
+        }
     }
 
     private class PlayerTurnIndicatorHolder extends RecyclerView.ViewHolder {

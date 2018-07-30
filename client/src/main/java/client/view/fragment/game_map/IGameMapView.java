@@ -15,4 +15,5 @@ public interface IGameMapView {
     public void setClaimRouteButtonEnabled(boolean enabled);
     public void setPresenter(IGameMapPresenter presenter);
     public void showToast(String message);
+    public void gameOver();
 }

@@ -17,4 +17,10 @@
         android:layout_height="wrap_content"
         android:text="@string/sidebar_open_game_status"/>
 
+    <Button
+        android:id="@+id/game_over_open_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sidebar_open_game_over"/>
+
 </RelativeLayout>
