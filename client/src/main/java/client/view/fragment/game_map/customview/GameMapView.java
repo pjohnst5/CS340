@@ -113,6 +113,11 @@ public class GameMapView extends FrameLayout {
         }
         if (newRoute) {
             _host.RouteSelected(_selectedRoute.getRoute());
+        } else if (rv != null) {
+            // TODO: Dallas Modified this, not sure what it does, ask Josh!
+            // It seems to fix the issue where the claim route button does
+            // not show up right away
+            _host.RouteSelected(rv.getRoute());
         }
     }
 
@@ -239,7 +244,7 @@ public class GameMapView extends FrameLayout {
 
         // closest route is selected
         if (closestRouteView == null) {
-            // there's no route that's close by
+          // there's no route that's close by
             return;
         }
         routeSelected(closestRouteView);

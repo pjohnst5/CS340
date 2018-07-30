@@ -15,7 +15,7 @@ public class DestCardSelectPresenter
     private IDestCardSelectView _selectView;
     private ClientModel _model;
 
-    private static DestCardSelectState _state;
+    private DestCardSelectState _state;
     public DestCardSelectPresenter(IDestCardSelectView selectView){
 
         _selectView = selectView;

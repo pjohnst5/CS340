@@ -68,6 +68,10 @@ public class Game {
         return _destOptionCards == null;
     }
 
+    public void clearDestOptionCards(){
+        _destOptionCards.clear();
+    }
+
     public String getGameName() {
         return _gameName;
     }

@@ -55,6 +55,8 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     private TextView _trainCardCount;
 
     private Button _claimRouteButton;
+    private Button _selectDestCardsButton;
+    private Button _selectTrainCardsButton;
 
     private static final String CLAIM_ROUTE_DIALOG_TAG = "ClaimRouteDialog";
     private static final String GAME_OVER_DIALOG_TAG = "GameOverDialog";
@@ -77,8 +79,8 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         _gameOver = false;
 
         // Initialize View Members
-        Button selectDestCardsButton = v.findViewById(R.id.game_map_select_dest_cards);
-        Button selectTrainCardsButton = v.findViewById(R.id.game_map_select_train_cards);
+        _selectDestCardsButton = v.findViewById(R.id.game_map_select_dest_cards);
+        _selectTrainCardsButton = v.findViewById(R.id.game_map_select_train_cards);
         _gameMap = v.findViewById(R.id.game_map);
         _destCardCount = v.findViewById(R.id.game_map_dest_card_count);
         _trainCardCount = v.findViewById(R.id.game_map_train_card_count);
@@ -100,14 +102,14 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
             dialog.show(manager, CLAIM_ROUTE_DIALOG_TAG);
         });
 
-        selectDestCardsButton.setOnClickListener((view) -> {
+        _selectDestCardsButton.setOnClickListener((view) -> {
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.game_content_container, new DestCardSelectFragment());
             transaction.commit();
         });
 
-        selectTrainCardsButton.setOnClickListener((view) -> {
+        _selectTrainCardsButton.setOnClickListener((view) -> {
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.game_content_container, new TrainCardSelectFragment());
@@ -116,6 +118,7 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
 
         _presenter = new GameMapPresenter(this);
         _players = _presenter.getPlayers();
+        _presenter.update();
 
         return v;
     }
@@ -180,6 +183,16 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     @Override
     public void setClaimRouteButtonEnabled(boolean enabled) {
         _claimRouteButton.setEnabled(enabled);
+    }
+
+    @Override
+    public void setSelectDestCardEnabled(boolean enabled){
+        _selectDestCardsButton.setEnabled(enabled);
+    }
+
+    @Override
+    public void setSelectTrainCardEnabled(boolean enabled){
+        _selectTrainCardsButton.setEnabled(enabled);
     }
 
     @Override

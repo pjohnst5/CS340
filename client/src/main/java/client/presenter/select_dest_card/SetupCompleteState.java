@@ -29,9 +29,9 @@ public class SetupCompleteState extends DestCardSelectState {
         } catch (InvalidGameException e){ }
 
         if (clientPlayerId.equals(currentTurnPlayerId)){
-            presenter().setState(new PlayerTurnState());
+            presenter().setState(new PlayerTurnState(presenter()));
         } else {
-            presenter().setState(new PlayerTurnWaitingState());
+            presenter().setState(new PlayerTurnWaitingState(presenter()));
         }
     }
 
