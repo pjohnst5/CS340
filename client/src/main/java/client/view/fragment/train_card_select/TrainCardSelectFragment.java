@@ -1,4 +1,6 @@
 package client.view.fragment.train_card_select;
 
-public class TrainCardSelectFragment implements ITrainCardSelectView {
+import android.support.v4.app.Fragment;
+
+public class TrainCardSelectFragment extends Fragment implements ITrainCardSelectView {
 }

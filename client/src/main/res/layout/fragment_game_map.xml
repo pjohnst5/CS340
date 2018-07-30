@@ -38,11 +38,13 @@
             android:text="@string/claim_route_button_text"/>
 
         <Button
+            android:id="@+id/game_map_select_dest_cards"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/draw_dest_card_text"/>
 
         <Button
+            android:id="@+id/game_map_select_train_cards"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/draw_train_card_text"/>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,6 +32,8 @@ import client.util.ColorPicker;
 import client.view.dialog.ClaimRouteDialog;
 import client.view.dialog.GameOverDialog;
 import client.view.fragment.game_map.customview.GameMapView;
+import client.view.fragment.select_dest_card.DestCardSelectFragment;
+import client.view.fragment.train_card_select.TrainCardSelectFragment;
 import shared.enumeration.CityManager;
 import shared.enumeration.TrainColor;
 import shared.model.GameMap;
@@ -68,16 +71,28 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_game_map, container, false);
 
-        _turnIndicator = v.findViewById(R.id.game_map_player_turn_recycler_view);
-        _turnIndicator.setLayoutManager(new LinearLayoutManager(getActivity()));
-        _turnIndicator.setAdapter(new PlayerTurnAdapter());
+        // Initialize Simple Members
+        GameMap mapModel = ClientModel.getInstance().getCurrentGame().getMap();
+        List<Route> routes = new ArrayList<>(mapModel.get_routes().values());
+        _gameOver = false;
 
+        // Initialize View Members
+        Button selectDestCardsButton = v.findViewById(R.id.game_map_select_dest_cards);
+        Button selectTrainCardsButton = v.findViewById(R.id.game_map_select_train_cards);
+        _gameMap = v.findViewById(R.id.game_map);
         _destCardCount = v.findViewById(R.id.game_map_dest_card_count);
         _trainCardCount = v.findViewById(R.id.game_map_train_card_count);
-
         _claimRouteButton = v.findViewById(R.id.game_map_claim_route_button);
-        _claimRouteButton.setVisibility(View.INVISIBLE);
+        _turnIndicator = v.findViewById(R.id.game_map_player_turn_recycler_view);
+
+        // Modify View Members
+        _gameMap.initializeData(this, CityManager.getInstance().getCities(), routes);
+        _turnIndicator.setLayoutManager(new LinearLayoutManager(getActivity()));
+        _turnIndicator.setAdapter(new PlayerTurnAdapter());
         _claimRouteButton.setEnabled(false);
+        _claimRouteButton.setVisibility(View.INVISIBLE);
+
+        // Set View OnClickListeners
         _claimRouteButton.setOnClickListener((view) -> {
             FragmentManager manager = getFragmentManager();
             ClaimRouteDialog dialog = ClaimRouteDialog.newInstance(_gameMap.getSelectedRoute().getId(), _presenter.getMyPlayer().getPlayerID());
@@ -85,16 +100,22 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
             dialog.show(manager, CLAIM_ROUTE_DIALOG_TAG);
         });
 
+        selectDestCardsButton.setOnClickListener((view) -> {
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.game_content_container, new DestCardSelectFragment());
+            transaction.commit();
+        });
 
-        _gameMap = v.findViewById(R.id.game_map);
-        GameMap mapModel = ClientModel.getInstance().getCurrentGame().getMap();
-        List<Route> routes = new ArrayList<>(mapModel.get_routes().values());
-        _gameMap.initializeData(this, CityManager.getInstance().getCities(), routes);
+        selectTrainCardsButton.setOnClickListener((view) -> {
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.game_content_container, new TrainCardSelectFragment());
+            transaction.commit();
+        });
+
         _presenter = new GameMapPresenter(this);
-
         _players = _presenter.getPlayers();
-
-        _gameOver = false;
 
         return v;
     }
