@@ -20,7 +20,6 @@ public class ListOfRoutes {
 
     public ListOfRoutes(){
         _routes = new ArrayList<>();
-//        _routes.add(new Route(CityName.LOS_ANGELES, CityName.NEW_ORLEANS, 0, BLUE)); //FIXME: i don't think this one is right
         _routes.add(new Route(CityName.VANCOUVER, CityName.CALGARY, 3, GRAY));
         _routes.add(new Route(CityName.VANCOUVER, CityName.SEATTLE, 1, GRAY));
         _routes.add(new Route(CityName.VANCOUVER, CityName.SEATTLE, 1, GRAY));
@@ -131,7 +130,7 @@ public class ListOfRoutes {
         return _routes;
     }
 
-    private void markDoubleRoutes() { // FIXME: remove double routes for games with less than 4 players
+    private void markDoubleRoutes() {
         int len = _routes.size();
         for (int i = 0; i < len; i++) {
             Route r1 = _routes.get(i);

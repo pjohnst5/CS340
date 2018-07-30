@@ -21,7 +21,7 @@ public class ServicesFacade {
         try{
             gameMapService.claimRoute(caller, route, discardCards);
         } catch (Exception e) {
-            System.out.println("Ryan, please handle this exception");
+            System.out.println("There was an issue claiming the route");
         }
     }
     public void drawFaceUpCard(AsyncServerTask.AsyncCaller caller, TrainCard trainCard, Player player){
