@@ -1,8 +1,6 @@
 package server.facade;
 
 
-import com.sun.security.ntlm.Server;
-
 import server.exception.ServerException;
 import server.model.ServerModel;
 import shared.command.GenericCommand;
