@@ -1,6 +1,8 @@
 package server.facade;
 
 
+import com.sun.security.ntlm.Server;
+
 import server.exception.ServerException;
 import server.model.ServerModel;
 import shared.command.GenericCommand;
@@ -24,6 +26,11 @@ public class TrainCardService {
         ServerModel serverModel = ServerModel.getInstance();
 
         try {
+            //If the card they want is a locomotive and they already drew a card throw an exception
+            if (request.get_faceUpCard().get_color() == TrainColor.LOCOMOTIVE && serverModel.getPlayer(request.get_playerID()).get_cardsDrawnThisTurn() == 1) {
+                throw new ServerException("Can't draw a locomotive card after already drawing a card");
+            }
+
             //draws face up card from game's train deck
             serverModel.getGame(request.get_gameID()).getTrainDeck().drawFaceUpCard(request.get_faceUpCard());
 

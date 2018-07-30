@@ -8,10 +8,11 @@ import shared.model.Player;
 import shared.model.Route;
 
 public interface IGameMapPresenter {
-    public void routeSelected(Route route);
-    public List<Player> getPlayers();
-    public String getCurrentTurnPlayerId();
-    public void destroy();
+    public void pause();
+    public void resume();
     public Player getMyPlayer();
+    public List<Player> getPlayers();
+    public void routeSelected(Route route);
+    public String getCurrentTurnPlayerId();
     public void claimRoute(Route route, Map<TrainColor, Integer> selectedCards);
 }

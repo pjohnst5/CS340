@@ -100,10 +100,15 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onResume() {
+        super.onResume();
+        _presenter.resume();
+    }
 
-        _presenter.destroy();
+    @Override
+    public void onPause() {
+        super.onPause();
+        _presenter.pause();
     }
 
     @Override

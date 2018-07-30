@@ -233,6 +233,12 @@ public class Game {
 
     }
 
+    public void setupComplete() {
+
+        if (_state == GameState.SETUP)
+            _state = GameState.STARTED;
+    }
+
     public void setMap(GameMap map) {
         _map = map;
     }
