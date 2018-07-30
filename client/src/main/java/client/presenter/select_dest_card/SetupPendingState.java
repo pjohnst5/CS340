@@ -42,12 +42,7 @@ public class SetupPendingState extends DestCardSelectState {
         int numPlayers = _model.getCurrentGame().getMaxPlayers();
 
         if (numPlayersCompleted >= numPlayers){
-            try {
-                _model.getCurrentGame().start();
-            } catch (InvalidGameException e) {
-                e.printStackTrace();
-                return;
-            }
+            _model.getCurrentGame().setupComplete();
             presenter().setState(new SetupCompleteState(presenter()));
         }
 
