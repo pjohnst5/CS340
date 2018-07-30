@@ -9,7 +9,7 @@ import shared.model.Player;
 import shared.model.decks.DestCard;
 import shared.model.wrapper.ThreeDestCardWrapper;
 
-public class StateSetup extends DestCardSelectState {
+public class SetupState extends DestCardSelectState {
 
     private static final int NUM_CARDS_REQUIRED = 2;
 
@@ -17,8 +17,8 @@ public class StateSetup extends DestCardSelectState {
     private ServicesFacade _facade = new ServicesFacade();
 
 
-    public StateSetup() { }
-    public StateSetup(IDestCardSelectPresenter presenter) {
+    public SetupState() { }
+    public SetupState(IDestCardSelectPresenter presenter) {
         super(presenter);
     }
 

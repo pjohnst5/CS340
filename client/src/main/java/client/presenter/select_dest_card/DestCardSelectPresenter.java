@@ -16,22 +16,16 @@ public class DestCardSelectPresenter
     private ClientModel _model;
 
     private static DestCardSelectState _state;
-    private static StateSetup _setupState = new StateSetup();
-    private static SetupPendingState _resultsPendingState = new SetupPendingState();
-    private static SetupCompleteState _setupCompleteState = new SetupCompleteState();
-
     public DestCardSelectPresenter(IDestCardSelectView selectView){
 
         _selectView = selectView;
         _model = ClientModel.getInstance();
         _model.addObserver(this);
 
-        _setupState.setPresenter(this);
-        _setupCompleteState.setPresenter(this);
-        _resultsPendingState.setPresenter(this);
-
         if (_model.getCurrentGame().get_state() == GameState.SETUP){
-            setState(_setupState);
+            setState(new SetupState(this));
+        } else {
+            setState(new SetupCompleteState(this));
         }
 
     }
