@@ -41,8 +41,6 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
         int numDestCards = _model.getCurrentGame().getDestDeck().get_cards().size();
         int numTrainCards = _model.getCurrentGame().getTrainDeck().sizeOfFaceDownDeck();
         _mapView.updateDeckCount(numDestCards, numTrainCards);
-
-        _model.addObserver(this);
     }
 
     @Override
@@ -60,8 +58,13 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
     }
 
     @Override
-    public void destroy() {
+    public void pause() {
         _model.deleteObserver(this);
+    }
+
+    @Override
+    public void resume() {
+        _model.addObserver(this);
     }
 
     @Override
