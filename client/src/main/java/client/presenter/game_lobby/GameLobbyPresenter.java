@@ -20,7 +20,6 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
     public GameLobbyPresenter(IGameLobbyView view) {
         _view = view;
         _model = ClientModel.getInstance();
-        _model.addObserver(this);
 
         Poller _poller = GameLobbyPoller.instance();
         ServerProxy.instance().usePoller(_poller);
@@ -29,8 +28,14 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
     }
 
     @Override
-    public void destroy() {
+    public void pause() {
+        ServerProxy.instance().stopPoller();
         _model.deleteObserver(this);
+    }
+
+    @Override
+    public void resume() {
+        _model.addObserver(this);
     }
 
     @Override
@@ -39,13 +44,11 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
 
         if (currentGame == null) {
             // player left the game
-            _model.deleteObserver(this);
             ServerProxy.instance().stopPoller();
             _view.leaveGame();
 
         } else if (currentGame.get_state() == GameState.SETUP) {
             // started the game
-            _model.deleteObserver(this);
             ServerProxy.instance().stopPoller();
             _view.startGame();
 

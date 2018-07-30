@@ -7,7 +7,8 @@ import shared.model.decks.DestCard;
 
 public interface IDestCardSelectPresenter extends AsyncServerTask.AsyncCaller {
 
-    public void destroy();
+    public void pause();
+    public void resume();
     public void disableInput();
     public void switchToGameMap();
     public int getNumCardsRequired();

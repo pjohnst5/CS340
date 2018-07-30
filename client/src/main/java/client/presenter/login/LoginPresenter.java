@@ -19,12 +19,16 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
     public LoginPresenter(ILoginView view) {
         _view = view;
         _model = ClientModel.getInstance();
-        _model.addObserver(this);
     }
 
     @Override
-    public void destroy(){
+    public void pause() {
         _model.deleteObserver(this);
+    }
+
+    @Override
+    public void resume() {
+        _model.addObserver(this);
     }
 
     @Override

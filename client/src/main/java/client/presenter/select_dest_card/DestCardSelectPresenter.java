@@ -20,7 +20,6 @@ public class DestCardSelectPresenter
 
         _selectView = selectView;
         _model = ClientModel.getInstance();
-        _model.addObserver(this);
 
         if (_model.getCurrentGame().get_state() == GameState.SETUP){
             setState(new SetupState(this));
@@ -28,6 +27,16 @@ public class DestCardSelectPresenter
             setState(new SetupCompleteState(this));
         }
 
+    }
+
+    @Override
+    public void pause() {
+        _model.deleteObserver(this);
+    }
+
+    @Override
+    public void resume() {
+        _model.addObserver(this);
     }
 
     @Override
@@ -69,11 +78,6 @@ public class DestCardSelectPresenter
     @Override
     public void submitData(List<DestCard> cardsSelected, List<DestCard> cardsDiscarded){
         _state.submitData(cardsSelected, cardsDiscarded);
-    }
-
-    @Override
-    public void destroy() {
-        _model.deleteObserver(this);
     }
 
     @Override

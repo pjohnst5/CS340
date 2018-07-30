@@ -104,14 +104,16 @@ public class ClientModel extends Observable {
 
     public void addPlayer(Player player) {
         if(player != null){
+
             String gameId = player.getGameID();
-            Game g = this._games.get(gameId);
+            Game game  = this._games.get(gameId);
+
             if(player.getUserName().equals(this._user.getUserName())){
-                setCurrentGame(g);
+                setCurrentGame(game);
                 _user.set_playerId(player.getPlayerID());
             }
             try {
-                g.addPlayer(player);
+                game.addPlayer(player);
             } catch (MaxPlayersException e) {
                 Log.i(TAG, e.getMessage());
                 e.printStackTrace();

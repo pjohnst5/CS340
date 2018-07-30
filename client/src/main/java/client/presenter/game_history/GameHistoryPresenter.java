@@ -22,15 +22,19 @@ public class GameHistoryPresenter
 
         _historyView = historyView;
         _model = ClientModel.getInstance();
-        _model.addObserver(this);
         _oldSize = 0;
         update();
 
     }
 
     @Override
-    public void destroy() {
+    public void pause() {
         _model.deleteObserver(this);
+    }
+
+    @Override
+    public void resume() {
+        _model.addObserver(this);
     }
 
     @Override

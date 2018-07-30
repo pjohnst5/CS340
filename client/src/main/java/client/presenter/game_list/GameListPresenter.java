@@ -51,16 +51,20 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
     public GameListPresenter(IGameListView view) {
         _view = view;
         _model = ClientModel.getInstance();
-        _model.addObserver(this);
 
         Poller _poller = GameListPoller.instance();
         ServerProxy.instance().usePoller(_poller);
     }
 
     @Override
-    public void destroy() {
+    public void pause() {
         ServerProxy.instance().stopPoller();
         _model.deleteObserver(this);
+    }
+
+    @Override
+    public void resume() {
+        _model.addObserver(this);
     }
 
     /**

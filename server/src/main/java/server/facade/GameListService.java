@@ -184,13 +184,7 @@ class GameListService {
             response.setCommands(commands);
             response.setSuccess(true);
 
-        } catch(ServerException e){
-            response.setSuccess(false);
-            response.setErrorMessage(e.getMessage());
-        } catch(PlayerException e){
-            response.setSuccess(false);
-            response.setErrorMessage(e.getMessage());
-        } catch(MaxPlayersException e){
+        } catch(MaxPlayersException | PlayerException | ServerException e){
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
         }

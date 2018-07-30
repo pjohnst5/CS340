@@ -51,8 +51,8 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
 
         // Initialize Simple Members
         _messages = new ArrayList<>();
-        _presenter = new ChatPresenter(this);
         _chatAdapter = new ChatListAdapter(_messages);
+        _presenter = new ChatPresenter(this);
 
         InputFilter[] filterArray = new InputFilter[1];
         filterArray[0] = new InputFilter.LengthFilter(MAX_CHARACTERS_IN_MESSAGE);
@@ -96,11 +96,16 @@ public class ChatFragment extends SidebarFragment implements IGameChatView {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        _presenter.destroy();
+    public void onResume() {
+        super.onResume();
+        _presenter.resume();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        _presenter.pause();
+    }
 
     @Override
     public void clearInput(){

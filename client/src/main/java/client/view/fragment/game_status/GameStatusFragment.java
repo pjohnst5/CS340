@@ -36,7 +36,7 @@ public class GameStatusFragment extends SidebarFragment implements IGameStatusVi
 
         // Initialize View Members
         Button _openButton = v.findViewById(R.id.game_status_open_dialog);
-        Button _gameOverButton = v.findViewById(R.id.game_over_close_dialog);
+        Button _gameOverButton = v.findViewById(R.id.game_over_open_dialog);
 
         // Modify View Members
         if (state != GameState.FINISHED) {

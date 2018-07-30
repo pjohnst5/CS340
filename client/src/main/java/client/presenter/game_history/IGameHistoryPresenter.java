@@ -4,7 +4,8 @@ import shared.model.Player;
 
 public interface IGameHistoryPresenter {
 
-    public void destroy();
+    public void pause();
+    public void resume();
     public Player getPlayerByDisplayName(String displayName);
 
 }

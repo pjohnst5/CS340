@@ -18,6 +18,7 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.List;
 
+import client.presenter.game_lobby.GameLobbyPresenter;
 import client.presenter.game_lobby.IGameLobbyPresenter;
 import client.util.ColorPicker;
 import client.view.activity.GameActivity;
@@ -35,6 +36,9 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_game_lobby, container, false);
+
+        // Initialize Simple Members
+        _presenter = new GameLobbyPresenter(this);
 
         // Initialize View Members
         Button _leaveButton = v.findViewById(R.id.leave_game_button);
@@ -55,9 +59,15 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        _presenter.destroy();
+    public void onResume() {
+        super.onResume();
+        _presenter.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        _presenter.pause();
     }
 
     private void updateView(Game game) {

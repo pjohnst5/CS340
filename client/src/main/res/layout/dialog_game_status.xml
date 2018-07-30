@@ -143,6 +143,7 @@
     </HorizontalScrollView>
 
     <LinearLayout
+        android:id="@+id/game_status_deck_cards_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/game_status_deck_cards"
@@ -156,4 +157,11 @@
             android:layout_marginEnd="10dp" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/game_over_open_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game_status_deck_cards"
+        android:text="Game Over" />
 </RelativeLayout>

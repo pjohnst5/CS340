@@ -38,7 +38,6 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
         }
 
         _oldSize = 0;
-        _model.addObserver(this);
         update();
 
     }
@@ -64,8 +63,13 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
     }
 
     @Override
-    public void destroy() {
+    public void pause() {
         _model.deleteObserver(this);
+    }
+
+    @Override
+    public void resume() {
+        _model.addObserver(this);
     }
 
     @Override

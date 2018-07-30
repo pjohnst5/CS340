@@ -70,9 +70,15 @@ public class LoginFragment extends Fragment implements ILoginView {
     }
 
     @Override
-    public void onDestroyView(){
-        super.onDestroyView();
-        _presenter.destroy();
+    public void onResume() {
+        super.onResume();
+        _presenter.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        _presenter.pause();
     }
 
     @Override
