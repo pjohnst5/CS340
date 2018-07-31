@@ -36,18 +36,18 @@ public class ColorPicker {
         }
     }
 
-    public static int getRouteColor(Resources res, PlayerColor color) {
+    public static int claimedColor(Resources res, PlayerColor color) {
         switch (color) {
             case BLUE:
-                return ResourcesCompat.getColor(res, R.color.train_light_blue_disabled, null);
+                return ResourcesCompat.getColor(res, R.color.claimed_blue, null);
             case GREEN:
-                return ResourcesCompat.getColor(res, R.color.train_light_green_disabled, null);
+                return ResourcesCompat.getColor(res, R.color.claimed_green, null);
             case RED:
-                return ResourcesCompat.getColor(res, R.color.train_light_red_disabled, null);
+                return ResourcesCompat.getColor(res, R.color.claimed_red, null);
             case YELLOW:
-                return ResourcesCompat.getColor(res, R.color.train_light_yellow_disabled, null);
+                return ResourcesCompat.getColor(res, R.color.claimed_yellow, null);
             default:
-                return ResourcesCompat.getColor(res, R.color.train_light_grey_disabled, null);
+                return ResourcesCompat.getColor(res, R.color.claimed_black, null);
         }
     }
 

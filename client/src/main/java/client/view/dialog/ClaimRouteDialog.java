@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.pjohnst5icloud.tickettoride.R;
@@ -111,6 +110,8 @@ public class ClaimRouteDialog extends DialogFragment {
                 (view) -> ad.getButton(Dialog.BUTTON_POSITIVE).performClick()
         );
 
+        updateDisplayCounts();
+
         ad.show();
         ad.getButton(Dialog.BUTTON_POSITIVE).setVisibility(View.GONE);
         ad.getButton(Dialog.BUTTON_NEGATIVE).setVisibility(View.GONE);
@@ -157,50 +158,58 @@ public class ClaimRouteDialog extends DialogFragment {
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 
-    private class TrainCardHolder extends RecyclerView.ViewHolder implements NumberPicker.OnValueChangeListener {
+    private class TrainCardHolder extends RecyclerView.ViewHolder {
+        private static final int MIN_CARDS = 0;
         private TextView _trainColorView;
-        private NumberPicker _numCardsPicker;
+        private TextView _numCardsView;
         private Button _minusButton;
         private Button _plusButton;
         private TextView _indicatorView;
+
         private int _maxCards;
+        private int _numCards;
         private TrainColor _trainColor;
         public TrainCardHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.claim_route_list_item, parent, false));
             _trainColorView = itemView.findViewById(R.id.list_item_train_card_color);
-            _numCardsPicker = itemView.findViewById(R.id.list_item_select_num_cards);
+            _numCardsView = itemView.findViewById(R.id.list_item_select_num_cards);
             _minusButton = itemView.findViewById(R.id.claim_route_minus_button);
             _plusButton = itemView.findViewById(R.id.claim_route_plus_button);
             _indicatorView = itemView.findViewById(R.id.list_item_selected_indicator);
             _minusButton.setOnClickListener((view) -> {
-                int value = _numCardsPicker.getValue();
-                value--;
-                _numCardsPicker.setValue(value); // number picker checks for us if it's below the minimum
+                decrCount();
             });
             _plusButton.setOnClickListener((view) -> {
-                int value = _numCardsPicker.getValue();
-                value++;
-                _numCardsPicker.setValue(value);
+                incrCount();
             });
         }
         public void bind(Pair<TrainColor, Integer> cards, int initialValue) {
             _trainColor = cards.getKey();
             _trainColorView.setText(ColorPicker.trainCardColorName(getResources(), _trainColor));
-            _numCardsPicker.setMinValue(0);
-            _numCardsPicker.setMaxValue(cards.getValue());
-            _numCardsPicker.setValue(initialValue);
-            _numCardsPicker.setOnValueChangedListener(this);
+            _numCards = initialValue;
             _maxCards = cards.getValue();
-            refreshIndicatorText();
+            _numCardsView.setText(Integer.toString(_numCards));
+            refreshText();
         }
-        private void refreshIndicatorText() {
-            _indicatorView.setText(Integer.toString(_numCardsPicker.getValue()) + "/" + Integer.toString(_maxCards));
+        private void refreshText() {
+            _numCardsView.setText(Integer.toString(_numCards));
+            _indicatorView.setText(Integer.toString(_numCards) + "/" + Integer.toString(_maxCards));
         }
-
-        @Override
-        public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
-            _selectedCards.put(_trainColor, newValue);
-            refreshIndicatorText();
+        private void decrCount() {
+            if (_numCards > 0) {
+                _numCards--;
+                onValueChange();
+            }
+        }
+        private void incrCount() {
+            if (_numCards < _maxCards) {
+                _numCards++;
+                onValueChange();
+            }
+        }
+        public void onValueChange() {
+            _selectedCards.put(_trainColor, _numCards);
+            refreshText();
             updateDisplayCounts();
         }
     }

@@ -91,6 +91,9 @@ public class RouteView extends View {
         int color = ColorPicker.getRouteColor(getResources(), _route.get_color());
         _linePaint.setColor(color);
         _boundsPaint.setColor(color);
+        if (_route.isClaimed()) {
+            _claimedPaint.setColor(ColorPicker.claimedColor(getResources(), _route.get_claimedColor()));
+        }
         return this;
     }
 
@@ -104,7 +107,7 @@ public class RouteView extends View {
 
     public void redraw() {
         if (_route.isClaimed()) {
-            _claimedPaint.setColor(ColorPicker.getRouteColor(getResources(), _route.get_claimedColor()));
+            _claimedPaint.setColor(ColorPicker.claimedColor(getResources(), _route.get_claimedColor()));
         }
         invalidate();
         requestLayout();
@@ -160,6 +163,9 @@ public class RouteView extends View {
     }
 
     public int getDistance(float touchX, float touchY) {
+        if (_route.isClaimed()) {
+            return -1;
+        }
         if (!_bounds.contains(touchX, touchY)) {
             return -1;
         }

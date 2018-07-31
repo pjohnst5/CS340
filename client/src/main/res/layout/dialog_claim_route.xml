@@ -74,7 +74,7 @@
                 android:layout_height="75dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_action_blue"
-                android:text="@string/create_game_button" />
+                android:text="@string/claim_route_dialog_button_text" />
 
 
         </LinearLayout>

@@ -87,9 +87,24 @@ public class GameMapView extends FrameLayout {
         _cities = cities;
         _routes = routes;
 
+        Route selectedRoute = null;
+        if (_selectedRoute != null) {
+            selectedRoute = _selectedRoute.getRoute();
+        }
+        initializeRoutes(selectedRoute);
+    }
+
+    private void initializeRoutes(Route selected) {
         for (Route r : _routes) {
             RouteView rv = new RouteView(getContext()).initialize(r);
             addView(rv);
+            if (r == selected) {
+                if (!r.isClaimed()) {
+                    // references point to the same route, and it hasn't been claimed
+                    _selectedRoute = rv;
+                    rv.setSelected(true);
+                }
+            }
         }
     }
 
@@ -98,27 +113,20 @@ public class GameMapView extends FrameLayout {
     }
 
     private void routeSelected(RouteView rv) {
-        boolean newRoute = false;
+        if (_selectedRoute == rv) {
+            // do nothing
+            return;
+        }
         if (_selectedRoute != null) {
-            if (_selectedRoute != rv) {
-                _selectedRoute.setSelected(false);
-                _selectedRoute.redraw();
-                newRoute = true;
-            }
+            _selectedRoute.setSelected(false);
+            _selectedRoute.redraw();
         }
         if (rv != null) {
             rv.setSelected(true);
             rv.redraw();
             _selectedRoute = rv;
         }
-        if (newRoute) {
-            _host.RouteSelected(_selectedRoute.getRoute());
-        } else if (rv != null) {
-            // TODO: Dallas Modified this, not sure what it does, ask Josh!
-            // It seems to fix the issue where the claim route button does
-            // not show up right away
-            _host.RouteSelected(rv.getRoute());
-        }
+        _host.RouteSelected(_selectedRoute.getRoute());
     }
 
     @Override
@@ -165,10 +173,15 @@ public class GameMapView extends FrameLayout {
         invalidate();
         requestLayout();
 
-        int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            ((RouteView) getChildAt(i)).redraw();
+        // delete all children, then recreate them
+        _initialized = false;
+        Route selected = null;
+        if (_selectedRoute != null) {
+            selected = _selectedRoute.getRoute();
         }
+        routeSelected(null);
+        removeAllViews();
+        initializeRoutes(selected);
     }
 
     private void initializeGraphics() {
@@ -224,9 +237,6 @@ public class GameMapView extends FrameLayout {
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             RouteView rv = (RouteView) getChildAt(i);
-            if (rv.getRoute().isClaimed()) {
-                continue;
-            }
             int dist = rv.getDistance(touchX, touchY);
             if (dist >= 0) {
                 if (closestRouteView == null) {
@@ -244,7 +254,8 @@ public class GameMapView extends FrameLayout {
 
         // closest route is selected
         if (closestRouteView == null) {
-          // there's no route that's close by
+            // there's no route that's close by
+            routeSelected(null);
             return;
         }
         routeSelected(closestRouteView);
