@@ -107,7 +107,7 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
 
     @Override
     public void disableSubmitButton() {
-        _submitButton.setEnabled(false);
+        getActivity().runOnUiThread(() -> _submitButton.setEnabled(false));
     }
 
     @Override

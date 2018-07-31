@@ -82,7 +82,7 @@ public class DestCardSelectPresenter
 
     @Override
     public void onServerResponseComplete(Exception exception) {
-
+        exception.printStackTrace();
     }
 
     @Override
