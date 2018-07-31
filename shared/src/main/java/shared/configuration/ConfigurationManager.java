@@ -1,118 +1,68 @@
 package shared.configuration;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+import java.util.HashMap;
 
-public class ConfigurationManager {
-    private static final String CONFIG_PATH = "client" +
-            File.separator + "src" +
-            File.separator + "main" +
-            File.separator + "assets" +
-            File.separator + "config.properties";
+public class ConfigurationManager implements IConfigurationManager {
 
-    private Properties _prop;
-    private static ConfigurationManager _instance = new ConfigurationManager();
-    private static ConfigurationManager instance() {
-        if (!initialized)
-            _instance.init();
+
+    private HashMap<String, Integer> _intProperties;
+    private HashMap<String, String> _stringProperties;
+    private static ConfigurationManager _instance;
+
+    private ConfigurationManager(){
+        _stringProperties = new HashMap<>();
+        _intProperties = new HashMap<>();
+    }
+
+    private static ConfigurationManager instance(){
+        if (_instance == null) {
+            _instance = new ConfigurationManager();
+            new DefaultConfiguration().load(_instance);
+
+        }
+
         return _instance;
     }
 
-    private static boolean initialized;
-
-    private boolean catchError(Exception e, String msg){
-        System.out.println(msg);
-        e.printStackTrace();
-        return true;
+    @Override
+    public void add(String key, String value) {
+        instance()._stringProperties.put(key, value);
     }
 
-    private ConfigurationManager(){
-        initialized = false;
+    @Override
+    public void add(String key, int value) {
+        instance()._intProperties.put(key, value);
     }
 
-    public static void use(InputStream is){
-        if (!initialized) {
-            _instance.init(is);
-            initialized = true;
-        }
+    public static void set(String key, String value){
+        instance()._stringProperties.put(key, value);
     }
 
-    private void init(){
-
-        if (initialized) return;
-
-        InputStream input = null;
-
-        try {
-            input = new FileInputStream(CONFIG_PATH);
-            init(input);
-
-        } catch (FileNotFoundException e) {
-            catchError(e, "Absent configurations file");
-
-            if (input != null){
-                try {
-                    input.close();
-                } catch (IOException ex){
-                    catchError(ex, "Could not close file.");
-                }
-
-            }
-
-            System.exit(1);
-
-        }
+    public static void set(String key, int value){
+        instance()._intProperties.put(key, value);
     }
 
-    private void init(InputStream input){
+    public static String get(String prop){
 
-        if (initialized) return;
-
-        boolean SysExitFlag = false;
-
-        _prop = new Properties();
-
-        try {
-            _prop.load(input);
-
-        } catch (IOException e) {
-            SysExitFlag = catchError(e, "Exception encountered processing the file");
-
-        } finally {
-
-            try {
-                if (input != null)
-                    input.close();
-
-            } catch (IOException e) {
-                SysExitFlag = catchError(e, "Exception encountered closing input stream");
-
-            }
-
-            if (SysExitFlag)
-                System.exit(1);
-
-        }
-        initialized = true;
-
-        System.out.println("Configurations File Loaded");
-    }
-
-    public static String get(String prop) {
         return getString(prop);
     }
 
+    /**
+     * Find string property in the configuration settings.
+     * @param prop The name of the target property.
+     * @return Returns the property as a string if it exists. Otherwise, returns null.
+     */
     public static String getString(String prop) {
-        return _instance._prop.getProperty(prop);
+        if (instance()._stringProperties.containsKey(prop)){
+            return instance()._stringProperties.get(prop);
+        } else if (instance()._intProperties.containsKey(prop)){
+            return Integer.toString(instance()._intProperties.get(prop));
+        }
+        return null;
     }
 
-    public static int getInt(String prop){
-        String propResult = instance()._prop.getProperty(prop);
-        int parseResult = Integer.parseInt(propResult);
-        return parseResult;
+    public static int getInt(String prop) {
+        return instance()._intProperties.get(prop);
     }
+
 }

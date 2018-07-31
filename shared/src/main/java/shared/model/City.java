@@ -1,6 +1,5 @@
 package shared.model;
 
-import shared.configuration.ConfigurationManager;
 import shared.enumeration.CityName;
 
 public class City {

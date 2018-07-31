@@ -20,18 +20,25 @@ public class ClientCommunicator {
     private static final String HTTP_POST = "POST";
     private static final String HTTP_GET = "GET";
 
-    private static final String SERVER_HOST = ConfigurationManager.get("server_host");
-    private static final String SERVER_PORT = ConfigurationManager.get("port");
-    private static final String SERVER_PROTOCOL = ConfigurationManager.get("protocol");
-    private static final String HOST_URL = SERVER_PROTOCOL + "://" + SERVER_HOST + ":" + SERVER_PORT;
-
-    private static final String EXEC_ENDPOINT = ConfigurationManager.get("execute_command_endpoint");
+    private final String HOST_URL;
+    private final String EXEC_ENDPOINT;
 
 
-    private ClientCommunicator() {}
-    private static ClientCommunicator _instance = new ClientCommunicator();
+    private ClientCommunicator() {
+        String SERVER_PORT = ConfigurationManager.get("port");
+        String SERVER_HOST = ConfigurationManager.get("server_host");
+        String SERVER_PROTOCOL = ConfigurationManager.get("protocol");
+        HOST_URL = SERVER_PROTOCOL + "://" + SERVER_HOST + ":" + SERVER_PORT;
+        EXEC_ENDPOINT = ConfigurationManager.get("execute_command_endpoint");
+    }
+    private static ClientCommunicator _instance;
 
     public static ClientCommunicator instance() {
+
+        if (_instance == null){
+            _instance = new ClientCommunicator();
+        }
+
         return _instance;
     }
 
@@ -62,8 +69,8 @@ public class ClientCommunicator {
 
     public HttpURLConnection makeRequest(String endpoint, ICommand command){
 
+        Writer writer;
         HttpURLConnection connection = null;
-        Writer writer = null;
 
         try {
             URL url = new URL(HOST_URL + endpoint);
@@ -76,8 +83,6 @@ public class ClientCommunicator {
             writer.close();
             connection.connect();
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,8 +92,8 @@ public class ClientCommunicator {
 
     public static IResponse sendCommand(ICommand command){
 
-        HttpURLConnection connection = _instance.makeRequest(command);
-        return _instance.getResponse(connection);
+        HttpURLConnection connection = instance().makeRequest(command);
+        return instance().getResponse(connection);
     }
 
     public static void main(String[] args){

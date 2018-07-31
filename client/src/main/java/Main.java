@@ -1,13 +1,8 @@
-import android.graphics.Bitmap;
-
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -21,14 +16,10 @@ import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.configuration.ConfigurationManager;
 import shared.enumeration.PlayerColor;
-import shared.exception.InvalidGameException;
 import shared.model.Game;
-import shared.model.GameMap;
 import shared.model.Message;
 import shared.model.Player;
 import shared.model.User;
-import shared.model.decks.DestDeck;
-import shared.model.request.DestCardRequest;
 import shared.model.request.JoinRequest;
 import shared.model.request.MessageRequest;
 import shared.serialization.Serializer;
@@ -94,9 +85,9 @@ public class Main {
         try {
             ClientModel model = ClientModel.getInstance();
             ServerProxy proxy = ServerProxy.instance();
-            File initialFile = new File("client/src/main/assets/config.properties");
-            InputStream targetStream = new FileInputStream(initialFile);
-            ConfigurationManager.use(targetStream);
+//            File initialFile = new File("client/src/main/assets/config.properties");
+//            InputStream targetStream = new FileInputStream(initialFile);
+//            ConfigurationManager.use(targetStream);
             ClientCommunicator communicator = ClientCommunicator.instance();
 
             Game game = new Game("test", 3);
