@@ -43,6 +43,11 @@ public class TrainSelectPresenter
     }
 
     @Override
+    public void setEnableCloseDialog(boolean value) {
+        _selectView.setEnabledCloseDialog(value);
+    }
+
+    @Override
     public void setEnableCardSelect(boolean value) {
         _selectView.setCardSelectEnabled(value);
     }

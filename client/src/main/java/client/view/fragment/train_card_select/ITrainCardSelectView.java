@@ -7,6 +7,7 @@ public interface ITrainCardSelectView {
     public void clearCards();
     public void switchToGameMap();
     public void setCardSelectEnabled(boolean value);
+    public void setEnabledCloseDialog(boolean value);
     public void setSelectionSubmitEnabled(boolean value);
     public void showToast(String message);
     public boolean addCard(TrainCard card);

@@ -9,6 +9,7 @@ public enum TrainColor {
     YELLOW,
     ORANGE,
     BLACK,
+    CARD_BACK,
     RED,
     GREEN,
     GRAY,

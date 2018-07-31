@@ -27,6 +27,7 @@ import java.util.Set;
 import client.presenter.train_card_select.ITrainCardSelectPresenter;
 import client.presenter.train_card_select.TrainSelectPresenter;
 import client.view.fragment.game_map.GameMapFragment;
+import shared.enumeration.TrainColor;
 import shared.model.decks.TrainCard;
 
 public class TrainCardSelectFragment extends Fragment implements ITrainCardSelectView {
@@ -54,7 +55,6 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
         _cardAdapter = new CardAdapter();
         _selectedCards = new HashSet<>();
         _unselectedCards = new HashSet<>();
-        _presenter = new TrainSelectPresenter(this);
 
         // Initialize View Members
         _recyclerViewContainer = v.findViewById(R.id.train_card_linear_layout);
@@ -70,11 +70,23 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
         _submitButton.setEnabled(false);
 
         // Set View OnClickListeners
-        _submitButton.setOnClickListener((view) -> { });
-        _closeButton.setOnClickListener((view) -> {
-            _presenter.switchToGameMap();
-        });
+        _submitButton.setOnClickListener((view) -> {
 
+            if (_selectedCards.size() > 0) {
+
+                TrainCard selectedCard = null;
+                for (CardItemHolder holder : _selectedCards){
+                    selectedCard = holder.getTrainCard();
+                }
+
+                _presenter.submitData(selectedCard);
+
+            }
+
+        });
+        _closeButton.setOnClickListener((view) -> _presenter.switchToGameMap());
+
+        _presenter = new TrainSelectPresenter(this);
         return v;
     }
 
@@ -88,6 +100,18 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
     public void onPause(){
         super.onPause();
         _presenter.pause();
+    }
+
+    @Override
+    public void setEnabledCloseDialog(boolean value) {
+
+        getActivity().runOnUiThread(() -> {
+            if (value){
+                _closeButton.setVisibility(View.VISIBLE);
+            } else {
+                _closeButton.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -185,8 +209,50 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
                 _unselectedCards.remove(this);
                 return;
             }
+
             _card = card;
-            _cardHolder.setImageResource(R.drawable.train_card_purple);
+            switch (card.get_color()) {
+                case BLACK:
+                    _cardHolder.setImageResource(R.drawable.train_card_black);
+                    break;
+
+                case BLUE:
+                    _cardHolder.setImageResource(R.drawable.train_card_blue);
+                    break;
+
+                case GREEN:
+                    _cardHolder.setImageResource(R.drawable.train_card_green);
+                    break;
+
+                case RED:
+                    _cardHolder.setImageResource(R.drawable.train_card_red);
+                    break;
+
+                case YELLOW:
+                    _cardHolder.setImageResource(R.drawable.train_card_yellow);
+                    break;
+
+                case PINK:
+                    _cardHolder.setImageResource(R.drawable.train_card_purple);
+                    break;
+
+                case WHITE:
+                    _cardHolder.setImageResource(R.drawable.train_card_white);
+                    break;
+
+                case ORANGE:
+                    _cardHolder.setImageResource(R.drawable.train_card_orange);
+                    break;
+
+                case LOCOMOTIVE:
+                    _cardHolder.setImageResource(R.drawable.train_card_loco);
+                    break;
+
+                default:
+                    _cardHolder.setImageResource(R.drawable.train_card_back);
+                    break;
+
+            }
         }
 
         public TrainCard getTrainCard(){
@@ -195,6 +261,7 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
 
         public void disable() {
             itemView.setOnClickListener(null);
+            _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_black));
         }
 
         public void enable(){
@@ -203,7 +270,16 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
 
         @Override
         public void onClick(View view) {
-            showToast("Cool!");
+            for (CardItemHolder card : _selectedCards){
+                card._cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_black));
+                _selectedCards.remove(card);
+                _unselectedCards.add(card);
+            }
+
+            _selectedCards.add(this);
+            _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_blue));
+            _submitButton.setEnabled(true);
+
         }
 
     }

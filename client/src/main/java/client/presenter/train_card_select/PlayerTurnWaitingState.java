@@ -1,5 +1,7 @@
 package client.presenter.train_card_select;
 
+import java.util.List;
+
 import client.model.ClientModel;
 import shared.model.decks.TrainCard;
 
@@ -14,6 +16,7 @@ public class PlayerTurnWaitingState extends TrainCardSelectState {
 
     @Override
     public void enterState() {
+        presenter().setEnableCloseDialog(true);
         presenter().setEnableCardSelect(false);
         presenter().setEnableSelectionSubmit(false);
     }
@@ -23,6 +26,9 @@ public class PlayerTurnWaitingState extends TrainCardSelectState {
         if (_model.isMyTurn()){
             presenter().setState(new PlayerTurnState(presenter()));
         }
+
+            List<TrainCard> faceUpCards = _model.getCurrentGame().getTrainDeck().getFaceUpTrainCards();
+            presenter().setCards(faceUpCards);
     }
 
     @Override
