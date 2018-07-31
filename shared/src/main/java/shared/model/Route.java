@@ -94,5 +94,10 @@ public class Route {
         _visited = b;
     }
 
+    @Override
+    public String toString() {
+        String out = new String(_source.toString() + " to " + _dest.toString());
+        return out;
+    }
 
 }
