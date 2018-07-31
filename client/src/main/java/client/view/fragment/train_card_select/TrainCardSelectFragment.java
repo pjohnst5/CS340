@@ -174,6 +174,8 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
     @Override
     public void clearCards() {
         _cards.clear();
+        _unselectedCards.clear();
+        _selectedCards.clear();
         getActivity().runOnUiThread(() -> _cardAdapter.notifyDataSetChanged());
     }
 
@@ -200,6 +202,7 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
 
             itemView.setOnClickListener(this);
             _unselectedCards.add(this);
+            _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_black));
 
         }
 

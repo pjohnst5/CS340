@@ -1,5 +1,6 @@
 package client.presenter.train_card_select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import client.facade.ServicesFacade;
@@ -21,6 +22,14 @@ public class PlayerDrewCardState extends TrainCardSelectState {
     @Override
     public void enterState() {
         presenter().setEnableCloseDialog(false);
+        List<TrainCard> modelFaceUpCards = _model.getCurrentGame().getTrainDeck().getFaceUpTrainCards();
+
+        // This is important so that we don't add the face down card to the deck
+        List<TrainCard> faceUpCards = new ArrayList<>(modelFaceUpCards);
+        faceUpCards.add(new TrainCard(TrainColor.CARD_BACK));
+        presenter().setCards(faceUpCards);
+
+
     }
 
     @Override
@@ -35,10 +44,12 @@ public class PlayerDrewCardState extends TrainCardSelectState {
             return;
         }
 
-        if (!presenter().trainCardsLoaded()){
-            List<TrainCard> faceUpCards = _model.getCurrentGame().getTrainDeck().getFaceUpTrainCards();
-            presenter().setCards(faceUpCards);
-        }
+        List<TrainCard> modelFaceUpCards = _model.getCurrentGame().getTrainDeck().getFaceUpTrainCards();
+
+        // This is important so that we don't add the face down card to the deck
+        List<TrainCard> faceUpCards = new ArrayList<>(modelFaceUpCards);
+        faceUpCards.add(new TrainCard(TrainColor.CARD_BACK));
+        presenter().setCards(faceUpCards);
 
     }
 
@@ -49,7 +60,6 @@ public class PlayerDrewCardState extends TrainCardSelectState {
         } else {
             _facade.drawFaceUpCard(presenter(), keep, _model.getCurrentPlayer());
         }
-        exitState();
-        return;
+        presenter().setEnableSelectionSubmit(false);
     }
 }

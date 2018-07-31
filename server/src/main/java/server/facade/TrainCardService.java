@@ -20,6 +20,7 @@ public class TrainCardService {
 
     public static IResponse drawFaceUp(FaceUpRequest request)
     {
+        boolean changeTurnsFlag = false;
         CommandResponse response = new CommandResponse();
         ServerModel serverModel = ServerModel.getInstance();
 
@@ -50,8 +51,13 @@ public class TrainCardService {
             //update player in server (to keep map of Players and players in Games synced)
             serverModel.updatePlayer(player.getGameID(), player);
 
+            // The change turns method resets the number of cardsDrawnThisTurn, so we have to set a flag
+            if (player.get_cardsDrawnThisTurn() == 2) {
+                changeTurnsFlag = true;
+            }
+
             //if card was locomotive or limit was reached, change turns
-            if (request.get_faceUpCard().get_color() == TrainColor.LOCOMOTIVE || player.get_cardsDrawnThisTurn() == 2){
+            if (request.get_faceUpCard().get_color() == TrainColor.LOCOMOTIVE || changeTurnsFlag){
                 serverModel.getGame(request.get_gameID()).changeTurns();
             }
 
@@ -81,7 +87,7 @@ public class TrainCardService {
             serverModel.addCommand(request.get_gameID(), command3);
 
             //if the the card was locomotive or limit was reached, command to change turns for client
-            if (request.get_faceUpCard().get_color() == TrainColor.LOCOMOTIVE || player.get_cardsDrawnThisTurn() == 2){
+            if (request.get_faceUpCard().get_color() == TrainColor.LOCOMOTIVE || changeTurnsFlag){
                 String className4 = ConfigurationManager.getString("client_facade_name");
                 String methodName4 = ConfigurationManager.getString("client_change_turns_method");
                 String[] paramTypes4 = new String[0];
@@ -103,6 +109,7 @@ public class TrainCardService {
 
     public static IResponse drawFaceDown(FaceDownRequest request)
     {
+        boolean changeTurnsFlag = false;
         CommandResponse response = new CommandResponse();
         ServerModel serverModel = ServerModel.getInstance();
         try {
@@ -118,6 +125,11 @@ public class TrainCardService {
             //increment cards this turn count
             player.incrementCardsDrawnThisTurn();
 
+            // The change turns method resets the number of cardsDrawnThisTurn, so we have to set a flag
+            if (player.get_cardsDrawnThisTurn() == 2) {
+                changeTurnsFlag = true;
+            }
+
             //update player in server (to keep map of Players and players in Games synced)
             serverModel.updatePlayer(player.getGameID(), player);
 
@@ -128,7 +140,7 @@ public class TrainCardService {
             serverModel.addGameAction(request.get_gameID(), action);
 
             //if limit has been reached for this player, change turns (This will handle any logic for changing to last round or ending the game)
-            if (player.get_cardsDrawnThisTurn() == 2){
+            if (changeTurnsFlag){
                 serverModel.getGame(request.get_gameID()).changeTurns();
             }
 
@@ -157,7 +169,7 @@ public class TrainCardService {
             serverModel.addCommand(request.get_gameID(), command3);
 
             //if limit has been reached, command to change turns for client
-            if (player.get_cardsDrawnThisTurn() == 2){
+            if (changeTurnsFlag){
                 String className4 = ConfigurationManager.getString("client_facade_name");
                 String methodName4 = ConfigurationManager.getString("client_change_turns_method");
                 String[] paramTypes4 = new String[0];
