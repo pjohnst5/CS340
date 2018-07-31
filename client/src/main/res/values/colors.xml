@@ -58,4 +58,11 @@
 
     <color name="train_light_grey_pressed">#afaead</color>
     <color name="train_black_border">#000000</color>
+
+    <!-- Game Map Colors -->
+    <color name="claimed_black">#aa000000</color>
+    <color name="claimed_blue">#aa255cf4</color>
+    <color name="claimed_green">#aa05af00</color>
+    <color name="claimed_red">#aaaf0500</color>
+    <color name="claimed_yellow">#aaffe500</color>
 </resources>

@@ -170,7 +170,7 @@ public Dialog onCreateDialog(Bundle savedInstanceState) {
             _destCards.setText(Integer.toString(player.getDestCards().size()));
             _routes.setText(Integer.toString(numRoutes));
             PlayerColor color = player.getColor();
-            _playerName.setTextColor(ColorPicker.getRouteColor(getResources(), color));
+            _playerName.setTextColor(ColorPicker.claimedColor(getResources(), color));
             if (player.getDisplayName().equals(_myPlayer.getDisplayName())) {
                 itemView.setBackgroundColor(0xffbbbbbb);
 //                ((View)_playerName.getParent()).setBackgroundColor(0xffbbbbbb);

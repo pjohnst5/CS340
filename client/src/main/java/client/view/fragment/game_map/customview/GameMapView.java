@@ -87,7 +87,11 @@ public class GameMapView extends FrameLayout {
         _cities = cities;
         _routes = routes;
 
-        initializeRoutes(_selectedRoute.getRoute());
+        Route selectedRoute = null;
+        if (_selectedRoute != null) {
+            selectedRoute = _selectedRoute.getRoute();
+        }
+        initializeRoutes(selectedRoute);
     }
 
     private void initializeRoutes(Route selected) {
@@ -109,22 +113,20 @@ public class GameMapView extends FrameLayout {
     }
 
     private void routeSelected(RouteView rv) {
-        boolean newRoute = false;
+        if (_selectedRoute == rv) {
+            // do nothing
+            return;
+        }
         if (_selectedRoute != null) {
-            if (_selectedRoute != rv) {
-                _selectedRoute.setSelected(false);
-                _selectedRoute.redraw();
-                newRoute = true;
-            }
+            _selectedRoute.setSelected(false);
+            _selectedRoute.redraw();
         }
         if (rv != null) {
             rv.setSelected(true);
             rv.redraw();
             _selectedRoute = rv;
         }
-        if (newRoute) {
-            _host.RouteSelected(_selectedRoute.getRoute());
-        }
+        _host.RouteSelected(_selectedRoute.getRoute());
     }
 
     @Override
@@ -173,7 +175,10 @@ public class GameMapView extends FrameLayout {
 
         // delete all children, then recreate them
         _initialized = false;
-        Route selected = _selectedRoute.getRoute();
+        Route selected = null;
+        if (_selectedRoute != null) {
+            selected = _selectedRoute.getRoute();
+        }
         routeSelected(null);
         removeAllViews();
         initializeRoutes(selected);
@@ -250,6 +255,7 @@ public class GameMapView extends FrameLayout {
         // closest route is selected
         if (closestRouteView == null) {
             // there's no route that's close by
+            routeSelected(null);
             return;
         }
         routeSelected(closestRouteView);
