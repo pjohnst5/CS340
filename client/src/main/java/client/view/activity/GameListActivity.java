@@ -19,4 +19,11 @@ public class GameListActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         return new GameListFragment();
     }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+
+        getSupportActionBar().hide();
+    }
 }

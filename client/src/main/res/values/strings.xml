@@ -30,6 +30,7 @@
 
 
     <!-- CREATE GAME STRING SET -->
+    <string name="select_a_game">Select a Game</string>
     <string name="create_game_dialog_title">Create New Game</string>
 
     <string name="create_game_room_name">Room Name:</string>

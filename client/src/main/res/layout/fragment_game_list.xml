@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="8dp"
-    android:weightSum="10">
+    android:padding="0dp"
+    android:background="@drawable/game_list_bg_image">
+
+    <ImageView
+        android:id="@+id/bg_characters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/characters_image"/>
 
     <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/game_list_dark_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="9">
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:layout_above="@id/game_list_button_holder"
+        android:layout_toLeftOf="@id/bg_characters"
+        android:padding="10dp"
+        android:background="@drawable/game_list_bg">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            style="@style/TitleText"
+            android:text="@string/select_a_game"
+            android:paddingBottom="10dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/game_list_recycler_view"
@@ -20,16 +42,18 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/game_list_button_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_weight="1">
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/create_game_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="@string/create_game_button"/>
 
         <Button
@@ -40,4 +64,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

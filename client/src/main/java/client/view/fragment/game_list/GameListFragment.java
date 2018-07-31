@@ -2,6 +2,7 @@ package client.view.fragment.game_list;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -190,15 +191,15 @@ public class GameListFragment extends Fragment implements IGameListView {
         private TextView mGamePlayerNumView;
 
         public void deselect(){
-            mGameIdView.setBackgroundColor(getResources().getColor(R.color.train_light_grey));
-            mGameNameView.setBackgroundColor(getResources().getColor(R.color.train_light_grey));
-            mGamePlayerNumView.setBackgroundColor(getResources().getColor(R.color.train_light_grey));
+            mGameIdView.setBackgroundColor(Color.TRANSPARENT);
+            mGameNameView.setBackgroundColor(Color.TRANSPARENT);
+            mGamePlayerNumView.setBackgroundColor(Color.TRANSPARENT);
         }
 
         public void select(){
-            mGameIdView.setBackgroundColor(getResources().getColor(R.color.blue));
-            mGameNameView.setBackgroundColor(getResources().getColor(R.color.blue));
-            mGamePlayerNumView.setBackgroundColor(getResources().getColor(R.color.blue));
+            mGameIdView.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+            mGameNameView.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
+            mGamePlayerNumView.setBackgroundColor(getResources().getColor(R.color.yellow_highlight));
         }
 
         public GameHolder(LayoutInflater inflater, ViewGroup parent) {

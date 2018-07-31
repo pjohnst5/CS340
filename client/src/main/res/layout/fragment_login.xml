@@ -34,7 +34,7 @@
         android:padding="8dp"
         android:useDefaultMargins="false"
         android:layout_marginTop="30dp"
-        android:background="@color/translucent_background"
+        android:background="@color/translucent_bg_light"
         android:verticalSpacing="0dp">
 
         <TextView
