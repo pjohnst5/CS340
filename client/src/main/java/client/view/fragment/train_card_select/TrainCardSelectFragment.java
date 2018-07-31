@@ -91,12 +91,34 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
     }
 
     @Override
-    public void disableSubmitButton() {
-        getActivity().runOnUiThread(() -> _submitButton.setEnabled(false));
+    public void setCardSelectEnabled(boolean value) {
+        getActivity().runOnUiThread(() -> {
+            if (value) {
+                for (CardItemHolder card : _selectedCards) {
+                    card.disable();
+                    _unselectedCards.add(card);
+                    _selectedCards.remove(card);
+                }
+            } else {
+
+                for (CardItemHolder card : _selectedCards){
+                    card.enable();
+                }
+
+                for (CardItemHolder card : _unselectedCards){
+                    card.enable();
+                }
+            }
+        });
+
     }
 
     @Override
-    public void disableCardSelect() {
+    public void setSelectionSubmitEnabled(boolean value) {
+        getActivity().runOnUiThread(() -> _submitButton.setEnabled(value));
+    }
+
+    private void disableCardSelect() {
         for (CardItemHolder card : _selectedCards) {
             card.disable();
         }
@@ -123,6 +145,12 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
 
             ((GridLayoutManager) _cardsRecyclerView.getLayoutManager()).setSpanCount(numColumns);
         });
+    }
+
+    @Override
+    public void clearCards() {
+        _cards.clear();
+        getActivity().runOnUiThread(() -> _cardAdapter.notifyDataSetChanged());
     }
 
     @Override
@@ -167,6 +195,10 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
 
         public void disable() {
             itemView.setOnClickListener(null);
+        }
+
+        public void enable(){
+            itemView.setOnClickListener(this);
         }
 
         @Override

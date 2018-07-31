@@ -13,6 +13,7 @@ public class TrainSelectPresenter
 
     private ITrainCardSelectView _selectView;
     private ClientModel _model;
+    private List<TrainCard> _cards;
 
     private TrainCardSelectState _state;
     public TrainSelectPresenter(ITrainCardSelectView selectView){
@@ -25,6 +26,30 @@ public class TrainSelectPresenter
         } else {
             setState(new PlayerTurnWaitingState(this));
         }
+    }
+
+    @Override
+    public boolean trainCardsLoaded() {
+        return (_cards != null && _cards.size() > 0);
+    }
+
+    @Override
+    public void setCards(List<TrainCard> cards) {
+        _cards = cards;
+        _selectView.clearCards();
+        for (TrainCard card : cards){
+            _selectView.addCard(card);
+        }
+    }
+
+    @Override
+    public void setEnableCardSelect(boolean value) {
+        _selectView.setCardSelectEnabled(value);
+    }
+
+    @Override
+    public void setEnableSelectionSubmit(boolean value) {
+        _selectView.setSelectionSubmitEnabled(value);
     }
 
     @Override
@@ -53,8 +78,8 @@ public class TrainSelectPresenter
     }
 
     @Override
-    public void submitData(List<TrainCard> keep, List<TrainCard> discard) {
-        _state.submitData(keep, discard);
+    public void submitData(TrainCard keep) {
+        _state.submitData(keep);
     }
 
     @Override

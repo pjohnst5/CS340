@@ -1,7 +1,5 @@
 package client.presenter.train_card_select;
 
-import java.util.List;
-
 import shared.model.decks.TrainCard;
 
 public abstract class TrainCardSelectState {
@@ -21,6 +19,6 @@ public abstract class TrainCardSelectState {
     public void enterState(){}
     public void exitState(){}
     public abstract void update();
-    public abstract void submitData(List<TrainCard> keep,List<TrainCard> discard);
+    public abstract void submitData(TrainCard keep);
 
 }
