@@ -19,19 +19,23 @@ public class ClientCommunicator {
 
     private static final String HTTP_POST = "POST";
     private static final String HTTP_GET = "GET";
+    private static final int MAX_CONNECTION_TIME = 10000; // 10 seconds
 
-    private final String HOST_URL;
     private final String EXEC_ENDPOINT;
 
 
     private ClientCommunicator() {
-        String SERVER_PORT = ConfigurationManager.get("port");
-        String SERVER_HOST = ConfigurationManager.get("server_host");
-        String SERVER_PROTOCOL = ConfigurationManager.get("protocol");
-        HOST_URL = SERVER_PROTOCOL + "://" + SERVER_HOST + ":" + SERVER_PORT;
         EXEC_ENDPOINT = ConfigurationManager.get("execute_command_endpoint");
     }
     private static ClientCommunicator _instance;
+
+    private String getHostUrl() {
+        String SERVER_PORT = ConfigurationManager.get("port");
+        String SERVER_HOST = ConfigurationManager.get("server_host");
+        String SERVER_PROTOCOL = ConfigurationManager.get("protocol");
+        String hostUrl = SERVER_PROTOCOL + "://" + SERVER_HOST + ":" + SERVER_PORT;
+        return hostUrl;
+    }
 
     public static ClientCommunicator instance() {
 
@@ -73,10 +77,12 @@ public class ClientCommunicator {
         HttpURLConnection connection = null;
 
         try {
-            URL url = new URL(HOST_URL + endpoint);
+            URL url = new URL(getHostUrl() + endpoint);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
+            connection.setReadTimeout(MAX_CONNECTION_TIME);
+            connection.setConnectTimeout(MAX_CONNECTION_TIME);
 
             writer = new PrintWriter(connection.getOutputStream());
             Serializer.serializeToWriter(writer, command);

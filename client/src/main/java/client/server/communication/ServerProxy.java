@@ -21,6 +21,9 @@ public class ServerProxy {
     public void sendCommand(ICommand command) throws ServerProxyException {
         CommandResponse response = (CommandResponse)ClientCommunicator.sendCommand(command);
 
+        if (response == null) {
+            throw new ServerProxyException("Server connection failed");
+        }
         if (response.getSuccess()){
             List<ICommand> commands = response.getCommands();
 
