@@ -28,8 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginStart="35dp"
-            android:textStyle="bold"
-            android:text="Taylorsville, UT - Dallas, TX"/>
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/dest_card_point_value"

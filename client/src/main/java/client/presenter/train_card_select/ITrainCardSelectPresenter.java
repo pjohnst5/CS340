@@ -10,7 +10,11 @@ public interface ITrainCardSelectPresenter extends AsyncServerTask.AsyncCaller {
     public void pause();
     public void resume();
     public void switchToGameMap();
+    public boolean trainCardsLoaded();
+    public void setCards(List<TrainCard> cards);
     public void setState(TrainCardSelectState state);
-    public void submitData(List<TrainCard> keep, List<TrainCard> discard);
+    public void setEnableCardSelect(boolean value);
+    public void setEnableSelectionSubmit(boolean value);
+    public void submitData(TrainCard keep);
 
 }
