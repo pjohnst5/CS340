@@ -72,7 +72,8 @@ public class DestDeck {
 
         if (_cards.size() < 3)
         {
-            for (int i = 0; i < _cards.size(); i++) {
+            int cardsLeft = _cards.size();
+            for (int i = 0; i < cardsLeft; i++) {
                 three.add(_cards.remove(0));
             }
 

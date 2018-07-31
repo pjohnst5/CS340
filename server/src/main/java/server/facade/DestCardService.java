@@ -160,7 +160,7 @@ public class DestCardService {
             serverModel.updatePlayer(player.getGameID(), player);
 
             //Make game action saying this person drew destination cards
-            GameAction action = new GameAction(request.get_player().getDisplayName(), " drew destination cards");
+            GameAction action = new GameAction(request.get_player().getDisplayName(), " selected destination cards");
 
             //add game action to server
             serverModel.addGameAction(request.get_gameID(), action);
