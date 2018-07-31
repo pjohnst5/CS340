@@ -12,13 +12,15 @@ import shared.enumeration.PlayerColor;
 public class GameMap {
     private HashMap<UUID, Route> _routes = new HashMap<>();
     private List<Route> _claimedRoutes = new ArrayList<>();
+    private int _numPlayers;
 
-    public GameMap() {
+    public GameMap(int numPlayers) {
         List<Route> routeList =  new ListOfRoutes().getRoutes();
         for(int i = 0; i < routeList.size(); i++){
             _routes.put(routeList.get(i).getId(), routeList.get(i));
         }
         System.out.println();
+        this._numPlayers = numPlayers;
     }
 
     public HashMap<UUID, Route> get_routes() {
@@ -34,6 +36,13 @@ public class GameMap {
         Route route = _routes.get(routeId);
         route.claimRoute(playerId, playerColor);
         _claimedRoutes.add(route);
+        if (_numPlayers < 4 && route.getDoubleRoute() > 0) {
+            // need to delete the other route
+            Route r = findDoubleRoute(route);
+            if (r == null) return;
+            _routes.remove(r.getId());
+            route.setDoubleRoute(0);
+        }
     }
 
     public Route getRoute(UUID routeId) {
@@ -53,5 +62,21 @@ public class GameMap {
             }
         }
         return result;
+    }
+
+    private Route findDoubleRoute(Route route) {
+        if (route.getDoubleRoute() == 0) {
+            return null;
+        }
+        for (Route r : _routes.values()) {
+            if (r.getDoubleRoute() == 0) continue;
+            if (r.getDoubleRoute() == route.getDoubleRoute()) continue; // they'll be different indices
+            if ((route.get_source() == r.get_source() && route.get_dest() == r.get_dest()) ||
+                    (route.get_source() == r.get_dest() && route.get_dest() == r.get_source())) {
+                // found the matching route
+                return r;
+            }
+        }
+        return null;
     }
 }

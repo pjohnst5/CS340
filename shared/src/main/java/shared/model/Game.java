@@ -49,7 +49,8 @@ public class Game {
         _actions = new ArrayList<>();
         _trainDeck = new TrainDeck();
         _destDeck = new DestDeck();
-        _map = new GameMap();
+        // if at any point we make it so that maxPlayers can change, GameMap needs to be notified!
+        _map = new GameMap(maxPlayers);
         _destOptionCards = null;
         _playersSetup = 0;
         _playerToEndOn = new String();
