@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">TicketToRide</string>
+
+    <!-- LOGIN -->
     <string name="login_title">Ticket To Ride</string>
     <string name="login_username_label">Username</string>
     <string name="login_username_hint">Username...</string>
@@ -10,6 +12,14 @@
     <string name="login_switch_login_label">Login</string>
     <string name="login_switch_register_label">Register</string>
     <string name="login_submit_button">Submit</string>
+    <string name="login_server_settings">Settings</string>
+
+    <!-- SERVER SETTINGS DIALOG -->
+    <string name="server_settings_title">Connection Settings</string>
+    <string name="server_settings_host">Host IP:</string>
+    <string name="server_settings_port">Port:</string>
+
+    <!--GAME LIST/LOBBY -->
     <string name="create_game_button">Create Game</string>
     <string name="join_game_button">Join Game</string>
     <string name="lobby_title">Players</string>

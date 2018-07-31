@@ -115,4 +115,15 @@
         android:background="@drawable/button_green"
         android:layout_margin="16dp"/>
 
+    <Button
+        android:id="@+id/login_server_settings_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_server_settings"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:padding="20dp"
+        android:background="@drawable/button_green"
+        android:layout_margin="16dp"/>
+
 </RelativeLayout>

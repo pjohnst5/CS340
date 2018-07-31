@@ -44,6 +44,7 @@ public class LoginFragment extends Fragment implements ILoginView {
         _usernameField = v.findViewById(R.id.login_username);
         _passwordField = v.findViewById(R.id.login_password);
         _confirmPasswordField = v.findViewById(R.id.login_confirm_password);
+        Button mSettingsButton = v.findViewById(R.id.login_server_settings_button);
 
         // Modify View Members
         mSubmitOptionSwitch.setChecked(false);
@@ -65,6 +66,9 @@ public class LoginFragment extends Fragment implements ILoginView {
         });
 
         mSubmitButton.setOnClickListener((view) -> onSubmit());
+        mSettingsButton.setOnClickListener((view) -> {
+            
+        });
 
         return v;
     }
