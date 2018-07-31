@@ -16,6 +16,8 @@ public class Route {
     private CityName _source;
     private CityName _dest;
     private int _doubleRouteIndex;
+    private boolean _wasSrc; //used for determining if Dest Card was completed
+    private boolean _visited; //used for determining if Dest Card was completed
 
     public Route(CityName city1, CityName city2, int pathLength, TrainColor color) {
         this._source = city1;
@@ -75,4 +77,22 @@ public class Route {
     public int getDoubleRoute() {
         return _doubleRouteIndex;
     }
+
+    public boolean wasSrc() {
+        return _wasSrc;
+    }
+
+    public boolean visited() {
+        return _visited;
+    }
+
+    public void set_wasSrc(boolean b) {
+        _wasSrc = b;
+    }
+
+    public void setVisited(boolean b) {
+        _visited = b;
+    }
+
+
 }

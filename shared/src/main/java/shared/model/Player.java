@@ -196,4 +196,8 @@ public class Player {
     public void resetCardsDrawnThisTurn() {
         _cardsDrawnThisTurn = 0;
     }
+
+    public void updateDestCards(List<DestCard> updated) {
+        _destCards = updated;
+    }
 }
