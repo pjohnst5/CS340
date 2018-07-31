@@ -84,9 +84,11 @@ public class GenericCommand implements ICommand {
         }
         catch (ClassNotFoundException e) {
             System.out.println("Class type not found: " + e.getCause());
+            e.printStackTrace();
         }
         catch (Exception e) {
             System.out.println("Error in execute: " + e.getMessage());
+            e.printStackTrace();
         }
         return obj;
     }

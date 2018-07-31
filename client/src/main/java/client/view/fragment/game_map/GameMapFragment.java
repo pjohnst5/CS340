@@ -182,17 +182,17 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
 
     @Override
     public void setClaimRouteButtonEnabled(boolean enabled) {
-        _claimRouteButton.setEnabled(enabled);
+        getActivity().runOnUiThread(() -> _claimRouteButton.setEnabled(enabled));
     }
 
     @Override
     public void setSelectDestCardEnabled(boolean enabled){
-        _selectDestCardsButton.setEnabled(enabled);
+        getActivity().runOnUiThread(() -> _selectDestCardsButton.setEnabled(enabled));
     }
 
     @Override
     public void setSelectTrainCardEnabled(boolean enabled){
-        _selectTrainCardsButton.setEnabled(enabled);
+        getActivity().runOnUiThread(() -> _selectTrainCardsButton.setEnabled(enabled));
     }
 
     @Override
