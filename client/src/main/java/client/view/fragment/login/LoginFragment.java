@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,12 @@ import com.pjohnst5icloud.tickettoride.R;
 import client.presenter.login.LoginPresenter;
 import client.view.activity.GameListActivity;
 import client.presenter.login.ILoginPresenter;
+import client.view.dialog.ServerSettingsDialog;
 
 public class LoginFragment extends Fragment implements ILoginView {
+
+    private static final String SERVER_SETTINGS_DIALOG_TAG = "ServerSettingsDialog";
+    private static final int SERVER_SETTINGS_DIALOG_CODE = 0;
 
     private TextView _confirmPasswordLabel;
     private EditText _usernameField;
@@ -67,7 +72,10 @@ public class LoginFragment extends Fragment implements ILoginView {
 
         mSubmitButton.setOnClickListener((view) -> onSubmit());
         mSettingsButton.setOnClickListener((view) -> {
-            
+            FragmentManager manager = getFragmentManager();
+            ServerSettingsDialog dialog = ServerSettingsDialog.newInstance();
+            dialog.setTargetFragment(LoginFragment.this, SERVER_SETTINGS_DIALOG_CODE);
+            dialog.show(manager, SERVER_SETTINGS_DIALOG_TAG);
         });
 
         return v;
