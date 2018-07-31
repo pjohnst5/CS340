@@ -2,6 +2,7 @@ package client.presenter.game_map;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -17,6 +18,7 @@ import shared.exception.DeckException;
 import shared.exception.InvalidGameException;
 import shared.exception.RouteClaimedAlreadyException;
 import shared.model.Game;
+import shared.model.GameMap;
 import shared.model.Player;
 import shared.model.Route;
 import shared.model.decks.TrainCard;
@@ -83,7 +85,9 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
         int numDestCards = _model.getCurrentGame().getDestDeck().get_cards().size();
         int numTrainCards = _model.getCurrentGame().getTrainDeck().sizeOfFaceDownDeck();
 
-        _mapView.updateMap();
+        GameMap mapModel = ClientModel.getInstance().getCurrentGame().getMap();
+        List<Route> routes = new ArrayList<>(mapModel.get_routes().values());
+        _mapView.updateMap(routes);
         _mapView.updatePlayerTurn();
         _mapView.updateDeckCount(numDestCards, numTrainCards);
 

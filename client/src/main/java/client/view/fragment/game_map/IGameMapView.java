@@ -1,5 +1,7 @@
 package client.view.fragment.game_map;
 
+import java.util.List;
+
 import client.presenter.game_map.IGameMapPresenter;
 import shared.model.Player;
 import shared.model.Route;
@@ -9,7 +11,7 @@ import shared.model.Route;
  */
 
 public interface IGameMapView {
-    public void updateMap();
+    public void updateMap(List<Route> routes);
     public void updatePlayerTurn();
     public void updateDeckCount(int destCards, int trainCards);
     public void setClaimRouteButtonEnabled(boolean enabled);

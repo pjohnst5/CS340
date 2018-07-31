@@ -160,8 +160,8 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     }
 
     @Override
-    public void updateMap() {
-        getActivity().runOnUiThread(() -> _gameMap.redraw());
+    public void updateMap(List<Route> routes) {
+        getActivity().runOnUiThread(() -> _gameMap.redraw(routes));
     }
 
     @Override

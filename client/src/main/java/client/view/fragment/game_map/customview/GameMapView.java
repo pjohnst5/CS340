@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.List;
+import java.util.UUID;
 
 import shared.enumeration.CityManager;
 import shared.model.City;
@@ -98,7 +99,7 @@ public class GameMapView extends FrameLayout {
         for (Route r : _routes) {
             RouteView rv = new RouteView(getContext()).initialize(r);
             addView(rv);
-            if (r == selected) {
+            if (selected != null && r.getId().equals(selected.getId())) {
                 if (!r.isClaimed()) {
                     // references point to the same route, and it hasn't been claimed
                     _selectedRoute = rv;
@@ -169,19 +170,21 @@ public class GameMapView extends FrameLayout {
         }
     }
 
-    public void redraw() {
-        invalidate();
-        requestLayout();
+    public void redraw(List<Route> routes) {
 
         // delete all children, then recreate them
         _initialized = false;
         Route selected = null;
-        if (_selectedRoute != null) {
+        if (_selectedRoute != null && routes.contains(_selectedRoute.getRoute())) {
             selected = _selectedRoute.getRoute();
         }
         routeSelected(null);
         removeAllViews();
+        _routes = routes;
         initializeRoutes(selected);
+
+        invalidate();
+        requestLayout();
     }
 
     private void initializeGraphics() {
