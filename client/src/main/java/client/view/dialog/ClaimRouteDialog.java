@@ -111,6 +111,8 @@ public class ClaimRouteDialog extends DialogFragment {
                 (view) -> ad.getButton(Dialog.BUTTON_POSITIVE).performClick()
         );
 
+        updateDisplayCounts();
+
         ad.show();
         ad.getButton(Dialog.BUTTON_POSITIVE).setVisibility(View.GONE);
         ad.getButton(Dialog.BUTTON_NEGATIVE).setVisibility(View.GONE);

@@ -160,6 +160,9 @@ public class RouteView extends View {
     }
 
     public int getDistance(float touchX, float touchY) {
+        if (_route.isClaimed()) {
+            return -1;
+        }
         if (!_bounds.contains(touchX, touchY)) {
             return -1;
         }

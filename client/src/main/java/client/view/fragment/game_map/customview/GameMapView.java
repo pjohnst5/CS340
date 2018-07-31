@@ -87,9 +87,20 @@ public class GameMapView extends FrameLayout {
         _cities = cities;
         _routes = routes;
 
+        initializeRoutes(_selectedRoute.getRoute());
+    }
+
+    private void initializeRoutes(Route selected) {
         for (Route r : _routes) {
             RouteView rv = new RouteView(getContext()).initialize(r);
             addView(rv);
+            if (r == selected) {
+                if (!r.isClaimed()) {
+                    // references point to the same route, and it hasn't been claimed
+                    _selectedRoute = rv;
+                    rv.setSelected(true);
+                }
+            }
         }
     }
 
@@ -160,10 +171,12 @@ public class GameMapView extends FrameLayout {
         invalidate();
         requestLayout();
 
-        int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            ((RouteView) getChildAt(i)).redraw();
-        }
+        // delete all children, then recreate them
+        _initialized = false;
+        Route selected = _selectedRoute.getRoute();
+        routeSelected(null);
+        removeAllViews();
+        initializeRoutes(selected);
     }
 
     private void initializeGraphics() {
@@ -219,9 +232,6 @@ public class GameMapView extends FrameLayout {
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             RouteView rv = (RouteView) getChildAt(i);
-            if (rv.getRoute().isClaimed()) {
-                continue;
-            }
             int dist = rv.getDistance(touchX, touchY);
             if (dist >= 0) {
                 if (closestRouteView == null) {
