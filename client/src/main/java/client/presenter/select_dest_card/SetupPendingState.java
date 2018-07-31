@@ -31,8 +31,8 @@ public class SetupPendingState extends DestCardSelectState {
 
     @Override
     public void exitState(){
-        presenter().hideOverlayMessage();
         presenter().switchToGameMap();
+        presenter().hideOverlayMessage();
     }
 
     @Override
@@ -43,7 +43,8 @@ public class SetupPendingState extends DestCardSelectState {
 
         if (numPlayersCompleted >= numPlayers){
             _model.getCurrentGame().setupComplete();
-            presenter().setState(new SetupCompleteState(presenter()));
+            //presenter().setState(new SetupCompleteState(presenter()));
+            exitState();
         }
 
     }
