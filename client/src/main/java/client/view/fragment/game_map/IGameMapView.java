@@ -13,6 +13,8 @@ public interface IGameMapView {
     public void updatePlayerTurn();
     public void updateDeckCount(int destCards, int trainCards);
     public void setClaimRouteButtonEnabled(boolean enabled);
+    public void setSelectTrainCardEnabled(boolean enabled);
+    public void setSelectDestCardEnabled(boolean enabled);
     public void setPresenter(IGameMapPresenter presenter);
     public void showToast(String message);
     public void gameOver();

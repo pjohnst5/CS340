@@ -3,6 +3,7 @@ package shared.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import shared.enumeration.ListOfRoutes;
@@ -10,7 +11,7 @@ import shared.enumeration.PlayerColor;
 
 public class GameMap {
     private HashMap<UUID, Route> _routes = new HashMap<>();
-    private List<Route> claimedRoutes = new ArrayList<>();
+    private List<Route> _claimedRoutes = new ArrayList<>();
 
     public GameMap() {
         List<Route> routeList =  new ListOfRoutes().getRoutes();
@@ -32,7 +33,7 @@ public class GameMap {
     public void claimRoute(UUID routeId, String playerId, PlayerColor playerColor){
         Route route = _routes.get(routeId);
         route.claimRoute(playerId, playerColor);
-        claimedRoutes.add(route);
+        _claimedRoutes.add(route);
     }
 
     public Route getRoute(UUID routeId) {
@@ -40,6 +41,17 @@ public class GameMap {
     }
 
     public List<Route> getClaimedRoutes() {
-        return claimedRoutes;
+        return _claimedRoutes;
+    }
+
+    public Map<UUID, Route> getRoutesClaimedByPlayer(String playerID) {
+        Map<UUID, Route> result = new HashMap<>();
+
+        for (int i = 0; i < _claimedRoutes.size(); i++) {
+            if (_claimedRoutes.get(i).isClaimed() && _claimedRoutes.get(i).get_claimedBy().equals(playerID)){
+                result.put(_claimedRoutes.get(i).getId(), _claimedRoutes.get(i));
+            }
+        }
+        return result;
     }
 }

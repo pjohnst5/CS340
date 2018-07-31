@@ -63,5 +63,7 @@ public class SetupState extends DestCardSelectState {
             presenter().addCard(card);
         }
 
+        _model.getCurrentGame().clearDestOptionCards();
+
     }
 }

@@ -41,7 +41,7 @@ public class ClientFacade {
     }
 
     public static void leaveGame(Player player) { clientModel.removePlayer(player); }
-    
+
     public static void claimRoute(Route route) {
         clientModel.claimRoute(route);
     }

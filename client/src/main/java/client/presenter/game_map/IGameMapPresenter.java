@@ -10,6 +10,7 @@ import shared.model.Route;
 public interface IGameMapPresenter {
     public void pause();
     public void resume();
+    public void update();
     public Player getMyPlayer();
     public List<Player> getPlayers();
     public void routeSelected(Route route);

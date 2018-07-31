@@ -1,5 +1,10 @@
 package server.facade;
 
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import server.helper.DestCardHelper;
 import server.model.ServerModel;
 
 import shared.command.GenericCommand;
@@ -9,6 +14,7 @@ import shared.enumeration.ClaimedRoutePointSystem;
 import shared.model.GameAction;
 import shared.model.Player;
 import shared.model.Route;
+import shared.model.decks.DestCard;
 import shared.model.decks.TrainDeck;
 import shared.model.request.ClaimRouteRequest;
 import shared.model.response.CommandResponse;
@@ -45,7 +51,10 @@ public class GameMapService {
             player.addPoints(new ClaimedRoutePointSystem().getPoints(request.get_route().get_pathLength()));
 
             //updates player dest ticket completion status
-            //TODO : Implement me
+            Map<UUID, Route> claimedByPlayer = serverModel.getGame(request.get_gameID()).getMap().getRoutesClaimedByPlayer(request.get_playerID());
+            DestCardHelper helper = new DestCardHelper(claimedByPlayer, request.get_player().getDestCards());
+            List<DestCard> updatedDestCards = helper.updateDestCards();
+            player.updateDestCards(updatedDestCards);
 
             //update player in server (to keep map of Players and players in Games synced)
             serverModel.updatePlayer(player.getGameID(), player);

@@ -41,6 +41,7 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
         int numDestCards = _model.getCurrentGame().getDestDeck().get_cards().size();
         int numTrainCards = _model.getCurrentGame().getTrainDeck().sizeOfFaceDownDeck();
         _mapView.updateDeckCount(numDestCards, numTrainCards);
+
     }
 
     @Override
@@ -69,10 +70,7 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
 
     @Override
     public void routeSelected(Route route) {
-        if (!_model.isMyTurn()) {
-            return;
-        }
-        _mapView.setClaimRouteButtonEnabled(true);
+        _mapView.setClaimRouteButtonEnabled(_model.isMyTurn());
     }
 
     @Override
@@ -81,8 +79,7 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
     }
 
     @Override
-    public void update(Observable observable, Object o) {
-
+    public void update(){
         int numDestCards = _model.getCurrentGame().getDestDeck().get_cards().size();
         int numTrainCards = _model.getCurrentGame().getTrainDeck().sizeOfFaceDownDeck();
 
@@ -90,9 +87,17 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
         _mapView.updatePlayerTurn();
         _mapView.updateDeckCount(numDestCards, numTrainCards);
 
+        _mapView.setSelectDestCardEnabled(_model.isMyTurn());
+        _mapView.setSelectTrainCardEnabled(_model.isMyTurn());
+
         if (_model.getCurrentGame().get_state() == GameState.FINISHED) {
             _mapView.gameOver();
         }
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        update();
     }
 
     @Override

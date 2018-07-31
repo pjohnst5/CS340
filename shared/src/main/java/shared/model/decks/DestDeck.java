@@ -65,13 +65,21 @@ public class DestDeck {
     {
         List<DestCard> three = new ArrayList<>();
 
-        if (_cards.size() < 3)
+        if (_cards.size() == 0)
         {
-            throw new DeckException("There are only " + _cards.size() + " cards in the dest card deck");
+            throw new DeckException("There are only no more cards left in the Destination Deck");
         }
 
-        for (int i = 0; i < 3; i++){
-            three.add(_cards.remove(0));
+        if (_cards.size() < 3)
+        {
+            for (int i = 0; i < _cards.size(); i++) {
+                three.add(_cards.remove(0));
+            }
+
+        } else {
+            for (int i = 0; i < 3; i++){
+                three.add(_cards.remove(0));
+            }
         }
 
         return three;
