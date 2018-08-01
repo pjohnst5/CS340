@@ -25,6 +25,7 @@ public class Serializer implements ISerializer {
         builder.registerTypeAdapter(ICommand.class, new GenericCommandSerializer());
         builder.registerTypeAdapter(GenericCommand.class, new GenericCommandSerializer());
         builder.registerTypeAdapter(GamesWrapper.class, new HashMapDeserializer());
+        builder.setDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
         _gson = builder.create();
     }
