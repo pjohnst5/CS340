@@ -70,6 +70,9 @@ public class TrainDeck {
         for (int i = 0; i < numFaceUpCards; i++){
             try {
                 _faceUpDeck.addCard(_faceDownDeck.drawCard());
+                if (_faceUpDeck._locoMotiveCount == 3){
+                    reDealCards();
+                }
             } catch(DeckException e){
                 System.out.println("Something cray cray happened when making a new TrainDeck: " + e.get_message());
             }
@@ -82,10 +85,15 @@ public class TrainDeck {
         return _faceDownDeck.drawCard();
     }
 
-    public void drawFaceUpCard(TrainCard card) throws DeckException
+    public TrainCard drawFaceUpCard(TrainCard card) throws DeckException
     {
         _faceUpDeck.removeCard(card);
         _faceUpDeck.addCard(_faceDownDeck.drawCard());
+
+        if (_faceUpDeck._locoMotiveCount == 3) {
+            reDealCards();
+        }
+        return card;
     }
 
     public void discardTrainCard(TrainCard card) throws DeckException {
@@ -133,6 +141,9 @@ public class TrainDeck {
         for (int i = 0; i < 5; i++) {
             try {
                 _faceUpDeck.addCard(_faceDownDeck.drawCard());
+                if (_faceUpDeck._locoMotiveCount == 3) {
+                    reDealCards();
+                }
             } catch (DeckException e) {
                 System.out.println("Something cray cray happened when redealing the train deck: " + e.get_message());
             }
@@ -166,9 +177,9 @@ public class TrainDeck {
             }
 
             //ReDeal cards
-            if (_locoMotiveCount == 3) {
-                reDealCards();
-            }
+//            if (_locoMotiveCount == 3) {
+//                reDealCards();
+//            }
         }
 
         private void removeCard(TrainCard card) throws DeckException
