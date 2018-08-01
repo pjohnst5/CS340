@@ -68,4 +68,7 @@
     <color name="claimed_green">#b005af00</color>
     <color name="claimed_red">#b0af0500</color>
     <color name="claimed_yellow">#b0ffe500</color>
+
+    <!-- Game Status Dialog -->
+    <color name="transparent_number_bg">#d0ededed</color>
 </resources>

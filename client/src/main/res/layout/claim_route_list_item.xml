@@ -9,13 +9,12 @@
     android:gravity="center_vertical"
     android:weightSum="6">
 
-    <TextView
-        android:id="@+id/list_item_train_card_color"
+    <LinearLayout
+        android:id="@+id/claim_route_color_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:textSize="24sp"
-        tools:text="Blue" />
+        android:layout_weight="2">
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"

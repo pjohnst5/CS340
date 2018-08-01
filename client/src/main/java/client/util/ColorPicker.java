@@ -111,4 +111,32 @@ public class ColorPicker {
     public static String convertCityNameToString(CityName city) {
         return city.name().replace("_", " ");
     }
+
+    public static int trainCardDrawable(TrainColor color) {
+        switch (color){
+            case BLACK:
+                return R.drawable.train_card_black;
+            case BLUE:
+                return R.drawable.train_card_blue;
+            case GREEN:
+                return R.drawable.train_card_green;
+            case RED:
+                return R.drawable.train_card_red;
+            case YELLOW:
+                return R.drawable.train_card_yellow;
+            case PINK:
+                return R.drawable.train_card_purple;
+            case WHITE:
+                return R.drawable.train_card_white;
+            case ORANGE:
+                return R.drawable.train_card_orange;
+            case LOCOMOTIVE:
+                return R.drawable.train_card_locomotive;
+        }
+        throw new RuntimeException("Unknown train card color: " + color.name());
+    }
+
+    public static int spToPx(Resources res, float sp) {
+        return (int) (sp * res.getDisplayMetrics().scaledDensity);
+    }
 }

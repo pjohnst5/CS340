@@ -143,14 +143,11 @@ public class Player {
 
     public Map<TrainColor, Integer> countNumTrainCards() {
         Map<TrainColor, Integer> counts = new HashMap<>();
-        for (TrainColor color : TrainColor.values()) {
-            if (color == TrainColor.GRAY) {
-                continue;
-            }
-            counts.put(color, 0);
-        }
         for (TrainCard c : _trainCards) {
             TrainColor color = c.get_color();
+            if (!counts.containsKey(color)) {
+                counts.put(color, 0);
+            }
             int prevCount = counts.get(color);
             prevCount++;
             counts.put(color, prevCount);

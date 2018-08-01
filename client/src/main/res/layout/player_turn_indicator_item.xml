@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:singleLine="true"
         android:background="@drawable/button_green"
         android:padding="5dp"/>
 

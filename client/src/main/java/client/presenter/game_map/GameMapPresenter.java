@@ -61,6 +61,11 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
     }
 
     @Override
+    public boolean isLastRound() {
+        return _model.getCurrentGame().get_state() == GameState.LAST_ROUND;
+    }
+
+    @Override
     public void pause() {
         _model.deleteObserver(this);
     }

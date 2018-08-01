@@ -15,5 +15,6 @@ public interface IGameMapPresenter {
     public List<Player> getPlayers();
     public void routeSelected(Route route);
     public String getCurrentTurnPlayerId();
+    public boolean isLastRound();
     public void claimRoute(Route route, Map<TrainColor, Integer> selectedCards);
 }

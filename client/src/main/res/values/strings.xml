@@ -57,6 +57,7 @@
     <string name="draw_train_card_text">Draw Train Card</string>
     <string name="draw_dest_card_text">Draw Destination Card</string>
     <string name="select">Select</string>
+    <string name="game_view_last_round">LAST ROUND</string>
 
     <!-- SIDEBAR TEXT -->
     <string name="chat_title">CHAT</string>

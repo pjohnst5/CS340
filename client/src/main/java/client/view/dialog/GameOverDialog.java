@@ -13,24 +13,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.pjohnst5icloud.tickettoride.R;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import client.model.ClientModel;
-import client.util.ColorPicker;
-import shared.enumeration.PlayerColor;
-import shared.enumeration.TrainColor;
 import shared.model.Game;
 import shared.model.Player;
 import shared.model.decks.DestCard;
-import shared.model.decks.TrainCard;
 
 public class GameOverDialog extends DialogFragment {
 

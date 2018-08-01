@@ -3,6 +3,9 @@ package client.view.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -13,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pjohnst5icloud.tickettoride.R;
@@ -159,8 +163,8 @@ public class ClaimRouteDialog extends DialogFragment {
     }
 
     private class TrainCardHolder extends RecyclerView.ViewHolder {
-        private static final int MIN_CARDS = 0;
-        private TextView _trainColorView;
+        private LinearLayout _trainColorContainer;
+//        private TextView _trainColorView;
         private TextView _numCardsView;
         private Button _minusButton;
         private Button _plusButton;
@@ -171,7 +175,8 @@ public class ClaimRouteDialog extends DialogFragment {
         private TrainColor _trainColor;
         public TrainCardHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.claim_route_list_item, parent, false));
-            _trainColorView = itemView.findViewById(R.id.list_item_train_card_color);
+            _trainColorContainer = itemView.findViewById(R.id.claim_route_color_container);
+//            _trainColorView = itemView.findViewById(R.id.list_item_train_card_color);
             _numCardsView = itemView.findViewById(R.id.list_item_select_num_cards);
             _minusButton = itemView.findViewById(R.id.claim_route_minus_button);
             _plusButton = itemView.findViewById(R.id.claim_route_plus_button);
@@ -184,8 +189,11 @@ public class ClaimRouteDialog extends DialogFragment {
             });
         }
         public void bind(Pair<TrainColor, Integer> cards, int initialValue) {
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), ColorPicker.trainCardDrawable(cards.getKey()));
+            Bitmap modifiedBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), ColorPicker.spToPx(getResources(), 24));
+            _trainColorContainer.setBackground(new BitmapDrawable(getResources(), modifiedBm));
             _trainColor = cards.getKey();
-            _trainColorView.setText(ColorPicker.trainCardColorName(getResources(), _trainColor));
+//            _trainColorView.setText(ColorPicker.trainCardColorName(getResources(), _trainColor));
             _numCards = initialValue;
             _maxCards = cards.getValue();
             _numCardsView.setText(Integer.toString(_numCards));
@@ -253,6 +261,10 @@ public class ClaimRouteDialog extends DialogFragment {
 
         TrainColor routeColor = route.get_color();
         if(routeColor == TrainColor.GRAY) {
+            return initialValues;
+        }
+
+        if (!cards.containsKey(routeColor)) {
             return initialValues;
         }
 

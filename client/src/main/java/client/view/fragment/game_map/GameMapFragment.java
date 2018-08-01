@@ -57,6 +57,7 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     private Button _claimRouteButton;
     private Button _selectDestCardsButton;
     private Button _selectTrainCardsButton;
+    private LinearLayout _lastRoundView;
 
     private static final String CLAIM_ROUTE_DIALOG_TAG = "ClaimRouteDialog";
     private static final String GAME_OVER_DIALOG_TAG = "GameOverDialog";
@@ -86,6 +87,7 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         _trainCardCount = v.findViewById(R.id.game_map_train_card_count);
         _claimRouteButton = v.findViewById(R.id.game_map_claim_route_button);
         _turnIndicator = v.findViewById(R.id.game_map_player_turn_recycler_view);
+        _lastRoundView = v.findViewById(R.id.game_map_last_round_indicator);
 
         // Modify View Members
         _gameMap.initializeData(this, CityManager.getInstance().getCities(), routes);
@@ -93,6 +95,7 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         _turnIndicator.setAdapter(new PlayerTurnAdapter());
         _claimRouteButton.setEnabled(false);
         _claimRouteButton.setVisibility(View.INVISIBLE);
+        _lastRoundView.setVisibility(View.GONE);
 
         // Set View OnClickListeners
         _claimRouteButton.setOnClickListener((view) -> {
@@ -161,6 +164,9 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
 
     @Override
     public void updateMap(List<Route> routes) {
+        if (_presenter.isLastRound()) {
+            _lastRoundView.setVisibility(View.VISIBLE);
+        }
         getActivity().runOnUiThread(() -> _gameMap.redraw(routes));
     }
 
