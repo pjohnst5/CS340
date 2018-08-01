@@ -37,9 +37,9 @@ public class GameOverDialog extends DialogFragment {
 
     @Override
 public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_game_status, null);
+        View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_game_over, null);
 
-        Button closeDialogButton = v.findViewById(R.id.game_status_close_dialog);
+        Button closeDialogButton = v.findViewById(R.id.game_over_close_dialog);
 
         AlertDialog ad = new AlertDialog.Builder(getActivity())
                 .setView(v)

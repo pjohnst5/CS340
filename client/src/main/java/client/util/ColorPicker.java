@@ -20,7 +20,7 @@ public class ColorPicker {
             case GRAY:
                 return ResourcesCompat.getColor(res, R.color.gray, null);
             case PINK:
-                return ResourcesCompat.getColor(res, R.color.pink, null);
+                return ResourcesCompat.getColor(res, R.color.route_pink, null);
             case GREEN:
                 return ResourcesCompat.getColor(res, R.color.green, null);
             case WHITE:

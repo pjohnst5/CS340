@@ -21,9 +21,6 @@
     <color name="white">#ffffff</color>
     <color name="gray">#bbbbbb</color>
     <color name="pink">#fc7695</color>
-    <color name="route_orange">#ff7700</color>
-    <color name="route_yellow">#ffff00</color>
-    <color name="route_black">#444444</color>
 
 
     <color name="dark_green">#1e7145</color>
@@ -63,6 +60,10 @@
     <color name="train_black_border">#000000</color>
 
     <!-- Game Map Colors -->
+    <color name="route_pink">#c668f2</color>
+    <color name="route_orange">#ff7700</color>
+    <color name="route_yellow">#ffff00</color>
+    <color name="route_black">#444444</color>
     <color name="claimed_black">#b0000000</color>
     <color name="claimed_blue">#b0255cf4</color>
     <color name="claimed_green">#b005af00</color>
@@ -70,5 +71,5 @@
     <color name="claimed_yellow">#b0ffe500</color>
 
     <!-- Game Status Dialog -->
-    <color name="transparent_number_bg">#d0ededed</color>
+    <color name="transparent_number_bg">#e0ededed</color>
 </resources>

@@ -190,7 +190,7 @@ public class ClaimRouteDialog extends DialogFragment {
         }
         public void bind(Pair<TrainColor, Integer> cards, int initialValue) {
             Bitmap bm = BitmapFactory.decodeResource(getResources(), ColorPicker.trainCardDrawable(cards.getKey()));
-            Bitmap modifiedBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), ColorPicker.spToPx(getResources(), 24));
+            Bitmap modifiedBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), ColorPicker.spToPx(getResources(), 32));
             _trainColorContainer.setBackground(new BitmapDrawable(getResources(), modifiedBm));
             _trainColor = cards.getKey();
 //            _trainColorView.setText(ColorPicker.trainCardColorName(getResources(), _trainColor));
