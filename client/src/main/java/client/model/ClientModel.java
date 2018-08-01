@@ -74,7 +74,7 @@ public class ClientModel extends Observable {
     }
 
     public void setCurrentGame(Game currentGame) {
-        _currentGame = currentGame;
+        _currentGame = _games.get(currentGame.getGameID());
         setChanged();
         notifyObservers();
     }

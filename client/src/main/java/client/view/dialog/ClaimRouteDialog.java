@@ -277,13 +277,15 @@ public class ClaimRouteDialog extends DialogFragment {
 
         initialValues.put(routeColor, matchingTrainColorNum);
         int amountShort = amountNeeded - matchingTrainColorNum;
-        int locomotiveCount = cards.get(TrainColor.LOCOMOTIVE);
-        if (locomotiveCount >= amountShort) {
-            initialValues.put(TrainColor.LOCOMOTIVE, amountShort);
-            return initialValues;
-        }
+        if (cards.containsKey(TrainColor.LOCOMOTIVE)) {
+            int locomotiveCount = cards.get(TrainColor.LOCOMOTIVE);
+            if (locomotiveCount >= amountShort) {
+                initialValues.put(TrainColor.LOCOMOTIVE, amountShort);
+                return initialValues;
+            }
 
-        initialValues.put(TrainColor.LOCOMOTIVE, locomotiveCount);
+            initialValues.put(TrainColor.LOCOMOTIVE, locomotiveCount);
+        }
         return initialValues;
     }
 

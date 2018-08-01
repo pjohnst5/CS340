@@ -159,14 +159,14 @@ class GameListService {
             // In order to create a game before adding game action objects, we must
             // Move the join request to the beginning of the commands
             List<ICommand> commands = new ArrayList<>(serverModel.getCommands(player.getGameID()));
-            int i = commands.indexOf(command);
-            while(i > 0){
-                ICommand joinCmd = commands.get(i);
-                commands.set(i, commands.get(i-1));
-                commands.set(i-1, joinCmd);
-                i--;
-
-            }
+//            int i = commands.indexOf(command);
+//            while(i > 0){
+//                ICommand joinCmd = commands.get(i);
+//                commands.set(i, commands.get(i-1));
+//                commands.set(i-1, joinCmd);
+//                i--;
+//
+//            }
 
             //Sets player's index to size of commands for that game minus 1 because it's an index.
             player.setIndex(commands.size() - 1);
