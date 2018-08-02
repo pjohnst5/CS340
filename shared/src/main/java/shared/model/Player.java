@@ -117,6 +117,7 @@ public class Player {
         for (int i = 0; i < _trainCards.size(); i++){
             if (_trainCards.get(i).get_color() == card.get_color()){
                 _trainCards.remove(i);
+                return;
             }
         }
     }
