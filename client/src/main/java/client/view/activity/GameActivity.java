@@ -28,6 +28,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() { }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -45,7 +48,7 @@ public class GameActivity extends AppCompatActivity {
                     .commit();
         }
 
-        if (gameSidebarFragment == null){
+        if (gameSidebarFragment == null) {
             gameSidebarFragment = new ChatFragment();
             fm.beginTransaction()
                     .add(R.id.game_sidebar_container, gameSidebarFragment)

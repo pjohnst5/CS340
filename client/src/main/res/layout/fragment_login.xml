@@ -88,7 +88,6 @@
 
     </GridLayout>
 
-
     <Switch
         android:id="@+id/login_submit_option_switch"
         android:layout_width="wrap_content"
