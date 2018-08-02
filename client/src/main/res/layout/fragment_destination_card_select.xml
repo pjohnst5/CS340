@@ -14,14 +14,40 @@
         style="@style/TitleText"
         android:text="@string/game_select_dest_card_title"/>
 
-    <TextView
-        android:id="@+id/dest_card_frag_subtitle"
+    <RelativeLayout
+        android:id="@+id/dest_card_frag_subtitle_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:layout_below="@id/dest_card_frag_title"
-        style="@style/SubtitleText"
-        android:text="@string/game_select_dest_card_subtitle"/>
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/dest_card_frag_subtitle_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:textAlignment="center"
+            style="@style/SubtitleText"
+            android:text="@string/game_select_dest_card_subtitle"/>
+
+        <TextView
+            android:id="@+id/dest_card_frag_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/dest_card_frag_subtitle_text"
+            style="@style/SubtitleText"
+            android:text="2"/>
+
+        <TextView
+            android:id="@+id/dest_card_frag_subtitle_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/dest_card_frag_subtitle"
+            android:layout_marginStart="4dp"
+            style="@style/SubtitleText"
+            android:text="@string/cards"/>
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/dest_card_frag_select_cards"
@@ -35,7 +61,7 @@
         android:id="@+id/dest_card_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dest_card_frag_subtitle"
+        android:layout_below="@id/dest_card_frag_subtitle_container"
         android:layout_above="@id/dest_card_frag_select_cards"
         android:gravity="center">
 

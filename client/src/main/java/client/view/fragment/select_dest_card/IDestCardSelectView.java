@@ -10,6 +10,7 @@ public interface IDestCardSelectView {
 
     public void hideOverlayMessage();
     public void showOverlayMessage(String message);
+    public void setNumCardsRequiredText(String number);
     public void showToast(String message);
     public boolean addCard(DestCard card);
 }

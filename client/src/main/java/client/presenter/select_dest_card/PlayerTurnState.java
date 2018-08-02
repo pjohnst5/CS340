@@ -23,6 +23,7 @@ public class PlayerTurnState extends DestCardSelectState {
 
     @Override
     public void enterState() {
+        displayNumCardsRequired();
         _facade.requestDestCards(presenter(), _model.getCurrentPlayer());
     }
 

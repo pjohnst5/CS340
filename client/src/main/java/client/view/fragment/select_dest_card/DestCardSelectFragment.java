@@ -43,9 +43,13 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
     private Button _submitButton;
     private CardAdapter _cardAdapter;
     private TextView _overlayMessage;
+    private TextView _numCardsReqText;
     private RecyclerView _cardsRecyclerView;
     private LinearLayout _recyclerViewContainer;
     private IDestCardSelectPresenter _presenter;
+
+    private boolean _viewInitialized = false;
+    private String _cardsWaitingRequest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +69,7 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
         _cardsRecyclerView.setAdapter(_cardAdapter);
         _overlayMessage = v.findViewById(R.id.dest_card_overlay_message);
         _submitButton = v.findViewById(R.id.dest_card_frag_select_cards);
+        _numCardsReqText = v.findViewById(R.id.dest_card_frag_subtitle);
 
 
         // Modify View Members
@@ -90,7 +95,20 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
             _presenter.submitData(selectedCards, unselectedCards);
         });
 
+        _viewInitialized = true;
+        if (_cardsWaitingRequest != null){
+            setNumCardsRequiredText(_cardsWaitingRequest);
+            _cardsWaitingRequest = null;
+        }
+
         return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        _viewInitialized = false;
+        _cardsWaitingRequest = null;
     }
 
     @Override
@@ -150,6 +168,17 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
             if (numColumns == 0) numColumns = 1;
 
             ((GridLayoutManager) _cardsRecyclerView.getLayoutManager()).setSpanCount(numColumns);
+        });
+    }
+
+    @Override
+    public void setNumCardsRequiredText(String number) {
+        getActivity().runOnUiThread(() -> {
+            if (_viewInitialized) {
+                _numCardsReqText.setText(number);
+            } else {
+                _cardsWaitingRequest = number;
+            }
         });
     }
 

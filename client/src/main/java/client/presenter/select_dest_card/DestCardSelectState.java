@@ -24,4 +24,8 @@ public abstract class DestCardSelectState {
     public abstract int getNumCardsRequired();
     public abstract void update(Observable o, Object arg);
     public abstract void submitData(List<DestCard> cardsSelected, List<DestCard> cardsDiscarded);
+
+    public void displayNumCardsRequired(){
+        presenter().displayNumCardsRequired(getNumCardsRequired());
+    }
 }

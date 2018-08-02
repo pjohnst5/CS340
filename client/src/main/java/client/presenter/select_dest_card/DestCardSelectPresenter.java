@@ -40,6 +40,11 @@ public class DestCardSelectPresenter
     }
 
     @Override
+    public void displayNumCardsRequired(int num) {
+        _selectView.setNumCardsRequiredText(Integer.toString(num));
+    }
+
+    @Override
     public int getNumCardsRequired() {
         return _state.getNumCardsRequired();
     }
