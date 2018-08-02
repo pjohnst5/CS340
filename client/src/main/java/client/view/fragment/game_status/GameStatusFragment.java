@@ -17,7 +17,7 @@ import client.view.dialog.GameStatusDialog;
 import client.view.fragment.SidebarFragment;
 import shared.enumeration.GameState;
 
-public class GameStatusFragment extends SidebarFragment implements IGameStatusView {
+public class GameStatusFragment extends SidebarFragment {
 
     private static final String TAG="GameStatusFragment";
     private static final String VIEW_GAME_STATUS_DIALOG_TAG = "OpenGameStatusDialog";

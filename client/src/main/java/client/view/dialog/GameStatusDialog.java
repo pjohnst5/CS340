@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -26,18 +25,24 @@ import com.pjohnst5icloud.tickettoride.R;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import client.model.ClientModel;
+import client.presenter.game_status.GameStatusPresenter;
+import client.presenter.game_status.IGameStatusPresenter;
+import client.server.AsyncServerTask;
 import client.util.ColorPicker;
+import client.view.fragment.game_status.IGameStatusView;
 import shared.enumeration.PlayerColor;
 import shared.enumeration.TrainColor;
 import shared.model.Game;
 import shared.model.Player;
 import shared.model.decks.DestCard;
-import shared.model.decks.TrainCard;
 
-public class GameStatusDialog extends DialogFragment {
+public class GameStatusDialog extends DialogFragment implements IGameStatusView {
 
+    private IGameStatusPresenter _presenter;
     private RecyclerView _playerRecyclerView;
     private RecyclerView _cardRecyclerView;
     private RecyclerView _destCardRecyclerView;
@@ -94,8 +99,34 @@ public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         ad.hide();
 
+        _presenter = new GameStatusPresenter(this);
+
         return ad;
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        _presenter.resume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        _presenter.pause();
+    }
+
+    @Override
+    public void update() {
+        // Implement this
+        getActivity().runOnUiThread(() -> {
+            ClientModel model = ClientModel.getInstance();
+            Game currentGame = model.getCurrentGame();
+            _playerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            _playerRecyclerView.setAdapter(new PlayerAdapter(currentGame));
+
+        });
     }
 
     private class PlayerHolder extends RecyclerView.ViewHolder {

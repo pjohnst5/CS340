@@ -267,9 +267,13 @@ public class TrainCardSelectFragment extends Fragment implements ITrainCardSelec
 
         public void setSelected(boolean selected){
             if (selected){
-                _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_blue));
+                getActivity().runOnUiThread(() ->
+                        _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_blue))
+                );
             } else {
-                _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_black));
+                getActivity().runOnUiThread(() ->
+                    _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_black))
+                );
             }
         }
 
