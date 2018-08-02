@@ -95,7 +95,7 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         _turnIndicator.setAdapter(new PlayerTurnAdapter());
         _claimRouteButton.setEnabled(false);
         _claimRouteButton.setVisibility(View.INVISIBLE);
-        _lastRoundView.setVisibility(View.GONE);
+        _lastRoundView.setVisibility(View.INVISIBLE);
 
         // Set View OnClickListeners
         _claimRouteButton.setOnClickListener((view) -> {

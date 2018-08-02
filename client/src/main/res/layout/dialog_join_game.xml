@@ -7,6 +7,11 @@
     android:paddingRight="20dp"
     android:paddingLeft="20dp">
 
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:focusableInTouchMode="true"><requestFocus /></ImageView>
+
     <RelativeLayout
         android:id="@+id/join_game_room_number_rl"
         android:layout_width="match_parent"

@@ -31,6 +31,7 @@ public class LoginFragment extends Fragment implements ILoginView {
     private EditText _usernameField;
     private EditText _passwordField;
     private EditText _confirmPasswordField;
+    private Button _settingsButton;
     private ILoginPresenter _presenter;
 
     private boolean _registerSelected;
@@ -50,7 +51,7 @@ public class LoginFragment extends Fragment implements ILoginView {
         _usernameField = v.findViewById(R.id.login_username);
         _passwordField = v.findViewById(R.id.login_password);
         _confirmPasswordField = v.findViewById(R.id.login_confirm_password);
-        Button mSettingsButton = v.findViewById(R.id.login_server_settings_button);
+        _settingsButton = v.findViewById(R.id.login_server_settings_button);
 
         // Modify View Members
         mSubmitOptionSwitch.setChecked(false);
@@ -74,7 +75,7 @@ public class LoginFragment extends Fragment implements ILoginView {
         });
 
         mSubmitButton.setOnClickListener((view) -> onSubmit());
-        mSettingsButton.setOnClickListener((view) -> {
+        _settingsButton.setOnClickListener((view) -> {
             FragmentManager manager = getFragmentManager();
             ServerSettingsDialog dialog = ServerSettingsDialog.newInstance();
             dialog.setTargetFragment(LoginFragment.this, SERVER_SETTINGS_DIALOG_CODE);
