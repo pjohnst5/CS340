@@ -11,7 +11,7 @@ public class AlphaNumericFilter implements InputFilter {
         StringBuilder builder = new StringBuilder();
         for (int i = start; i < end; i++) {
             char c = source.charAt(i);
-            if (Character.isLetterOrDigit(c)) {
+            if (Character.isLetterOrDigit(c) || c == ' ') {
                 builder.append(c);
             }
         }

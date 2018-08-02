@@ -36,7 +36,7 @@ public class CreateGameDialog extends DialogFragment {
     private boolean mGameNameTextEntered;
     private boolean mDisplayNameTextEntered;
 
-    private static final int MAX_CHARACTERS_ROOM_NAME = 12;
+    private static final int MAX_CHARACTERS_ROOM_NAME = 24;
     private static final int MAX_CHARACTERS_IN_DISPLAY_NAME = 12;
     public static final String EXTRA_GAME_NAME = "client.server.CreateGameDialog.gameName";
     public static final String EXTRA_DISPLAY_NAME = "client.server.CreateGameDialog.displayName";
