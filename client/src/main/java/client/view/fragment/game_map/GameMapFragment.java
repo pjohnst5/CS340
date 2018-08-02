@@ -153,19 +153,23 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     @Override
     public void RouteSelected(Route route) {
         if (route == null) {
-            _claimRouteButton.setVisibility(View.INVISIBLE);
-            _claimRouteButton.setEnabled(false);
+            getActivity().runOnUiThread(() -> {
+                _claimRouteButton.setVisibility(View.INVISIBLE);
+                _claimRouteButton.setEnabled(false);
+            });
         } else {
-            _claimRouteButton.setVisibility(View.VISIBLE);
-            _claimRouteButton.setEnabled(false);
-            _presenter.routeSelected(route);
+            getActivity().runOnUiThread(() -> {
+                _claimRouteButton.setVisibility(View.VISIBLE);
+                _claimRouteButton.setEnabled(false);
+                _presenter.routeSelected(route);
+            });
         }
     }
 
     @Override
     public void updateMap(List<Route> routes) {
         if (_presenter.isLastRound()) {
-            _lastRoundView.setVisibility(View.VISIBLE);
+            getActivity().runOnUiThread(() -> _lastRoundView.setVisibility(View.VISIBLE));
         }
         getActivity().runOnUiThread(() -> _gameMap.redraw(routes));
     }
