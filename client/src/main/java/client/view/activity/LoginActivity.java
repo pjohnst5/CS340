@@ -21,6 +21,9 @@ public class LoginActivity extends SingleFragmentActivity {
     }
 
     @Override
+    public void onBackPressed() { }
+
+    @Override
     protected Fragment createFragment() {
         return new LoginFragment();
     }

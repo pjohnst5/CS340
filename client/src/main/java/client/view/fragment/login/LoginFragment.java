@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,8 @@ public class LoginFragment extends Fragment implements ILoginView {
         mSubmitOptionSwitch.setChecked(false);
         _confirmPasswordField.setVisibility(View.GONE);
         _confirmPasswordLabel.setVisibility(View.GONE);
+        _passwordField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        _confirmPasswordField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         // Set View OnClickListeners
         mSubmitOptionSwitch.setOnCheckedChangeListener((compoundButton, b) -> {

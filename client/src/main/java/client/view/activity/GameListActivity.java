@@ -26,4 +26,7 @@ public class GameListActivity extends SingleFragmentActivity {
 
         getSupportActionBar().hide();
     }
+
+    @Override
+    public void onBackPressed() { }
 }

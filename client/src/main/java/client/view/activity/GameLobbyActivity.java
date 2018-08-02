@@ -52,6 +52,9 @@ public class GameLobbyActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() { }
+
+    @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
 
