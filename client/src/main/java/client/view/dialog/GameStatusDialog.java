@@ -265,6 +265,8 @@ public Dialog onCreateDialog(Bundle savedInstanceState) {
             _points.setText(Integer.toString(points));
             if (card.getCompleted()) {
                 _points.setTextColor(getResources().getColor(R.color.green));
+            } else {
+                _points.setTextColor(getResources().getColor(R.color.red));
             }
         }
 
