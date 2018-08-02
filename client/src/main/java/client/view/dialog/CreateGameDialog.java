@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.NumberPicker;
 import com.pjohnst5icloud.tickettoride.R;
 
 import client.server.communication.poll.GameListPoller;
+import client.util.AlphaNumericFilter;
 
 /**
  * Created by jtyler17 on 7/10/18.
@@ -34,6 +36,8 @@ public class CreateGameDialog extends DialogFragment {
     private boolean mGameNameTextEntered;
     private boolean mDisplayNameTextEntered;
 
+    private static final int MAX_CHARACTERS_ROOM_NAME = 12;
+    private static final int MAX_CHARACTERS_IN_DISPLAY_NAME = 12;
     public static final String EXTRA_GAME_NAME = "client.server.CreateGameDialog.gameName";
     public static final String EXTRA_DISPLAY_NAME = "client.server.CreateGameDialog.displayName";
     public static final String EXTRA_PLAYER_COLOR = "client.server.CreateGameDialog.playerColor";
@@ -57,8 +61,18 @@ public class CreateGameDialog extends DialogFragment {
         Button mCancelButton = v.findViewById(R.id.create_game_cancel_dialog);
         Button mCreateButton = v.findViewById(R.id.create_game_call_create);
 
+        InputFilter[] roomNameFilter = new InputFilter[2];
+        roomNameFilter[0] = new InputFilter.LengthFilter(MAX_CHARACTERS_ROOM_NAME);
+        roomNameFilter[1] = new AlphaNumericFilter();
         mGameNameView = v.findViewById(R.id.create_game_room_name);
+        mGameNameView.setFilters(roomNameFilter);
+
+        InputFilter[] nameFilter = new InputFilter[2];
+        nameFilter[0] = new InputFilter.LengthFilter(MAX_CHARACTERS_IN_DISPLAY_NAME);
+        nameFilter[1] = new AlphaNumericFilter();
         mDisplayNameView = v.findViewById(R.id.create_game_display_name);
+        mDisplayNameView.setFilters(nameFilter);
+
         mNumPlayers = v.findViewById(R.id.dialog_max_players);
         mNumPlayers.setMinValue(2);
         mNumPlayers.setMaxValue(5);

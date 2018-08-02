@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import com.pjohnst5icloud.tickettoride.R;
 
 import client.model.ClientModel;
 import client.server.communication.poll.GameListPoller;
+import client.util.AlphaNumericFilter;
 import shared.model.Game;
 
 public class JoinGameDialog extends DialogFragment {
@@ -32,6 +34,7 @@ public class JoinGameDialog extends DialogFragment {
 
     private int mActiveColorIndex;
 
+    private static final int MAX_CHARACTERS_IN_DISPLAY_NAME = 12;
     public static final String EXTRA_DISPLAY_NAME = "client.server.JoinGameDialog.displayName";
     public static final String EXTRA_PLAYER_COLOR = "client.server.JoinGameDialog.playerColor";
 
@@ -50,7 +53,11 @@ public class JoinGameDialog extends DialogFragment {
         Button mRedTrainButton = v.findViewById(R.id.join_game_train_color_red_button);
         Button mYellowTrainButton = v.findViewById(R.id.join_game_train_color_yellow_button);
 
+        InputFilter[] nameFilter = new InputFilter[2];
+        nameFilter[0] = new InputFilter.LengthFilter(MAX_CHARACTERS_IN_DISPLAY_NAME);
+        nameFilter[1] = new AlphaNumericFilter();
         mDisplayName = v.findViewById(R.id.join_game_display_name);
+        mDisplayName.setFilters(nameFilter);
         String gameId = getArguments().getString("GameId");
 
         mCurrentGame = ClientModel.getInstance().getGames().get(gameId);
