@@ -54,7 +54,7 @@ public class GameMapService {
         //check if the route isn't already claimed
         //check if the route length is the same as the size of discarded cards
         //check if that the cards are of the right color to claim route
-        return !isRouteClaimed(route) && areLengthsTheSame(route, discardedCards) && areColorsAreCorrect(route, discardedCards);
+        return !isRouteClaimed(route) && areLengthsTheSame(route, discardedCards) && areColorsAreCorrect(route, discardedCards) && !hasUserClaimedOtherDoubleRoute(route);
     }
 
     public boolean isRouteClaimed(Route route){
@@ -90,5 +90,17 @@ public class GameMapService {
             }
         }
         return true;
+    }
+
+    public boolean hasUserClaimedOtherDoubleRoute(Route route){
+        if((route = map.findDoubleRoute(route)) != null){
+            if(route.isClaimed()){
+                return player.getPlayerID().equals(route.get_claimedBy());
+            }
+            else
+                return false;
+        }
+        else
+            return false;
     }
 }

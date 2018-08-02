@@ -64,7 +64,7 @@ public class GameMap {
         return result;
     }
 
-    private Route findDoubleRoute(Route route) {
+    public Route findDoubleRoute(Route route) {
         if (route.getDoubleRoute() == 0) {
             return null;
         }
