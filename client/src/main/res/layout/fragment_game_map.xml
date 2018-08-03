@@ -132,52 +132,69 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:clipToPadding="false"
+        android:layout_centerVertical="true"
         android:gravity="center">
 
         <RelativeLayout
             android:id="@+id/game_map_dest_deck_relative_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-220dp"
-                android:src="@drawable/ticket_back"/>
+                android:id="@+id/game_map_dest_deck_image"
+                android:layout_width="132dp"
+                android:layout_height="93dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="-40dp"
+                android:paddingStart="100dp"
+                android:paddingEnd="0dp"
+                android:layout_toEndOf="@id/game_map_dest_card_count"
+                android:layout_below="@id/game_map_dest_card_count"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ticket_back_backwards"/>
+
+            <ImageView
+                android:layout_width="132dp"
+                android:layout_height="93dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="-40dp"
+                android:paddingStart="100dp"
+                android:paddingEnd="0dp"
+                android:layout_toEndOf="@id/game_map_dest_card_count"
+                android:layout_below="@id/game_map_train_card_count"
+                android:scaleType="centerCrop"
+                android:src="@drawable/train_card_back_backwards"/>
 
             <TextView
                 android:id="@+id/game_map_dest_card_count"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/translucent_bg_light"
+                android:layout_marginTop="11dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="center"
+                android:textSize="24sp"
                 style="@style/PointsText"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_below="@id/game_map_dest_deck_relative_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-80dp"
-                android:src="@drawable/train_card_back_standing"/>
 
             <TextView
                 android:id="@+id/game_map_train_card_count"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="11dp"
                 android:layout_marginStart="25dp"
+                android:background="@color/translucent_bg_light"
+                android:layout_below="@id/game_map_dest_deck_image"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="center"
+                android:textSize="24sp"
+
                 style="@style/PointsText"/>
         </RelativeLayout>
-
 
     </RelativeLayout>
 
