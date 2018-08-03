@@ -30,6 +30,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
     private Game _currentGame;
     private Button _startButton;
+    private TextView _roomName;
     private RecyclerView _playerListRecyclerView;
     private IGameLobbyPresenter _presenter;
 
@@ -42,6 +43,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
 
         // Initialize View Members
         Button _leaveButton = v.findViewById(R.id.leave_game_button);
+        _roomName = v.findViewById(R.id.game_lobby_room_name);
         _startButton = v.findViewById(R.id.start_game_button);
         _playerListRecyclerView = v.findViewById(R.id.player_list_recycler_view);
 
@@ -71,12 +73,23 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
     }
 
     private void updateView(Game game) {
+        // Get the current game
         _currentGame = game;
         if (_currentGame == null) { return; }
+
+        // Show the game room name
+        String roomName = _currentGame.getGameName();
+        _roomName.setText(roomName);
+
+        // Get the players from the game
         List<Player> players = _currentGame.getPlayers();
         if (players == null) {return; }
+
+        // Load the players into the adapter
         PlayerListAdapter _playerListAdapter = new PlayerListAdapter(players);
         _playerListRecyclerView.setAdapter(_playerListAdapter);
+
+        // Enable Start Button if possible
         GameState state = _currentGame.get_state();
         if (state == GameState.READY) {
             _startButton.setEnabled(true);
@@ -131,7 +144,7 @@ public class GameLobbyFragment extends Fragment implements IGameLobbyView {
         }
 
         public void bind(Player player) {
-            _playerNameView.setText(player.getUserName());
+            _playerNameView.setText(player.getDisplayName());
             _container.setBackgroundColor(ColorPicker.getPlayerColor(getResources(), player.getColor()));
         }
     }

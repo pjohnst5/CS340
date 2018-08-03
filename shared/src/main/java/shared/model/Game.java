@@ -36,7 +36,7 @@ public class Game {
         if (maxPlayers < 2 || maxPlayers > 5) {
             throw new InvalidGameException("Invalid number of players : " + maxPlayers);
         }
-        if (gameName.isEmpty() || gameName == null) {
+        if (gameName == null || gameName.isEmpty()) {
             throw new InvalidGameException("shared.model.Game must have a name");
         }
 
