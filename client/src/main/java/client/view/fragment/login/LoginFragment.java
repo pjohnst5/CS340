@@ -1,5 +1,6 @@
 package client.view.fragment.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +34,7 @@ public class LoginFragment extends Fragment implements ILoginView {
     private EditText _confirmPasswordField;
     private Button _settingsButton;
     private ILoginPresenter _presenter;
+    private ProgressDialog nDialog;
 
     private boolean _registerSelected;
 
@@ -107,6 +109,7 @@ public class LoginFragment extends Fragment implements ILoginView {
     @Override
     public void switchToGameList() {
         // when the presenter observes a successful sign-in, changes to the game list view
+        nDialog.dismiss();
         Intent intent = GameListActivity.newIntent(getActivity());
         startActivity(intent);
     }
@@ -120,6 +123,12 @@ public class LoginFragment extends Fragment implements ILoginView {
         if (_presenter == null) {
             return;
         }
+
+        nDialog = new ProgressDialog(getActivity(), R.style.LoadingDialogTheme);
+        nDialog.setCancelable(false);
+        nDialog.show();
+
+
         String username = _usernameField.getText().toString();
         String password = _passwordField.getText().toString();
         String checkPassword = _confirmPasswordField.getText().toString();
@@ -131,6 +140,15 @@ public class LoginFragment extends Fragment implements ILoginView {
             _presenter.login(username, password);
         }
 
+    }
+
+    @Override
+    public void hideLoadMenu(){
+        getActivity().runOnUiThread(() -> {
+            if (nDialog != null && nDialog.isShowing()) {
+                nDialog.dismiss();
+            }
+        });
     }
 
     @Override

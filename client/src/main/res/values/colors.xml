@@ -30,6 +30,7 @@
     <color name="dark_red">#b91d47</color>
 
 
+    <color name="transparent">#001d1d1d</color>
     <color name="translucent_bg_light">#c2ededed</color>
     <color name="translucent_bg_dark">#c21d1d1d</color>
     <color name="yellow_highlight">#77ffcc00</color>

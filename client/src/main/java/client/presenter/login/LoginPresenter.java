@@ -34,6 +34,7 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
     @Override
     public void update(Observable observable, Object o) {
         Log.i(TAG,"Updating LoginPresenter");
+        _view.hideLoadMenu();
         if (_model.getUser() != null) {
             _view.switchToGameList();
         }
@@ -67,7 +68,10 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
     @Override
     public void login(String username, String password) {
 
-        if (!validateArguments(username, password, password)) { return; }
+        if (!validateArguments(username, password, password)) {
+            _view.hideLoadMenu();
+            return;
+        }
         LoginService.login(this, username, password);
 
     }
@@ -75,13 +79,18 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
     @Override
     public void register(String username, String password, String checkPassword) {
 
-        if (!validateArguments(username, password, checkPassword)) { return; }
+        if (!validateArguments(username, password, checkPassword)) {
+            _view.hideLoadMenu();
+            return;
+        }
         LoginService.register(this, username, password);
 
     }
 
     @Override
     public void onServerResponseComplete(Exception exception) {
-        _view.showToast(exception.getMessage());
+        _view.hideLoadMenu();
+        exception.printStackTrace();
+        _view.showToast("Failed to connect to server. Are your settings configured properly?");
     }
 }
