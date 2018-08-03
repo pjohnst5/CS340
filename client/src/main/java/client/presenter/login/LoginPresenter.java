@@ -90,7 +90,6 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
     @Override
     public void onServerResponseComplete(Exception exception) {
         _view.hideLoadMenu();
-        exception.printStackTrace();
-        _view.showToast("Failed to connect to server. Are your settings configured properly?");
+        _view.showToast(exception.getMessage());
     }
 }
