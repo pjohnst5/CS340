@@ -52,7 +52,7 @@ public class TrainCardService {
             serverModel.updatePlayer(player.getGameID(), player);
 
             // The change turns method resets the number of cardsDrawnThisTurn, so we have to set a flag
-            if (player.get_cardsDrawnThisTurn() == 2) {
+            if (player.get_cardsDrawnThisTurn() == 2 || (player.get_cardsDrawnThisTurn() == 1 && serverModel.getGame(request.get_gameID()).getTrainDeck().getFaceUpTrainCards().size() == 0)) {
                 changeTurnsFlag = true;
             }
 

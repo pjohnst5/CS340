@@ -55,12 +55,7 @@ public class TrainDeck {
 
         //Sets tempDeck as face down deck
         for (int i = 0; i < tempDeck.size(); i++){
-            try {
-                _faceDownDeck.addCard(tempDeck.get(i));
-            } catch(DeckException e)
-            {
-                System.out.println("Something cray cray happened when making a new TrainDeck: " + e.get_message());
-            }
+            _faceDownDeck.addCard(tempDeck.get(i));
         }
 
         //clears tempDeck
@@ -70,12 +65,12 @@ public class TrainDeck {
         for (int i = 0; i < numFaceUpCards; i++){
             try {
                 _faceUpDeck.addCard(_faceDownDeck.drawCard());
-                if (_faceUpDeck._locoMotiveCount == 3){
-                    reDealCards();
-                }
             } catch(DeckException e){
                 System.out.println("Something cray cray happened when making a new TrainDeck: " + e.get_message());
             }
+        }
+        if (_faceUpDeck._locoMotiveCount >= 3){
+            reDealCards();
         }
 
     }
@@ -88,9 +83,10 @@ public class TrainDeck {
     public TrainCard drawFaceUpCard(TrainCard card) throws DeckException
     {
         _faceUpDeck.removeCard(card);
-        _faceUpDeck.addCard(_faceDownDeck.drawCard());
-
-        if (_faceUpDeck._locoMotiveCount == 3) {
+        if (_faceDownDeck._cards.size() != 0){
+            _faceUpDeck.addCard(_faceDownDeck.drawCard());
+        }
+        if (_faceUpDeck._locoMotiveCount >= 3) {
             reDealCards();
         }
         return card;
@@ -101,8 +97,14 @@ public class TrainDeck {
         {
             throw new DeckException("There are already 110 cards in the train deck, can't add another");
         }
-
-        _faceDownDeck.addCard(card);
+        if (_faceUpDeck._cards.size() < 5){
+            _faceUpDeck.addCard(card);
+        } else {
+            _faceDownDeck.addCard(card);
+            if (_faceUpDeck._locoMotiveCount >= 3){
+                reDealCards();
+            }
+        }
     }
 
     public void discardTrainCards(List<TrainCard> cards) throws DeckException {
@@ -123,16 +125,31 @@ public class TrainDeck {
 
 
     private void reDealCards() {
+        if ((_faceDownDeck._nonLocomotiveCount + _faceUpDeck._nonLocomotiveCount) < 3) { //this is to avoid infinite loop, there has to be at least 3 non-locomotive cards in the deck to reshuffle
+            return;
+        }
         System.out.println("Re-dealing cards, locomotive count is " + _faceUpDeck._locoMotiveCount);
 
         //adds all face up cards to face down deck
-        _faceDownDeck._cards.addAll(_faceUpDeck._cards);
+        for (int i = 0; i < _faceUpDeck._cards.size(); i++){
+            try {
+                if (_faceDownDeck._cards.size() ==110){
+                    throw new DeckException("There were 110 train cards in face down deck already");
+                }
+                _faceDownDeck.addCard(_faceUpDeck._cards.get(i));
+            } catch (DeckException e) {
+                System.out.println("Something cray cray happened when redealing the train deck: " + e.get_message());
+            }
+
+        }
 
         //clears face up cards
         _faceUpDeck._cards.clear();
 
-        //sets locomotive count of face up deck to 0
+        //sets counts of face up deck to 0
         _faceUpDeck._locoMotiveCount = 0;
+        _faceUpDeck._nonLocomotiveCount = 0;
+
 
         //shuffles face down deck
         Collections.shuffle(_faceDownDeck._cards);
@@ -141,23 +158,27 @@ public class TrainDeck {
         for (int i = 0; i < 5; i++) {
             try {
                 _faceUpDeck.addCard(_faceDownDeck.drawCard());
-                if (_faceUpDeck._locoMotiveCount == 3) {
-                    reDealCards();
-                }
             } catch (DeckException e) {
                 System.out.println("Something cray cray happened when redealing the train deck: " + e.get_message());
             }
         }
+        if (_faceUpDeck._locoMotiveCount >= 3) {
+            reDealCards();
+        }
     }
+
+
 
     //FaceUpDeck is private and only TrainDeck has it
     private class FaceUpDeck {
         int _locoMotiveCount;
         List<TrainCard> _cards;
+        int _nonLocomotiveCount;
 
         private FaceUpDeck() {
             _cards = new ArrayList<>();
             _locoMotiveCount = 0;
+            _nonLocomotiveCount = 0;
         }
 
         public List<TrainCard> getCards(){
@@ -174,12 +195,10 @@ public class TrainDeck {
 
             if (card.get_color() == TrainColor.LOCOMOTIVE){
                 _locoMotiveCount++;
+            } else {
+                _nonLocomotiveCount++;
             }
 
-            //ReDeal cards
-//            if (_locoMotiveCount == 3) {
-//                reDealCards();
-//            }
         }
 
         private void removeCard(TrainCard card) throws DeckException
@@ -200,27 +219,39 @@ public class TrainDeck {
             //Card was successfully removed, is it locomotive?
             if (card.get_color() == TrainColor.LOCOMOTIVE) {
                 _locoMotiveCount--;
+            } else {
+                _nonLocomotiveCount--;
             }
         }
 
     }
 
+
+
     //FaceDownDeck is private and only TrainDeck has it
     private class FaceDownDeck {
         List<TrainCard> _cards;
+        int _nonLocomotiveCount;
 
         private FaceDownDeck() {
             _cards = new ArrayList<>();
+            _nonLocomotiveCount = 0;
         }
 
         private TrainCard drawCard() throws DeckException {
             if (_cards.size() == 0){
                 throw new DeckException("No more cards to draw in Face Down Deck of Train Cards");
             }
+            if (_cards.get(0).get_color() != TrainColor.LOCOMOTIVE){
+                _nonLocomotiveCount--;
+            }
             return _cards.remove(0);
         }
 
-        private void addCard(TrainCard card) throws DeckException {
+        private void addCard(TrainCard card) {
+            if (card.get_color() != TrainColor.LOCOMOTIVE){
+                _nonLocomotiveCount++;
+            }
             _cards.add(card);
         }
 

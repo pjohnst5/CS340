@@ -97,7 +97,7 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
         _mapView.updateDeckCount(numDestCards, numTrainCards);
 
         _mapView.setSelectDestCardEnabled(_model.isMyTurn());
-        _mapView.setSelectTrainCardEnabled(_model.isMyTurn());
+        _mapView.setSelectTrainCardEnabled(_model.isMyTurn()&&(_model.getCurrentGame().getTrainDeck().getFaceUpTrainCards().size() != 0));
 
         if (_model.getCurrentGame().getDestDeck().get_cards().size() <= 0) {
             _mapView.setSelectDestCardEnabled(false);
