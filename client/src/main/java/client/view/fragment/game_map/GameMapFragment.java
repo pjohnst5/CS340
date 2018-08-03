@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +66,7 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
     private static final int GAME_OVER_DIALOG_CODE = 1;
 
     private boolean _gameOver;
+    private boolean _mapNamesShowing;
 
     public static GameMapFragment newInstance() {
         return new GameMapFragment();
@@ -80,6 +82,8 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         _gameOver = false;
 
         // Initialize View Members
+        Button _showMapNames = v.findViewById(R.id.game_map_toggle_names_button);
+        ImageView _mapNamesView = v.findViewById(R.id.game_map_names_helper);
         _selectDestCardsButton = v.findViewById(R.id.game_map_select_dest_cards);
         _selectTrainCardsButton = v.findViewById(R.id.game_map_select_train_cards);
         _gameMap = v.findViewById(R.id.game_map);
@@ -98,6 +102,15 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
         _lastRoundView.setVisibility(View.INVISIBLE);
 
         // Set View OnClickListeners
+        _showMapNames.setOnClickListener((view) -> {
+            _mapNamesShowing = !_mapNamesShowing;
+            if (_mapNamesShowing){
+                _mapNamesView.setVisibility(View.VISIBLE);
+            } else {
+                _mapNamesView.setVisibility(View.GONE);
+            }
+        });
+
         _claimRouteButton.setOnClickListener((view) -> {
             FragmentManager manager = getFragmentManager();
             ClaimRouteDialog dialog = ClaimRouteDialog.newInstance(_gameMap.getSelectedRoute().getId(), _presenter.getMyPlayer().getPlayerID());

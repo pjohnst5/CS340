@@ -59,6 +59,7 @@
     <string name="select">Select</string>
     <string name="game_view_last_round">LAST ROUND</string>
     <string name="cards">cards</string>
+    <string name="toggle_map_names">Toggle Map Names</string>
 
     <!-- SIDEBAR TEXT -->
     <string name="chat_title">CHAT</string>

@@ -14,14 +14,44 @@
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <client.view.fragment.game_map.customview.GameMapView
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/game_map"
-                android:background="@drawable/map"/> <!-- NOTE: don't remove this line or onDraw() never gets called!-->
+                android:layout_height="wrap_content">
+
+                <client.view.fragment.game_map.customview.GameMapView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/game_map"
+                    android:background="@drawable/map"/> <!-- NOTE: don't remove this line or onDraw() never gets called!-->
+
+                <ImageView
+                    android:id="@+id/game_map_names_helper"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/map_names"/>
+
+            </RelativeLayout>
         </HorizontalScrollView>
 
     </ScrollView>
+
+    <Button
+        android:id="@+id/game_map_toggle_names_button"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/button_green"
+        android:text="@string/toggle_map_names"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
