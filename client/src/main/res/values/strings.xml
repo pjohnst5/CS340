@@ -9,8 +9,8 @@
     <string name="login_password_hint">Password...</string>
     <string name="login_confirm_password_label">Confirm</string>
     <string name="login_confirm_password_hint">Confirm Password...</string>
-    <string name="login_switch_login_label">Login</string>
-    <string name="login_switch_register_label">Register</string>
+    <string name="login_switch_login_label">LOGIN</string>
+    <string name="login_switch_register_label">REGISTER</string>
     <string name="login_submit_button">Submit</string>
     <string name="login_server_settings">Settings</string>
 

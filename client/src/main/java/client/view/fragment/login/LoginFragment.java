@@ -47,6 +47,8 @@ public class LoginFragment extends Fragment implements ILoginView {
         // Initialize View Members
         Switch mSubmitOptionSwitch = v.findViewById(R.id.login_submit_option_switch);
         Button mSubmitButton = v.findViewById(R.id.login_submit_button);
+        TextView switchBGRegister = v.findViewById(R.id.login_submit_option_switch_bg_register);
+        TextView switchBGLogin = v.findViewById(R.id.login_submit_option_switch_bg_login);
         _confirmPasswordLabel = v.findViewById(R.id.login_confirm_password_label);
         _usernameField = v.findViewById(R.id.login_username);
         _passwordField = v.findViewById(R.id.login_password);
@@ -68,9 +70,14 @@ public class LoginFragment extends Fragment implements ILoginView {
             if (_registerSelected) {
                 _confirmPasswordField.setVisibility(View.VISIBLE);
                 _confirmPasswordLabel.setVisibility(View.VISIBLE);
+                switchBGRegister.setVisibility(View.GONE);
+                switchBGLogin.setVisibility(View.VISIBLE);
+
             } else {
                 _confirmPasswordField.setVisibility(View.GONE);
                 _confirmPasswordLabel.setVisibility(View.GONE);
+                switchBGRegister.setVisibility(View.VISIBLE);
+                switchBGLogin.setVisibility(View.GONE);
             }
         });
 
