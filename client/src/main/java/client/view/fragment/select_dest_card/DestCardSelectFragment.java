@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +34,7 @@ import shared.model.decks.DestCard;
 
 public class DestCardSelectFragment extends Fragment implements IDestCardSelectView {
 
-    private final int CARD_LENGTH = 294;
+    private final int CARD_LENGTH = 284;
     private static final int CARD_WIDTH = 264;
     private static final int CARD_HEIGHT = 166;
 
@@ -73,7 +75,13 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
 
 
         // Modify View Members
-        setGridlayoutSpan();
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+
+        float density = getResources().getDisplayMetrics().density;
+        setGridlayoutSpan(density);
+
         hideOverlayMessage();
         _submitButton.setEnabled(false);
 
@@ -160,11 +168,13 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
         .commit();
     }
 
-    private void setGridlayoutSpan() {
+    private void setGridlayoutSpan(float dpDensity) {
 
         ViewTreeObserver vto = _recyclerViewContainer.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(() -> {
-            int numColumns = _recyclerViewContainer.getWidth() / CARD_LENGTH;
+
+            float dpWidth = _recyclerViewContainer.getWidth() / dpDensity;
+            int numColumns = (int)Math.floor(dpWidth / CARD_LENGTH);
             if (numColumns == 0) numColumns = 1;
 
             ((GridLayoutManager) _cardsRecyclerView.getLayoutManager()).setSpanCount(numColumns);
