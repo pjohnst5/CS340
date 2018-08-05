@@ -279,6 +279,9 @@ public class Game {
 
     public void changeTurns() throws InvalidGameException
     {
+        if (_state == GameState.FINISHED) {
+            throw new InvalidGameException("Can't change turns; game has ended");
+        }
         if (_turnManager == null)
         {
             throw new InvalidGameException("Game hasn't started yet");
@@ -298,6 +301,10 @@ public class Game {
             _state = GameState.LAST_ROUND;
             _playerToEndOn = _players.get(indexOfPersonWhosTurnIsEnding).getPlayerID();
         } else if (_state == GameState.LAST_ROUND && _turnManager.getCurrentPlayer().equals(_playerToEndOn)) { //case where the person who triggered the last round just finished their turn
+            // Game is Over; calculate player's points from their destination cards
+            for (Player player : _players) {
+                player.gameOver();
+            }
             _state = GameState.FINISHED;
             return;
         }
@@ -329,8 +336,40 @@ public class Game {
         _map.claimRoute(route.getId(), player.getPlayerID(), player.getColor());
     }
 
+    public List<Player> getWinners() {
+        // return the player(s) with the most points. If players are tied for points, the player with the most completed Destination tickets wins. If they're still tied, both are returned.
+        if (_state != GameState.FINISHED) return null;
+        List<Player> winners = new ArrayList<>();
+        for (Player player : _players) {
+            if (winners.size() == 0) {
+                winners.add(player);
+            } else {
+                Player other = winners.get(0);
+                if (player.getPoints() < other.getPoints()) {
+                    continue;
+                } else if (player.getPoints() > other.getPoints()) {
+                    winners = new ArrayList<>();
+                    winners.add(player);
+                } else {
+                    // they have the same score; see who has more completed destination cards
+                    if (player.getNumCompletedDestCards() < other.getNumCompletedDestCards()) {
+                        continue;
+                    } else if (player.getNumCompletedDestCards() > other.getNumCompletedDestCards()) {
+                        winners = new ArrayList<>();
+                        winners.add(player);
+                    } else {
+                        // they both have the same number of completed destination cards; it's a tie
+                        winners.add(player);
+                    }
+                }
+            }
+        }
+        return winners;
+    }
+
     public boolean getGameOver() {
-        return _gameOver;
+        return _state == GameState.FINISHED;
+//        return _gameOver;
     }
 
 }

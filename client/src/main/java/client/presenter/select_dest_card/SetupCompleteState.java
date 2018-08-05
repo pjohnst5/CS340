@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Observable;
 
 import client.model.ClientModel;
+import shared.enumeration.GameState;
 import shared.exception.InvalidGameException;
 import shared.model.decks.DestCard;
 
@@ -28,7 +29,7 @@ public class SetupCompleteState extends DestCardSelectState {
             clientPlayerId = _model.getCurrentPlayer().getPlayerID();
         } catch (InvalidGameException e){ }
 
-        if (clientPlayerId.equals(currentTurnPlayerId)){
+        if (clientPlayerId.equals(currentTurnPlayerId) && _model.getCurrentGame().get_state() != GameState.FINISHED){
             presenter().setState(new PlayerTurnState(presenter()));
         } else {
             presenter().setState(new PlayerTurnWaitingState(presenter()));

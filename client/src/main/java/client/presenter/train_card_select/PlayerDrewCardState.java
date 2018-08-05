@@ -5,6 +5,7 @@ import java.util.List;
 
 import client.facade.ServicesFacade;
 import client.model.ClientModel;
+import shared.enumeration.GameState;
 import shared.enumeration.TrainColor;
 import shared.model.decks.TrainCard;
 
@@ -39,7 +40,7 @@ public class PlayerDrewCardState extends TrainCardSelectState {
 
     @Override
     public void update() {
-        if (!_model.isMyTurn()) {
+        if (!_model.isMyTurn() || _model.getCurrentGame().get_state() == GameState.FINISHED) {
             exitState();
             return;
         }

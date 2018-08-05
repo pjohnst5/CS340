@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -169,31 +170,34 @@
 
             <TextView
                 android:id="@+id/game_map_dest_card_count"
+                style="@style/PointsText"
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="2dp"
-                android:background="@color/translucent_bg_light"
-                android:layout_marginTop="11dp"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="2dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="11dp"
+                android:background="@color/translucent_bg_light"
                 android:textAlignment="center"
-                android:textSize="24sp"
-                style="@style/PointsText"/>
+                android:textSize="18sp"
+                tools:text="30" />
 
             <TextView
                 android:id="@+id/game_map_train_card_count"
-                android:layout_width="30dp"
+                style="@style/PointsText"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                android:layout_marginStart="25dp"
-                android:background="@color/translucent_bg_light"
-                android:layout_below="@id/game_map_dest_deck_image"
                 android:layout_alignParentEnd="true"
-                android:textAlignment="center"
-                android:textSize="24sp"
+                android:layout_below="@id/game_map_dest_deck_image"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="11dp"
+                android:background="@color/translucent_bg_light"
 
-                style="@style/PointsText"/>
+                android:singleLine="false"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                tools:text="100" />
         </RelativeLayout>
 
     </RelativeLayout>

@@ -64,7 +64,20 @@ public Dialog onCreateDialog(Bundle savedInstanceState) {
         }
 
         _winnerTextView = v.findViewById(R.id.game_over_winner);
-//        _winnerTextView.setText(currentGame.getWinner().name() + " wins!"); // FIXME: implement
+        List<Player> winners = currentGame.getWinners();
+        if (winners != null) {
+            if (winners.size() == 1) {
+                String winnerText = winners.get(0).getDisplayName() + " wins!";
+                _winnerTextView.setText(winnerText);
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Tie between ").append(winners.get(0).getDisplayName());
+                for (int i = 1; i < winners.size(); i++) {
+                    sb.append(" and ").append(winners.get(i).getDisplayName());
+                }
+                _winnerTextView.setText(sb.toString());
+            }
+        }
 
         _playerRecyclerView = v.findViewById(R.id.game_over_stats_recycler_view);
         _playerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -148,7 +161,15 @@ public Dialog onCreateDialog(Bundle savedInstanceState) {
             String destinationName = card.toString();
 
             _destinationTitle.setText(destinationName);
-            _points.setText(Integer.toString(points));
+            if (card.getCompleted()) {
+                String pointsText = "+" + Integer.toString(points);
+                _points.setText(pointsText);
+                _points.setTextColor(getResources().getColor(R.color.green));
+            } else {
+                String pointsText = "-" + Integer.toString(points);
+                _points.setText(pointsText);
+                _points.setTextColor(getResources().getColor(R.color.red));
+            }
         }
 
         public DestCard getDestCard(){

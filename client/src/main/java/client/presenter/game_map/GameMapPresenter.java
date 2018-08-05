@@ -77,7 +77,7 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
 
     @Override
     public void routeSelected(Route route) {
-        _mapView.setClaimRouteButtonEnabled(_model.isMyTurn());
+        _mapView.setClaimRouteButtonEnabled(isButtonSelectable());
     }
 
     @Override
@@ -96,8 +96,10 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
         _mapView.updatePlayerTurn();
         _mapView.updateDeckCount(numDestCards, numTrainCards);
 
-        _mapView.setSelectDestCardEnabled(_model.isMyTurn());
-        _mapView.setSelectTrainCardEnabled(_model.isMyTurn()&&(_model.getCurrentGame().getTrainDeck().getFaceUpTrainCards().size() != 0));
+        boolean buttonSelectable = isButtonSelectable();
+        _mapView.setClaimRouteButtonEnabled(buttonSelectable);
+        _mapView.setSelectDestCardEnabled(buttonSelectable);
+        _mapView.setSelectTrainCardEnabled(buttonSelectable && (_model.getCurrentGame().getTrainDeck().getFaceUpTrainCards().size() != 0));
 
         if (_model.getCurrentGame().getDestDeck().get_cards().size() <= 0) {
             _mapView.setSelectDestCardEnabled(false);
@@ -106,6 +108,14 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
         if (_model.getCurrentGame().get_state() == GameState.FINISHED) {
             _mapView.gameOver();
         }
+    }
+
+    private boolean isButtonSelectable() {
+        GameState state = _model.getCurrentGame().get_state();
+        if (state != GameState.STARTED && state != GameState.LAST_ROUND) {
+            return false;
+        }
+        return _model.isMyTurn();
     }
 
     @Override

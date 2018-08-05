@@ -27,8 +27,8 @@ public class PlayerTurnWaitingState extends TrainCardSelectState {
             presenter().setState(new PlayerTurnState(presenter()));
         }
 
-            List<TrainCard> faceUpCards = _model.getCurrentGame().getTrainDeck().getFaceUpTrainCards();
-            presenter().setCards(faceUpCards);
+        List<TrainCard> faceUpCards = _model.getCurrentGame().getTrainDeck().getFaceUpTrainCards();
+        presenter().setCards(faceUpCards);
     }
 
     @Override

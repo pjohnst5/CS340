@@ -25,6 +25,7 @@ public class Player {
     private int _index_of_commands; //i.e if this is -1, the player has received no commands, if 0 he has received and executed the first command
     private int _points;
     private int _cardsDrawnThisTurn;
+    private boolean _gameOver;
 
 
     public Player(String userName, String displayName, PlayerColor color, String gameId, String playerId) throws PlayerException {
@@ -197,5 +198,28 @@ public class Player {
 
     public void updateDestCards(List<DestCard> updated) {
         _destCards = updated;
+    }
+
+    public void gameOver() {
+        // game state has been set to FINISHED; calculate points
+        if (_gameOver) return;
+        for (DestCard card : _destCards) {
+            if (card.getCompleted()) {
+                _points += card.get_worth();
+            } else {
+                _points -= card.get_worth();
+            }
+        }
+        _gameOver = true; // set so we don't accidentally calculate twice
+    }
+
+    public int getNumCompletedDestCards() {
+        int completed = 0;
+        for (DestCard card : _destCards) {
+            if (card.getCompleted()) {
+                completed++;
+            }
+        }
+        return completed;
     }
 }
