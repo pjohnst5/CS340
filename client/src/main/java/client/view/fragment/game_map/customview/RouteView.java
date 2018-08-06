@@ -116,6 +116,9 @@ public class RouteView extends View {
     }
 
     public void setCoordinates(int c1X, int c1Y, int c2X, int c2Y) {
+        if (_initialized) {
+            return; // already been initialized
+        }
         _c1 = new Point(c1X, c1Y);
         _c2 = new Point(c2X, c2Y);
 
