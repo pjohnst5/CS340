@@ -19,7 +19,7 @@ public class ClientCommunicator {
 
     private static final String HTTP_POST = "POST";
     private static final String HTTP_GET = "GET";
-    private static final int MAX_CONNECTION_TIME = 999999999; // 10 seconds
+    private static final int MAX_CONNECTION_TIME = 10000; // 10 seconds
 
     private final String EXEC_ENDPOINT;
 
