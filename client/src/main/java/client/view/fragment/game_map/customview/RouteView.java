@@ -27,6 +27,7 @@ public class RouteView extends View {
     private Paint _linePaint;
     private Paint _claimedPaint;
     private Paint _boundsPaint; // testing
+    private boolean _initialized;
     static {
         _lineWidth = LINE_WIDTH;
         _linePaintNotSelected = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -84,6 +85,7 @@ public class RouteView extends View {
         _boundsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         _boundsPaint.setStyle(Paint.Style.STROKE);
         _boundsPaint.setStrokeWidth(2.0f);
+        _initialized = false;
     }
 
     public RouteView initialize(Route route) {
@@ -141,6 +143,7 @@ public class RouteView extends View {
         _linePaint.setStrokeWidth(_lineWidth);
         _claimedPaint.setStrokeWidth(_lineWidth);
         _claimedPaint.setPathEffect(new DashPathEffect(new float[] {segmentLength, LINE_GAP}, 0));
+        _initialized = true;
     }
 
     @Override
@@ -151,6 +154,9 @@ public class RouteView extends View {
     // Use our own defined method rather than onDraw, so we can call it from GameMapView in the
     //  order we want
     public void drawRoute(Canvas canvas) {
+        if (!_initialized) {
+            return;
+        }
         Paint selectedPaint = (_selected) ? _linePaintSelected : _linePaintNotSelected;
 
         if (_route.isClaimed()) {
@@ -163,6 +169,9 @@ public class RouteView extends View {
     }
 
     public int getDistance(float touchX, float touchY) {
+        if (!_initialized) {
+            return -1;
+        }
         if (_route.isClaimed()) {
             return -1;
         }
