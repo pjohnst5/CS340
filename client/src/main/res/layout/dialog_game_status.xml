@@ -3,120 +3,129 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/game_status_close_dialog"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/button_red"
-        android:text="@string/close_modal_button_text"/>
-
-    <TextView
-        android:id="@+id/game_status_title"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:textAlignment="center"
-        android:layout_marginTop="20dp"
-        android:paddingEnd="40dp"
-        android:paddingStart="40dp"
-        style="@style/TitleText"
-        android:text="@string/game_status_dialog_title"/>
-
-    <LinearLayout
-        android:id="@+id/game_status_stats_container_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/game_status_title"
-        android:orientation="vertical"
-        android:padding="20dp">
-
-        <LinearLayout
+        android:layout_height="match_parent">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="9">
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/game_status_close_dialog"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/button_red"
+                android:text="@string/close_modal_button_text"/>
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/game_status_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:textAlignment="center"
-                android:text="@string/points"
-                android:layout_weight="1"/>
+                android:layout_marginTop="20dp"
+                android:paddingEnd="40dp"
+                android:paddingStart="40dp"
+                style="@style/TitleText"
+                android:text="@string/game_status_dialog_title"/>
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/game_status_stats_container_linear_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="@string/trains"
-                android:layout_weight="1"/>
+                android:layout_below="@id/game_status_title"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-            <TextView
-                android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="9">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@string/points"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@string/trains"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@string/train_cards"
+                        android:layout_weight="2"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@string/dest_cards"
+                        android:layout_weight="2"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@string/routes"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/game_status_stats_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/game_status_card_count_display"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="@string/train_cards"
-                android:layout_weight="2"/>
+                android:layout_below="@id/game_status_stats_container_linear_layout"
+                android:gravity="center">
 
-            <TextView
-                android:layout_width="0dp"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/game_status_card_recycler_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/game_status_deck_cards_linear_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="@string/dest_cards"
-                android:layout_weight="2"/>
+                android:layout_below="@id/game_status_card_count_display"
+                android:gravity="center">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="@string/routes"
-                android:layout_weight="1"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/game_status_dest_card_recycler_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp" />
 
-        </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/game_status_stats_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/game_status_card_count_display"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/game_status_stats_container_linear_layout"
-        android:gravity="center">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/game_status_card_recycler_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/game_status_deck_cards_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/game_status_card_count_display"
-        android:gravity="center">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/game_status_dest_card_recycler_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
-
-    </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>
