@@ -59,19 +59,19 @@ class GameListService {
 //--------------------------
 
             //Makes game action object
-            //GameAction action = new GameAction(game.getPlayers().get(0).getDisplayName()," joined the game");
+            GameAction action = new GameAction(game.getPlayers().get(0).getDisplayName()," joined the game", game.getGameID());
 
             //makes command to do same on client
-//            String className3 = ConfigurationManager.getString("client_facade_name");
-//            String methodName3 = ConfigurationManager.getString("client_add_game_action_method");
-//            String[] paramTypes3 = {GameAction.class.getCanonicalName()};
-//            Object[] paramValues3 = {action};
-//            ICommand command3 = new GenericCommand(className3, methodName3, paramTypes3, paramValues3, null);
+            String className3 = ConfigurationManager.getString("client_facade_name");
+            String methodName3 = ConfigurationManager.getString("client_add_game_action_method");
+            String[] paramTypes3 = {GameAction.class.getCanonicalName()};
+            Object[] paramValues3 = {action};
+            ICommand command3 = new GenericCommand(className3, methodName3, paramTypes3, paramValues3, null);
 //-----------------------
 
             serverModel.addCommand(game.getGameID(), command); //set games
             serverModel.addCommand(game.getGameID(), command2); //join game
-            //serverModel.addCommand(game.getGameID(), command3); //game history entry
+            serverModel.addCommand(game.getGameID(), command3); //game history entry
 
             //gets all the commands for that game for the newly joined player
             List<ICommand> commands = serverModel.getCommands(game.getGameID());
@@ -134,20 +134,20 @@ class GameListService {
 
 
             //Makes game action object
-            //GameAction action = new GameAction(jr.getDisplayName()," joined the game");
+            GameAction action = new GameAction(jr.getDisplayName()," joined the game", game.getGameID());
 
             //adds game action into server model
-            //serverModel.addGameAction(jr.getGameID(), action);
+            serverModel.addGameAction(jr.getGameID(), action);
 
             //makes command to do same on client
-//            String className2 = ConfigurationManager.getString("client_facade_name");
-//            String methodName2 = ConfigurationManager.getString("client_add_game_action_method");
-//            String[] paramTypes2 = {GameAction.class.getCanonicalName()};
-//            Object[] paramValues2 = {action};
-//            ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
+            String className2 = ConfigurationManager.getString("client_facade_name");
+            String methodName2 = ConfigurationManager.getString("client_add_game_action_method");
+            String[] paramTypes2 = {GameAction.class.getCanonicalName()};
+            Object[] paramValues2 = {action};
+            ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
 
             serverModel.addCommand(jr.getGameID(),command);  //Player joined
-            //serverModel.addCommand(jr.getGameID(), command2); //game action of player joined
+            serverModel.addCommand(jr.getGameID(), command2); //game action of player joined
 
 
 
@@ -155,14 +155,6 @@ class GameListService {
             // In order to create a game before adding game action objects, we must
             // Move the join request to the beginning of the commands
             List<ICommand> commands = new ArrayList<>(serverModel.getCommands(player.getGameID()));
-//            int i = commands.indexOf(command);
-//            while(i > 0){
-//                ICommand joinCmd = commands.get(i);
-//                commands.set(i, commands.get(i-1));
-//                commands.set(i-1, joinCmd);
-//                i--;
-//
-//            }
 
             //Sets player's index to size of commands for that game minus 1 because it's an index.
             player.setIndex(commands.size() - 1);

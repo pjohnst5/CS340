@@ -60,7 +60,7 @@ public class GameMapService {
             serverModel.updatePlayer(player.getGameID(), player);
 
             //Makes game action object saying this player claimed the route
-            GameAction action = new GameAction(request.get_player().getDisplayName(), " claimed the route " + request.get_route().toString());
+            GameAction action = new GameAction(request.get_player().getDisplayName(), " claimed the route " + request.get_route().toString(), request.get_gameID());
 
             //adds game action into server model
             serverModel.addGameAction(request.get_gameID(), action);

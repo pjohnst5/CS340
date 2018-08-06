@@ -41,7 +41,7 @@ public class DestCardService {
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
             // Makes game action object
-            GameAction action = new GameAction(request.get_player().getDisplayName(), " selected destination cards");
+            GameAction action = new GameAction(request.get_player().getDisplayName(), " selected destination cards", request.get_gameID());
 
             //adds game action into server model
             serverModel.addGameAction(request.get_gameID(), action);
@@ -160,7 +160,7 @@ public class DestCardService {
             serverModel.updatePlayer(player.getGameID(), player);
 
             //Make game action saying this person drew destination cards
-            GameAction action = new GameAction(request.get_player().getDisplayName(), " selected destination cards");
+            GameAction action = new GameAction(request.get_player().getDisplayName(), " selected destination cards", request.get_gameID());
 
             //add game action to server
             serverModel.addGameAction(request.get_gameID(), action);

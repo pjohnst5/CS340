@@ -49,7 +49,7 @@ class GameLobbyService {
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
             //Makes game action object
-            GameAction action = new GameAction(serverModel.getPlayer(playerID).getDisplayName(), " started the game");
+            GameAction action = new GameAction(serverModel.getPlayer(playerID).getDisplayName(), " started the game", gameID);
 
             //adds game action into server model
             serverModel.addGameAction(gameID, action);
@@ -147,7 +147,7 @@ class GameLobbyService {
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
             //Makes game action object
-            GameAction action = new GameAction(serverModel.getPlayer(request.get_playerID()).getDisplayName(), " left the game");
+            GameAction action = new GameAction(serverModel.getPlayer(request.get_playerID()).getDisplayName(), " left the game", request.get_gameID());
 
             //adds game action into server model
             serverModel.addGameAction(request.get_gameID(), action);

@@ -176,7 +176,7 @@ public class ClientModel extends Observable {
     }
 
     public void addGameAction(GameAction action) {
-        _currentGame.addGameAction(action);
+        _games.get(action.get_gameId()).addGameAction(action);
         setChanged();
         notifyObservers();
     }

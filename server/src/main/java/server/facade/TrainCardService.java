@@ -40,7 +40,7 @@ public class TrainCardService {
             player.addTrainCard(request.get_faceUpCard());
 
             //make game action to say the player drew a face up card
-            GameAction action = new GameAction(request.get_player().getDisplayName(), " drew a face-up train card");
+            GameAction action = new GameAction(request.get_player().getDisplayName(), " drew a face-up train card", request.get_gameID());
 
             //add game action into server
             serverModel.addGameAction(request.get_gameID(), action);
@@ -134,7 +134,7 @@ public class TrainCardService {
             serverModel.updatePlayer(player.getGameID(), player);
 
             //make game action saying the player drew a face down card
-            GameAction action = new GameAction(request.get_player().getDisplayName(), " drew a face-down train card");
+            GameAction action = new GameAction(request.get_player().getDisplayName(), " drew a face-down train card", request.get_gameID());
 
             //add game action to server
             serverModel.addGameAction(request.get_gameID(), action);

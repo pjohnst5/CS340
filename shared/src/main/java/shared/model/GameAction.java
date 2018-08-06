@@ -7,14 +7,16 @@ public class GameAction {
 
     private String _displayName;
     private String _actionDescription;
+    private String _gameId;
     private Date _timestamp;
 
     private GameAction(){}
 
-    public GameAction(String displayName, String description)
+    public GameAction(String displayName, String description, String gameId)
     {
         _displayName = displayName;
         _actionDescription = description;
+        _gameId = gameId;
         _timestamp = new Date();
     }
 
@@ -26,6 +28,10 @@ public class GameAction {
     public String get_actionDescription()
     {
         return _actionDescription;
+    }
+
+    public String get_gameId() {
+        return _gameId;
     }
 
     public Date getTimestamp() { return _timestamp; }
