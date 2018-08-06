@@ -23,7 +23,7 @@
     <style name="PointsText">
         <item name="android:textColor">@color/dark_red</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">32sp</item>
+        <item name="android:textSize">28sp</item>
     </style>
 
     <!--<style name="LoadingDialogTheme" parent="@android:style/Theme.Dialog">-->

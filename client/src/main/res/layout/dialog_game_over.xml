@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="10">
+            android:weightSum="2">
 
             <TextView
                 android:layout_width="0dp"
@@ -63,12 +63,7 @@
                 android:textSize="24sp"
                 android:textAllCaps="true"
                 android:text="@string/points"
-                android:layout_weight="3"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"/>
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
