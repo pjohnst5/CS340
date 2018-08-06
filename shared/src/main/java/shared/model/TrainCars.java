@@ -3,7 +3,10 @@ package shared.model;
 import shared.exception.NotEnoughTrainCarsException;
 
 public class TrainCars {
-    private int _numberOfCars = 45;
+
+    private final int START_NUM_TRAIN_CARS = 45;
+
+    private int _numberOfCars = START_NUM_TRAIN_CARS;
     private boolean _isFinalRound = false;
 
     public void removeCars(int numberOfCars) throws NotEnoughTrainCarsException {

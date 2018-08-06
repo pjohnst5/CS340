@@ -1,6 +1,8 @@
 package client.view.fragment.game_map;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -118,12 +120,20 @@ public class GameMapFragment extends Fragment implements IGameMapView, GameMapVi
             dialog.show(manager, CLAIM_ROUTE_DIALOG_TAG);
         });
 
-        _selectDestCardsButton.setOnClickListener((view) -> {
-            FragmentManager fm = getActivity().getSupportFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.game_content_container, new DestCardSelectFragment());
-            transaction.commit();
-        });
+        _selectDestCardsButton.setOnClickListener((view) ->
+
+            new AlertDialog.Builder(getActivity())
+                .setMessage("Are you sure you would like to draw more destination cards?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.game_content_container, new DestCardSelectFragment());
+                    transaction.commit();
+                })
+                .show()
+        );
 
         _selectTrainCardsButton.setOnClickListener((view) -> {
             FragmentManager fm = getActivity().getSupportFragmentManager();

@@ -54,6 +54,27 @@ public class MainGamePoller extends Poller {
     }
 
     public boolean start() {
+
+        // Update for when the game and playerId's change
+        String[] paramTypes = {
+                String.class.getCanonicalName(),
+                String.class.getCanonicalName()
+        };
+
+        Object[] paramValues = {
+                ClientModel.getInstance().getCurrentGame().getGameID(),
+                ClientModel.getInstance().getUser().get_playerId()
+
+        };
+
+        _instance._serverRequest = new GenericCommand(
+                ConfigurationManager.get("server_facade_name"),
+                ConfigurationManager.get("server_get_commands_method"),
+                paramTypes,
+                paramValues,
+                null
+        );
+
         return _instance._start(TASK_ID, TASK_INTERVAL);
     }
 

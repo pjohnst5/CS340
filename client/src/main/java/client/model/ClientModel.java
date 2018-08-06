@@ -50,6 +50,12 @@ public class ClientModel extends Observable {
         }
     }
 
+    public void reset(){
+        _games = new HashMap<>();
+        _currentGame = null;
+        _user.set_playerId(null);
+    }
+
     /**
      * Retrieves the current player if exists.
      * @return The Player object or null if it does not exist

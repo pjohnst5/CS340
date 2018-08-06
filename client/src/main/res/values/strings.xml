@@ -74,6 +74,7 @@
     <string name="dest_cards">Destination Cards</string>
     <string name="routes">Routes</string>
     <string name="sidebar_open_game_over">Final Scores</string>
+    <string name="sidebar_open_game_over_exit">Exit Game</string>
 
     <!-- CLAIM ROUTE DIALOG -->
     <string name="claim_route_title_text">Claim Route</string>
