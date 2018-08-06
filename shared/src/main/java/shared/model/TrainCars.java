@@ -4,7 +4,7 @@ import shared.exception.NotEnoughTrainCarsException;
 
 public class TrainCars {
 
-    private final int START_NUM_TRAIN_CARS = 5;
+    private final int START_NUM_TRAIN_CARS = 45;
 
     private int _numberOfCars = START_NUM_TRAIN_CARS;
     private boolean _isFinalRound = false;
