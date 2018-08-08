@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import server.exception.ServerException;
 import shared.command.ICommand;
+import shared.exception.DatabaseException;
 import shared.exception.DeckException;
 import shared.exception.InvalidGameException;
 import shared.exception.InvalidUserException;
@@ -18,6 +19,10 @@ import shared.model.Player;
 import shared.model.User;
 import shared.model.decks.DestCard;
 
+import shared.plugin.IGameDao;
+import shared.plugin.IPersistenceProvider;
+import shared.plugin.IUserDao;
+import shared.plugin.PluginManager;
 
 public class ServerModel {
 
@@ -32,15 +37,28 @@ public class ServerModel {
     }
 
     private ServerModel() {
-        _users = new HashMap<>();
-        _players = new HashMap<>();
-        _games = new HashMap<>();
-        _manager = CommandManager.getInstance();
+        IPersistenceProvider _plugin = PluginManager.getPlugin();
+        IUserDao _userDao = _plugin.getUserDao();
+        IGameDao _gameDao = _plugin.getGameDao();
+
+        try {
+            List<User> users = _userDao.getUsers();
+            for (int i = 0; i < users.size(); i++){
+                User user = users.get(i);
+                _users.put(user.getUserName(), user);
+            }
+            for (int i = 0; i < _gameDao.getGames().size(); i++){
+                addNewGame(_gameDao.getGames().get(i));
+            }
+            _manager = CommandManager.getInstance();
+        } catch (DatabaseException | ServerException e) {
+            e.printStackTrace();
+        }
     }
 
-    private Map<String, User> _users; //usernames to Users
-    private Map<String, Player> _players; //playerid's to Player
-    private Map<String, Game> _games;  //gameid's to games
+    private Map<String, User> _users = new HashMap<>(); //usernames to Users
+    private Map<String, Player> _players = new HashMap<>(); //playerid's to Player
+    private Map<String, Game> _games = new HashMap<>();  //gameid's to games
     private CommandManager _manager;
 
 

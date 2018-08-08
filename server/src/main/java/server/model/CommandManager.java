@@ -7,6 +7,10 @@ import java.util.Map;
 
 import server.exception.ServerException;
 import shared.command.ICommand;
+import shared.exception.DatabaseException;
+import shared.model.Game;
+import shared.plugin.IPersistenceProvider;
+import shared.plugin.PluginManager;
 
 /**
  * CommandManager provides access to lists of commands for each game
@@ -17,7 +21,7 @@ import shared.command.ICommand;
 public class CommandManager {
 
     private static CommandManager _instance;
-    private Map<String, List<ICommand>> _commandList;
+    private Map<String, List<ICommand>> _commandList = new HashMap<>();
 
     /**
      * Returns the CommandManager instance, this class is a singleton
@@ -40,7 +44,22 @@ public class CommandManager {
      */
     private CommandManager()
     {
-        _commandList = new HashMap<>();
+        try {
+            IPersistenceProvider _plugin = PluginManager.getPlugin();
+            List<Game> games = _plugin.getGameDao().getGames();
+            for(int i = 0; i < games.size(); i++) {
+                String currGameId = games.get(i).getGameID();
+                List<ICommand> commands = _plugin.getCommandDao().getCommands(currGameId);
+                _commandList.put(currGameId, commands);
+
+                int indexOfCommandsToExecute = _plugin.getGameDao().getIndexOfCompletedCommands(currGameId) + 1;
+                for(int j = indexOfCommandsToExecute; j < commands.size(); j++){
+                    commands.get(j).execute();
+                }
+            }
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
     }
 
 
