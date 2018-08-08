@@ -4,10 +4,12 @@ import server.model.ServerModel;
 import server.exception.ServerException;
 import shared.command.GenericCommand;
 import shared.command.ICommand;
+import shared.exception.DatabaseException;
 import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
 import shared.model.User;
 import shared.configuration.ConfigurationManager;
+import shared.plugin.PluginManager;
 
 //Only ServerFacade should touch these
 class LoginService {
@@ -36,9 +38,6 @@ class LoginService {
             response.setErrorMessage(e.getMessage());
         }
 
-
-        //------------------------Database stuff----------------------------------------------------------------//
-
         return response;
     }
 
@@ -60,14 +59,15 @@ class LoginService {
             response.addCommand(command);
             response.setSuccess(true);
 
+            //------------------------------------Database stuff--------------------------------------------------//
+            PluginManager.getPlugin().getUserDao().addUser(user);
+
         } catch (ServerException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
+        } catch (DatabaseException e) {
+            System.out.println("Add user failed in database");
         }
-
-
-        //------------------------------------Database stuff--------------------------------------------------//
-
 
         return response;
     }
