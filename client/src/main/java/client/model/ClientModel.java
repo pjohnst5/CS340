@@ -221,11 +221,14 @@ public class ClientModel extends Observable {
         notifyObservers();
     }
 
-    public void setDestOptionCards(List<DestCard> cards){
-        _currentGame.setDestOptionCards(cards);
+    public void setDestOptionCards(List<DestCard> cards, String playerID){
+        //Checks if these three option cards are for this player
+        if (playerID.equals(_user.get_playerId())){
+            _currentGame.setDestOptionCards(cards);
 
-        setChanged();
-        notifyObservers();
+            setChanged();
+            notifyObservers();
+        }
     }
 
     public void setTrainDeck(TrainDeck deck){

@@ -368,5 +368,8 @@ public class Game {
     public int getCommandCountSinceSnapshot() {
         return _commandCountSinceSnapshot;
     }
+    public void resetCommandCountSinceSnapshot() {
+        _commandCountSinceSnapshot = 0;
+    }
 
 }

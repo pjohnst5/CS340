@@ -8,6 +8,6 @@ public class DatabaseException extends Exception {
     }
 
     public String get_message(){
-        return _message;
+        return "DATABASE EXCEPTION: " + _message;
     }
 }

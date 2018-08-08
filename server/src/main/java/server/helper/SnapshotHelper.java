@@ -14,6 +14,12 @@ public class SnapshotHelper {
         ServerModel serverModel = ServerModel.getInstance();
         Game game = serverModel.getGame(gameID);
 
+        //Adds command into database
+        PluginManager.getPlugin().getCommandDao().storeCommand(gameID, indexOfCommand, command);
+
+        //Increment CommandCountSinceSnapshot for this game
+        game.incrementCommandCountSinceSnapshot();
+
         //checks to see if the number of commands since the last snapshot == N
         if (game.getCommandCountSinceSnapshot() == ConfigurationManager.getInt("delta_update_interval")){
             //Takes new snapshot
@@ -22,11 +28,5 @@ public class SnapshotHelper {
             //Resets CommandCountSinceSnapshot for this game
             game.resetCommandCountSinceSnapshot();
         }
-
-        //Adds command into database
-        PluginManager.getPlugin().getCommandDao().storeCommand(gameID, indexOfCommand, command);
-
-        //Increment CommandCountSinceSnapshot for this game
-        game.incrementCommandCountSinceSnapshot();
     }
 }
