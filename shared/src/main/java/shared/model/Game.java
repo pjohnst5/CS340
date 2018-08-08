@@ -27,8 +27,7 @@ public class Game {
     private TurnManager _turnManager;
     private int _playersSetup;
     private String _playerToEndOn;
-    private boolean _gameOver;
-    private int _commandsAfterSnapshotCount;
+    private int _commandCountSinceSnapshot;
 
     private List<DestCard>_destOptionCards;
 
@@ -55,8 +54,7 @@ public class Game {
         _destOptionCards = null;
         _playersSetup = 0;
         _playerToEndOn = new String();
-        _gameOver = false;
-        _commandsAfterSnapshotCount = 0;
+        _commandCountSinceSnapshot = 0;
     }
 
     public void setDestOptionCards(List<DestCard> cards){
@@ -364,11 +362,11 @@ public class Game {
     }
 
     //This messes with the number of commands that have been inserted AFTER a snapshot has been taken
-    public void incrementCommandsAfterSnapshotCount() {
-        _commandsAfterSnapshotCount++;
+    public void incrementCommandCountSinceSnapshot() {
+        _commandCountSinceSnapshot++;
     }
-    public int getCommandsAfterSnapshotCout() {
-        return _commandsAfterSnapshotCount;
+    public int getCommandCountSinceSnapshot() {
+        return _commandCountSinceSnapshot;
     }
 
 }
