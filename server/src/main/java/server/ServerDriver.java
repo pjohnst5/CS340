@@ -3,6 +3,10 @@ package server;
 import java.util.Scanner;
 
 import server.exception.ServerException;
+import shared.GenericFactory;
+import shared.command.GenericCommand;
+import shared.configuration.ConfigurationManager;
+import shared.plugin.IPersistenceProvider;
 import shared.plugin.PluginManager;
 
 public class ServerDriver {
@@ -37,6 +41,11 @@ public class ServerDriver {
         return false;
     }
 
+    public static void registerPluginType(IPersistenceProvider provider) {
+
+
+    }
+
     public static void main(String[] args) throws ServerException{
         ServerCommunicator server;
         Scanner scanner = new Scanner(System.in);
@@ -47,17 +56,25 @@ public class ServerDriver {
         int argc = args.length;
 
         switch (argc) {
+
+            case 3:
+                int deltaUpdateInterval = Integer.parseInt(args[2]);
+                ConfigurationManager.set("delta_update_interval", deltaUpdateInterval);
+
             case 2:
                 String dbType = args[1];
                 if (validatePluginName(dbType)) {
                     PluginManager.loadPlugin(dbType);
+
                 } else  {
+
                     System.err.println("Invalid plugin name: " + dbType );
                     System.err.println("Please choose from the available options:");
                     for (String allowed : permissiblePlugins)
                         System.err.println(allowed);
 
                     System.exit(FAILED_INSTANTIATION);
+
                 }
 
             case 1:

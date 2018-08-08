@@ -15,7 +15,7 @@ public class PluginManager {
      * Expects load the plugin into the classpath dynamically
      * @param pluginName name of the plugin to get (i.e. "sql_provider", "json_provider")
      */
-    public static void loadPlugin(String pluginName){
+    public static IPersistenceProvider loadPlugin(String pluginName){
         try {
             String pluginJarPath = ConfigurationManager.get("plugin_" + pluginName + "_jar_path");
             String pluginClassName = ConfigurationManager.get("plugin_" + pluginName + "_class_name");
@@ -26,12 +26,14 @@ public class PluginManager {
 
             Constructor<?> constructor = clazz.getConstructor();
             _pluginInstance = (IPersistenceProvider)constructor.newInstance();
+            return _pluginInstance;
 
         } catch (MalformedURLException  | ClassNotFoundException | NoSuchMethodException |
                  IllegalAccessException | InstantiationException | InvocationTargetException e) {
 
             System.out.println("Failed to load plugin: " + pluginName);
             System.exit(1);
+            return null;
         }
     }
 
@@ -41,7 +43,7 @@ public class PluginManager {
 
     public static void main(String[] args){
         PluginManager.loadPlugin("json_provider");
-        PluginManager.getPlugin().getGameDao();
+        PluginManager.getPlugin().clear();
     }
 
 }
