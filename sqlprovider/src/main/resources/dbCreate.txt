@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS user (
+ 	userId VARCHAR(50) NOT NULL PRIMARY KEY,
+ 	jsonData TEXT NOT NULL,
+	CONSTRAINT userConstraint UNIQUE (userId)
+);
+CREATE TABLE IF NOT EXISTS Game (
+	gameId VARCHAR(50) NOT NULL PRIMARY KEY,
+    indexOfCompletedCommands INT NOT NULL,
+	jsonData TEXT NOT NULL,
+	CONSTRAINT gameConstraint UNIQUE (gameId)
+);
+CREATE TABLE IF NOT EXISTS Command (
+	gameId VARCHAR(50) NOT NULL PRIMARY KEY,
+	index INT NOT NULL,
+	jsonData TEXT NOT NULL,
+	FOREIGN KEY(gameId) REFERENCES Game(gameId)
+);

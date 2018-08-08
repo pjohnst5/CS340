@@ -7,8 +7,6 @@ import shared.model.decks.DestCard;
 
 public class PlayerTurnWaitingState extends DestCardSelectState {
 
-    private static final int NUM_CARDS_REQUIRED = 4;
-
     public PlayerTurnWaitingState(IDestCardSelectPresenter presenter){
         super(presenter);
     }

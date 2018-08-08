@@ -7,9 +7,13 @@ import sdk.plugin.IUserDao;
 
 public class Plugin implements IPersistenceProvider {
 
+    public static void main(String[] args) {
+        // do something
+        DatabaseManager db = new DatabaseManager();
+    }
+
     @Override
     public void clear() {
-
     }
 
     @Override
