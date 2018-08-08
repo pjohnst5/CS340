@@ -2,12 +2,15 @@ package server.facade;
 
 import java.util.List;
 
+import server.helper.SnapshotHelper;
 import server.model.ServerModel;
 import server.exception.ServerException;
 import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.enumeration.GameState;
 import shared.configuration.ConfigurationManager;
+import shared.exception.DatabaseException;
+import shared.exception.InvalidGameException;
 import shared.model.Game;
 import shared.model.GameAction;
 import shared.model.Message;
@@ -63,7 +66,9 @@ class GameLobbyService {
 
             //adds commands to list of commands for game
             serverModel.addCommand(game.getGameID(), command);
+            int commandIndex = serverModel.getCommands(game.getGameID()).size() - 1;
             serverModel.addCommand(game.getGameID(), command2);
+            int command2Index = serverModel.getCommands(game.getGameID()).size() - 1;
 
             //gets all commands for this game and player
             List<ICommand> commands = serverModel.getCommands(gameID, playerID);
@@ -72,9 +77,16 @@ class GameLobbyService {
             response.setCommands(commands);
             response.setSuccess(true);
 
-        } catch(Exception e){
+
+            //------------------------------------Database stuff--------------------------------------------------//
+            SnapshotHelper.addCommandToDatabase(game.getGameID(), command, commandIndex);
+            SnapshotHelper.addCommandToDatabase(game.getGameID(), command2, command2Index);
+
+        } catch(ServerException | InvalidGameException e){
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
+        } catch(DatabaseException e) {
+            System.out.println(e.get_message());
         }
         return response;
     }
@@ -105,14 +117,22 @@ class GameLobbyService {
 
             //add newly made command to list
             serverModel.addCommand(request.get_gameID(), command);
+            int commandIndex = serverModel.getCommands(request.get_gameID()).size() - 1;
+
 
             //gets list of new commands for player and sets them as the response commands
             response.setCommands(serverModel.getCommands(request.get_gameID(),request.get_playerID()));
             response.setSuccess(true);
 
+
+            //------------------------------------Database stuff--------------------------------------------------//
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
+
         } catch (ServerException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
+        } catch (DatabaseException e) {
+            System.out.println(e.get_message());
         }
 
         return response;
@@ -162,7 +182,10 @@ class GameLobbyService {
 
             //add commands to list of commands for game
             serverModel.addCommand(game.getGameID(), command);
+            int commandIndex = serverModel.getCommands(request.get_gameID()).size() - 1;
             serverModel.addCommand(game.getGameID(), command2);
+            int command2Index = serverModel.getCommands(request.get_gameID()).size() - 1;
+
 
             //gets all commands for this game and player
             List<ICommand> commands = serverModel.getCommands(gameId, playerId);
@@ -171,9 +194,16 @@ class GameLobbyService {
             response.setCommands(commands);
             response.setSuccess(true);
 
-        } catch(Exception e) {
+
+            //------------------------------------Database stuff--------------------------------------------------//
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command2, command2Index);
+
+        } catch(ServerException | InvalidGameException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
+        } catch (DatabaseException e) {
+            System.out.println(e.get_message());
         }
         return response;
     }

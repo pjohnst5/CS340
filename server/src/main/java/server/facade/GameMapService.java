@@ -4,13 +4,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import server.exception.ServerException;
 import server.helper.DestCardHelper;
+import server.helper.SnapshotHelper;
 import server.model.ServerModel;
 
 import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.configuration.ConfigurationManager;
 import shared.enumeration.ClaimedRoutePointSystem;
+import shared.exception.DatabaseException;
+import shared.exception.DeckException;
+import shared.exception.InvalidGameException;
+import shared.exception.NotEnoughTrainCarsException;
 import shared.model.GameAction;
 import shared.model.Player;
 import shared.model.Route;
@@ -77,6 +83,8 @@ public class GameMapService {
             Object[] paramValues = { request.get_route() };
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
             serverModel.addCommand(request.get_gameID(), command);
+            int commandIndex = serverModel.getCommands(request.get_gameID()).size() - 1;
+
 
             //command to update train deck for client
             String className2 = ConfigurationManager.getString("client_facade_name");
@@ -85,6 +93,7 @@ public class GameMapService {
             Object[] paramValues2 = {serverModel.getGame(request.get_gameID()).getTrainDeck()};
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
             serverModel.addCommand(request.get_gameID(), command2);
+            int command2Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             //command to update the player for client
             String className3 = ConfigurationManager.getString("client_facade_name");
@@ -93,6 +102,7 @@ public class GameMapService {
             Object[] paramValues3 = {serverModel.getPlayer(request.get_playerID())};
             ICommand command3 = new GenericCommand(className3, methodName3, paramTypes3, paramValues3, null);
             serverModel.addCommand(request.get_gameID(), command3);
+            int command3Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             //command to add game action claim route for client
             String className4 = ConfigurationManager.getString("client_facade_name");
@@ -101,6 +111,7 @@ public class GameMapService {
             Object[] paramValues4 = {action};
             ICommand command4 = new GenericCommand(className4, methodName4, paramTypes4, paramValues4, null);
             serverModel.addCommand(request.get_gameID(), command4);
+            int command4Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             //command to change turns for client
             String className5 = ConfigurationManager.getString("client_facade_name");
@@ -109,14 +120,25 @@ public class GameMapService {
             Object[] paramValues5 = new Object[0];
             ICommand command5 = new GenericCommand(className5, methodName5, paramTypes5, paramValues5, null);
             serverModel.addCommand(request.get_gameID(), command5);
+            int command5Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             //sets updated list of commands as response's list
             response.setSuccess(true);
             response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
 
-        } catch(Exception e) {
+
+            //------------------------------------Database stuff--------------------------------------------------//
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command2, command2Index);
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command3, command3Index);
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command4, command4Index);
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command5, command5Index);
+
+        } catch(ServerException | InvalidGameException | NotEnoughTrainCarsException | DeckException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
+        } catch(DatabaseException e) {
+            System.out.println(e.get_message());
         }
         return response;
     }

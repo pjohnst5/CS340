@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import server.helper.SnapshotHelper;
 import server.model.ServerModel;
 import server.exception.ServerException;
 
 import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.enumeration.GameState;
+import shared.exception.DatabaseException;
 import shared.exception.MaxPlayersException;
 import shared.exception.PlayerException;
 import shared.configuration.ConfigurationManager;
@@ -20,7 +22,7 @@ import shared.model.Player;
 import shared.model.request.JoinRequest;
 import shared.model.response.IResponse;
 import shared.model.response.CommandResponse;
-
+import shared.plugin.PluginManager;
 
 
 //Only ServerFacade should touch these
@@ -71,7 +73,9 @@ class GameListService {
 
             serverModel.addCommand(game.getGameID(), command); //set games
             serverModel.addCommand(game.getGameID(), command2); //join game
+            int command2Index = serverModel.getCommands(game.getGameID()).size() - 1;
             serverModel.addCommand(game.getGameID(), command3); //game history entry
+            int command3Index = serverModel.getCommands(game.getGameID()).size() - 1;
 
             //gets all the commands for that game for the newly joined player
             List<ICommand> commands = serverModel.getCommands(game.getGameID());
@@ -82,9 +86,20 @@ class GameListService {
             response.setCommands(commands);
             response.setSuccess(true);
 
+
+            //------------------------------------Database stuff--------------------------------------------------//
+            //Add game in database
+            PluginManager.getPlugin().getGameDao().addGame(game);
+
+            //Adds commands to that game
+            SnapshotHelper.addCommandToDatabase(game.getGameID(), command2, command2Index);
+            SnapshotHelper.addCommandToDatabase(game.getGameID(), command3, command3Index);
+
         } catch(ServerException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
+        } catch (DatabaseException e) {
+            System.out.println(e.get_message());
         }
         return response;
     }
@@ -147,13 +162,13 @@ class GameListService {
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
 
             serverModel.addCommand(jr.getGameID(),command);  //Player joined
+            int commandIndex = serverModel.getCommands(jr.getGameID()).size() - 1;
             serverModel.addCommand(jr.getGameID(), command2); //game action of player joined
+            int command2Index = serverModel.getCommands(jr.getGameID()).size() - 1;
 
 
 
             //Get list of commands from game the player just joined
-            // In order to create a game before adding game action objects, we must
-            // Move the join request to the beginning of the commands
             List<ICommand> commands = new ArrayList<>(serverModel.getCommands(player.getGameID()));
 
             //Sets player's index to size of commands for that game minus 1 because it's an index.
@@ -172,9 +187,16 @@ class GameListService {
             response.setCommands(commands);
             response.setSuccess(true);
 
+
+            //------------------------------------Database stuff--------------------------------------------------//
+            SnapshotHelper.addCommandToDatabase(jr.getGameID(), command, commandIndex);
+            SnapshotHelper.addCommandToDatabase(jr.getGameID(), command2, command2Index);
+
         } catch(MaxPlayersException | PlayerException | ServerException e){
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
+        } catch(DatabaseException e) {
+            System.out.println(e.get_message());
         }
         return response;
     }

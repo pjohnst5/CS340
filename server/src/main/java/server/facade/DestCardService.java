@@ -42,7 +42,6 @@ public class DestCardService {
             String[] paramTypes = { DestDeck.class.getCanonicalName() };
             Object[] paramValues = { serverModel.getGame(request.get_gameID()).getDestDeck() };
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
-            int commandIndex = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             // Makes game action object
             GameAction action = new GameAction(request.get_player().getDisplayName(), " selected destination cards", request.get_gameID());
@@ -56,7 +55,6 @@ public class DestCardService {
             String[] paramTypes2 = { GameAction.class.getCanonicalName() };
             Object[] paramValues2 = { action };
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
-            int command2Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             //updates player in server model
             serverModel.updatePlayer(request.get_gameID(), request.get_player());
@@ -67,7 +65,6 @@ public class DestCardService {
             String[] paramTypes3 = { Player.class.getCanonicalName() };
             Object[] paramValues3 = { request.get_player() };
             ICommand command3 = new GenericCommand(className3, methodName3, paramTypes3, paramValues3, null);
-            int command3Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             //increment the number of players completed setup
             serverModel.getGame(request.get_gameID()).playerCompletedSetup();
@@ -78,13 +75,17 @@ public class DestCardService {
             String[] paramTypes4 = {};
             Object[] paramValues4 = {};
             ICommand command4 = new GenericCommand(className4, methodName4, paramTypes4, paramValues4, null);
-            int command4Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             //adds commands to server model
             serverModel.addCommand(request.get_gameID(), command);  //sets deck
+            int commandIndex = serverModel.getCommands(request.get_gameID()).size() - 1;
             serverModel.addCommand(request.get_gameID(), command2); //adds game history entry
+            int command2Index = serverModel.getCommands(request.get_gameID()).size() - 1;
             serverModel.addCommand(request.get_gameID(), command3); //updates player
+            int command3Index = serverModel.getCommands(request.get_gameID()).size() - 1;
             serverModel.addCommand(request.get_gameID(), command4); //updates number of players completed setup
+            int command4Index = serverModel.getCommands(request.get_gameID()).size() - 1;
+
 
             //gets new list of commands and sets it as response's commands
             response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
