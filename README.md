@@ -30,7 +30,7 @@ For Windows:
 
 <json_provider> : optional parameter that indicates that the server should utilize the json persistence provider plugin
 
-# How to Run the Client
+## How to Run the Client
 Run the following command to see what devices are currently turned on:
 
  > adb devices
