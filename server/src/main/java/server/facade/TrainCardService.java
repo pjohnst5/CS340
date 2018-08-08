@@ -1,12 +1,13 @@
 package server.facade;
 
-
 import server.exception.ServerException;
 import server.model.ServerModel;
 import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.configuration.ConfigurationManager;
 import shared.enumeration.TrainColor;
+import shared.exception.DeckException;
+import shared.exception.InvalidGameException;
 import shared.model.GameAction;
 import shared.model.Player;
 import shared.model.decks.TrainCard;
@@ -15,6 +16,7 @@ import shared.model.request.FaceDownRequest;
 import shared.model.request.FaceUpRequest;
 import shared.model.response.CommandResponse;
 import shared.model.response.IResponse;
+import shared.plugin.PluginManager;
 
 public class TrainCardService {
 
@@ -99,7 +101,11 @@ public class TrainCardService {
             //sets response's list of commands to be new commands for client
             response.setSuccess(true);
             response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
-        } catch (Exception e) {
+
+            //------------------------------------Database stuff--------------------------------------------------//
+
+
+        } catch (ServerException | DeckException | InvalidGameException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
         }
@@ -181,7 +187,7 @@ public class TrainCardService {
             //sets response's list of commands to be new commands for client
             response.setSuccess(true);
             response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
-        } catch(Exception e) {
+        } catch(ServerException | DeckException | InvalidGameException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
         }

@@ -66,7 +66,7 @@ class LoginService {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
         } catch (DatabaseException e) {
-            System.out.println("Add user failed in database");
+            System.out.println("DATABASE EXCEPTION: Add user failed in database");
         }
 
         return response;
