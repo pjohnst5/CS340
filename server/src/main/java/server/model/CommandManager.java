@@ -54,9 +54,11 @@ public class CommandManager {
                 List<ICommand> commands = _plugin.getCommandDao().getCommands(currGameId);
                 _commandList.put(currGameId, commands);
 
-                int indexOfCompletedCommands =
+                int indexOfCommandsToExecute = _plugin.getGameDao().getIndexOfCompletedCommands(currGameId) + 1;
+                for(int j = indexOfCommandsToExecute; j < commands.size(); j++){
+                    commands.get(j).execute();
+                }
             }
-            //get index of commands from game dao and start executing from index+1
         } catch (DatabaseException e) {
             e.printStackTrace();
         }

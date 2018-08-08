@@ -13,5 +13,5 @@ public interface IGameDao {
 
     List<Game> getGames() throws DatabaseException;
 
-    int getIndexOfCompletedCommands() throws DatabaseException;
+    int getIndexOfCompletedCommands(String gameId) throws DatabaseException;
 }
