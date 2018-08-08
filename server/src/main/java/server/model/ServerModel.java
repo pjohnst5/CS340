@@ -19,7 +19,6 @@ import shared.model.Player;
 import shared.model.User;
 import shared.model.decks.DestCard;
 
-import shared.plugin.ICommandDao;
 import shared.plugin.IGameDao;
 import shared.plugin.IPersistenceProvider;
 import shared.plugin.IUserDao;
