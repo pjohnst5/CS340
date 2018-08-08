@@ -1,4 +1,4 @@
-package sdk.plugin;
+package shared.plugin;
 
 public interface IPersistenceProvider {
 

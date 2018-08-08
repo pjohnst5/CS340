@@ -18,6 +18,7 @@ public class ConfigurationManager implements IConfigurationManager {
         if (_instance == null) {
             _instance = new ConfigurationManager();
             new DefaultConfiguration().load(_instance);
+            new PluginConfiguration().load(_instance);
 
         }
 

@@ -1,9 +1,9 @@
 package json.provider;
 
-import sdk.plugin.ICommandDao;
-import sdk.plugin.IGameDao;
-import sdk.plugin.IPersistenceProvider;
-import sdk.plugin.IUserDao;
+import shared.plugin.ICommandDao;
+import shared.plugin.IGameDao;
+import shared.plugin.IPersistenceProvider;
+import shared.plugin.IUserDao;
 
 public class Plugin implements IPersistenceProvider {
 
