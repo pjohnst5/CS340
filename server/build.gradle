@@ -3,7 +3,6 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':shared')
-    implementation project(':pluginsdk')
 }
 
 sourceCompatibility = "1.7"

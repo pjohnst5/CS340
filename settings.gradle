@@ -1,1 +1,1 @@
-include ':client', ':server', ':shared', ':sqlprovider', ':jsonprovider', ':pluginsdk'
+include ':client', ':server', ':shared', ':sqlprovider', ':jsonprovider'
