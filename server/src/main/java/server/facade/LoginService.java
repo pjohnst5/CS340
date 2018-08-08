@@ -36,6 +36,9 @@ class LoginService {
             response.setErrorMessage(e.getMessage());
         }
 
+
+        //------------------------Database stuff----------------------------------------------------------------//
+
         return response;
     }
 
@@ -61,6 +64,10 @@ class LoginService {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
         }
+
+
+        //------------------------------------Database stuff--------------------------------------------------//
+
 
         return response;
     }
