@@ -79,7 +79,8 @@ public class Plugin implements IPersistenceProvider {
         Connection conn = db.openConnection();
         String[] sqlStrings = {"DELETE FROM `users`",
                 "DELETE FROM `games`",
-                "DELETE FROM `commands`"};
+                "DELETE FROM `serverCommands`",
+                "DELETE FROM `clientCommands`",};
         for (String sqlString : sqlStrings) {
             try (PreparedStatement pstmt = conn.prepareStatement(sqlString)) {
                 pstmt.executeUpdate();

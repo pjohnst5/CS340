@@ -9,7 +9,13 @@ CREATE TABLE IF NOT EXISTS `games` (
 	`jsonData`	TEXT NOT NULL,
 	PRIMARY KEY(`gameId`)
 );
-CREATE TABLE IF NOT EXISTS `commands` (
+CREATE TABLE IF NOT EXISTS `clientCommands` (
+	`gameId`	TEXT NOT NULL,
+	`snapshotIndex`	INTEGER NOT NULL,
+	`jsonData`	TEXT NOT NULL,
+	FOREIGN KEY(`gameId`) REFERENCES `games`(`gameId`)
+);
+CREATE TABLE IF NOT EXISTS `serverCommands` (
 	`gameId`	TEXT NOT NULL,
 	`snapshotIndex`	INTEGER NOT NULL,
 	`jsonData`	TEXT NOT NULL,

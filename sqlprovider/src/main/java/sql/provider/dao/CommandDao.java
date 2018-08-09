@@ -17,8 +17,30 @@ import shared.serialization.Serializer;
 import sql.provider.DatabaseManager;
 
 public class CommandDao implements ICommandDao {
+    private static final String SERVER_COMMANDS = "serverCommands";
+    private static final String CLIENT_COMMANDS = "clientCommands";
     @Override
-    public void storeCommand(String gameID, int index, ICommand command) throws DatabaseException {
+    public void storeServerCommand(String gameID, int index, ICommand command) throws DatabaseException {
+        storeCommand(gameID, index, command, SERVER_COMMANDS);
+    }
+
+
+    @Override
+    public void storeClientCommand(String gameID, int index, ICommand command) throws DatabaseException {
+        storeCommand(gameID, index, command, CLIENT_COMMANDS);
+    }
+
+    @Override
+    public List<ICommand> getServerCommands(String gameID) throws DatabaseException {
+        return getCommands(gameID, SERVER_COMMANDS);
+    }
+
+    @Override
+    public List<ICommand> getClientCommands(String gameID) throws DatabaseException {
+        return getCommands(gameID, CLIENT_COMMANDS);
+    }
+
+    private void storeCommand(String gameID, int index, ICommand command, String databaseName) throws DatabaseException {
         if (gameID == null) {
             throw new DatabaseException("Null reference for gameID parameter");
         }
@@ -30,7 +52,7 @@ public class CommandDao implements ICommandDao {
         }
         DatabaseManager db = new DatabaseManager();
         Connection conn = db.openConnection();
-        String sqlString = "INSERT INTO commands VALUES(?, ?, ?)";
+        String sqlString = "INSERT INTO " + databaseName + " VALUES(?, ?, ?)";
         boolean commit = true;
         try (PreparedStatement pstmt = conn.prepareStatement(sqlString)) {
             pstmt.setString(1, gameID);
@@ -46,14 +68,13 @@ public class CommandDao implements ICommandDao {
         }
     }
 
-    @Override
-    public List<ICommand> getCommands(String gameID) throws DatabaseException {
+    private List<ICommand> getCommands(String gameID, String databaseName) throws DatabaseException {
         if (gameID == null) {
             throw new DatabaseException("Null reference for gameID parameter");
         }
         DatabaseManager db = new DatabaseManager();
         Connection conn = db.openConnection();
-        String sqlString = "SELECT jsonData FROM commands WHERE gameId = ?";
+        String sqlString = "SELECT jsonData FROM " + databaseName + " WHERE gameId = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sqlString)) {
             pstmt.setString(1, gameID);
             ArrayList<ICommand> commands = new ArrayList<>();
