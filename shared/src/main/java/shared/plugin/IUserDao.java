@@ -9,5 +9,7 @@ public interface IUserDao {
 
     void addUser(User user) throws DatabaseException;
 
+    void updateUser(User user) throws DatabaseException;
+
     List<User> getUsers() throws DatabaseException;
 }
