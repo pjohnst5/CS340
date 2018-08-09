@@ -3,6 +3,7 @@ package sql.provider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import shared.exception.DatabaseException;
 import shared.exception.InvalidUserException;
@@ -11,20 +12,27 @@ import shared.plugin.ICommandDao;
 import shared.plugin.IGameDao;
 import shared.plugin.IPersistenceProvider;
 import shared.plugin.IUserDao;
+import sql.provider.dao.CommandDao;
+import sql.provider.dao.GameDao;
 import sql.provider.dao.UserDao;
 
 public class Plugin implements IPersistenceProvider {
+    private int _deltaUpdateInterval;
 
     public static void main(String[] args) {
         // run some tests
-        DatabaseManager db = new DatabaseManager(); // makes sure the database gets initialized
-        SQLProvider provider = new SQLProvider();
+        new DatabaseManager(); // makes sure the database gets initialized
+
+        // clear the database
+        IPersistenceProvider provider = new Plugin();
         try {
             provider.clear();
         } catch (DatabaseException e) {
             e.printStackTrace();
             return;
         }
+
+        // create a dummy user object
         User user;
         try {
             user = new User("henry", "blue");
@@ -32,11 +40,26 @@ public class Plugin implements IPersistenceProvider {
             e.printStackTrace();
             return;
         }
-        UserDao dao = new UserDao();
+
+        // add the user to the database
+        IUserDao dao = provider.getUserDao();
         try {
             dao.addUser(user);
         } catch (DatabaseException e) {
             e.printStackTrace();
+            return;
+        }
+
+        // extract the user(s) from the database
+        List<User> extractedUsers;
+        try {
+            extractedUsers = dao.getUsers();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+            return;
+        }
+        for (User u : extractedUsers) {
+            System.out.println("Extracted user: " + u.getUserName());
         }
     }
 
@@ -44,9 +67,9 @@ public class Plugin implements IPersistenceProvider {
     public void clear() throws DatabaseException {
         DatabaseManager db = new DatabaseManager();
         Connection conn = db.openConnection();
-        String[] sqlStrings = {"DROP TABLE IF EXISTS `users`",
-                "DROP TABLE IF EXISTS `games`",
-                "DROP TABLE IF EXISTS `commands`"};
+        String[] sqlStrings = {"DELETE FROM `users`",
+                "DELETE FROM `games`",
+                "DELETE FROM `commands`"};
         for (String sqlString : sqlStrings) {
             try (PreparedStatement pstmt = conn.prepareStatement(sqlString)) {
                 pstmt.executeUpdate();
@@ -69,17 +92,22 @@ public class Plugin implements IPersistenceProvider {
     }
 
     @Override
+    public void setDeltaUpdateInterval(int interval) {
+        _deltaUpdateInterval = interval;
+    }
+
+    @Override
     public IUserDao getUserDao() {
-        return null;
+        return new UserDao();
     }
 
     @Override
     public IGameDao getGameDao() {
-        return null;
+        return new GameDao();
     }
 
     @Override
     public ICommandDao getCommandDao() {
-        return null;
+        return new CommandDao();
     }
 }

@@ -13,4 +13,5 @@
 .externalNativeBuild
 .idea/caches/build_file_checksums.ser
 .idea/dictionaries/dvwilliamson.xml
-/db/ticketToRide.db
+/sqlresources/*
+/plugins/sqlresources/ticketToRide.db

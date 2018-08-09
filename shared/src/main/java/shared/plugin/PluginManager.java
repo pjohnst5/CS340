@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import shared.configuration.ConfigurationManager;
+import shared.exception.DatabaseException;
 
 public class PluginManager {
     private static IPersistenceProvider _pluginInstance;
@@ -43,7 +44,11 @@ public class PluginManager {
 
     public static void main(String[] args){
         PluginManager.loadPlugin("json_provider");
-        PluginManager.getPlugin().clear();
+        try {
+            PluginManager.getPlugin().clear();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
     }
 
 }

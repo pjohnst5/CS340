@@ -1,7 +1,6 @@
 package sql.provider;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -10,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Scanner;
+
+import shared.exception.DatabaseException;
 
 public class DatabaseManager {
     static {
@@ -35,7 +36,7 @@ public class DatabaseManager {
 
     public Connection openConnection() throws DatabaseException {
         try {
-            final String CONNECTION_URL = "jdbc:sqlite:db/ticketToRide.db";
+            final String CONNECTION_URL = "jdbc:sqlite:sqlresources/ticketToRide.db";
             // Open a database connection
             conn = DriverManager.getConnection(CONNECTION_URL);
 
@@ -64,13 +65,11 @@ public class DatabaseManager {
     }
     private void createTables() throws DatabaseException {
         // we're just going to load the statements in from a text file
-        Path p = Paths.get(System.getProperty("user.dir"), "resources", "dbCreate.txt");
-        ClassLoader c = DatabaseManager.class.getClassLoader();
-        InputStream in = DatabaseManager.class.getClassLoader()
-                .getResourceAsStream("resources/dbCreate.txt");
-//        Path in = Paths.get("dbCreate.txt");
+        Path in = Paths.get("sqlresources/dbCreate.txt");
+//        InputStream in = DatabaseManager.class.getClassLoader()
+//                .getResourceAsStream("sqlresources/dbCreate.txt");
         StringBuilder sb;
-        try (Scanner sc = new Scanner(p)) {
+        try (Scanner sc = new Scanner(in)) {
             sb = new StringBuilder();
             while (sc.hasNextLine()) {
                 sb.append(sc.nextLine());

@@ -11,6 +11,7 @@ public class User {
     private UUID _uuid;
     private String _playerId;
 
+
     public User(String username, String password) throws InvalidUserException
     {
         if (username == null || password == null)
