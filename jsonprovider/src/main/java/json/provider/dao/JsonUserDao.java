@@ -19,6 +19,13 @@ public class JsonUserDao implements IUserDao {
     }
 
     @Override
+    public void updateUser(User user) throws DatabaseException {
+        String contents = Serializer._serialize(user);
+        String userId = user.getUUID().toString();
+        UserFilesManager.updateUser(userId, contents);
+    }
+
+    @Override
     public List<User> getUsers() throws DatabaseException {
         return UserFilesManager.getAllUsers();
     }

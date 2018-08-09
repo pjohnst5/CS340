@@ -39,6 +39,11 @@ public class UserFilesManager extends FileManager {
         instance().createFile(fileName, contents, OVERWRITE);
     }
 
+    public static void updateUser(String userId, String contents){
+        String fileName = usersDirName + File.separator + userId;
+        instance().createFile(fileName, contents, OVERWRITE);
+    }
+
     public static List<User> getAllUsers() throws DatabaseException {
 
         File usersFolder = new File(usersDirName);
