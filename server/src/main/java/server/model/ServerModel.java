@@ -51,6 +51,7 @@ public class ServerModel {
                 addNewGame(_gameDao.getGames().get(i));
             }
             _manager = CommandManager.getInstance();
+            _manager.init();
         } catch (DatabaseException | ServerException e) {
             e.printStackTrace();
         }
