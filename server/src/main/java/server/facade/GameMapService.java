@@ -128,11 +128,22 @@ public class GameMapService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command2, command2Index);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command3, command3Index);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command4, command4Index);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command5, command5Index);
+            String[] paramTypesServer = {ClaimRouteRequest.class.getCanonicalName()};
+            Object[] paramValuesServer = {request};
+            GenericCommand serverCommand = new GenericCommand(
+                    ConfigurationManager.getString("server_facade_name"),
+                    ConfigurationManager.getString("server_claim_route_method"),
+                    paramTypesServer,
+                    paramValuesServer,
+                    null);
+            int commandServerIndex = serverModel.getGame(request.get_gameID()).getCommandCountSinceSnapshot();
+            SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), serverCommand, commandServerIndex);
+
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command2, command2Index);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command3, command3Index);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command4, command4Index);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command5, command5Index);
 
         } catch(ServerException | InvalidGameException | NotEnoughTrainCarsException | DeckException e) {
             response.setSuccess(false);
