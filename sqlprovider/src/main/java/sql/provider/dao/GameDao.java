@@ -30,7 +30,7 @@ public class GameDao implements IGameDao {
         boolean commit = true;
         try (PreparedStatement pstmt = conn.prepareStatement(sqlString)) {
             pstmt.setString(1, game.getGameID());
-            pstmt.setInt(2, 1);
+            pstmt.setInt(2, 0);
             String json = Serializer._serialize(game);
             pstmt.setString(3, json);
             pstmt.executeUpdate();

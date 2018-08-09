@@ -31,6 +31,7 @@ public class ServerModel {
     public static ServerModel getInstance() {
         if (_instance == null) {
             _instance = new ServerModel();
+            _instance.initCommandManager();
         }
 
         return _instance;
@@ -58,10 +59,13 @@ public class ServerModel {
                     _players.put(currPlayer.getPlayerID(), currPlayer);
                 }
             }
-            _manager.init();
         } catch (DatabaseException | ServerException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initCommandManager() {
+        _manager.init();
     }
 
     private Map<String, User> _users = new HashMap<>(); //usernames to Users
