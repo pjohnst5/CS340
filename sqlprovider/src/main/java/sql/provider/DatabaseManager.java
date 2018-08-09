@@ -1,5 +1,6 @@
 package sql.provider;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,7 +37,7 @@ public class DatabaseManager {
 
     public Connection openConnection() throws DatabaseException {
         try {
-            final String CONNECTION_URL = "jdbc:sqlite:sqlresources/ticketToRide.db";
+            final String CONNECTION_URL = "jdbc:sqlite:sqlresources" + File.separator + "ticketToRide.db";
             // Open a database connection
             conn = DriverManager.getConnection(CONNECTION_URL);
 
