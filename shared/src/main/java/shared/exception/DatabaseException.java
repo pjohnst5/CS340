@@ -1,13 +1,14 @@
 package shared.exception;
 
 public class DatabaseException extends Exception {
-    private String _message;
-
-    public DatabaseException(String message){
-        _message = message;
+    public DatabaseException() {}
+    public DatabaseException(String message) {
+        super(message);
     }
-
-    public String get_message(){
-        return _message;
+    public DatabaseException(String message, Throwable cause) {
+        super(message);
+        initCause(cause);
     }
+//    @Override
+//    public String getMessage() {}
 }
