@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS `users` (
+	`userId`	TEXT NOT NULL UNIQUE,
+	`jsonData`	TEXT NOT NULL,
+	PRIMARY KEY(`userId`)
+);
+CREATE TABLE IF NOT EXISTS `games` (
+	`gameId`	TEXT NOT NULL UNIQUE,
+	`indexOfCompletedCommands`	INTEGER NOT NULL,
+	`jsonData`	TEXT NOT NULL,
+	PRIMARY KEY(`gameId`)
+);
+CREATE TABLE IF NOT EXISTS `commands` (
+	`gameId`	TEXT NOT NULL,
+	`snapshotIndex`	INTEGER NOT NULL,
+	`jsonData`	TEXT NOT NULL,
+	FOREIGN KEY(`gameId`) REFERENCES `games`(`gameId`)
+);
