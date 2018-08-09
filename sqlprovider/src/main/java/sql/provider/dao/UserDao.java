@@ -43,6 +43,31 @@ public class UserDao implements IUserDao {
     }
 
     @Override
+    public void updateUser(User user) throws DatabaseException {
+        if (user == null) {
+            throw new DatabaseException("Null reference to User parameter");
+        }
+        if (user.getUserName() == null) {
+            throw new DatabaseException("User parameter has null username");
+        }
+        DatabaseManager db = new DatabaseManager();
+        Connection conn = db.openConnection();
+        String sqlString = "UPDATE users SET jsonData = ? WHERE userId = ?";
+        boolean commit = true;
+        try (PreparedStatement pstmt = conn.prepareStatement(sqlString)) {
+            String json = Serializer._serialize(user);
+            pstmt.setString(1, json);
+            pstmt.setString(2, user.getUserName());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            commit = false;
+            throw new DatabaseException("Update user failed", e);
+        } finally {
+            db.closeConnection(commit);
+        }
+    }
+
+    @Override
     public List<User> getUsers() throws DatabaseException {
         DatabaseManager db = new DatabaseManager();
         Connection conn = db.openConnection();

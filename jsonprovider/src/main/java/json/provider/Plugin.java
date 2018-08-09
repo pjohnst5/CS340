@@ -32,21 +32,6 @@ public class Plugin implements IPersistenceProvider {
     }
 
     @Override
-    public void endTransaction(boolean commit) {
-        System.err.println("JSON Provider: endTransaction not yet implemented");
-    }
-
-    @Override
-    public void startTransaction() {
-        System.err.println("JSON Provider: startTransaction not yet implemented");
-    }
-
-    @Override
-    public void setDeltaUpdateInterval(int interval) {
-        System.err.println("JSON Provider: setDeltaUpdateInterval not yet implemented ");
-    }
-
-    @Override
     public IUserDao getUserDao() {
 
         if (_userDao == null){

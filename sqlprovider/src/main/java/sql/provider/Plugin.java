@@ -34,8 +34,10 @@ public class Plugin implements IPersistenceProvider {
 
         // create a dummy user object
         User user;
+        User user2;
         try {
             user = new User("henry", "blue");
+            user2 = new User("blade", "peanutbutter");
         } catch (InvalidUserException e) {
             e.printStackTrace();
             return;
@@ -45,6 +47,7 @@ public class Plugin implements IPersistenceProvider {
         IUserDao dao = provider.getUserDao();
         try {
             dao.addUser(user);
+            dao.addUser(user2);
         } catch (DatabaseException e) {
             e.printStackTrace();
             return;
@@ -60,6 +63,14 @@ public class Plugin implements IPersistenceProvider {
         }
         for (User u : extractedUsers) {
             System.out.println("Extracted user: " + u.getUserName());
+        }
+
+        // clear the database again
+        try {
+            provider.clear();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+            return;
         }
     }
 
@@ -79,21 +90,6 @@ public class Plugin implements IPersistenceProvider {
             }
         }
         db.closeConnection(true);
-    }
-
-    @Override
-    public void endTransaction(boolean commit) {
-
-    }
-
-    @Override
-    public void startTransaction() {
-
-    }
-
-    @Override
-    public void setDeltaUpdateInterval(int interval) {
-        _deltaUpdateInterval = interval;
     }
 
     @Override

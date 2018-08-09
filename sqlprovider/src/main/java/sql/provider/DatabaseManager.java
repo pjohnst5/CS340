@@ -76,7 +76,7 @@ public class DatabaseManager {
                 sb.append("\n");
             }
         } catch (IOException e) {
-            throw new DatabaseException("unable to load createTables.txt file", e);
+            throw new DatabaseException("unable to load create tables file", e);
         }
 
         String[] tableStmts = sb.toString().split(";");
@@ -87,7 +87,7 @@ public class DatabaseManager {
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(tableStmt);
             } catch (SQLException e) {
-                throw new DatabaseException("dbCreate failed: " + tableStmt, e);
+                throw new DatabaseException("Create tables failed for table: " + tableStmt, e);
             }
         }
     }
