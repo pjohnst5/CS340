@@ -112,11 +112,24 @@ public class TrainCardService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command2, command2Index);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command3, command3Index);
+            //Add server command
+            String[] paramTypesServer = {FaceUpRequest.class.getCanonicalName()};
+            Object[] paramValuesServer = {request};
+            GenericCommand serverCommand = new GenericCommand(
+                    ConfigurationManager.getString("server_facade_name"),
+                    ConfigurationManager.getString("server_draw_face_up_method"),
+                    paramTypesServer,
+                    paramValuesServer,
+                    null);
+            int commandServerIndex = serverModel.getGame(request.get_gameID()).getCommandCountSinceSnapshot();
+            SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), serverCommand, commandServerIndex);
+
+            //Adds client commands to database
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command2, command2Index);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command3, command3Index);
             if (request.get_faceUpCard().get_color() == TrainColor.LOCOMOTIVE || changeTurnsFlag){
-                SnapshotHelper.addCommandToDatabase(request.get_gameID(), command4, command4Index);
+                SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command4, command4Index);
             }
 
 
@@ -213,11 +226,24 @@ public class TrainCardService {
 
 
             //-----------------------------------Database stuff--------------------------------------------------//
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command2, command2Index);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command3, command3Index);
+            //Add server command
+            String[] paramTypesServer = {FaceDownRequest.class.getCanonicalName()};
+            Object[] paramValuesServer = {request};
+            GenericCommand serverCommand = new GenericCommand(
+                    ConfigurationManager.getString("server_facade_name"),
+                    ConfigurationManager.getString("server_draw_face_down_method"),
+                    paramTypesServer,
+                    paramValuesServer,
+                    null);
+            int commandServerIndex = serverModel.getGame(request.get_gameID()).getCommandCountSinceSnapshot();
+            SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), serverCommand, commandServerIndex);
+
+            //Adds client Commands into database
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command2, command2Index);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command3, command3Index);
             if (changeTurnsFlag){
-                SnapshotHelper.addCommandToDatabase(request.get_gameID(), command4, command4Index);
+                SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command4, command4Index);
             }
 
 
