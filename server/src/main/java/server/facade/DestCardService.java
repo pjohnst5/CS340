@@ -93,10 +93,23 @@ public class DestCardService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command2, command2Index);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command3, command3Index);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command4, command4Index);
+
+            //Adding Server command into database
+            String[] paramTypesServer = { request.getClass().getCanonicalName() };
+            Object[] paramValuesServer = { request };
+            GenericCommand commandServer = new GenericCommand(
+                    ConfigurationManager.get("server_facade_name"),
+                    ConfigurationManager.get("server_send_setup_results"),
+                    paramTypesServer,
+                    paramValuesServer,
+                    null
+            );
+            SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), commandServer, commandIndex);
+
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command2, command2Index);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command3, command3Index);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command4, command4Index);
 
 
         } catch (ServerException e) {

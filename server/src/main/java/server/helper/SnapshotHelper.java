@@ -10,12 +10,12 @@ import shared.plugin.PluginManager;
 
 public class SnapshotHelper {
 
-    public static void addCommandToDatabase(String gameID, ICommand command, int indexOfCommand) throws ServerException, DatabaseException {
+    public static void addServerCommandToDatabase(String gameID, ICommand command, int indexOfCommand) throws ServerException, DatabaseException {
         ServerModel serverModel = ServerModel.getInstance();
         Game game = serverModel.getGame(gameID);
 
-        //Adds command into database
-        PluginManager.getPlugin().getCommandDao().storeCommand(gameID, indexOfCommand, command);
+        //Add server command into database
+        PluginManager.getPlugin().getCommandDao().storeServerCommand(gameID, indexOfCommand, command);
 
         //Increment CommandCountSinceSnapshot for this game
         game.incrementCommandCountSinceSnapshot();
@@ -29,4 +29,9 @@ public class SnapshotHelper {
             game.resetCommandCountSinceSnapshot();
         }
     }
+
+    public static void addClientCommandToDatabase(String gameID, ICommand command, int indexOfCommand)  throws DatabaseException{
+        PluginManager.getPlugin().getCommandDao().storeClientCommand(gameID, indexOfCommand, command);
+    }
+
 }
