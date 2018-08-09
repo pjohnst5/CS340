@@ -23,6 +23,7 @@ public class CommandManager {
 
     private static CommandManager _instance;
     private static Map<String, List<ICommand>> _commandList = new HashMap<>();
+    private static boolean _hasBeenInitialized;
 
     /**
      * Returns the CommandManager instance, this class is a singleton
@@ -59,6 +60,7 @@ public class CommandManager {
         } catch (DatabaseException | ServerException e) {
             e.printStackTrace();
         }
+        _hasBeenInitialized = true;
     }
 
     /**
@@ -68,7 +70,7 @@ public class CommandManager {
      */
     private CommandManager()
     {
-
+        _hasBeenInitialized = false;
     }
 
 
@@ -147,6 +149,9 @@ public class CommandManager {
      */
     public void addCommand(String gameID, ICommand command) throws ServerException
     {
+        if (_hasBeenInitialized == false){
+            return;
+        }
         if (!_commandList.containsKey(gameID)){
             throw new ServerException("Game does not exist in Command Manager");
         }

@@ -92,8 +92,8 @@ class GameListService {
             PluginManager.getPlugin().getGameDao().addGame(game);
 
             //Adds commands to that game
-            SnapshotHelper.addCommandToDatabase(game.getGameID(), command2, command2Index);
-            SnapshotHelper.addCommandToDatabase(game.getGameID(), command3, command3Index);
+            SnapshotHelper.addClientCommandToDatabase(game.getGameID(), command2, command2Index);
+            SnapshotHelper.addClientCommandToDatabase(game.getGameID(), command3, command3Index);
 
         } catch(ServerException e) {
             response.setSuccess(false);
@@ -189,8 +189,22 @@ class GameListService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            SnapshotHelper.addCommandToDatabase(jr.getGameID(), command, commandIndex);
-            SnapshotHelper.addCommandToDatabase(jr.getGameID(), command2, command2Index);
+            //Adds Server command
+            String[] paramTypesServer = { jr.getClass().getCanonicalName() };
+            Object[] paramValuesServer = { jr };
+            GenericCommand commandServer = new GenericCommand(
+                    ConfigurationManager.get("server_facade_name"),
+                    ConfigurationManager.get("server_join_game_method"),
+                    paramTypesServer,
+                    paramValuesServer,
+                    null
+            );
+            int commandServerIndex = serverModel.getGame(jr.getGameID()).getCommandCountSinceSnapshot();
+            SnapshotHelper.addServerCommandToDatabase(jr.getGameID(), commandServer, commandServerIndex);
+
+            //adds client commands
+            SnapshotHelper.addClientCommandToDatabase(jr.getGameID(), command, commandIndex);
+            SnapshotHelper.addClientCommandToDatabase(jr.getGameID(), command2, command2Index);
 
         } catch(MaxPlayersException | PlayerException | ServerException e){
             response.setSuccess(false);

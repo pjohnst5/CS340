@@ -104,7 +104,8 @@ public class DestCardService {
                     paramValuesServer,
                     null
             );
-            SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), commandServer, commandIndex);
+            int commandServerIndex = serverModel.getGame(request.get_gameID()).getCommandCountSinceSnapshot();
+            SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), commandServer, commandServerIndex);
 
             SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
             SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command2, command2Index);
@@ -161,7 +162,21 @@ public class DestCardService {
             response.setSuccess(true);
 
             //------------------------------------Database stuff--------------------------------------------------//
-            SnapshotHelper.addCommandToDatabase(player.getGameID(), command, commandIndex);
+            //Adds Server command
+            String[] paramTypesServer = { player.getClass().getCanonicalName() };
+            Object[] paramValuesServer = { player };
+            GenericCommand commandServer = new GenericCommand(
+                    ConfigurationManager.get("server_facade_name"),
+                    ConfigurationManager.get("server_request_three_dest_cards"),
+                    paramTypesServer,
+                    paramValuesServer,
+                    null
+            );
+            int commandServerIndex = serverModel.getGame(player.getGameID()).getCommandCountSinceSnapshot();
+            SnapshotHelper.addServerCommandToDatabase(player.getGameID(), commandServer, commandServerIndex);
+
+            //adds client command
+            SnapshotHelper.addClientCommandToDatabase(player.getGameID(), command, commandIndex);
 
         } catch (ServerException | DeckException e) {
             response.setSuccess(false);
@@ -247,10 +262,23 @@ public class DestCardService {
             response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
 
             //------------------------------------Database stuff--------------------------------------------------//
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command2, command2Index);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command3, command3Index);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command4, command4Index);
+            //Adds Server command
+            String[] paramTypesServer = { request.getClass().getCanonicalName() };
+            Object[] paramValuesServer = { request };
+            GenericCommand commandServer = new GenericCommand(
+                    ConfigurationManager.get("server_facade_name"),
+                    ConfigurationManager.get("server_draw_dest_cards_method"),
+                    paramTypesServer,
+                    paramValuesServer,
+                    null
+            );
+            int commandServerIndex = serverModel.getGame(request.get_gameID()).getCommandCountSinceSnapshot();
+            SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), commandServer, commandServerIndex);
+
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command2, command2Index);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command3, command3Index);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command4, command4Index);
 
         } catch (ServerException | InvalidGameException e) {
             response.setSuccess(false);
