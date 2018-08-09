@@ -138,7 +138,7 @@ public class GameMapService {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
         } catch(DatabaseException e) {
-            System.out.println(e.get_message());
+            System.out.println(e.getMessage());
         }
         return response;
     }

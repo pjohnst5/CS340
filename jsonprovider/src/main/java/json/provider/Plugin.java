@@ -1,7 +1,11 @@
 package json.provider;
 
-import java.io.File;
-
+import json.provider.dao.JsonCommandDao;
+import json.provider.dao.JsonGameDao;
+import json.provider.dao.JsonUserDao;
+import json.provider.file.management.CommandFilesManager;
+import json.provider.file.management.GameFilesManager;
+import json.provider.file.management.UserFilesManager;
 import shared.GenericFactory;
 import shared.plugin.ICommandDao;
 import shared.plugin.IGameDao;
@@ -10,23 +14,11 @@ import shared.plugin.IUserDao;
 
 public class Plugin implements IPersistenceProvider {
 
-    private static final String DB_ROOT_DIR_NAME = "json_db";
-
-    private File root;
     private IUserDao _userDao;
     private IGameDao _gameDao;
     private ICommandDao _commandDao;
 
     public Plugin(){
-        root = new File(DB_ROOT_DIR_NAME);
-
-        if (root.exists() && root.isDirectory()) return;
-
-        boolean success = root.mkdir();
-        if (success) {
-            System.out.println("Root DB Created");
-        }
-
         GenericFactory.register(IUserDao.class, JsonUserDao.class);
         GenericFactory.register(IGameDao.class, JsonGameDao.class);
         GenericFactory.register(ICommandDao.class, JsonCommandDao.class);
@@ -34,18 +26,24 @@ public class Plugin implements IPersistenceProvider {
 
     @Override
     public void clear() {
-        deleteDir(root);
-        root.mkdir();
+        GameFilesManager.clear();
+        UserFilesManager.clear();
+        CommandFilesManager.clear();
     }
 
     @Override
     public void endTransaction(boolean commit) {
-        System.out.println("JSON Provider: endTransaction Called");
+        System.err.println("JSON Provider: endTransaction not yet implemented");
     }
 
     @Override
     public void startTransaction() {
-        System.out.println("JSON Provider: startTransaction Called");
+        System.err.println("JSON Provider: startTransaction not yet implemented");
+    }
+
+    @Override
+    public void setDeltaUpdateInterval(int interval) {
+        System.err.println("JSON Provider: setDeltaUpdateInterval not yet implemented ");
     }
 
     @Override
@@ -79,26 +77,5 @@ public class Plugin implements IPersistenceProvider {
 
         return _commandDao;
 
-    }
-
-    private static boolean deleteDir(File dir) {
-        if (dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i=0; i<children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-        }
-        return dir.delete();
-    }
-
-    public static void main(String[] args){
-        System.out.println("Testing, testing, 1 2 3, testing");
-        Plugin plugin = new Plugin();
-        plugin.clear();
-        plugin.getUserDao();
-        System.out.println("Got the user Dao!");
     }
 }

@@ -15,3 +15,4 @@
 .idea/dictionaries/dvwilliamson.xml
 /sqlresources/*
 /plugins/sqlresources/ticketToRide.db
+/plugins/json_db/
