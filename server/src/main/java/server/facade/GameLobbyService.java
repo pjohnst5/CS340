@@ -79,8 +79,20 @@ class GameLobbyService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            SnapshotHelper.addCommandToDatabase(game.getGameID(), command, commandIndex);
-            SnapshotHelper.addCommandToDatabase(game.getGameID(), command2, command2Index);
+            String[] paramTypesServer = {String.class.getCanonicalName(), String.class.getCanonicalName()};
+            Object[] paramValuesServer = {gameID, playerID};
+
+            GenericCommand serverCommand = new GenericCommand(
+                    ConfigurationManager.getString("server_facade_name"),
+                    ConfigurationManager.getString("server_start_game_method"),
+                    paramTypesServer,
+                    paramValuesServer,
+                    null);
+            int commandServerIndex = serverModel.getGame(gameID).getCommandCountSinceSnapshot();
+            SnapshotHelper.addServerCommandToDatabase(gameID, serverCommand, commandServerIndex);
+
+            SnapshotHelper.addClientCommandToDatabase(gameID, command, commandIndex);
+            SnapshotHelper.addClientCommandToDatabase(gameID, command2, command2Index);
 
         } catch(ServerException | InvalidGameException e){
             response.setSuccess(false);
@@ -126,7 +138,19 @@ class GameLobbyService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
+            String[] paramTypesServer = {Message.class.getCanonicalName()};
+            Object[] paramValuesServer = {request};
+
+            GenericCommand serverCommand = new GenericCommand(
+                    ConfigurationManager.getString("server_facade_name"),
+                    ConfigurationManager.getString("server_send_message_method"),
+                    paramTypesServer,
+                    paramValuesServer,
+                    null);
+            int commandServerIndex = serverModel.getGame(request.get_gameID()).getCommandCountSinceSnapshot();
+            SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), serverCommand, commandServerIndex);
+
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
 
         } catch (ServerException e) {
             response.setSuccess(false);
@@ -196,8 +220,20 @@ class GameLobbyService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
-            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command2, command2Index);
+            String[] paramTypesServer = {String.class.getCanonicalName(), String.class.getCanonicalName()};
+            Object[] paramValuesServer = {request.get_gameID(), playerId};
+
+            GenericCommand serverCommand = new GenericCommand(
+                    ConfigurationManager.getString("server_facade_name"),
+                    ConfigurationManager.getString("server_leave_game_method"),
+                    paramTypesServer,
+                    paramValuesServer,
+                    null);
+            int commandServerIndex = serverModel.getGame(request.get_gameID()).getCommandCountSinceSnapshot();
+            SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), serverCommand, commandServerIndex);
+
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
+            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command2, command2Index);
 
         } catch(ServerException | InvalidGameException e) {
             response.setSuccess(false);
