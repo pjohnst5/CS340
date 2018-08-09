@@ -47,8 +47,9 @@ public class ServerModel {
                 User user = users.get(i);
                 _users.put(user.getUserName(), user);
             }
-            for (int i = 0; i < _gameDao.getGames().size(); i++){
-                addNewGame(_gameDao.getGames().get(i));
+            List<Game> games = _gameDao.getGames();
+            for (int i = 0; i < games.size(); i++){
+                addNewGame(games.get(i));
             }
             _manager = CommandManager.getInstance();
         } catch (DatabaseException | ServerException e) {
