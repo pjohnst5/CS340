@@ -27,7 +27,7 @@ public class Game {
     private TurnManager _turnManager;
     private int _playersSetup;
     private String _playerToEndOn;
-    private boolean _gameOver;
+    private int _commandCountSinceSnapshot;
 
     private List<DestCard>_destOptionCards;
 
@@ -54,7 +54,7 @@ public class Game {
         _destOptionCards = null;
         _playersSetup = 0;
         _playerToEndOn = new String();
-        _gameOver = false;
+        _commandCountSinceSnapshot = 0;
     }
 
     public void setDestOptionCards(List<DestCard> cards){
@@ -143,12 +143,6 @@ public class Game {
     public GameState get_state() {
         return _state;
     }
-
-    //This should only be done internally
-//    public void set_state(GameState state){
-//        _state = state;
-//    }
-
 
     //returns the number of players after adding the player, otherwise throws an exception
     public int addPlayer(Player p) throws MaxPlayersException {
@@ -367,9 +361,15 @@ public class Game {
         return winners;
     }
 
-    public boolean getGameOver() {
-        return _state == GameState.FINISHED;
-//        return _gameOver;
+    //This messes with the number of commands that have been inserted AFTER a snapshot has been taken
+    public void incrementCommandCountSinceSnapshot() {
+        _commandCountSinceSnapshot++;
+    }
+    public int getCommandCountSinceSnapshot() {
+        return _commandCountSinceSnapshot;
+    }
+    public void resetCommandCountSinceSnapshot() {
+        _commandCountSinceSnapshot = 0;
     }
 
 }

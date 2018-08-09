@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import server.exception.ServerException;
+import server.helper.SnapshotHelper;
 import server.model.ServerModel;
 import shared.command.GenericCommand;
 import shared.command.ICommand;
 import shared.configuration.ConfigurationManager;
+import shared.exception.DatabaseException;
 import shared.exception.DeckException;
+import shared.exception.InvalidGameException;
 import shared.model.GameAction;
 import shared.model.Player;
 import shared.model.decks.DestCard;
@@ -75,18 +78,32 @@ public class DestCardService {
 
             //adds commands to server model
             serverModel.addCommand(request.get_gameID(), command);  //sets deck
+            int commandIndex = serverModel.getCommands(request.get_gameID()).size() - 1;
             serverModel.addCommand(request.get_gameID(), command2); //adds game history entry
+            int command2Index = serverModel.getCommands(request.get_gameID()).size() - 1;
             serverModel.addCommand(request.get_gameID(), command3); //updates player
+            int command3Index = serverModel.getCommands(request.get_gameID()).size() - 1;
             serverModel.addCommand(request.get_gameID(), command4); //updates number of players completed setup
+            int command4Index = serverModel.getCommands(request.get_gameID()).size() - 1;
+
 
             //gets new list of commands and sets it as response's commands
             response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
             response.setSuccess(true);
 
 
+            //------------------------------------Database stuff--------------------------------------------------//
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command2, command2Index);
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command3, command3Index);
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command4, command4Index);
+
+
         } catch (ServerException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
+        } catch (DatabaseException e) {
+            System.out.println(e.get_message());
         }
 
         return response;
@@ -111,8 +128,8 @@ public class DestCardService {
             ThreeDestCardWrapper wrapper = new ThreeDestCardWrapper();
             wrapper.setCards(cardsList);
 
-            String[] paramTypes = { ThreeDestCardWrapper.class.getCanonicalName() };
-            Object[] paramValues ={ wrapper };
+            String[] paramTypes = { ThreeDestCardWrapper.class.getCanonicalName(), String.class.getCanonicalName() };
+            Object[] paramValues ={ wrapper, player.getPlayerID() };
 
             GenericCommand command = new GenericCommand(
                     ConfigurationManager.get("client_facade_name"),
@@ -122,15 +139,22 @@ public class DestCardService {
                     null
             );
 
-            List<ICommand> commandList = new ArrayList<>();
-            commandList.add(command);
+            serverModel.addCommand(player.getGameID(), command); //adds command to server
+            int commandIndex = serverModel.getCommands(player.getGameID()).size() - 1;
+//            List<ICommand> commandList = new ArrayList<>();
+//            commandList.add(command);
 
-            response.setCommands(commandList);
+            response.setCommands(serverModel.getCommands(player.getGameID(), player.getPlayerID()));
             response.setSuccess(true);
+
+            //------------------------------------Database stuff--------------------------------------------------//
+            SnapshotHelper.addCommandToDatabase(player.getGameID(), command, commandIndex);
 
         } catch (ServerException | DeckException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
+        } catch (DatabaseException e){
+            System.out.println(e.get_message());
         }
 
         return response;
@@ -176,6 +200,7 @@ public class DestCardService {
             Object[] paramValues = { serverModel.getGame(request.get_gameID()).getDestDeck() };
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
             serverModel.addCommand(request.get_gameID(), command);
+            int commandIndex = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             //Command to update player for the client
             String className2 = ConfigurationManager.getString("client_facade_name");
@@ -184,6 +209,7 @@ public class DestCardService {
             Object[] paramValues2 = {serverModel.getPlayer(request.get_playerID())};
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
             serverModel.addCommand(request.get_gameID(), command2);
+            int command2Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             //Command to add game action for client
             String className3 = ConfigurationManager.getString("client_facade_name");
@@ -192,6 +218,7 @@ public class DestCardService {
             Object[] paramValues3 = {action};
             ICommand command3 = new GenericCommand(className3, methodName3, paramTypes3, paramValues3, null);
             serverModel.addCommand(request.get_gameID(), command3);
+            int command3Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             //Command to change turns for client
             String className4 = ConfigurationManager.getString("client_facade_name");
@@ -200,13 +227,23 @@ public class DestCardService {
             Object[] paramValues4 = new Object[0];
             ICommand command4 = new GenericCommand(className4, methodName4, paramTypes4, paramValues4, null);
             serverModel.addCommand(request.get_gameID(), command4);
+            int command4Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
             //sets response's list of commands to be new commands for client
             response.setSuccess(true);
             response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
-        } catch (Exception e) {
+
+            //------------------------------------Database stuff--------------------------------------------------//
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command, commandIndex);
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command2, command2Index);
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command3, command3Index);
+            SnapshotHelper.addCommandToDatabase(request.get_gameID(), command4, command4Index);
+
+        } catch (ServerException | InvalidGameException e) {
             response.setSuccess(false);
             response.setErrorMessage(e.getMessage());
+        } catch (DatabaseException e) {
+            System.out.println(e.get_message());
         }
         return response;
     }

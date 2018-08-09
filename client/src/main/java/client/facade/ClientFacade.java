@@ -63,8 +63,8 @@ public class ClientFacade {
         clientModel.changeTurns();
     }
 
-    public static void setDestOptionCards(ThreeDestCardWrapper wrapper) {
-        clientModel.setDestOptionCards(wrapper.getDestCards());
+    public static void setDestOptionCards(ThreeDestCardWrapper wrapper, String playerID) {
+        clientModel.setDestOptionCards(wrapper.getDestCards(), playerID);
     }
 
     public static void playerCompletedSetup(){
