@@ -38,6 +38,7 @@ class GameListService {
 
             //Add player who's in game to serverModel
             serverModel.addPlayer(game.getPlayers().get(0));
+            serverModel.getUser(game.getPlayers().get(0).getUserName()).set_playerId(game.getPlayers().get(0).getPlayerID());
 
             //Get map of active games
             GamesWrapper games = new GamesWrapper();
@@ -91,6 +92,9 @@ class GameListService {
             //Add game in database
             PluginManager.getPlugin().getGameDao().addGame(game);
 
+            //Update User in database (playerID)
+            PluginManager.getPlugin().getUserDao().updateUser(serverModel.getUser(game.getPlayers().get(0).getUserName()));
+
             //Adds commands to that game
             SnapshotHelper.addClientCommandToDatabase(game.getGameID(), command2, command2Index);
             SnapshotHelper.addClientCommandToDatabase(game.getGameID(), command3, command3Index);
@@ -136,6 +140,15 @@ class GameListService {
             //By here, no player in the game had same info as new player
             //Good to make new player
             Player player = new Player(jr.getUserName(),jr.getDisplayName(),jr.getColor(),game.getGameID(), UUID.randomUUID().toString());
+
+            //it was adding the player to the game, but it was making a new playerID for it when initilzation the server, then the client's player id was invalid.
+            if (serverModel.isInitializing()){
+                player.setPlayerID(serverModel.getUser(jr.getUserName()).get_playerId());
+            } else {
+                //Need to add this player's playerID to the User who just joined!
+                serverModel.getUser(jr.getUserName()).set_playerId(player.getPlayerID());
+            }
+
 
             //Player's index is -1 at this point
 
@@ -190,21 +203,27 @@ class GameListService {
 
             //------------------------------------Database stuff--------------------------------------------------//
             //Adds Server command
-            String[] paramTypesServer = { jr.getClass().getCanonicalName() };
-            Object[] paramValuesServer = { jr };
-            GenericCommand commandServer = new GenericCommand(
-                    ConfigurationManager.get("server_facade_name"),
-                    ConfigurationManager.get("server_join_game_method"),
-                    paramTypesServer,
-                    paramValuesServer,
-                    null
-            );
-            int commandServerIndex = serverModel.getGame(jr.getGameID()).getCommandCountSinceSnapshot();
-            SnapshotHelper.addServerCommandToDatabase(jr.getGameID(), commandServer, commandServerIndex);
+            if (!serverModel.isInitializing()){
+                String[] paramTypesServer = { jr.getClass().getCanonicalName() };
+                Object[] paramValuesServer = { jr };
+                GenericCommand commandServer = new GenericCommand(
+                        ConfigurationManager.get("server_facade_name"),
+                        ConfigurationManager.get("server_join_game_method"),
+                        paramTypesServer,
+                        paramValuesServer,
+                        null
+                );
+                int commandServerIndex = serverModel.getGame(jr.getGameID()).getCommandCountSinceSnapshot();
+                SnapshotHelper.addServerCommandToDatabase(jr.getGameID(), commandServer, commandServerIndex);
 
-            //adds client commands
-            SnapshotHelper.addClientCommandToDatabase(jr.getGameID(), command, commandIndex);
-            SnapshotHelper.addClientCommandToDatabase(jr.getGameID(), command2, command2Index);
+                //Update User in database (playerID)
+                PluginManager.getPlugin().getUserDao().updateUser(serverModel.getUser(jr.getUserName()));
+
+                //adds client commands
+                SnapshotHelper.addClientCommandToDatabase(jr.getGameID(), command, commandIndex);
+                SnapshotHelper.addClientCommandToDatabase(jr.getGameID(), command2, command2Index);
+            }
+
 
         } catch(MaxPlayersException | PlayerException | ServerException e){
             response.setSuccess(false);

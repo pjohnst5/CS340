@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import shared.command.ICommand;
@@ -73,6 +74,7 @@ public class CommandFilesManager extends FileManager {
 
             if (commandsFolder.isDirectory()){
                 String[] indices = commandsFolder.list();
+                Arrays.sort(indices);
                 if (indices == null) indices = new String[]{};
 
                 for (String index : indices) {

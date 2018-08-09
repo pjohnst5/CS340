@@ -99,6 +99,7 @@ public class Player {
         if (id == null || id.isEmpty()) {
             throw new PlayerException("Player ID cannot be null or empty");
         }
+        _playerID = id;
     }
 
     public void setIndex(int i) {

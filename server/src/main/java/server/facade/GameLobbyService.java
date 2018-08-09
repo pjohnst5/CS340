@@ -79,20 +79,24 @@ class GameLobbyService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            String[] paramTypesServer = {String.class.getCanonicalName(), String.class.getCanonicalName()};
-            Object[] paramValuesServer = {gameID, playerID};
+            //Adds Server command into database
+            if (!serverModel.isInitializing()){
+                String[] paramTypesServer = {String.class.getCanonicalName(), String.class.getCanonicalName()};
+                Object[] paramValuesServer = {gameID, playerID};
 
-            GenericCommand serverCommand = new GenericCommand(
-                    ConfigurationManager.getString("server_facade_name"),
-                    ConfigurationManager.getString("server_start_game_method"),
-                    paramTypesServer,
-                    paramValuesServer,
-                    null);
-            int commandServerIndex = serverModel.getGame(gameID).getCommandCountSinceSnapshot();
-            SnapshotHelper.addServerCommandToDatabase(gameID, serverCommand, commandServerIndex);
+                GenericCommand serverCommand = new GenericCommand(
+                        ConfigurationManager.getString("server_facade_name"),
+                        ConfigurationManager.getString("server_start_game_method"),
+                        paramTypesServer,
+                        paramValuesServer,
+                        null);
+                int commandServerIndex = serverModel.getGame(gameID).getCommandCountSinceSnapshot();
+                SnapshotHelper.addServerCommandToDatabase(gameID, serverCommand, commandServerIndex);
 
-            SnapshotHelper.addClientCommandToDatabase(gameID, command, commandIndex);
-            SnapshotHelper.addClientCommandToDatabase(gameID, command2, command2Index);
+                SnapshotHelper.addClientCommandToDatabase(gameID, command, commandIndex);
+                SnapshotHelper.addClientCommandToDatabase(gameID, command2, command2Index);
+            }
+
 
         } catch(ServerException | InvalidGameException e){
             response.setSuccess(false);
@@ -138,19 +142,24 @@ class GameLobbyService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            String[] paramTypesServer = {MessageRequest.class.getCanonicalName()};
-            Object[] paramValuesServer = {request};
+            //Adds Server command into database
+            if (!serverModel.isInitializing()){
+                String[] paramTypesServer = {MessageRequest.class.getCanonicalName()};
+                Object[] paramValuesServer = {request};
 
-            GenericCommand serverCommand = new GenericCommand(
-                    ConfigurationManager.getString("server_facade_name"),
-                    ConfigurationManager.getString("server_send_message_method"),
-                    paramTypesServer,
-                    paramValuesServer,
-                    null);
-            int commandServerIndex = serverModel.getGame(request.get_gameID()).getCommandCountSinceSnapshot();
-            SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), serverCommand, commandServerIndex);
+                GenericCommand serverCommand = new GenericCommand(
+                        ConfigurationManager.getString("server_facade_name"),
+                        ConfigurationManager.getString("server_send_message_method"),
+                        paramTypesServer,
+                        paramValuesServer,
+                        null);
+                int commandServerIndex = serverModel.getGame(request.get_gameID()).getCommandCountSinceSnapshot();
+                SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), serverCommand, commandServerIndex);
 
-            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
+                //adds client command into database
+                SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
+            }
+
 
         } catch (ServerException e) {
             response.setSuccess(false);
@@ -220,20 +229,24 @@ class GameLobbyService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            String[] paramTypesServer = {LeaveGameRequest.class.getCanonicalName()};
-            Object[] paramValuesServer = {request};
+            //Adds Server Command into database
+            if (!serverModel.isInitializing()){
+                String[] paramTypesServer = {LeaveGameRequest.class.getCanonicalName()};
+                Object[] paramValuesServer = {request};
 
-            GenericCommand serverCommand = new GenericCommand(
-                    ConfigurationManager.getString("server_facade_name"),
-                    ConfigurationManager.getString("server_leave_game_method"),
-                    paramTypesServer,
-                    paramValuesServer,
-                    null);
-            int commandServerIndex = serverModel.getGame(request.get_gameID()).getCommandCountSinceSnapshot();
-            SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), serverCommand, commandServerIndex);
+                GenericCommand serverCommand = new GenericCommand(
+                        ConfigurationManager.getString("server_facade_name"),
+                        ConfigurationManager.getString("server_leave_game_method"),
+                        paramTypesServer,
+                        paramValuesServer,
+                        null);
+                int commandServerIndex = serverModel.getGame(request.get_gameID()).getCommandCountSinceSnapshot();
+                SnapshotHelper.addServerCommandToDatabase(request.get_gameID(), serverCommand, commandServerIndex);
 
-            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
-            SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command2, command2Index);
+                SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
+                SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command2, command2Index);
+            }
+
 
         } catch(ServerException | InvalidGameException e) {
             response.setSuccess(false);

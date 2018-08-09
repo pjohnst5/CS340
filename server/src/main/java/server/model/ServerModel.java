@@ -28,16 +28,22 @@ public class ServerModel {
 
     private static ServerModel _instance;
 
+    public static boolean isInitializing() {
+        return _instance._initializing;
+    }
+
     public static ServerModel getInstance() {
         if (_instance == null) {
             _instance = new ServerModel();
             _instance.initCommandManager();
+            _instance._initializing = false;
         }
 
         return _instance;
     }
 
     private ServerModel() {
+        _initializing = true;
         IPersistenceProvider _plugin = PluginManager.getPlugin();
         IUserDao _userDao = _plugin.getUserDao();
         IGameDao _gameDao = _plugin.getGameDao();
@@ -72,6 +78,7 @@ public class ServerModel {
     private Map<String, Player> _players = new HashMap<>(); //playerid's to Player
     private Map<String, Game> _games = new HashMap<>();  //gameid's to games
     private CommandManager _manager;
+    private boolean _initializing = false;
 
 
     //------------------Login/Register-------------------------------------------------------//
@@ -242,6 +249,14 @@ public class ServerModel {
 
     public Map<String, Game> getGames() {
         return _games;
+    }
+
+    public User getUser(String userName) throws ServerException {
+        if (!_users.containsKey(userName)){
+            throw new ServerException("No user with username in server");
+        }
+
+        return _users.get(userName);
     }
 
 
