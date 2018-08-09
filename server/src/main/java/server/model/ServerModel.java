@@ -42,6 +42,7 @@ public class ServerModel {
         IGameDao _gameDao = _plugin.getGameDao();
 
         try {
+            _manager = CommandManager.getInstance();
             List<User> users = _userDao.getUsers();
             for (int i = 0; i < users.size(); i++){
                 User user = users.get(i);
@@ -50,7 +51,6 @@ public class ServerModel {
             for (int i = 0; i < _gameDao.getGames().size(); i++){
                 addNewGame(_gameDao.getGames().get(i));
             }
-            _manager = CommandManager.getInstance();
             _manager.init();
         } catch (DatabaseException | ServerException e) {
             e.printStackTrace();
