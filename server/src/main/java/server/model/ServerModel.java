@@ -48,8 +48,15 @@ public class ServerModel {
                 User user = users.get(i);
                 _users.put(user.getUserName(), user);
             }
-            for (int i = 0; i < _gameDao.getGames().size(); i++){
-                addNewGame(_gameDao.getGames().get(i));
+            List<Game> games = _gameDao.getGames();
+            for (int i = 0; i < games.size(); i++){
+                Game currGame = games.get(i);
+                addNewGame(currGame);
+                List<Player> players = currGame.getPlayers();
+                for(int j = 0; j < players.size(); j++){
+                    Player currPlayer = players.get(j);
+                    _players.put(currPlayer.getPlayerID(), currPlayer);
+                }
             }
             _manager.init();
         } catch (DatabaseException | ServerException e) {
