@@ -7,7 +7,9 @@ import shared.exception.DatabaseException;
 
 public interface ICommandDao {
 
-    void storeCommand(String gameID, int index, ICommand command) throws DatabaseException;
+    void storeClientCommand(String gameID, int index, ICommand command) throws DatabaseException;
+    void storeServerCommand(String gameID, int index, ICommand command) throws DatabaseException;
 
-    List<ICommand> getCommands(String gameID) throws DatabaseException;
+    List<ICommand> getClientCommands(String gameID) throws DatabaseException;
+    List<ICommand> getServerCommands(String gameID) throws DatabaseException;
 }

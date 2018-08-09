@@ -21,7 +21,7 @@ import shared.plugin.PluginManager;
 public class CommandManager {
 
     private static CommandManager _instance;
-    private Map<String, List<ICommand>> _commandList = new HashMap<>();
+    private static Map<String, List<ICommand>> _commandList = new HashMap<>();
 
     /**
      * Returns the CommandManager instance, this class is a singleton
@@ -37,12 +37,7 @@ public class CommandManager {
         return _instance;
     }
 
-    /**
-     * Constructs a new CommandManage
-     *
-     * @return      A CommandManager object
-     */
-    private CommandManager()
+    public static void init()
     {
         try {
             IPersistenceProvider _plugin = PluginManager.getPlugin();
@@ -55,11 +50,22 @@ public class CommandManager {
                 int indexOfCommandsToExecute = _plugin.getGameDao().getIndexOfCompletedCommands(currGameId) + 1;
                 for(int j = indexOfCommandsToExecute; j < commands.size(); j++){
                     commands.get(j).execute();
+                    ServerModel.getInstance().getGame(currGameId).incrementCommandCountSinceSnapshot();
                 }
             }
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | ServerException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Constructs a new CommandManage
+     *
+     * @return      A CommandManager object
+     */
+    private CommandManager()
+    {
+
     }
 
 

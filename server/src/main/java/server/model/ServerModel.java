@@ -42,6 +42,7 @@ public class ServerModel {
         IGameDao _gameDao = _plugin.getGameDao();
 
         try {
+            _manager = CommandManager.getInstance();
             List<User> users = _userDao.getUsers();
             for (int i = 0; i < users.size(); i++){
                 User user = users.get(i);
@@ -49,9 +50,15 @@ public class ServerModel {
             }
             List<Game> games = _gameDao.getGames();
             for (int i = 0; i < games.size(); i++){
-                addNewGame(games.get(i));
+                Game currGame = games.get(i);
+                addNewGame(currGame);
+                List<Player> players = currGame.getPlayers();
+                for(int j = 0; j < players.size(); j++){
+                    Player currPlayer = players.get(j);
+                    _players.put(currPlayer.getPlayerID(), currPlayer);
+                }
             }
-            _manager = CommandManager.getInstance();
+            _manager.init();
         } catch (DatabaseException | ServerException e) {
             e.printStackTrace();
         }
