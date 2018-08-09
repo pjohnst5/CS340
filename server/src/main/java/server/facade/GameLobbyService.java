@@ -138,7 +138,7 @@ class GameLobbyService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            String[] paramTypesServer = {Message.class.getCanonicalName()};
+            String[] paramTypesServer = {MessageRequest.class.getCanonicalName()};
             Object[] paramValuesServer = {request};
 
             GenericCommand serverCommand = new GenericCommand(
@@ -220,8 +220,8 @@ class GameLobbyService {
 
 
             //------------------------------------Database stuff--------------------------------------------------//
-            String[] paramTypesServer = {String.class.getCanonicalName(), String.class.getCanonicalName()};
-            Object[] paramValuesServer = {request.get_gameID(), playerId};
+            String[] paramTypesServer = {LeaveGameRequest.class.getCanonicalName()};
+            Object[] paramValuesServer = {request};
 
             GenericCommand serverCommand = new GenericCommand(
                     ConfigurationManager.getString("server_facade_name"),
