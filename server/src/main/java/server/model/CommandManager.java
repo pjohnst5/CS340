@@ -50,9 +50,10 @@ public class CommandManager {
                 int indexOfCommandsToExecute = _plugin.getGameDao().getIndexOfCompletedCommands(currGameId) + 1;
                 for(int j = indexOfCommandsToExecute; j < commands.size(); j++){
                     commands.get(j).execute();
+                    ServerModel.getInstance().getGame(currGameId).incrementCommandCountSinceSnapshot();
                 }
             }
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | ServerException e) {
             e.printStackTrace();
         }
     }
