@@ -17,7 +17,6 @@ import sql.provider.dao.GameDao;
 import sql.provider.dao.UserDao;
 
 public class Plugin implements IPersistenceProvider {
-    private int _deltaUpdateInterval;
 
     public static void main(String[] args) {
         // run some tests
