@@ -65,7 +65,6 @@ public class CommandFilesManager extends FileManager {
         return getAllCommands(gameId, commandDirPath);
     }
 
-
     private static List<ICommand> getAllCommands(String gameId, String commandDirPath) throws DatabaseException {
         File commandsFolder = new File(commandDirPath);
         List<ICommand> commands = new ArrayList<>();
