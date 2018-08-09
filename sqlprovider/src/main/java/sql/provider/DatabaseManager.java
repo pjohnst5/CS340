@@ -37,7 +37,7 @@ public class DatabaseManager {
 
     public Connection openConnection() throws DatabaseException {
         try {
-            final String CONNECTION_URL = "jdbc:sqlite:sqlresources" + File.separator + "ticketToRide.db";
+            final String CONNECTION_URL = "jdbc:sqlite:" + "plugins" + File.separator + "sqlresources" + File.separator + "ticketToRide.db";
             // Open a database connection
             conn = DriverManager.getConnection(CONNECTION_URL);
 
@@ -66,7 +66,7 @@ public class DatabaseManager {
     }
     private void createTables() throws DatabaseException {
         // we're just going to load the statements in from a text file
-        Path in = Paths.get("sqlresources/dbCreate.txt");
+        Path in = Paths.get("plugins" + File.separator + "sqlresources" + File.separator + "dbCreate.txt");
 //        InputStream in = DatabaseManager.class.getClassLoader()
 //                .getResourceAsStream("sqlresources/dbCreate.txt");
         StringBuilder sb;
