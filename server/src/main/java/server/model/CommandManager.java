@@ -9,6 +9,7 @@ import server.exception.ServerException;
 import shared.command.ICommand;
 import shared.exception.DatabaseException;
 import shared.model.Game;
+import shared.plugin.ICommandDao;
 import shared.plugin.IPersistenceProvider;
 import shared.plugin.PluginManager;
 
@@ -41,15 +42,17 @@ public class CommandManager {
     {
         try {
             IPersistenceProvider _plugin = PluginManager.getPlugin();
+            ICommandDao commandDao = _plugin.getCommandDao();
             List<Game> games = _plugin.getGameDao().getGames();
             for(int i = 0; i < games.size(); i++) {
                 String currGameId = games.get(i).getGameID();
-                List<ICommand> commands = _plugin.getCommandDao().getCommands(currGameId);
-                _commandList.put(currGameId, commands);
+                List<ICommand> clientCommands = commandDao.getClientCommands(currGameId);
+                _commandList.put(currGameId, clientCommands);
 
+                List<ICommand> serverCommands = commandDao.getServerCommands(currGameId);
                 int indexOfCommandsToExecute = _plugin.getGameDao().getIndexOfCompletedCommands(currGameId) + 1;
-                for(int j = indexOfCommandsToExecute; j < commands.size(); j++){
-                    commands.get(j).execute();
+                for(int j = indexOfCommandsToExecute; j < serverCommands.size(); j++){
+                    serverCommands.get(j).execute();
                     ServerModel.getInstance().getGame(currGameId).incrementCommandCountSinceSnapshot();
                 }
             }
