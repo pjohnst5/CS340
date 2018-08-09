@@ -15,11 +15,11 @@ public class JsonUserDao implements IUserDao {
         String contents = Serializer._serialize(user);
         String userId = user.getUUID().toString();
         UserFilesManager.addUser(userId, contents);
-        
+
     }
 
     @Override
     public List<User> getUsers() throws DatabaseException {
-        return null;
+        return UserFilesManager.getAllUsers();
     }
 }

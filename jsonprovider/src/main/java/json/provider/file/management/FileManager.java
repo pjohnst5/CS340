@@ -57,6 +57,7 @@ public abstract class FileManager {
                 }
             }
 
+            file.getParentFile().mkdirs();
             file.createNewFile();
 
             FileWriter writer = new FileWriter(file);
