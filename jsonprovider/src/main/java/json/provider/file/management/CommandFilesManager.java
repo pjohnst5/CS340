@@ -16,7 +16,8 @@ public class CommandFilesManager extends FileManager {
     private static CommandFilesManager _instance;
 
     private CommandFilesManager() {
-        createCommandsDir(PRESERVE);
+        createServerCommandsDir(PRESERVE);
+        createClientCommandsDir(PRESERVE);
     }
 
     public static CommandFilesManager instance(){
@@ -27,22 +28,45 @@ public class CommandFilesManager extends FileManager {
     }
 
     public static void clear() {
-        instance().createCommandsDir(OVERWRITE);
+        instance().createServerCommandsDir(OVERWRITE);
+        instance().createClientCommandsDir(OVERWRITE);
     }
 
-    private boolean createCommandsDir(boolean overwrite){
-        return createDir(commandsDir, commandsDirName, overwrite);
+    private boolean createServerCommandsDir(boolean overwrite){
+        return createDir(commandsDir, serverCommandsDirName, overwrite);
     }
 
-    public static void addCommand(String gameId, int index, String contents){
+    private boolean createClientCommandsDir(boolean overwrite){
+        return createDir(commandsDir, clientCommandsDirName, overwrite);
+    }
+
+    public static void addServerCommand(String gameId, int index, String contents){
+        addCommand(gameId, index, contents, serverCommandsDirName);
+    }
+
+    public static void addClientCommand(String gameId, int index, String contents){
+        addCommand(gameId, index, contents, clientCommandsDirName);
+    }
+
+    private static void addCommand(String gameId, int index, String contents, String commandsDirName){
         String fileName = commandsDirName +
                 File.separator + gameId +
                 File.separator + index;
         instance().createFile(fileName, contents, OVERWRITE);
     }
 
-    public static List<ICommand> getAllCommands(String gameId) throws DatabaseException {
-        String commandDirPath = commandsDirName + File.separator + gameId;
+    public static List<ICommand> getAllServerCommands(String gameId) throws DatabaseException{
+        String commandDirPath = serverCommandsDirName + File.separator + gameId;
+        return getAllCommands(gameId, commandDirPath);
+    }
+
+    public static List<ICommand> getAllClientCommands(String gameId) throws DatabaseException{
+        String commandDirPath = clientCommandsDirName + File.separator + gameId;
+        return getAllCommands(gameId, commandDirPath);
+    }
+
+
+    private static List<ICommand> getAllCommands(String gameId, String commandDirPath) throws DatabaseException {
         File commandsFolder = new File(commandDirPath);
         List<ICommand> commands = new ArrayList<>();
 

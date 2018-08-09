@@ -11,16 +11,25 @@ import shared.serialization.Serializer;
 public class JsonCommandDao implements ICommandDao {
 
     @Override
-    public void storeCommand(String gameId, int index, ICommand command) throws DatabaseException {
-
+    public void storeClientCommand(String gameId, int index, ICommand command) throws DatabaseException {
         String contents = Serializer._serialize(command);
-        CommandFilesManager.addCommand(gameId, index, contents);
-
+        CommandFilesManager.addClientCommand(gameId, index, contents);
     }
 
     @Override
-    public List<ICommand> getCommands(String gameId) throws DatabaseException {
-        return CommandFilesManager.getAllCommands(gameId);
+    public void storeServerCommand(String gameId, int index, ICommand command) throws DatabaseException {
+        String contents = Serializer._serialize(command);
+        CommandFilesManager.addServerCommand(gameId, index, contents);
+    }
+
+    @Override
+    public List<ICommand> getClientCommands(String gameId) throws DatabaseException {
+        return CommandFilesManager.getAllClientCommands(gameId);
+    }
+
+    @Override
+    public List<ICommand> getServerCommands(String gameId) throws DatabaseException {
+        return CommandFilesManager.getAllServerCommands(gameId);
     }
 
 }

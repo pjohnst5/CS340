@@ -30,7 +30,8 @@ public abstract class FileManager {
     private static final String json_dbDirName = pluginsDirName + File.separator + "json_db";
     public static final String usersDirName = json_dbDirName + File.separator + "users";
     public static final String gamesDirName = json_dbDirName + File.separator + "games";
-    public static final String commandsDirName = json_dbDirName + File.separator + "commands";
+    public static final String clientCommandsDirName = json_dbDirName + File.separator + "client_commands";
+    public static final String serverCommandsDirName = json_dbDirName + File.separator + "server_commands";
 
     public static final String commandIndexFileName = "command_index";
     public static final String gameFileName = "game";
