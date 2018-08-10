@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/jsonprovider" />
             <option value="$PROJECT_DIR$/server" />
             <option value="$PROJECT_DIR$/shared" />
+            <option value="$PROJECT_DIR$/sqlite-jdbc-3.23.1" />
             <option value="$PROJECT_DIR$/sqlprovider" />
           </set>
         </option>

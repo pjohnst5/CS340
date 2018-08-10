@@ -1,1 +1,1 @@
-include ':client', ':server', ':shared', ':sqlprovider', ':jsonprovider'
+include ':client', ':server', ':shared', ':sqlprovider', ':jsonprovider', ':sqlite-jdbc-3.23.1'
