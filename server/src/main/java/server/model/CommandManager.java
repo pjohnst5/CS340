@@ -50,6 +50,9 @@ public class CommandManager {
                 List<ICommand> clientCommands = commandDao.getClientCommands(currGameId);
                 _commandList.put(currGameId, clientCommands);
 
+                //resets games commandCountSinceSnapshot
+                ServerModel.getInstance().getGame(currGameId).resetCommandCountSinceSnapshot();
+
                 List<ICommand> serverCommands = commandDao.getServerCommands(currGameId);
                 int indexOfCommandsToExecute = _plugin.getGameDao().getIndexOfCompletedCommands(currGameId);
                 for(int j = indexOfCommandsToExecute; j < serverCommands.size(); j++){

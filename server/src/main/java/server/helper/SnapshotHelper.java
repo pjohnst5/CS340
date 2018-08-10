@@ -14,6 +14,10 @@ public class SnapshotHelper {
         ServerModel serverModel = ServerModel.getInstance();
         Game game = serverModel.getGame(gameID);
 
+        //Get the Game's index then add this index to it
+        int gameSnapshotIndex = PluginManager.getPlugin().getGameDao().getIndexOfCompletedCommands(gameID);
+        indexOfCommand = gameSnapshotIndex + indexOfCommand;
+
         //Add server command into database
         PluginManager.getPlugin().getCommandDao().storeServerCommand(gameID, indexOfCommand, command);
 
