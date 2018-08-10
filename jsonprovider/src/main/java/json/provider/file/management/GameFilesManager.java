@@ -64,7 +64,7 @@ public class GameFilesManager extends FileManager {
     public static void addCmdIndex(String gameId, int index, boolean overwrite) throws DatabaseException{
         int oldIndex = getCmdIndex(gameId);
         String fileName = gamesDirName + File.separator + gameId + File.separator + commandIndexFileName;
-        String contents = Integer.toString(index) + oldIndex;
+        String contents = Integer.toString((index+ oldIndex));
         instance().createFile(fileName, contents, overwrite);
     }
 
