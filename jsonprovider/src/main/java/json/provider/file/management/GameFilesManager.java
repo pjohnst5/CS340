@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
+import javax.xml.crypto.Data;
+
 import shared.exception.DatabaseException;
 import shared.model.Game;
 import shared.serialization.Serializer;
@@ -55,13 +57,14 @@ public class GameFilesManager extends FileManager {
         instance().createFile(fileName, contents, overwrite);
     }
 
-    public static void addCmdIndex(String gameId, int index){
+    public static void addCmdIndex(String gameId, int index) throws DatabaseException{
         addCmdIndex(gameId, index, PRESERVE);
     }
 
-    public static void addCmdIndex(String gameId, int index, boolean overwrite){
+    public static void addCmdIndex(String gameId, int index, boolean overwrite) throws DatabaseException{
+        int oldIndex = getCmdIndex(gameId);
         String fileName = gamesDirName + File.separator + gameId + File.separator + commandIndexFileName;
-        String contents = Integer.toString(index);
+        String contents = Integer.toString(index) + oldIndex;
         instance().createFile(fileName, contents, overwrite);
     }
 

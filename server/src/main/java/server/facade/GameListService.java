@@ -73,6 +73,7 @@ class GameListService {
 //-----------------------
 
             serverModel.addCommand(game.getGameID(), command); //set games
+            int commandIndex = serverModel.getCommands(game.getGameID()).size() - 1;
             serverModel.addCommand(game.getGameID(), command2); //join game
             int command2Index = serverModel.getCommands(game.getGameID()).size() - 1;
             serverModel.addCommand(game.getGameID(), command3); //game history entry
@@ -96,6 +97,7 @@ class GameListService {
             PluginManager.getPlugin().getUserDao().updateUser(serverModel.getUser(game.getPlayers().get(0).getUserName()));
 
             //Adds commands to that game
+            SnapshotHelper.addClientCommandToDatabase(game.getGameID(), command, commandIndex);
             SnapshotHelper.addClientCommandToDatabase(game.getGameID(), command2, command2Index);
             SnapshotHelper.addClientCommandToDatabase(game.getGameID(), command3, command3Index);
 
