@@ -18,6 +18,7 @@
     <string name="server_settings_title">Connection Settings</string>
     <string name="server_settings_host">Host IP:</string>
     <string name="server_settings_port">Port:</string>
+    <string name="server_settings_debug">Debug Mode:</string>
 
     <!--GAME LIST/LOBBY -->
     <string name="create_game_button">Create Game</string>

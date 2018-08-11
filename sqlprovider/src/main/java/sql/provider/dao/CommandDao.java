@@ -44,7 +44,7 @@ public class CommandDao implements ICommandDao {
         if (gameID == null) {
             throw new DatabaseException("Null reference for gameID parameter");
         }
-        if (index <= 0) {
+        if (index < 0) {
             throw new DatabaseException("Invalid command index parameter");
         }
         if (command == null) {

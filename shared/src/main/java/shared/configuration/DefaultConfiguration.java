@@ -9,6 +9,7 @@ public class DefaultConfiguration implements IConfiguration {
         manager.add("max_connections", 10);
         manager.add("protocol", "http");
         manager.add("server_host", "10.0.2.2");
+        manager.add("debug_mode", "true");
 
         // Server Endpoints
         manager.add("execute_command_endpoint", "/api/exec");

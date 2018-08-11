@@ -81,8 +81,10 @@ public class ClientCommunicator {
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
-            connection.setReadTimeout(MAX_CONNECTION_TIME);
-            connection.setConnectTimeout(MAX_CONNECTION_TIME);
+            if (!Boolean.parseBoolean(ConfigurationManager.getString("debug_mode"))) {
+                connection.setReadTimeout(MAX_CONNECTION_TIME);
+                connection.setConnectTimeout(MAX_CONNECTION_TIME);
+            }
 
             writer = new PrintWriter(connection.getOutputStream());
             Serializer.serializeToWriter(writer, command);
