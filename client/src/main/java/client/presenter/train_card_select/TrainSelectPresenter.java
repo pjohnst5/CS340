@@ -34,6 +34,11 @@ public class TrainSelectPresenter
     }
 
     @Override
+    public void enableLocomotives(boolean enable) {
+        _selectView.enableLocomotives(enable);
+    }
+
+    @Override
     public void setCards(List<TrainCard> cards) {
         _cards = cards;
         _selectView.clearCards();

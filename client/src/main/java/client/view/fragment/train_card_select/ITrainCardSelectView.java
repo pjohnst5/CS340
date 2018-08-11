@@ -10,6 +10,7 @@ public interface ITrainCardSelectView extends ILoadingScreenFragment {
     public void setCardSelectEnabled(boolean value);
     public void setEnabledCloseDialog(boolean value);
     public void setSelectionSubmitEnabled(boolean value);
+    public void enableLocomotives(boolean enable);
     public void showToast(String message);
     public boolean addCard(TrainCard card);
 

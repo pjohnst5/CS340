@@ -48,6 +48,8 @@ public class PlayerDrewCardState extends TrainCardSelectState {
             cardsLoaded = true;
         }
 
+        presenter().enableLocomotives(false);
+
     }
 
     @Override

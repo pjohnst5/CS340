@@ -16,6 +16,7 @@ public interface ITrainCardSelectPresenter extends AsyncServerTask.AsyncCaller {
     public void setState(TrainCardSelectState state);
     public void setEnableCardSelect(boolean value);
     public void setEnableSelectionSubmit(boolean value);
+    public void enableLocomotives(boolean enable);
     public void submitData(TrainCard keep);
 
 }

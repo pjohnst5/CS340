@@ -59,6 +59,7 @@
 
     <color name="train_light_grey_pressed">#afaead</color>
     <color name="train_black_border">#000000</color>
+    <color name="train_card_disabled">#585858</color>
 
     <!-- Game Map Colors -->
     <color name="route_pink">#c668f2</color>

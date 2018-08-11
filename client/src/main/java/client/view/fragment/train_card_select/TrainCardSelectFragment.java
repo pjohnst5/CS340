@@ -37,6 +37,7 @@ public class TrainCardSelectFragment extends LoadingScreenFragment implements IT
 
     private final int CARD_LENGTH = 294;
 
+    private boolean locomotivesDisabled;
     private List<TrainCard> _cards;
     private Set<CardItemHolder> _selectedCards;
     private Set<CardItemHolder> _unselectedCards;
@@ -52,6 +53,8 @@ public class TrainCardSelectFragment extends LoadingScreenFragment implements IT
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_train_card_select, container, false);
+
+        locomotivesDisabled = false;
 
         // Initialize Simple Members
         _cards = new ArrayList<>();
@@ -109,6 +112,28 @@ public class TrainCardSelectFragment extends LoadingScreenFragment implements IT
     public void onPause(){
         super.onPause();
         _presenter.pause();
+    }
+
+    @Override
+    public void enableLocomotives(boolean enable) {
+        locomotivesDisabled = !enable;
+        getActivity().runOnUiThread(() -> {
+            enableLocomotive(_selectedCards, enable);
+            enableLocomotive(_unselectedCards, enable);
+        });
+    }
+
+    private void enableLocomotive(Set<CardItemHolder> cards, boolean enable){
+        for (CardItemHolder card : cards){
+            if(card.getTrainCard().get_color() == TrainColor.LOCOMOTIVE){
+                if (enable) {
+                    card.enable();
+                } else {
+                    card.setSelected(false);
+                    card.disable();
+                }
+            }
+        }
     }
 
     @Override
@@ -228,6 +253,7 @@ public class TrainCardSelectFragment extends LoadingScreenFragment implements IT
             }
 
             _card = card;
+            this.enable();
             switch (card.get_color()) {
                 case BLACK:
                     _cardHolder.setImageResource(R.drawable.train_card_black);
@@ -263,6 +289,9 @@ public class TrainCardSelectFragment extends LoadingScreenFragment implements IT
 
                 case LOCOMOTIVE:
                     _cardHolder.setImageResource(R.drawable.train_card_loco);
+                    if (locomotivesDisabled){
+                        this.disable();
+                    }
                     break;
 
                 default:
@@ -290,11 +319,20 @@ public class TrainCardSelectFragment extends LoadingScreenFragment implements IT
 
         public void disable() {
             itemView.setOnClickListener(null);
-            _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_black));
+            if (_selectedCards.contains(this)){
+                _unselectedCards.add(this);
+                _selectedCards.remove(this);
+            }
+            _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_grey));
         }
 
         public void enable(){
             itemView.setOnClickListener(this);
+            if (_selectedCards.contains(this)){
+                _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_blue));
+            } else {
+                _cardBorder.setBackground(getResources().getDrawable(R.drawable.card_item_black));
+            }
         }
 
         @Override
