@@ -103,8 +103,8 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
 
         boolean buttonSelectable = isButtonSelectable();
         _mapView.setClaimRouteButtonEnabled(buttonSelectable);
-        _mapView.setSelectDestCardEnabled(buttonSelectable && _model.getCurrentGame().getDestDeck().get_cards().size() <= 0);
-        _mapView.setSelectTrainCardEnabled(buttonSelectable && (_model.getCurrentGame().getTrainDeck().getFaceUpTrainCards().size() != 0));
+        _mapView.setSelectDestCardEnabled(buttonSelectable && _model.getCurrentGame().getDestDeck().get_cards().size() > 0);
+        _mapView.setSelectTrainCardEnabled(buttonSelectable && (_model.getCurrentGame().getTrainDeck().getFaceUpTrainCards().size() > 0));
 
         if (_model.getCurrentGame().get_state() == GameState.FINISHED) {
             _mapView.gameOver();

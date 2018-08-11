@@ -62,15 +62,9 @@ public class GameFilesManager extends FileManager {
     }
 
     public static void addCmdIndex(String gameId, int index, boolean overwrite) {
-        int oldIndex;
-        try {
-             oldIndex = getCmdIndex(gameId);
-        } catch (DatabaseException e) {
-            // file hasn't been initialized yet
-            oldIndex = 0;
-        }
+        try { index += getCmdIndex(gameId); } catch (DatabaseException e) { }
         String fileName = gamesDirName + File.separator + gameId + File.separator + commandIndexFileName;
-        String contents = Integer.toString((index+ oldIndex));
+        String contents = Integer.toString(index);
         instance().createFile(fileName, contents, overwrite);
     }
 
@@ -91,8 +85,6 @@ public class GameFilesManager extends FileManager {
             return Integer.parseInt(contents.toString().trim());
 
         } catch (IOException e){
-            e.printStackTrace();
-            System.out.println("Could not get command list index");
             throw new DatabaseException("Could not get command list index", e);
         }
 

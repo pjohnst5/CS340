@@ -93,25 +93,14 @@ public class ServerModel {
             throw new ServerException("Wrong password");
         }
 
+        //Get user from map
+        User user = _users.get(username);
 
-        try {
-            //Get user from map
-            User user = _users.get(username);
+        //Insert new User (new because new UUID) into the map
+        _users.put(user.getUserName(), user);
 
-            //Make new UUID
-            UUID uuid = UUID.randomUUID();
+        return user;
 
-            //Set new uuid for User
-            user.setUUID(uuid);
-
-            //Insert new User (new because new UUID) into the map
-            _users.put(user.getUserName(), user);
-
-            return user;
-
-        } catch(InvalidUserException e) {
-            throw new ServerException(e.getMessage());
-        }
     }
 
     public User register(String username, String password) throws ServerException {
