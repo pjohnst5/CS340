@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import shared.command.ICommand;
@@ -74,8 +75,17 @@ public class CommandFilesManager extends FileManager {
 
             if (commandsFolder.isDirectory()){
                 String[] indices = commandsFolder.list();
-                Arrays.sort(indices);
                 if (indices == null) indices = new String[]{};
+                Arrays.sort(indices, new Comparator<String>() {
+                    @Override
+                    public int compare(String s1, String s2) {
+                        try {
+                            int i1 = Integer.parseInt(s1);
+                            int i2 = Integer.parseInt(s2);
+                            return Integer.compare(i1, i2);
+                        } catch (Exception e){ return 1; }
+                    }
+                });
 
                 for (String index : indices) {
                     File cmdFile = new File(commandsFolder, index);
