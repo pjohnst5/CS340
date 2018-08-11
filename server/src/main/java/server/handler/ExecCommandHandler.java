@@ -12,7 +12,10 @@ import shared.serialization.Serializer;
 
 public class ExecCommandHandler extends Handler {
 
-    private boolean commandListRequest;
+    private static final int MAX_CHAR_PER_LINE = 125;
+
+    private String prev;
+    private int charWrapCount;
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -20,18 +23,21 @@ public class ExecCommandHandler extends Handler {
         InputStreamReader reader = new InputStreamReader(exchange.getRequestBody());
         GenericCommand command = (GenericCommand) Serializer.deserializeToObject(reader, GenericCommand.class);
 
-        if (command.get_methodName().equals("getCommandList")){
-            if (commandListRequest) {
-                System.out.print(".");
-            } else {
-                commandListRequest = true;
-                System.out.print(command.get_className() + "." + command.get_methodName());
+        String current = command.get_className() + "." + command.get_methodName();
+
+        if (current.equals(prev)){
+            charWrapCount++;
+            if (charWrapCount >= MAX_CHAR_PER_LINE){
+                charWrapCount = 0;
+                System.out.println();
             }
+            System.out.print(".");
         } else {
-            if (commandListRequest) System.out.println();
-            commandListRequest = false;
-            System.out.println(command.get_className() + "." + command.get_methodName());
+            System.out.print("\n" + current);
+            charWrapCount = current.length()-1;
         }
+
+        prev = current;
 
         CommandResponse result = (CommandResponse) command.execute();
         reader.close();

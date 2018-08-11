@@ -32,7 +32,7 @@ public class GameMapService {
     public void claimRoute(AsyncServerTask.AsyncCaller caller, Route route, List<TrainCard> discardedCards) throws UnableToClaimRouteException {
         if(canBeClaimed(route, discardedCards)){
             //Send the request to the server
-                ClaimRouteRequest request = new ClaimRouteRequest(route, discardedCards, player);
+            ClaimRouteRequest request = new ClaimRouteRequest(route, discardedCards, player);
 
             String[] paramTypes = {ClaimRouteRequest.class.getCanonicalName()};
             Object[] paramValues = {request};

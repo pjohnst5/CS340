@@ -35,6 +35,15 @@ public class DestCardService {
                 serverModel.addDestCardToDeck(request.get_gameID(), card);
             }
 
+            //Get player
+            Player player = serverModel.getPlayer(request.get_playerID());
+
+            //Puts kept cards into player's hand
+            List<DestCard> keptCards = request.get_keepCards().getDestCards();
+            for (DestCard card : keptCards) {
+                player.addDestCard(card);
+            }
+
             // Makes command to update deck of clients
             String className = ConfigurationManager.get("client_facade_name");
             String methodName = ConfigurationManager.get("client_set_dest_deck_method");
@@ -43,7 +52,7 @@ public class DestCardService {
             ICommand command = new GenericCommand(className, methodName, paramTypes, paramValues, null);
 
             // Makes game action object
-            GameAction action = new GameAction(request.get_player().getDisplayName(), " selected destination cards", request.get_gameID());
+            GameAction action = new GameAction(player.getDisplayName(), " selected destination cards", request.get_gameID());
 
             //adds game action into server model
             serverModel.addGameAction(request.get_gameID(), action);
@@ -56,13 +65,13 @@ public class DestCardService {
             ICommand command2 = new GenericCommand(className2, methodName2, paramTypes2, paramValues2, null);
 
             //updates player in server model
-            serverModel.updatePlayer(request.get_gameID(), request.get_player());
+            serverModel.updatePlayer(request.get_gameID(), player);
 
             //makes command to do same on client
             String className3 = ConfigurationManager.getString("client_facade_name");
             String methodName3 = ConfigurationManager.getString("client_update_player_method");
             String[] paramTypes3 = { Player.class.getCanonicalName() };
-            Object[] paramValues3 = { request.get_player() };
+            Object[] paramValues3 = { player };
             ICommand command3 = new GenericCommand(className3, methodName3, paramTypes3, paramValues3, null);
 
             //increment the number of players completed setup

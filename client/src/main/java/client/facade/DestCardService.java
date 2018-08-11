@@ -16,10 +16,6 @@ public class DestCardService {
 
         DestCardRequest request = new DestCardRequest(player, keep, discard);
 
-        for (DestCard card : keep.getDestCards()){
-            player.addDestCard(card);
-        }
-
         String[] paramTypes = { request.getClass().getCanonicalName() };
         Object[] paramValues = { request };
 
