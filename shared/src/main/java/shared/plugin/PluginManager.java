@@ -16,21 +16,32 @@ public class PluginManager {
      * Expects load the plugin into the classpath dynamically
      * @param pluginName name of the plugin to get (i.e. "sql_provider", "json_provider")
      */
-    public static IPersistenceProvider loadPlugin(String pluginName){
+    public static Class<?> loadPlugin(String pluginName){
         try {
             String pluginJarPath = ConfigurationManager.get("plugin_" + pluginName + "_jar_path");
             String pluginClassName = ConfigurationManager.get("plugin_" + pluginName + "_class_name");
 
             URL[] pathURL = new URL[]{ new URL(pluginJarPath) };
             URLClassLoader classLoader = new URLClassLoader(pathURL);
-            Class<?> clazz = classLoader.loadClass(pluginClassName);
+            return classLoader.loadClass(pluginClassName);
+
+        } catch (MalformedURLException  | ClassNotFoundException e) {
+            System.out.println("Failed to load plugin: " + pluginName);
+            System.exit(1);
+            return null;
+        }
+    }
+
+    public static IPersistenceProvider loadAndSetPlugin(String pluginName){
+        try {
+            Class<?> clazz = loadPlugin(pluginName);
 
             Constructor<?> constructor = clazz.getConstructor();
             _pluginInstance = (IPersistenceProvider)constructor.newInstance();
             return _pluginInstance;
 
-        } catch (MalformedURLException  | ClassNotFoundException | NoSuchMethodException |
-                 IllegalAccessException | InstantiationException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | NullPointerException |
+                IllegalAccessException | InstantiationException | InvocationTargetException e) {
 
             System.out.println("Failed to load plugin: " + pluginName);
             System.exit(1);

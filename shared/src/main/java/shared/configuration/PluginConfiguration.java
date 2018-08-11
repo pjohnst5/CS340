@@ -25,6 +25,10 @@ public class PluginConfiguration implements IConfiguration {
         manager.add("plugin_sql_provider_class_name", "sql.provider.Plugin");
         manager.add("plugin_sql_provider_jar_path", workingDir + "sqlprovider.jar");
 
+        // SQLite Plugin
+        manager.add("plugin_sqlite_class_name", "org.sqlite.JDBC");
+        manager.add("plugin_sqlite_jar_path", workingDir + "sqlite-jdbc-3.23.1.jar");
+
         // JSON Plugin
         manager.add("plugin_json_provider_class_name", "json.provider.Plugin");
         manager.add("plugin_json_provider_jar_path", workingDir + "jsonprovider.jar");

@@ -64,7 +64,11 @@ public class ServerDriver {
             case 2:
                 String dbType = args[1];
                 if (validatePluginName(dbType)) {
-                    PluginManager.loadPlugin(dbType);
+                    PluginManager.loadAndSetPlugin(dbType);
+
+                    if (dbType.equals("sql_provider")){
+                        PluginManager.loadPlugin("sqlite");
+                    }
 
                 } else  {
 

@@ -4,8 +4,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':shared')
     // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
-    compile 'org.xerial:sqlite-jdbc:3.7.2'
-    implementation files('/users/guest/j/jtyler17/Documents/cs340/ticketToRide/sqlite-jdbc-3.23.1.jar')
+    //compile 'org.xerial:sqlite-jdbc:3.7.2'
+    //implementation files('/users/guest/j/jtyler17/Documents/cs340/ticketToRide/sqlite-jdbc-3.23.1.jar')
 }
 
 sourceCompatibility = "1.7"
