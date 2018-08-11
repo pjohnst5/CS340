@@ -52,8 +52,9 @@ public class PlayerTurnState extends DestCardSelectState {
         ThreeDestCardWrapper discard = new ThreeDestCardWrapper(cardsDiscarded);
         DestCardRequest request = new DestCardRequest(player, keep, discard);
 
-        _facade.selectDestCard(presenter(), request);
         submitted = true;
+        submitData = new DataRequest(keep, discard);
+        _facade.selectDestCard(presenter(), request);
     }
 
     @Override

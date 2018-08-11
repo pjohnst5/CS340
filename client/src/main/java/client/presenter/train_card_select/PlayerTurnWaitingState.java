@@ -33,4 +33,10 @@ public class PlayerTurnWaitingState extends TrainCardSelectState {
 
     @Override
     public void submitData(TrainCard keep) { }
+
+    @Override
+    public void serverResponseSuccess() { }
+
+    @Override
+    public void serverResponseFailure() { }
 }

@@ -84,17 +84,21 @@ public class TrainSelectPresenter
 
     @Override
     public void submitData(TrainCard keep) {
+        _selectView.showLoadScreen(true);
         _state.submitData(keep);
     }
 
     @Override
     public void onServerResponseComplete(Exception exception) {
         exception.printStackTrace();
+        _selectView.showLoadScreen(true);
+        _state.serverResponseFailure();
     }
 
     @Override
     public void onServerResponseComplete() {
-
+        _selectView.showLoadScreen(false);
+        _state.serverResponseSuccess();
     }
 
     @Override

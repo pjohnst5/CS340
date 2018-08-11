@@ -19,6 +19,8 @@ public abstract class TrainCardSelectState {
     public void enterState(){}
     public void exitState(){}
     public abstract void update();
+    public abstract void serverResponseSuccess();
+    public abstract void serverResponseFailure();
     public abstract void submitData(TrainCard keep);
 
 }
