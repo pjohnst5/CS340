@@ -22,11 +22,12 @@ import client.presenter.game_lobby.GameLobbyPresenter;
 import client.presenter.game_lobby.IGameLobbyPresenter;
 import client.util.ColorPicker;
 import client.view.activity.GameActivity;
+import client.view.fragment.LoadingScreenFragment;
 import shared.enumeration.GameState;
 import shared.model.Game;
 import shared.model.Player;
 
-public class GameLobbyFragment extends Fragment implements IGameLobbyView {
+public class GameLobbyFragment extends LoadingScreenFragment implements IGameLobbyView {
 
     private Game _currentGame;
     private Button _startButton;

@@ -45,6 +45,12 @@ public class SetupCompleteState extends DestCardSelectState {
     public void submitData(List<DestCard> cardsSelected, List<DestCard> cardsDiscarded) { }
 
     @Override
+    public void serverResponseSuccess() { }
+
+    @Override
+    public void serverResponseFailure() { }
+
+    @Override
     public void update(Observable o, Object arg) {
         enterState();
     }

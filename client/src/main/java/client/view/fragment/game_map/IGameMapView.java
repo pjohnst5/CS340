@@ -3,6 +3,7 @@ package client.view.fragment.game_map;
 import java.util.List;
 
 import client.presenter.game_map.IGameMapPresenter;
+import client.view.fragment.ILoadingScreenFragment;
 import shared.model.Player;
 import shared.model.Route;
 
@@ -10,7 +11,7 @@ import shared.model.Route;
  * Created by jtyler17 on 7/21/18.
  */
 
-public interface IGameMapView {
+public interface IGameMapView extends ILoadingScreenFragment {
     public void updateMap(List<Route> routes);
     public void updatePlayerTurn();
     public void updateDeckCount(int destCards, int trainCards);

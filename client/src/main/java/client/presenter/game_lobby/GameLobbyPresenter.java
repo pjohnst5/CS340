@@ -76,4 +76,9 @@ public class GameLobbyPresenter implements IGameLobbyPresenter, Observer, AsyncS
     public void onServerResponseComplete(Exception exception) {
         _view.showToast(exception.getMessage());
     }
+
+    @Override
+    public void onServerResponseComplete() {
+
+    }
 }

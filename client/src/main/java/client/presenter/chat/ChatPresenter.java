@@ -77,6 +77,11 @@ public class ChatPresenter implements IChatPresenter, Observer, AsyncServerTask.
         _chatView.showToast(exception.getMessage());
     }
 
+    @Override
+    public void onServerResponseComplete() {
+
+    }
+
     private void update(){
         List<Message> messageList = _model.getCurrentGame().get_messages();
 

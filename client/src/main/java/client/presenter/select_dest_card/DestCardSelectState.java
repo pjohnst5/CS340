@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Observable;
 
 import shared.model.decks.DestCard;
+import shared.model.wrapper.ThreeDestCardWrapper;
 
 public abstract class DestCardSelectState {
 
@@ -23,9 +24,29 @@ public abstract class DestCardSelectState {
     public void exitState(){}
     public abstract int getNumCardsRequired();
     public abstract void update(Observable o, Object arg);
+    public abstract void serverResponseSuccess();
+    public abstract void serverResponseFailure();
     public abstract void submitData(List<DestCard> cardsSelected, List<DestCard> cardsDiscarded);
 
     public void displayNumCardsRequired(){
         presenter().displayNumCardsRequired(getNumCardsRequired());
+    }
+
+    class DataRequest{
+        private ThreeDestCardWrapper selected;
+        private ThreeDestCardWrapper discarded;
+
+        public DataRequest(ThreeDestCardWrapper cardsSelected, ThreeDestCardWrapper cardsDiscarded){
+            selected = cardsSelected;
+            discarded = cardsDiscarded;
+        }
+
+        public ThreeDestCardWrapper getSelected() {
+            return selected;
+        }
+
+        public ThreeDestCardWrapper getDiscarded() {
+            return discarded;
+        }
     }
 }

@@ -92,4 +92,9 @@ public class LoginPresenter implements ILoginPresenter, Observer, AsyncServerTas
         _view.hideLoadMenu();
         _view.showToast(exception.getMessage());
     }
+
+    @Override
+    public void onServerResponseComplete() {
+
+    }
 }

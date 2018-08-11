@@ -1,8 +1,8 @@
 package client.view.fragment.select_dest_card;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,10 +29,11 @@ import java.util.Set;
 
 import client.presenter.select_dest_card.DestCardSelectPresenter;
 import client.presenter.select_dest_card.IDestCardSelectPresenter;
+import client.view.fragment.LoadingScreenFragment;
 import client.view.fragment.game_map.GameMapFragment;
 import shared.model.decks.DestCard;
 
-public class DestCardSelectFragment extends Fragment implements IDestCardSelectView {
+public class DestCardSelectFragment extends LoadingScreenFragment implements IDestCardSelectView {
 
     private final int CARD_LENGTH = 284;
     private static final int CARD_WIDTH = 264;
@@ -45,6 +46,7 @@ public class DestCardSelectFragment extends Fragment implements IDestCardSelectV
     private Button _submitButton;
     private CardAdapter _cardAdapter;
     private TextView _overlayMessage;
+    private ProgressDialog _processDialog;
     private TextView _numCardsReqText;
     private RecyclerView _cardsRecyclerView;
     private LinearLayout _recyclerViewContainer;

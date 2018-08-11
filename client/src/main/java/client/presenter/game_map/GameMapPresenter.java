@@ -86,6 +86,11 @@ public class GameMapPresenter implements IGameMapPresenter, Observer, AsyncServe
     }
 
     @Override
+    public void onServerResponseComplete() {
+
+    }
+
+    @Override
     public void update(){
         int numDestCards = _model.getCurrentGame().getDestDeck().get_cards().size();
         int numTrainCards = _model.getCurrentGame().getTrainDeck().sizeOfFaceDownDeck();

@@ -33,6 +33,11 @@ public class GameStatusPresenter implements IGameStatusPresenter, Observer, Asyn
     }
 
     @Override
+    public void onServerResponseComplete() {
+
+    }
+
+    @Override
     public void update(Observable observable, Object o) {
         _statusView.update();
     }

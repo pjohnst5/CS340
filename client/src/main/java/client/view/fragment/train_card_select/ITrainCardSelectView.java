@@ -1,8 +1,9 @@
 package client.view.fragment.train_card_select;
 
+import client.view.fragment.ILoadingScreenFragment;
 import shared.model.decks.TrainCard;
 
-public interface ITrainCardSelectView {
+public interface ITrainCardSelectView extends ILoadingScreenFragment {
 
     public void clearCards();
     public void switchToGameMap();

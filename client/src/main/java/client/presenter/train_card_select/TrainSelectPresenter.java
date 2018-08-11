@@ -93,6 +93,11 @@ public class TrainSelectPresenter
     }
 
     @Override
+    public void onServerResponseComplete() {
+
+    }
+
+    @Override
     public void update(Observable o, Object arg) {
         _state.update();
     }

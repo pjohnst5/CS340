@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -19,11 +18,12 @@ import android.widget.Toast;
 import com.pjohnst5icloud.tickettoride.R;
 
 import client.presenter.login.LoginPresenter;
+import client.view.fragment.LoadingScreenFragment;
 import client.view.activity.GameListActivity;
 import client.presenter.login.ILoginPresenter;
 import client.view.dialog.ServerSettingsDialog;
 
-public class LoginFragment extends Fragment implements ILoginView {
+public class LoginFragment extends LoadingScreenFragment implements ILoginView {
 
     private static final String SERVER_SETTINGS_DIALOG_TAG = "ServerSettingsDialog";
     private static final int SERVER_SETTINGS_DIALOG_CODE = 0;

@@ -12,13 +12,26 @@ import shared.serialization.Serializer;
 
 public class ExecCommandHandler extends Handler {
 
+    private boolean commandListRequest;
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
-        System.out.println("ExecCommandHandler reached");
-
         InputStreamReader reader = new InputStreamReader(exchange.getRequestBody());
         GenericCommand command = (GenericCommand) Serializer.deserializeToObject(reader, GenericCommand.class);
+
+        if (command.get_methodName().equals("getCommandList")){
+            if (commandListRequest) {
+                System.out.print(".");
+            } else {
+                commandListRequest = true;
+                System.out.print(command.get_className() + "." + command.get_methodName());
+            }
+        } else {
+            if (commandListRequest) System.out.println();
+            commandListRequest = false;
+            System.out.println(command.get_className() + "." + command.get_methodName());
+        }
 
         CommandResponse result = (CommandResponse) command.execute();
         reader.close();

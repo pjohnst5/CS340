@@ -28,11 +28,12 @@ import java.util.Set;
 
 import client.presenter.train_card_select.ITrainCardSelectPresenter;
 import client.presenter.train_card_select.TrainSelectPresenter;
+import client.view.fragment.LoadingScreenFragment;
 import client.view.fragment.game_map.GameMapFragment;
 import shared.enumeration.TrainColor;
 import shared.model.decks.TrainCard;
 
-public class TrainCardSelectFragment extends Fragment implements ITrainCardSelectView {
+public class TrainCardSelectFragment extends LoadingScreenFragment implements ITrainCardSelectView {
 
     private final int CARD_LENGTH = 294;
 

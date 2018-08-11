@@ -27,6 +27,16 @@ public class PlayerTurnWaitingState extends DestCardSelectState {
     }
 
     @Override
+    public void serverResponseSuccess() {
+
+    }
+
+    @Override
+    public void serverResponseFailure() {
+
+    }
+
+    @Override
     public void submitData(List<DestCard> cardsSelected, List<DestCard> cardsDiscarded) {
 
     }

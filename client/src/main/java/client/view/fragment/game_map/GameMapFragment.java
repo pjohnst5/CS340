@@ -34,6 +34,7 @@ import client.presenter.game_map.IGameMapPresenter;
 import client.util.ColorPicker;
 import client.view.dialog.ClaimRouteDialog;
 import client.view.dialog.GameOverDialog;
+import client.view.fragment.LoadingScreenFragment;
 import client.view.fragment.game_map.customview.GameMapView;
 import client.view.fragment.select_dest_card.DestCardSelectFragment;
 import client.view.fragment.train_card_select.TrainCardSelectFragment;
@@ -47,7 +48,7 @@ import shared.model.Route;
  * Created by jtyler17 on 7/21/18.
  */
 
-public class GameMapFragment extends Fragment implements IGameMapView, GameMapView.HostFragment {
+public class GameMapFragment extends LoadingScreenFragment implements IGameMapView, GameMapView.HostFragment {
 
     private GameMapView _gameMap;
     private IGameMapPresenter _presenter;

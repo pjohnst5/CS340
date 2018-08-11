@@ -16,6 +16,7 @@ public class AsyncServerTask extends AsyncTask<Object, Void, Exception> {
 
     public interface AsyncCaller {
         void onServerResponseComplete(Exception exception);
+        void onServerResponseComplete();
     }
     private AsyncCaller caller;
     public AsyncServerTask(AsyncCaller caller) {this.caller = caller;}
@@ -39,7 +40,9 @@ public class AsyncServerTask extends AsyncTask<Object, Void, Exception> {
 
     @Override
     protected void onPostExecute(Exception exception) {
-        if (exception != null) {
+        if (exception == null) {
+            caller.onServerResponseComplete();
+        } else {
             caller.onServerResponseComplete(exception);
         }
     }

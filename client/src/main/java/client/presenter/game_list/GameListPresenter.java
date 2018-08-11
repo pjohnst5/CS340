@@ -212,4 +212,9 @@ public class GameListPresenter implements IGameListPresenter, Observer, AsyncSer
     public void onServerResponseComplete(Exception exception) {
         _view.showToast(exception.getMessage());
     }
+
+    @Override
+    public void onServerResponseComplete() {
+
+    }
 }

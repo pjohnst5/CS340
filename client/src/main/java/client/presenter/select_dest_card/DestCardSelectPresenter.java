@@ -82,12 +82,21 @@ public class DestCardSelectPresenter
 
     @Override
     public void submitData(List<DestCard> cardsSelected, List<DestCard> cardsDiscarded){
+        _selectView.showLoadScreen(true);
         _state.submitData(cardsSelected, cardsDiscarded);
     }
 
     @Override
     public void onServerResponseComplete(Exception exception) {
         exception.printStackTrace();
+        _selectView.showLoadScreen(true);
+        _state.serverResponseFailure();
+    }
+
+    @Override
+    public void onServerResponseComplete() {
+        _selectView.showLoadScreen(false);
+        _state.serverResponseSuccess();
     }
 
     @Override
@@ -99,4 +108,5 @@ public class DestCardSelectPresenter
     public void update(Observable o, Object arg) {
         _state.update(o, arg);
     }
+
 }

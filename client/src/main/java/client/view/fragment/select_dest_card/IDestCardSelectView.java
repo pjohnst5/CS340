@@ -1,8 +1,9 @@
 package client.view.fragment.select_dest_card;
 
+import client.view.fragment.ILoadingScreenFragment;
 import shared.model.decks.DestCard;
 
-public interface IDestCardSelectView {
+public interface IDestCardSelectView extends ILoadingScreenFragment {
 
     public void switchToGameMap();
     public void  disableCardSelect();

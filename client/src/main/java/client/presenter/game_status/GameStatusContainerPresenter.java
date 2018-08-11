@@ -39,6 +39,11 @@ public class GameStatusContainerPresenter implements IGameStatusContainerPresent
         exception.printStackTrace();
     }
 
+    @Override
+    public void onServerResponseComplete() {
+
+    }
+
     private boolean showEndButtons(){
         return ClientModel.getInstance().getCurrentGame().get_state() == GameState.FINISHED;
     }

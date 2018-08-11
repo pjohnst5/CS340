@@ -27,6 +27,7 @@ public class SetupPendingState extends DestCardSelectState {
     @Override
     public void enterState() {
         presenter().showOverlayMessage("Please wait while the other players select their cards...");
+        update(null, null);
     }
 
     @Override
@@ -51,4 +52,14 @@ public class SetupPendingState extends DestCardSelectState {
 
     @Override
     public void submitData(List<DestCard> cardsSelected, List<DestCard> cardsDiscarded) { }
+
+    @Override
+    public void serverResponseSuccess() {
+
+    }
+
+    @Override
+    public void serverResponseFailure() {
+
+    }
 }

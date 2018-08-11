@@ -47,6 +47,11 @@ public class GameHistoryPresenter
         _historyView.showToast(exception.getMessage());
     }
 
+    @Override
+    public void onServerResponseComplete() {
+
+    }
+
     private void update(){
         List<GameAction> actions = _model.getCurrentGame().getGameActions();
 

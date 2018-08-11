@@ -2,6 +2,8 @@ package client.presenter.select_dest_card;
 
 import java.util.List;
 import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import client.facade.ServicesFacade;
 import client.model.ClientModel;
@@ -14,8 +16,10 @@ public class PlayerTurnState extends DestCardSelectState {
 
     private static final int NUM_CARDS_REQUIRED = 1;
 
+    private boolean submitted;
     private ClientModel _model = ClientModel.getInstance();
     private ServicesFacade _facade = new ServicesFacade();
+    private DataRequest submitData;
 
     public PlayerTurnState(IDestCardSelectPresenter presenter){
         super(presenter);
@@ -23,6 +27,8 @@ public class PlayerTurnState extends DestCardSelectState {
 
     @Override
     public void enterState() {
+        submitted = false;
+        update(null, null);
         displayNumCardsRequired();
         _facade.requestDestCards(presenter(), _model.getCurrentPlayer());
     }
@@ -47,14 +53,13 @@ public class PlayerTurnState extends DestCardSelectState {
         DestCardRequest request = new DestCardRequest(player, keep, discard);
 
         _facade.selectDestCard(presenter(), request);
-        presenter().setState(new PlayerTurnWaitingState(presenter()));
-
+        submitted = true;
     }
 
     @Override
     public void update(Observable o, Object arg) {
 
-        if (_model.getCurrentGame().destOptionCardsEmpty()) return;
+        if (submitted || _model.getCurrentGame().destOptionCardsEmpty()) return;
 
         List<DestCard> cards = _model.getCurrentGame().getDestOptionCards();
 
@@ -64,5 +69,29 @@ public class PlayerTurnState extends DestCardSelectState {
 
         _model.getCurrentGame().clearDestOptionCards();
 
+    }
+
+    @Override
+    public void serverResponseSuccess() {
+        if (!submitted) return;
+        presenter().setState(new PlayerTurnWaitingState(presenter()));
+    }
+
+    @Override
+    public void serverResponseFailure() {
+        if (!submitted) return;
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run() {
+                _facade.sendSetupResults(
+                        presenter(),
+                        submitData.getSelected(),
+                        submitData.getDiscarded(),
+                        _model.getCurrentPlayer()
+                );
+                timer.cancel();
+            }
+        }, 100);
     }
 }
