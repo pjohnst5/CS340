@@ -9,6 +9,7 @@ import server.exception.ServerException;
 import shared.command.ICommand;
 import shared.exception.DatabaseException;
 import shared.model.Game;
+import shared.model.Player;
 import shared.plugin.ICommandDao;
 import shared.plugin.IPersistenceProvider;
 import shared.plugin.PluginManager;
@@ -49,6 +50,13 @@ public class CommandManager {
                 String currGameId = games.get(i).getGameID();
                 List<ICommand> clientCommands = commandDao.getClientCommands(currGameId);
                 _commandList.put(currGameId, clientCommands);
+
+                //Sets all players command index in this game to be the size of the list - 1 (otherwise it executes client commands twice)
+                List<Player> players = ServerModel.getInstance().getGame(currGameId).getPlayers();
+                for (int k = 0; k < players.size(); k++) {
+                    players.get(k).setIndex(clientCommands.size()-1);
+                }
+
 
                 //resets games commandCountSinceSnapshot
                 ServerModel.getInstance().getGame(currGameId).resetCommandCountSinceSnapshot();
