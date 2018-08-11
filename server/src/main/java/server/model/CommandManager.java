@@ -51,13 +51,6 @@ public class CommandManager {
                 List<ICommand> clientCommands = commandDao.getClientCommands(currGameId);
                 _commandList.put(currGameId, clientCommands);
 
-                //Sets all players command index in this game to be the size of the list - 1 (otherwise it executes client commands twice)
-                List<Player> players = ServerModel.getInstance().getGame(currGameId).getPlayers();
-                for (int k = 0; k < players.size(); k++) {
-                    players.get(k).setIndex(clientCommands.size()-1);
-                }
-
-
                 //resets games commandCountSinceSnapshot
                 ServerModel.getInstance().getGame(currGameId).resetCommandCountSinceSnapshot();
 
@@ -66,6 +59,12 @@ public class CommandManager {
                 for(int j = indexOfCommandsToExecute; j < serverCommands.size(); j++){
                     serverCommands.get(j).execute();
                     ServerModel.getInstance().getGame(currGameId).incrementCommandCountSinceSnapshot();
+                }
+
+                //Sets all players command index in this game to be the size of the list - 1 (otherwise it executes client commands twice)
+                List<Player> players = ServerModel.getInstance().getGame(currGameId).getPlayers();
+                for (int k = 0; k < players.size(); k++) {
+                    players.get(k).setIndex(clientCommands.size()-1);
                 }
             }
         } catch (DatabaseException | ServerException e) {
