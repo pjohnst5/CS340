@@ -57,12 +57,18 @@ public class GameFilesManager extends FileManager {
         instance().createFile(fileName, contents, overwrite);
     }
 
-    public static void addCmdIndex(String gameId, int index) throws DatabaseException{
+    public static void addCmdIndex(String gameId, int index) {
         addCmdIndex(gameId, index, PRESERVE);
     }
 
-    public static void addCmdIndex(String gameId, int index, boolean overwrite) throws DatabaseException{
-        int oldIndex = getCmdIndex(gameId);
+    public static void addCmdIndex(String gameId, int index, boolean overwrite) {
+        int oldIndex;
+        try {
+             oldIndex = getCmdIndex(gameId);
+        } catch (DatabaseException e) {
+            // file hasn't been initialized yet
+            oldIndex = 0;
+        }
         String fileName = gamesDirName + File.separator + gameId + File.separator + commandIndexFileName;
         String contents = Integer.toString((index+ oldIndex));
         instance().createFile(fileName, contents, overwrite);
