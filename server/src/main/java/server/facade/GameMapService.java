@@ -122,10 +122,6 @@ public class GameMapService {
             serverModel.addCommand(request.get_gameID(), command5);
             int command5Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
-            //sets updated list of commands as response's list
-            response.setSuccess(true);
-            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
-
 
             //------------------------------------Database stuff--------------------------------------------------//
             //Adds server command into database
@@ -148,6 +144,10 @@ public class GameMapService {
                 SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command5, command5Index);
             }
 
+
+            //sets updated list of commands as response's list
+            response.setSuccess(true);
+            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
 
         } catch(ServerException | InvalidGameException | NotEnoughTrainCarsException | DeckException e) {
             response.setSuccess(false);

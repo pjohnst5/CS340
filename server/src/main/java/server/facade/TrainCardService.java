@@ -105,11 +105,6 @@ public class TrainCardService {
                 command4Index = serverModel.getCommands(request.get_gameID()).size() - 1;
             }
 
-            //sets response's list of commands to be new commands for client
-            response.setSuccess(true);
-            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
-
-
 
             //------------------------------------Database stuff--------------------------------------------------//
             //Add server command
@@ -134,6 +129,9 @@ public class TrainCardService {
                 }
             }
 
+            //sets response's list of commands to be new commands for client
+            response.setSuccess(true);
+            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
 
 
         } catch (ServerException | DeckException | InvalidGameException e) {
@@ -223,10 +221,6 @@ public class TrainCardService {
                 command4Index = serverModel.getCommands(request.get_gameID()).size() - 1;
             }
 
-            //sets response's list of commands to be new commands for client
-            response.setSuccess(true);
-            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
-
 
             //-----------------------------------Database stuff--------------------------------------------------//
             //Add server command
@@ -251,6 +245,10 @@ public class TrainCardService {
                 }
             }
 
+
+            //sets response's list of commands to be new commands for client
+            response.setSuccess(true);
+            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
 
 
         } catch(ServerException | DeckException | InvalidGameException e) {

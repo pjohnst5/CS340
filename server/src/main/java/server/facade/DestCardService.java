@@ -95,12 +95,8 @@ public class DestCardService {
             int command4Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
 
-            //gets new list of commands and sets it as response's commands
-            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
-            response.setSuccess(true);
-
-
             //------------------------------------Database stuff--------------------------------------------------//
+
             if (!serverModel.isInitializing()){
                 //Adding Server command into database
                 String[] paramTypesServer = { request.getClass().getCanonicalName() };
@@ -120,6 +116,10 @@ public class DestCardService {
                 SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command3, command3Index);
                 SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command4, command4Index);
             }
+
+            //gets new list of commands and sets it as response's commands
+            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
+            response.setSuccess(true);
 
 
         } catch (ServerException e) {
@@ -167,8 +167,6 @@ public class DestCardService {
 //            List<ICommand> commandList = new ArrayList<>();
 //            commandList.add(command);
 
-            response.setCommands(serverModel.getCommands(player.getGameID(), player.getPlayerID()));
-            response.setSuccess(true);
 
             //------------------------------------Database stuff--------------------------------------------------//
             //Adds Server command
@@ -188,6 +186,9 @@ public class DestCardService {
                 //adds client command
                 SnapshotHelper.addClientCommandToDatabase(player.getGameID(), command, commandIndex);
             }
+
+            response.setCommands(serverModel.getCommands(player.getGameID(), player.getPlayerID()));
+            response.setSuccess(true);
 
 
         } catch (ServerException | DeckException e) {
@@ -269,9 +270,6 @@ public class DestCardService {
             serverModel.addCommand(request.get_gameID(), command4);
             int command4Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
-            //sets response's list of commands to be new commands for client
-            response.setSuccess(true);
-            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
 
             //------------------------------------Database stuff--------------------------------------------------//
             //Adds Server command
@@ -293,6 +291,10 @@ public class DestCardService {
                 SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command3, command3Index);
                 SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command4, command4Index);
             }
+
+            //sets response's list of commands to be new commands for client
+            response.setSuccess(true);
+            response.setCommands(serverModel.getCommands(request.get_gameID(), request.get_playerID()));
 
 
         } catch (ServerException | InvalidGameException e) {

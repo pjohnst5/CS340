@@ -70,13 +70,6 @@ class GameLobbyService {
             serverModel.addCommand(game.getGameID(), command2);
             int command2Index = serverModel.getCommands(game.getGameID()).size() - 1;
 
-            //gets all commands for this game and player
-            List<ICommand> commands = serverModel.getCommands(gameID, playerID);
-
-            //sets all the commands of this response to be the list
-            response.setCommands(commands);
-            response.setSuccess(true);
-
 
             //------------------------------------Database stuff--------------------------------------------------//
             //Adds Server command into database
@@ -97,6 +90,13 @@ class GameLobbyService {
                 SnapshotHelper.addClientCommandToDatabase(gameID, command2, command2Index);
             }
 
+
+            //gets all commands for this game and player
+            List<ICommand> commands = serverModel.getCommands(gameID, playerID);
+
+            //sets all the commands of this response to be the list
+            response.setCommands(commands);
+            response.setSuccess(true);
 
         } catch(ServerException | InvalidGameException e){
             response.setSuccess(false);
@@ -136,10 +136,6 @@ class GameLobbyService {
             int commandIndex = serverModel.getCommands(request.get_gameID()).size() - 1;
 
 
-            //gets list of new commands for player and sets them as the response commands
-            response.setCommands(serverModel.getCommands(request.get_gameID(),request.get_playerID()));
-            response.setSuccess(true);
-
 
             //------------------------------------Database stuff--------------------------------------------------//
             //Adds Server command into database
@@ -160,6 +156,10 @@ class GameLobbyService {
                 SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
             }
 
+
+            //gets list of new commands for player and sets them as the response commands
+            response.setCommands(serverModel.getCommands(request.get_gameID(),request.get_playerID()));
+            response.setSuccess(true);
 
         } catch (ServerException e) {
             response.setSuccess(false);
@@ -220,13 +220,6 @@ class GameLobbyService {
             int command2Index = serverModel.getCommands(request.get_gameID()).size() - 1;
 
 
-            //gets all commands for this game and player
-            List<ICommand> commands = serverModel.getCommands(gameId, playerId);
-
-            //sets all the commands of this response to be the list
-            response.setCommands(commands);
-            response.setSuccess(true);
-
 
             //------------------------------------Database stuff--------------------------------------------------//
             //Adds Server Command into database
@@ -246,6 +239,13 @@ class GameLobbyService {
                 SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command, commandIndex);
                 SnapshotHelper.addClientCommandToDatabase(request.get_gameID(), command2, command2Index);
             }
+
+            //gets all commands for this game and player
+            List<ICommand> commands = serverModel.getCommands(gameId, playerId);
+
+            //sets all the commands of this response to be the list
+            response.setCommands(commands);
+            response.setSuccess(true);
 
 
         } catch(ServerException | InvalidGameException e) {
