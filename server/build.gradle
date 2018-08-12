@@ -6,6 +6,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     //compile 'org.xerial:sqlite-jdbc:3.7.2'
     //implementation files('/users/guest/j/jtyler17/Documents/cs340/ticketToRide/sqlite-jdbc-3.23.1.jar')
+    implementation project(':sqlite-jdbc-3.23.1')
 }
 
 sourceCompatibility = "1.7"

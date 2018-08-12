@@ -3,7 +3,7 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation project(':sqlite-jdbc-3.23.1')
+//    implementation project(':sqlite-jdbc-3.23.1')
 }
 
 sourceCompatibility = "1.7"

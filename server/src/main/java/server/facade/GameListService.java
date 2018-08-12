@@ -198,11 +198,6 @@ class GameListService {
             //add player to model
             serverModel.addPlayer(player);
 
-            //add all the commands for the game the user just joined.
-            response.setCommands(commands);
-            response.setSuccess(true);
-
-
             //------------------------------------Database stuff--------------------------------------------------//
             //Adds Server command
             if (!serverModel.isInitializing()){
@@ -226,6 +221,9 @@ class GameListService {
                 SnapshotHelper.addClientCommandToDatabase(jr.getGameID(), command2, command2Index);
             }
 
+            //add all the commands for the game the user just joined.
+            response.setCommands(commands);
+            response.setSuccess(true);
 
         } catch(MaxPlayersException | PlayerException | ServerException e){
             response.setSuccess(false);
