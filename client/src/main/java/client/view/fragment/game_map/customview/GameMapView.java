@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import com.pjohnst5icloud.tickettoride.R;
 
 import java.util.List;
-import java.util.UUID;
 
 import shared.enumeration.CityManager;
 import shared.model.City;

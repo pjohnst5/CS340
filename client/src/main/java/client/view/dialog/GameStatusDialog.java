@@ -25,13 +25,10 @@ import com.pjohnst5icloud.tickettoride.R;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 
 import client.model.ClientModel;
 import client.presenter.game_status.GameStatusPresenter;
 import client.presenter.game_status.IGameStatusPresenter;
-import client.server.AsyncServerTask;
 import client.util.ColorPicker;
 import client.view.fragment.game_status.IGameStatusView;
 import shared.enumeration.PlayerColor;

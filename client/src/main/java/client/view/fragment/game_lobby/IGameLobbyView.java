@@ -3,7 +3,6 @@ package client.view.fragment.game_lobby;
 import client.presenter.game_lobby.IGameLobbyPresenter;
 import client.view.fragment.ILoadingScreenFragment;
 import shared.model.Game;
-import shared.model.Message;
 
 public interface IGameLobbyView extends ILoadingScreenFragment {
 

@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-import javax.xml.crypto.Data;
-
 import shared.exception.DatabaseException;
 import shared.model.Game;
 import shared.serialization.Serializer;

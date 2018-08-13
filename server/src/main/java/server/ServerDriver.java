@@ -3,10 +3,7 @@ package server;
 import java.util.Scanner;
 
 import server.exception.ServerException;
-import shared.GenericFactory;
-import shared.command.GenericCommand;
 import shared.configuration.ConfigurationManager;
-import shared.plugin.IPersistenceProvider;
 import shared.plugin.PluginManager;
 
 public class ServerDriver {
@@ -39,11 +36,6 @@ public class ServerDriver {
             if (accept.equals(name)) return true;
         }
         return false;
-    }
-
-    public static void registerPluginType(IPersistenceProvider provider) {
-
-
     }
 
     public static void main(String[] args) throws ServerException{

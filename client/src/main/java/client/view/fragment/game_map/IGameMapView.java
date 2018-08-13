@@ -4,7 +4,6 @@ import java.util.List;
 
 import client.presenter.game_map.IGameMapPresenter;
 import client.view.fragment.ILoadingScreenFragment;
-import shared.model.Player;
 import shared.model.Route;
 
 /**
